@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
-  title: 'SanityOps Framework',
+  title: 'SanityOps',
   description: 'AI Agent Continuous Governance Framework',
   lastUpdated: true,
 
@@ -12,7 +12,11 @@ export default defineConfig({
   ],
 
   themeConfig: {
-    logo: '/sanityops-logo.svg',
+    logo: {
+      light: '/sanityops-logo.svg',
+      dark: '/sanityops-logo.svg',
+    },
+    logoText: false,
 
     nav: [
       { text: 'Home', link: '/' },
