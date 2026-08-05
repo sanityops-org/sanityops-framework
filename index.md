@@ -19,7 +19,7 @@ hero:
 features:
   - icon: "📊"
     title: Committed Quality
-    details: A measurable, reproducible quality evaluation system covering Prompt, Skill, Tool, and RAG pipelines end to end. 
+    details: A measurable, reproducible quality evaluation system covering Prompt, Skill, Tool, RAG pipelines end to end. 
   - icon: "🔒"
     title: Visible Security
     details: Dual explicit and implicit risk detection covering OWASP Top 10 for LLM, continuously surfacing security blind spots.
