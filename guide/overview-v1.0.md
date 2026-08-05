@@ -446,7 +446,7 @@ SanityOps **core specifications and governance logic** have been released as ope
 - ✅ Community can **iteratively improve** and continuously optimize specifications
 - ✅ Establish **industry consensus** and form de facto governance standards
 
-**Repository**: http://github.com/sanityops
+**Repository**: https://github.com/sanityops-org/sanityops-framework
 **License**: CC BY 4.0
 
 ---
@@ -555,7 +555,7 @@ Requirements:
 ### 10.1 Get the Open-Source Framework
 
 ```bash
-git clone http://github.com/sanityops/framework.git
+git clone https://github.com/sanityops-org/sanityops-framework.git
 cd framework
 
 # View complete specification documents
@@ -670,21 +670,24 @@ To quickly build a deep understanding of SanityOps, reading in the following ord
 
 ### Foundation Path (3-4 hours)
 
-2. **[Core v1.0](http://github.com/sanityops/framework/blob/main/docs/Core-v1.0.md)**
+2. **[Core v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/guide/core-v1.0.md)**
    Unified terminology, object model, classification systems, Gate semantics. **Why**: Build a common language, understand key distinctions such as "Inspect pass ≠ Security pass"
 
-3. **[Relevance v1.0](http://github.com/sanityops/framework/blob/main/docs/Relevance-v1.0.md)**
+3. **[Relevance v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/quality/relevance-v1.0.md)**
    How defects map to risk and quality inspection recommendations. **Why**: Understand how the three systems relate to each other and form a closed loop
 
 ### Professional Path (Select by business need)
 
-4. **[Inspect v1.0](http://github.com/sanityops/framework/blob/main/docs/Inspect-v1.0.md)**
+4. **[Inspect Prompt v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/inspect-prompt-v1.0.md)**
++ **[Inspect Skill v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/inspect-skill-v1.0.md)**
++ **[Inspect Tool v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/inspect-tool-v1.0.md)**
++ **[Inspect CROSS v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/inspect-cross-v1.0.md)**
    Static defect specifications, defect classifications, inspection checklists. **Suitable for**: Those who want to deeply understand "what constitutes a good artifact definition"
 
-5. **[Risk Explicit v1.0](http://github.com/sanityops/framework/blob/main/docs/Risk-Explicit-v1.0.md) + [Risk Implicit v1.0](http://github.com/sanityops/framework/blob/main/docs/Risk-Implicit-v1.0.md)**
+5. **[Risk Explicit v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/risk/risk-explicit-v1.0.md) + [Risk Implicit v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/risk/risk-implicit-v1.0.md)**
    Explicit and implicit risks, validation methods, attack scenarios. **Suitable for**: Teams responsible for Agent security audits
 
-6. **[Quality Tool-Agent v1.0](http://github.com/sanityops/framework/blob/main/docs/Quality-Tool-v1.0.md) + [Quality RAG-Agent v1.0](http://github.com/sanityops/framework/blob/main/docs/Quality-RAG-v1.0.md)**
+6. **[Quality Tool-Agent v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/quality/quality-tool-agent-v1.0.md) + [Quality RAG-Agent v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/quality/quality-rag-agent-v1.0.md)**
    Quality assessment metrics, threshold definitions, implementation cases. **Suitable for**: Teams responsible for Agent service quality
 
 ---
@@ -705,7 +708,7 @@ This means:
 
 **Only requirement**: Retain open-source license and copyright notices
 
-See: [LICENSE](http://github.com/sanityops/framework/blob/main/LICENSE)
+See: [LICENSE](https://github.com/sanityops-org/sanityops-framework/blob/main/LICENSE)
 
 ### 12.2 Why Release as Open Source
 
@@ -739,9 +742,9 @@ SanityOps is an **emerging, industry-level framework**. We sincerely invite crit
 ### Feedback Channels
 
 - 📧 **Specification Discussion**: [discuss@sanityops.org](mailto:discuss@sanityops.org)
-- 🐛 **Bug Reports / Improvement Suggestions**: [GitHub Issues](http://github.com/sanityops/framework/issues)
+- 🐛 **Bug Reports / Improvement Suggestions**: [GitHub Issues](https://github.com/sanityops-org/sanityops-framework/issues)
 - 💬 **Community Discussion**: [Discord](https://discord.gg/sanityops) (to be established)
-- 📝 **Case Sharing**: [Case Library](http://github.com/sanityops/framework/discussions/cases) (to be added)
+- 📝 **Case Sharing**: [Case Library](https://github.com/sanityops-org/sanityops-framework/discussions/cases) (to be added)
 
 ### We Especially Welcome
 
@@ -831,9 +834,9 @@ SanityOps does not want to "solve all problems", but is committed to building fo
 ## Quick Navigation
 
 - 🌐 **Official Website**: [https://www.sanityops.org](https://www.sanityops.org)
-- 📚 **Framework Open Source Repository**: [http://github.com/sanityops](http://github.com/sanityops)
+- 📚 **Framework Open Source Repository**: [https://github.com/sanityops-org/sanityops-framework](https://github.com/sanityops-org/sanityops-framework)
 - 🚀 **SaaS Trial**: [https://www.sanityops.org/try](https://www.sanityops.org/try)
-- 💬 **Community Discussion**: [GitHub Discussions](http://github.com/sanityops/framework/discussions)
+- 💬 **Community Discussion**: [GitHub Discussions](https://github.com/sanityops-org/sanityops-framework/discussions)
 - 📧 **Contact Us**: [hello@sanityops.org](mailto:hello@sanityops.org)
 
 ---
