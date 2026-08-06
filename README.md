@@ -1,6 +1,6 @@
 <picture>
-  <source srcset="assets/sanityops-logo-github-w.svg" media="(prefers-color-scheme: dark)" />
-  <img src="assets/sanityops-logo-github-b.svg" alt="SanityOps Logo" width="260" />
+  <source srcset="/assets/sanityops-logo-github-w.svg" media="(prefers-color-scheme: dark)" />
+  <img src="/assets/sanityops-logo-github-b.svg" alt="SanityOps Logo" width="260" />
 </picture>
 
 # SanityOps Framework
@@ -71,7 +71,7 @@ SanityOps Six-Subset Framework
 
 ### Framework Workflow
 
-<img src="assets/sanityops.svg" alt="SanityOps 架构图" width="650" />
+<img src="/assets/sanityops.svg" alt="SanityOps 架构图" width="650" />
 
 ---
 
