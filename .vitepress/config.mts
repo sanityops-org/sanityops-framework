@@ -105,7 +105,7 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/' },
+      { icon: 'github', link: 'https://github.com/sanityops-org/sanityops-framework' },
     ],
 
     footer: {
