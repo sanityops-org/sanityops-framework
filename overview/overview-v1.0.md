@@ -215,7 +215,7 @@ Gartner also points out that **84% of AI project failures stem from governance a
 ## Section 3: What Is SanityOps
 
 > **SanityOps is a full-lifecycle governance system for enterprise AI Agent reliability and security.**
->
+> 
 > SanityOps believes that among various factors affecting Agent reliability and security, logic artifact defects are not only the most important root cause but also the most controllable clue. Therefore, SanityOps builds a **defect inspection, risk validation, and quality assessment** three-in-one bidirectional closed-loop structure; forward, starting from defect inspection and remediation, fundamentally improves service quality and reduces risk exposure; backward, assesses Agent quality and risks, discovers problems, and traces back to root cause defects.
 
 **Keyword Interpretation:**
@@ -408,13 +408,13 @@ This distinction is also a difference between SanityOps and some generalized eva
 
 To ensure enterprises have clear expectations, SanityOps explicitly states the following **non-commitments**:
 
-| Domain | SanityOps Role | Who Is Responsible |
-|--------|----------------|-------------------|
-| **IAM / Access Control** | Does not replace; only verifies whether artifacts correctly express permission constraints | Enterprise IAM systems |
-| **Network and Backend Security** | Does not replace; compensating controls provided by external systems | Enterprise infrastructure security |
-| **Production Monitoring** | Does not replace; SanityOps is pre-deployment decision | Post-deployment continuous monitoring systems |
-| **Model Fine-tuning** | Not involved; accepts given LLM | Model-level optimization |
-| **Data Quality** | Does not inspect; assumes data already conforms to specifications | Data governance systems |
+| Domain                           | SanityOps Role                                                                             | Who Is Responsible                            |
+| -------------------------------- | ------------------------------------------------------------------------------------------ | --------------------------------------------- |
+| **IAM / Access Control**         | Does not replace; only verifies whether artifacts correctly express permission constraints | Enterprise IAM systems                        |
+| **Network and Backend Security** | Does not replace; compensating controls provided by external systems                       | Enterprise infrastructure security            |
+| **Production Monitoring**        | Does not replace; SanityOps is pre-deployment decision                                     | Post-deployment continuous monitoring systems |
+| **Model Fine-tuning**            | Not involved; accepts given LLM                                                            | Model-level optimization                      |
+| **Data Quality**                 | Does not inspect; assumes data already conforms to specifications                          | Data governance systems                       |
 
 **SanityOps output value lies in**: enabling enterprises to make more **reliable decisions** before release, and through **continuous governance** reducing post-deployment rework, localization, and regression costs.
 
@@ -680,10 +680,11 @@ To quickly build a deep understanding of SanityOps, reading in the following ord
 
 4. **[Inspect Prompt v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/inspect-prompt-v1.0.md)**
 + **[Inspect Skill v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/inspect-skill-v1.0.md)**
+
 + **[Inspect Tool v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/inspect-tool-v1.0.md)**
+
 + **[Inspect CROSS v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/inspect-cross-v1.0.md)**
    Static defect specifications, defect classifications, inspection checklists. **Suitable for**: Those who want to deeply understand "what constitutes a good artifact definition"
-
 5. **[Risk Explicit v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/risk/risk-explicit-v1.0.md) + [Risk Implicit v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/risk/risk-implicit-v1.0.md)**
    Explicit and implicit risks, validation methods, attack scenarios. **Suitable for**: Teams responsible for Agent security audits
 
@@ -821,13 +822,13 @@ SanityOps does not want to "solve all problems", but is committed to building fo
 
 ## Data Source References
 
-| ref ID | Data | Original Source | Link |
-|:---|------|------|------|
-| ref:37 | 79% enterprises adopted AI Agents, only 11% in production, 6% trusted for core business | Harvard Business Review Analytic Services (Dec 2025), sponsored by Workato and AWS | [Fortune Report](https://fortune.com/2025/12/09/harvard-business-review-survey-only-6-percent-companies-trust-ai-agents/) |
-| ref:34 | 88% of Agent projects fail to move from POC to production | IDC (in partnership with Lenovo, 2025) | [Atlan Citation](https://atlan.com/know/ai-agent/ai-agent-scaling-in-production/) |
-| ref:21,25 | 42% of enterprises abandoned most AI projects in 2025, 147% increase from 2024 | S&P Global Market Intelligence (2025) | [AWS Official Blog Citation](https://aws.amazon.com/cn/blogs/machine-learning/practical-implementation-considerations-to-close-the-ai-value-gap/) |
-| ref:38 | 40% of agentic AI projects will be canceled by end of 2027 | Gartner (June 25, 2025 official press release) | [Gartner Newsroom](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027) |
-| ref:27 | 84% of AI project failures stem from governance and organizational issues, not technical issues | RAND Corporation (Aug 2024), The Root Causes of Failure for Artificial Intelligence Projects | [RAND Full Report](https://www.rand.org/pubs/research_reports/RRA2680-1.html) |
+| ref ID    | Data                                                                                            | Original Source                                                                              | Link                                                                                                                                                                      |
+|:--------- | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ref:37    | 79% enterprises adopted AI Agents, only 11% in production, 6% trusted for core business         | Harvard Business Review Analytic Services (Dec 2025), sponsored by Workato and AWS           | [Fortune Report](https://fortune.com/2025/12/09/harvard-business-review-survey-only-6-percent-companies-trust-ai-agents/)                                                 |
+| ref:34    | 88% of Agent projects fail to move from POC to production                                       | IDC (in partnership with Lenovo, 2025)                                                       | [Atlan Citation](https://atlan.com/know/ai-agent/ai-agent-scaling-in-production/)                                                                                         |
+| ref:21,25 | 42% of enterprises abandoned most AI projects in 2025, 147% increase from 2024                  | S&P Global Market Intelligence (2025)                                                        | [AWS Official Blog Citation](https://aws.amazon.com/cn/blogs/machine-learning/practical-implementation-considerations-to-close-the-ai-value-gap/)                         |
+| ref:38    | 40% of agentic AI projects will be canceled by end of 2027                                      | Gartner (June 25, 2025 official press release)                                               | [Gartner Newsroom](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027) |
+| ref:27    | 84% of AI project failures stem from governance and organizational issues, not technical issues | RAND Corporation (Aug 2024), The Root Causes of Failure for Artificial Intelligence Projects | [RAND Full Report](https://www.rand.org/pubs/research_reports/RRA2680-1.html)                                                                                             |
 
 ---
 

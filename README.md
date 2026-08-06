@@ -110,18 +110,18 @@ SanityOps does not replace FDE judgment, implementation work, observability, IAM
 
 | Scenario | Typical Example | Reference Document | Tool |
 | --- | --- | --- | --- |
-| **Prompt quality self-check** | Before a developer submits a new System Prompt, check for contradictions, unclear boundaries, missing permissions, and other defects | Inspect Prompt | 🟢 Defect Inspector |
-| **Skill definition audit** | Inspect whether a Skill's trigger conditions, permission declarations, and failure strategies contain logic loopholes | Inspect Skill | 🟢 Defect Inspector |
-| **Tool Schema compliance check** | Verify whether a Tool Schema's parameter constraints and side-effect declarations comply with the specification | Inspect Tool | 🟢 Defect Inspector |
-| **Cross-Artifact Consistency verification** | Verify that authorization, parameters, and contracts are consistent across Prompt–Skill–Tool | Inspect Cross | 🟢 Defect Inspector |
-| **Explicit Risk Audit** | Audit and quantitatively rate dangerous expressions, scripts, and dangerous authorizations in Logic Artifacts | Risk Explicit | 🔵 Risk Scanner |
-| **Implicit Risk attack validation** | Simulate complex logic attacks in a Shadow Environment to detect runtime vulnerabilities | Risk Implicit | 🔵 Risk Scanner |
-| **Tool-Agent reliability assessment** | Evaluate the task success rate of tool-based Agents; establish risk-driven test rigor | Quality Tool-Agent | 🔵 Quality Evaluator |
-| **RAG-Agent quality assessment** | Assess knowledge-based Agents across four dimensions and 12 metrics — accuracy, completeness, relevance, traceability, timeliness | Quality RAG-Agent | 🔵 Quality Evaluator |
-| **Enterprise Agent release admission** | Before a financial enterprise's financial-analysis Agent ships, pass the Inspect + Risk + Quality three-Gate check and generate a release report | Core, Relevance | 🔵 Full tool suite |
-| **Defect → risk/quality diagnosis** | Correlate Inspect-discovered defects with Risk Attack Surfaces and Quality Failure Modes to localize root causes | Relevance | 🔵 Full tool suite |
-| **Quality degradation regression** | After Logic Artifact changes, detect quality degradation through regression testing, producing the basis for release decisions | Quality RAG-Agent | 🔵 Quality Evaluator |
-| **Compliance audit evidence generation** | Provide audit departments with traceable version records, assessment reports, and Gate decision evidence | Core | 🔵 Full tool suite |
+| **Prompt quality self-check** | Before a developer submits a new System Prompt, check for contradictions, unclear boundaries, missing permissions, and other defects | [Inspect Prompt](https://www.sanityops.org/inspect/prompt-v1.0) | 🟢 Defect Inspector |
+| **Skill definition audit** | Inspect whether a Skill's trigger conditions, permission declarations, and failure strategies contain logic loopholes | [Inspect Skill](https://www.sanityops.org/inspect/skill-v1.0) | 🟢 Defect Inspector |
+| **Tool Schema compliance check** | Verify whether a Tool Schema's parameter constraints and side-effect declarations comply with the specification | [Inspect Tool](https://www.sanityops.org/inspect/tool-v1.0) | 🟢 Defect Inspector |
+| **Cross-Artifact Consistency verification** | Verify that authorization, parameters, and contracts are consistent across Prompt–Skill–Tool | [Inspect Cross](https://www.sanityops.org/inspect/cross-v1.0) | 🟢 Defect Inspector |
+| **Explicit Risk Audit** | Audit and quantitatively rate dangerous expressions, scripts, and dangerous authorizations in Logic Artifacts | [Risk Explicit](https://www.sanityops.org/risk/explicit-v1.0) | 🔵 Risk Scanner |
+| **Implicit Risk attack validation** | Simulate complex logic attacks in a Shadow Environment to detect runtime vulnerabilities | [Risk Implicit](https://www.sanityops.org/risk/implicit-v1.0) | 🔵 Risk Scanner |
+| **Tool-Agent reliability assessment** | Evaluate the task success rate of tool-based Agents; establish risk-driven test rigor | [Quality Tool-Agent](https://www.sanityops.org/quality/tool-agent-v1.0) | 🔵 Quality Evaluator |
+| **RAG-Agent quality assessment** | Assess knowledge-based Agents across four dimensions and 12 metrics — accuracy, completeness, relevance, traceability, timeliness | [Quality RAG-Agent](https://www.sanityops.org/quality/rag-agent-v1.0) | 🔵 Quality Evaluator |
+| **Enterprise Agent release admission** | Before a financial enterprise's financial-analysis Agent ships, pass the Inspect + Risk + Quality three-Gate check and generate a release report | [Core](https://www.sanityops.org/core/core-v1.0), [Relevance](https://www.sanityops.org/relevance/v1.0) | 🔵 Full tool suite |
+| **Defect → risk/quality diagnosis** | Correlate Inspect-discovered defects with Risk Attack Surfaces and Quality Failure Modes to localize root causes | [Relevance](https://www.sanityops.org/relevance/v1.0) | 🔵 Full tool suite |
+| **Quality degradation regression** | After Logic Artifact changes, detect quality degradation through regression testing, producing the basis for release decisions | [Quality RAG-Agent](https://www.sanityops.org/quality/rag-agent-v1.0) | 🔵 Quality Evaluator |
+| **Compliance audit evidence generation** | Provide audit departments with traceable version records, assessment reports, and Gate decision evidence | [Core](https://www.sanityops.org/core/core-v1.0) | 🔵 Full tool suite |
 
 > 🟢 Open-source tooling (Defect Inspector) ｜ 🔵 Commercial tooling (Risk Scanner, Quality Evaluator)
 >

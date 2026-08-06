@@ -2,31 +2,33 @@
 layout: home
 
 hero:
-  name: "SanityOps"
-  text: "AI Agent Continuous Governance"
-  tagline: A vendor-neutral, enterprise-grade quality and security governance framework for AI Agents across their full lifecycle.
-  image:
-    src: /sanityops-logo.png
-    alt: SanityOps
+  name: SanityOps
+  text: An Open Framework for AI Agent Continuous Governance
+  tagline: Vendor-neutral, built on logical-artifact defect inspection, extending into Risk scan and Quality assessment for AI Agents.
   actions:
     - theme: brand
       text: Get Started
-      link: /overview/v1.0
+      link: /get-started
     - theme: alt
-      text: Core Spec
-      link: /core/v1.0
+      text: Interactive Demo
+      link: '#demo'
+      # TODO: replace with actual demo URL when available
 
 features:
-  - icon: "📊"
-    title: Committed Quality
-    details: A measurable, reproducible quality evaluation system covering Prompt, Skill, Tool, RAG pipelines end to end. 
-  - icon: "🔒"
-    title: Visible Security
-    details: Dual explicit and implicit risk detection covering OWASP Top 10 for LLM, continuously surfacing security blind spots.
-  - icon: "🔍"
-    title: Traceable Root Causes
-    details: A structured defect root-cause analysis framework — precise diagnosis from symptom to source, replacing guesswork.
-  - icon: "🔄"
-    title: Sustainable Governance
-    details: Built-in ratchet mechanism with assetized attack cases and iterative re-checks, ensuring governance capability strengthens with every release.
+  - icon: 🎯
+    title: Why SanityOps
+    details: Most enterprise AI projects fail in production — not from weak models, but from unchecked logical artifacts.
+    link: /overview/overview-v1.0
+  - icon: 🔍
+    title: Inspect
+    details: Statically inspect logical artifacts — Prompt, Skill, and Tool Schema — to catch definition defects and boundary issues before they reach production.
+    link: /inspect/
+  - icon: 🛡️
+    title: Risk
+    details: Audit explicit risks and validate implicit risks in a shadow environment, extending into Risk audit & validation for AI Agents.
+    link: /risk/
+  - icon: ✅
+    title: Quality
+    details: Quantitatively assess real-world outputs and service quality, closing the loop with a release gate for continuous governance.
+    link: /quality/
 ---
