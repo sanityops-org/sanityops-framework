@@ -7,6 +7,12 @@ export default defineConfig({
 
   appearance: 'dark',
 
+  vite: {
+    server: {
+      allowedHosts: true,
+    },
+  },
+
   head: [
     ['link', { rel: 'icon', href: '/sanityops-logo.svg' }],
   ],
