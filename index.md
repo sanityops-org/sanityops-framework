@@ -11,10 +11,10 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: /guide/overview-v1.0
+      link: /overview/v1.0
     - theme: alt
       text: Core Spec
-      link: /guide/core-v1.0
+      link: /core/v1.0
 
 features:
   - icon: "📊"
