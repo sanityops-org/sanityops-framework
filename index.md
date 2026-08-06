@@ -6,7 +6,7 @@ hero:
   text: "AI Agent Continuous Governance"
   tagline: A vendor-neutral, enterprise-grade quality and security governance framework for AI Agents across their full lifecycle.
   image:
-    src: /sanityops-logo.svg
+    src: /sanityops-logo.png
     alt: SanityOps
   actions:
     - theme: brand
