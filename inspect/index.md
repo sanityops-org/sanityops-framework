@@ -100,6 +100,6 @@ Relevance (Relevance Assessment)
 
 ## Quick Start
 
-1. Read the [Overview](/overview/overview-v1.0) for the full SanityOps framework picture
+1. Read the [Overview](/framework/overview-v1.0) for the full SanityOps framework picture
 2. Navigate to the sub-specification matching your artifact type and begin inspection
 3. After completing single-artifact inspection, run [Inspect Cross](./cross-v1.0.md) for cross-artifact consistency inspection

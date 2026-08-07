@@ -27,9 +27,9 @@ export default defineConfig({
       {
         text: 'Framework',
         items: [
-          { text: 'Overview', link: '/overview/overview-v1.0' },
-          { text: 'Core', link: '/core/core-v1.0' },
-          { text: 'Relevance', link: '/relevance/v1.0' },
+          { text: 'Overview', link: '/framework/overview-v1.0' },
+          { text: 'Core', link: '/framework/core-v1.0' },
+          { text: 'Relevance', link: '/framework/relevance-v1.0' },
         ],
       },
       {
@@ -60,35 +60,22 @@ export default defineConfig({
     ],
 
     sidebar: {
-      '/overview/': [
+      '/framework/': [
         {
-          text: 'Getting Started',
+          text: 'Framework',
           items: [
             { text: 'Get Started', link: '/get-started' },
-            { text: 'Overview v1.0', link: '/overview/overview-v1.0' },
-          ],
-        },
-      ],
-      '/core/': [
-        {
-          text: 'Core',
-          items: [
-            { text: 'Core v1.0', link: '/core/core-v1.0' },
-          ],
-        },
-      ],
-      '/relevance/': [
-        {
-          text: 'Relevance',
-          items: [
-            { text: 'Relevance v1.0', link: '/relevance/v1.0' },
+            { text: 'Overview v1.0', link: '/framework/overview-v1.0' },
+            { text: 'Core v1.0', link: '/framework/core-v1.0' },
+            { text: 'Relevance v1.0', link: '/framework/relevance-v1.0' },
           ],
         },
       ],
       '/quality/': [
         {
-          text: 'Quality Dimensions',
+          text: 'Quality',
           items: [
+            { text: 'Overview', link: '/quality/' },
             { text: 'RAG-Agent v1.0', link: '/quality/rag-agent-v1.0' },
             { text: 'Tool-Agent v1.0', link: '/quality/tool-agent-v1.0' },
           ],
@@ -96,8 +83,9 @@ export default defineConfig({
       ],
       '/risk/': [
         {
-          text: 'Security & Risk',
+          text: 'Risk',
           items: [
+            { text: 'Overview', link: '/risk/' },
             { text: 'Explicit Risk v1.0', link: '/risk/explicit-v1.0' },
             { text: 'Implicit Risk v1.0', link: '/risk/implicit-v1.0' },
           ],
@@ -105,8 +93,9 @@ export default defineConfig({
       ],
       '/inspect/': [
         {
-          text: 'Inspect Specifications',
+          text: 'Inspect',
           items: [
+            { text: 'Overview', link: '/inspect/' },
             { text: 'Prompt v1.0', link: '/inspect/prompt-v1.0' },
             { text: 'Skill v1.0', link: '/inspect/skill-v1.0' },
             { text: 'Tool v1.0', link: '/inspect/tool-v1.0' },

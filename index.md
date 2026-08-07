@@ -18,7 +18,7 @@ features:
   - icon: 🎯
     title: Why SanityOps
     details: Most enterprise AI projects fail in production — not from weak models, but from unchecked logical artifacts.
-    link: /overview/overview-v1.0
+    link: /framework/overview-v1.0
   - icon: 🔍
     title: Inspect
     details: Statically inspect logical artifacts — Prompt, Skill, and Tool Schema — to catch definition defects and boundary issues before they reach production.

@@ -118,10 +118,10 @@ SanityOps does not replace FDE judgment, implementation work, observability, IAM
 | **Implicit Risk attack validation** | Simulate complex logic attacks in a Shadow Environment to detect runtime vulnerabilities | [Risk Implicit](https://www.sanityops.org/risk/implicit-v1.0) | 🔵 Risk Scanner |
 | **Tool-Agent reliability assessment** | Evaluate the task success rate of tool-based Agents; establish risk-driven test rigor | [Quality Tool-Agent](https://www.sanityops.org/quality/tool-agent-v1.0) | 🔵 Quality Evaluator |
 | **RAG-Agent quality assessment** | Assess knowledge-based Agents across four dimensions and 12 metrics — accuracy, completeness, relevance, traceability, timeliness | [Quality RAG-Agent](https://www.sanityops.org/quality/rag-agent-v1.0) | 🔵 Quality Evaluator |
-| **Enterprise Agent release admission** | Before a financial enterprise's financial-analysis Agent ships, pass the Inspect + Risk + Quality three-Gate check and generate a release report | [Core](https://www.sanityops.org/core/core-v1.0), [Relevance](https://www.sanityops.org/relevance/v1.0) | 🔵 Full tool suite |
-| **Defect → risk/quality diagnosis** | Correlate Inspect-discovered defects with Risk Attack Surfaces and Quality Failure Modes to localize root causes | [Relevance](https://www.sanityops.org/relevance/v1.0) | 🔵 Full tool suite |
+| **Enterprise Agent release admission** | Before a financial enterprise's financial-analysis Agent ships, pass the Inspect + Risk + Quality three-Gate check and generate a release report | [Core](https://www.sanityops.org/framework/core-v1.0), [Relevance](https://www.sanityops.org/framework/relevance-v1.0) | 🔵 Full tool suite |
+| **Defect → risk/quality diagnosis** | Correlate Inspect-discovered defects with Risk Attack Surfaces and Quality Failure Modes to localize root causes | [Relevance](https://www.sanityops.org/framework/relevance-v1.0) | 🔵 Full tool suite |
 | **Quality degradation regression** | After Logic Artifact changes, detect quality degradation through regression testing, producing the basis for release decisions | [Quality RAG-Agent](https://www.sanityops.org/quality/rag-agent-v1.0) | 🔵 Quality Evaluator |
-| **Compliance audit evidence generation** | Provide audit departments with traceable version records, assessment reports, and Gate decision evidence | [Core](https://www.sanityops.org/core/core-v1.0) | 🔵 Full tool suite |
+| **Compliance audit evidence generation** | Provide audit departments with traceable version records, assessment reports, and Gate decision evidence | [Core](https://www.sanityops.org/framework/core-v1.0) | 🔵 Full tool suite |
 
 > 🟢 Open-source tooling (Defect Inspector) ｜ 🔵 Commercial tooling (Risk Scanner, Quality Evaluator)
 >

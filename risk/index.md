@@ -120,4 +120,4 @@ Relevance (Relevance Assessment)
 1. Complete [Inspect](/inspect/) first — Risk Explicit and Implicit both depend on defect data from Inspect
 2. Run [Risk Explicit](./explicit-v1.0.md) to audit artifacts for dangerous expressions, scripts, and dangerous authorizations
 3. Run [Risk Implicit](./implicit-v1.0.md) in a Shadow Environment to validate whether identified defects form real attack surfaces
-4. Feed results to [Relevance](/relevance/v1.0) for defect → risk diagnostic mapping
+4. Feed results to [Relevance](/framework/relevance-v1.0) for defect → risk diagnostic mapping
