@@ -107,9 +107,9 @@ export default defineConfig({
         {
           text: 'Comparison',
           items: [
-            { text: 'Compare with Promptfoo', link: '/compare/with-promptfoo' },
-            { text: 'Compare with RAGAS', link: '/compare/with-ragas' },
-            { text: 'Compare with Skillspector', link: '/compare/with-skillspector' },
+            { text: 'Compare with Promptfoo', link: '/compare/compare-with-promptfoo' },
+            { text: 'Compare with RAGAS', link: '/compare/compare-with-ragas' },
+            { text: 'Compare with Skillspector', link: '/compare/compare-with-skillspector' },
           ],
         },
       ],
