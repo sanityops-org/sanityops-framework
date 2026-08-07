@@ -182,7 +182,7 @@ EX-x.y
 
 ---
 
-<a id="03-reading-guide-new"></a>
+<a id="03-reading-guide"></a>
 ### 0.3 Reading Guide (New)
 
 <a id="031-why-a-reading-guide"></a>
@@ -263,7 +263,7 @@ Question 2: How "completely" is this risk expressed?
 
 ---
 
-<a id="04-explicit-risk-core-concepts-new"></a>
+<a id="04-explicit-risk-core-concepts"></a>
 ### 0.4 Explicit Risk Core Concepts (New)
 
 <a id="041-what-is-explicit-risk"></a>
@@ -390,7 +390,7 @@ Harm Assessment:
 
 ---
 
-<a id="05-version-and-maintenance-information-new"></a>
+<a id="05-version-and-maintenance-information"></a>
 ### 0.5 Version and Maintenance Information (New)
 
 <a id="051-current-version"></a>
@@ -530,7 +530,7 @@ EX Explicit Risk Framework
 
 ---
 
-<a id="12-nl-a-family-details-continuous-type-9-subcategories"></a>
+<a id="12-nl-a-family-details"></a>
 ### 1.2 NL-A Family Details (Continuous Type, 9 Subcategories)
 
 #### NL-A-1 Single-Sentence Self-Contained
@@ -679,7 +679,7 @@ EX Explicit Risk Framework
 
 ---
 
-<a id="13-nl-b-family-details-non-continuous-type-10-subcategories"></a>
+<a id="13-nl-b-family-details"></a>
 ### 1.3 NL-B Family Details (Non-Continuous Type, 10 Subcategories)
 
 #### Single Object Group
@@ -863,7 +863,7 @@ The following table is used for audit routing, clarifying distinguishing dimensi
 
 ## Part 2: NR Family Details
 
-<a id="21-nr-o-family-details-obfuscated-coding-family-5-subcategories"></a>
+<a id="21-nr-o-family-details"></a>
 ### 2.1 NR-O Family Details (Obfuscated Coding Family, 5 Subcategories)
 
 #### NR-O-1 Zero-Width/Invisible Character Injection
@@ -929,7 +929,7 @@ The following table is used for audit routing, clarifying distinguishing dimensi
 
 ---
 
-<a id="22-nr-s-family-details-structured-configuration-family-8-subcategories"></a>
+<a id="22-nr-s-family-details"></a>
 ### 2.2 NR-S Family Details (Structured Configuration Family, 8 Subcategories)
 
 #### NR-S-1 Excessive Permission Field Declaration
@@ -1079,7 +1079,7 @@ The following table is used for audit routing, clarifying distinguishing dimensi
 
 ---
 
-<a id="23-concealment-level-mapping-table-directly-derived-from-classification"></a>
+<a id="23-concealment-level-mapping-table"></a>
 ### 2.3 Concealment Level Mapping Table (Directly Derived from Classification)
 
 | EX Classification | Concealment Level | Adjustment Direction |
@@ -1095,7 +1095,7 @@ The following table is used for audit routing, clarifying distinguishing dimensi
 
 This section documents optimization iterations from the base version to the current version, helping auditors understand framework evolution.
 
-<a id="31-v0602-v0603-key-changes"></a>
+<a id="31-v0602--v0603-key-changes"></a>
 ### 3.1 v0.602 → v0.603 Key Changes
 
 <a id="311-new-nl-a-9-instruction-priority-override"></a>
@@ -1152,7 +1152,7 @@ This section documents optimization iterations from the base version to the curr
 
 ---
 
-<a id="32-v0603-v10-key-changes"></a>
+<a id="32-v0603--v10-key-changes"></a>
 ### 3.2 v0.603 → v1.0 Key Changes
 
 <a id="321-complete-scoring-scheme-release"></a>
@@ -1166,7 +1166,7 @@ This section documents optimization iterations from the base version to the curr
 
 ---
 
-<a id="33-v10-v11-key-changes-this-update"></a>
+<a id="33-v10--v11-key-changes"></a>
 ### 3.3 v1.0 → v1.1 Key Changes (This Update)
 
 <a id="331-preface-structure-standardization"></a>
@@ -1512,7 +1512,7 @@ Final Deduction = 4 + 0 + 1.5 + 0 = 5.5 points
 
 ---
 
-<a id="47-complete-audit-workflow-three-phase-workflow"></a>
+<a id="47-complete-audit-workflow"></a>
 ### 4.7 Complete Audit Workflow (Three-Phase Workflow)
 
 #### Phase 1: Discovery and Classification
