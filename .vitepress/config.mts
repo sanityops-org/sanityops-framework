@@ -125,7 +125,7 @@ export default defineConfig({
 
     footer: {
       message: 'v1.0 · Licensed under CC BY 4.0',
-      copyright: 'Copyright © 2026 SanityOps',
+      copyright: 'Copyright © 2026 Sanity AI Labs',
     },
 
     editLink: {
