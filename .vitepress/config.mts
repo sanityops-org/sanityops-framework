@@ -64,7 +64,7 @@ export default defineConfig({
         {
           text: 'Framework',
           items: [
-            { text: 'Get Started', link: '/get-started' },
+            { text: 'Get Started', link: '/framework/get-started' },
             { text: 'Overview v1.0', link: '/framework/overview-v1.0' },
             { text: 'Core v1.0', link: '/framework/core-v1.0' },
             { text: 'Relevance v1.0', link: '/framework/relevance-v1.0' },

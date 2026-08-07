@@ -8,7 +8,7 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: /get-started
+      link: /framework/get-started
     - theme: alt
       text: Interactive Demo
       link: '#demo'
