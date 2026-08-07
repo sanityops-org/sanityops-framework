@@ -124,7 +124,7 @@ export default defineConfig({
     ],
 
     footer: {
-      message: 'v1.0 · Licensed under CC BY 4.0',
+      message: 'v1.0 · Licensed under CC BY 4.0 · hello@sanityops.org',
       copyright: 'Copyright © 2026 Sanity AI Labs',
     },
 
