@@ -1,4 +1,4 @@
-﻿# SanityOps Framework Overview
+# SanityOps Framework Overview
 
 # — AI Agent Continuous Governance
 
@@ -14,6 +14,7 @@
 
 ---
 
+<a id="table-of-contents"></a>
 ## Table of Contents
 
 - [Section 1: Three Challenges in Enterprise AI Deployment](#section-1-three-challenges-in-enterprise-ai-deployment)
@@ -67,6 +68,7 @@
 
 ---
 
+<a id="section-1-three-challenges-in-enterprise-ai-deployment"></a>
 ## Section 1: Three Challenges in Enterprise AI Deployment
 
 <a id="11-first-challenge-uncommitable-quality"></a>
@@ -148,6 +150,7 @@ This means the enterprise AI dilemma is a systemic problem, not a technical one:
 
 ---
 
+<a id="section-2-root-cause--the-missing-compiler-for-logic-artifacts"></a>
 ## Section 2: Root Cause — The "Missing Compiler" for Logic Artifacts
 
 Looking back now, what is the root cause of these three challenges? Let's think in reverse:
@@ -221,6 +224,7 @@ Gartner also points out that **84% of AI project failures stem from governance a
 
 ---
 
+<a id="section-3-what-is-sanityops"></a>
 ## Section 3: What Is SanityOps
 
 > **SanityOps is a full-lifecycle governance system for enterprise AI Agent reliability and security.**
@@ -235,11 +239,12 @@ Gartner also points out that **84% of AI project failures stem from governance a
 
 ---
 
+<a id="section-4-three-professional-systems-loosely-coupled-independent"></a>
 ## Section 4: Three Professional Systems (Loosely Coupled, Independent)
 
 SanityOps consists of three **independent, complete, and flexibly combinable** professional systems.
 
-<a id="41-inspect-logic-artifact-compiler-checks"></a>
+<a id="41-inspect--logic-artifact-compiler-checks"></a>
 ### 4.1 Inspect — Logic Artifact Compiler Checks
 
 **Core question**: Does the **definition layer** of logic artifacts have defects?
@@ -268,7 +273,7 @@ Includes four sub-tools for defect inspection of System Prompts, Skills, Tool Sc
 
 ---
 
-<a id="42-risk-agent-security-risk-detection"></a>
+<a id="42-risk--agent-security-risk-detection"></a>
 ### 4.2 Risk — Agent Security Risk Detection
 
 **Core question**: Does the Agent have **active or passive risk exposure surfaces** in static artifacts or runtime?
@@ -300,7 +305,7 @@ Includes four sub-tools for defect inspection of System Prompts, Skills, Tool Sc
 
 ---
 
-<a id="43-quality-agent-output-quality-assessment"></a>
+<a id="43-quality--agent-output-quality-assessment"></a>
 ### 4.3 Quality — Agent Output Quality Assessment
 
 **Core question**: Does the Agent's **actual output** or **task completion quality** meet business requirements?
@@ -344,6 +349,7 @@ Each type of examination has independent value and can be done alone; but combin
 
 ---
 
+<a id="section-5-integration-with-full-lifecycle-and-driving-mechanism"></a>
 ## Section 5: Integration with Full Lifecycle and Driving Mechanism
 
 <a id="51-how-to-drive-the-sanityops-closed-loop"></a>
@@ -389,6 +395,7 @@ Post-Deployment Monitoring → Incident Feedback → Rule Calibration → Next I
 
 ---
 
+<a id="section-6-relationship-between-sanityops-and-related-ecosystems"></a>
 ## Section 6: Relationship Between SanityOps and Related Ecosystems
 
 Before deeply understanding SanityOps, it is necessary to explain its relationship with existing Agent-related tools and standards.
@@ -422,6 +429,7 @@ This distinction is also a difference between SanityOps and some generalized eva
 
 ---
 
+<a id="section-7-what-sanityops-is-not-clear-boundaries"></a>
 ## Section 7: What SanityOps Is Not (Clear Boundaries)
 
 To ensure enterprises have clear expectations, SanityOps explicitly states the following **non-commitments**:
@@ -438,6 +446,7 @@ To ensure enterprises have clear expectations, SanityOps explicitly states the f
 
 ---
 
+<a id="section-8-current-status-of-sanityops-framework-v10-completed"></a>
 ## Section 8: Current Status of SanityOps Framework (v1.0 Completed)
 
 <a id="81-open-source-framework-apache-license-20"></a>
@@ -490,6 +499,7 @@ Based on the open-source Framework, we provide **rich tooling delivery**:
 
 ---
 
+<a id="section-9-what-sanityops-output-looks-like"></a>
 ## Section 9: What SanityOps Output Looks Like
 
 Regardless of form (open-source tools, SaaS, CLI, API), SanityOps artifacts follow unified "evidence and decision" language:
@@ -575,6 +585,7 @@ Requirements:
 
 ---
 
+<a id="section-10-quick-start"></a>
 ## Section 10: Quick Start
 
 <a id="101-get-the-open-source-framework"></a>
@@ -688,15 +699,18 @@ jobs:
 
 ---
 
+<a id="section-11-recommended-reading-path"></a>
 ## Section 11: Recommended Reading Path
 
 To quickly build a deep understanding of SanityOps, reading in the following order is recommended:
 
+<a id="entry-path-30-minutes"></a>
 ### Entry Path (30 minutes)
 
 1. **This document (Overview)** ← You are here
    Quickly understand "what SanityOps is, why it is needed, and how to use it"
 
+<a id="foundation-path-3-4-hours"></a>
 ### Foundation Path (3-4 hours)
 
 2. **[Core v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/guide/core-v1.0.md)**
@@ -705,6 +719,7 @@ To quickly build a deep understanding of SanityOps, reading in the following ord
 3. **[Relevance v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/quality/relevance-v1.0.md)**
    How defects map to risk and quality inspection recommendations. **Why**: Understand how the three systems relate to each other and form a closed loop
 
+<a id="professional-path-select-by-business-need"></a>
 ### Professional Path (Select by business need)
 
 4. **[Inspect Prompt v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/inspect-prompt-v1.0.md)**
@@ -722,6 +737,7 @@ To quickly build a deep understanding of SanityOps, reading in the following ord
 
 ---
 
+<a id="section-12-license-and-open-source-commitment"></a>
 ## Section 12: License and Open Source Commitment
 
 <a id="121-framework-open-source-license"></a>
@@ -751,6 +767,7 @@ See: [LICENSE](https://github.com/sanityops-org/sanityops-framework/blob/main/LI
 
 ---
 
+<a id="section-13-about-us"></a>
 ## Section 13: About Us
 
 SanityOps is a startup team focused on AI support system theory construction and tool implementation.
@@ -767,10 +784,12 @@ This is not academic research, nor self-indulgent framework design — this is *
 
 ---
 
+<a id="section-14-we-need-your-feedback"></a>
 ## Section 14: We Need Your Feedback
 
 SanityOps is an **emerging, industry-level framework**. We sincerely invite criticism, suggestions, and case sharing.
 
+<a id="feedback-channels"></a>
 ### Feedback Channels
 
 - 📧 **Specification Discussion**: [discuss@sanityops.org](mailto:discuss@sanityops.org)
@@ -778,6 +797,7 @@ SanityOps is an **emerging, industry-level framework**. We sincerely invite crit
 - 💬 **Community Discussion**: [Discord](https://discord.gg/sanityops) (to be established)
 - 📝 **Case Sharing**: [Case Library](https://github.com/sanityops-org/sanityops-framework/discussions/cases) (to be added)
 
+<a id="we-especially-welcome"></a>
 ### We Especially Welcome
 
 - 🔍 **Professional criticism**: Pointing out specification deficiencies, omissions, improvement opportunities
@@ -787,8 +807,10 @@ SanityOps is an **emerging, industry-level framework**. We sincerely invite crit
 
 ---
 
+<a id="appendix-a-frequently-asked-questions-faq"></a>
 ## Appendix A: Frequently Asked Questions (FAQ)
 
+<a id="q1-what-is-the-difference-between-sanityops-and-autotest-autobench"></a>
 ### Q1: What is the difference between SanityOps and AutoTest / AutoBench?
 
 **AutoTest / AutoBench**: Automated testing, verifying "whether Agent performance in a scenario meets expectations"
@@ -798,6 +820,7 @@ Complementary: Benchmark discovers problems → SanityOps localizes root causes 
 
 ---
 
+<a id="q2-we-already-have-our-own-quality-assessment-process-do-we-still-need-the-quality-module"></a>
 ### Q2: We already have our own quality assessment process, do we still need the Quality module?
 
 **Yes**. SanityOps Quality is:
@@ -808,6 +831,7 @@ Complementary: Benchmark discovers problems → SanityOps localizes root causes 
 
 ---
 
+<a id="q3-we-are-a-small-team-wont-inspectriskquality-all-be-too-complex"></a>
 ### Q3: We are a small team, won't Inspect/Risk/Quality all be too complex?
 
 **Don't need to do all**. Recommend:
@@ -820,6 +844,7 @@ Implement gradually by business priority.
 
 ---
 
+<a id="q4-is-the-open-source-framework-sufficient-for-self-building"></a>
 ### Q4: Is the open-source Framework sufficient for self-building?
 
 **Theoretically yes**. But requires:
@@ -832,6 +857,7 @@ Implement gradually by business priority.
 
 ---
 
+<a id="q5-what-is-the-relationship-between-sanityops-and-complianceaudit-systems"></a>
 ### Q5: What is the relationship between SanityOps and compliance/audit systems?
 
 SanityOps is **technical governance** (Agent's own definitions and behaviors)
@@ -841,6 +867,7 @@ SanityOps provides "**auditable evidence chains**" for compliance systems (what 
 
 ---
 
+<a id="final-words"></a>
 ## Final Words
 
 **The era of AI applications has arrived, but "quality and security" remain the biggest constraints on development.**
@@ -851,6 +878,7 @@ SanityOps does not want to "solve all problems", but is committed to building fo
 
 ---
 
+<a id="data-source-references"></a>
 ## Data Source References
 
 | ref ID    | Data                                                                                            | Original Source                                                                              | Link                                                                                                                                                                      |
@@ -863,6 +891,7 @@ SanityOps does not want to "solve all problems", but is committed to building fo
 
 ---
 
+<a id="quick-navigation"></a>
 ## Quick Navigation
 
 - 🌐 **Official Website**: [https://www.sanityops.org](https://www.sanityops.org)
