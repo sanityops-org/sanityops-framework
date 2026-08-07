@@ -1,4 +1,4 @@
-﻿# Appendix: Technical Comparison — Risk Implicit vs. Promptfoo
+# Appendix: Technical Comparison — Risk Implicit vs. Promptfoo
 
 ---
 
@@ -43,7 +43,7 @@ Unlike existing enterprise tools that can only gesture at "likely a prompt issue
 {"defect_id": "QD-T-3.2", "layer": "Tool", "root_cause": "Parameter defined as string type in Tool Schema, with no constraints and no format validation", "remediation": "..."}
 ```
 
-By tracing the full chain — **OWASP symptom — SanityOps root cause — precise clause localization — severity-ranked remediation (P0閳ユ彋2)** — Implicit bridges the gap between surface-level attack detection and exact artifact remediation. The `defect_id`, `layer`, and `root_cause` fields are bound directly to the specific artifact clauses statically resolved during the Inspect phase, with attack chain attribution organized across the four-layer defense model: Prompt, Skill, Tool, and Cross. This is not a conceptual aspiration; it is an explicitly documented mechanism in the framework specification.
+By tracing the full chain — **OWASP symptom — SanityOps root cause — precise clause localization — severity-ranked remediation (P0–P2)** — Implicit bridges the gap between surface-level attack detection and exact artifact remediation. The `defect_id`, `layer`, and `root_cause` fields are bound directly to the specific artifact clauses statically resolved during the Inspect phase, with attack chain attribution organized across the four-layer defense model: Prompt, Skill, Tool, and Cross. This is not a conceptual aspiration; it is an explicitly documented mechanism in the framework specification.
 
 Promptfoo Enterprise, by contrast, stops at the plugin category. It can tell you that a Prompt Injection category attack succeeded, but it cannot tell you _which line_ of your system prompt, _which_ Tool parameter definition, or _which_ Skill clause created the vulnerability. The remediation advice is generic because the tool never inspects the internal structure of the user's artifacts in the first place.
 
