@@ -27,12 +27,12 @@
 - [Chapter 2: Overall Framework Design](#chapter-2-overall-framework-design)
 - [2.1 Design Objectives](#21-design-objectives)
 - [2.2 Quality Closed Loop](#22-quality-closed-loop)
-  - [1. Authoritative Sources and Business Boundaries](#1-authoritative-sources-and-business-boundaries)
-  - [2. Baseline Test Case Assets](#2-baseline-test-case-assets)
-  - [3. Controlled Blind Testing](#3-controlled-blind-testing)
-  - [4. Automated Assessment and Conflict Arbitration](#4-automated-assessment-and-conflict-arbitration)
-  - [5. Metrics, Release Gates, and Evidence](#5-metrics-release-gates-and-evidence)
-  - [6. Regression and Improvement](#6-regression-and-improvement)
+  - [2.2.1 Authoritative Sources and Business Boundaries](#221-authoritative-sources-and-business-boundaries)
+  - [2.2.2 Baseline Test Case Assets](#222-baseline-test-case-assets)
+  - [2.2.3 Controlled Blind Testing](#223-controlled-blind-testing)
+  - [2.2.4 Automated Assessment and Conflict Arbitration](#224-automated-assessment-and-conflict-arbitration)
+  - [2.2.5 Metrics, Release Gates, and Evidence](#225-metrics-release-gates-and-evidence)
+  - [2.2.6 Regression and Improvement](#226-regression-and-improvement)
 - [2.3 Four Core Asset Types](#23-four-core-asset-types)
 - [2.4 Quality Model and Applicability Principles](#24-quality-model-and-applicability-principles)
   - [Apply by Use Case, Not Mandatory Full-Metric Scoring](#apply-by-use-case-not-mandatory-full-metric-scoring)
@@ -349,19 +349,23 @@ The overall assessment process consists of six stages:
 6. Regression verification, issue localization, and continuous improvement
 ```
 
-### 1. Authoritative Sources and Business Boundaries
+<a id="221-authoritative-sources-and-business-boundaries"></a>
+### 2.2.1 Authoritative Sources and Business Boundaries
 
 Inputs can include product documentation, business rules, policy terms, process manuals, version announcements, boundary specifications, and desensitized interaction corpora. Not all materials can be directly used as standard answer sources; key facts, exception conditions, and high-risk boundaries should be confirmed by the business.
 
-### 2. Baseline Test Case Assets
+<a id="222-baseline-test-case-assets"></a>
+### 2.2.2 Baseline Test Case Assets
 
 Baseline Test Cases are not equivalent to ordinary FAQ sets. They should contain structured information such as questions, expected conclusions, key facts, source localization, risk levels, applicable metrics, and assessment strategies.
 
-### 3. Controlled Blind Testing
+<a id="223-controlled-blind-testing"></a>
+### 2.2.3 Controlled Blind Testing
 
 The Agent should not know the complete test set, testing timing, or expected answers to reduce the risk of optimizing for the test set rather than truly improving service quality.
 
-### 4. Automated Assessment and Conflict Arbitration
+<a id="224-automated-assessment-and-conflict-arbitration"></a>
+### 2.2.4 Automated Assessment and Conflict Arbitration
 
 Different content types use different assessment methods:
 
@@ -369,11 +373,13 @@ Different content types use different assessment methods:
 - Semantic conclusions, coverage, Relevance, multi-turn context, and action appropriateness use LLM-as-Judge;
 - Synonym paraphrasing, candidate screening, and obvious deviation identification can use Embedding as auxiliary signals.
 
-### 5. Metrics, Release Gates, and Evidence
+<a id="225-metrics-release-gates-and-evidence"></a>
+### 2.2.5 Metrics, Release Gates, and Evidence
 
 Assessment results are aggregated into metric scores, but key Test Cases and high-risk scenarios must pass independently. Each assessment should preserve version, Test Case, source, and conclusion evidence.
 
-### 6. Regression and Improvement
+<a id="226-regression-and-improvement"></a>
+### 2.2.6 Regression and Improvement
 
 After making changes to Agent, knowledge, Prompt, workflow, or model, organizations should execute corresponding regression assessments based on the scope of change impact. Quality failures should first present factual evidence and associated clues, then combine with SanityOps Inspect or other diagnostic mechanisms to localize the cause.
 
