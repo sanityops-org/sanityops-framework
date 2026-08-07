@@ -1,5 +1,6 @@
 ﻿# Appendix: Technical Comparison 鈥?Inspect & Risk vs. NVIDIA SkillSpector
 
+<a id="table-of-contents"></a>
 ## Table of Contents
 
 - [0. Scope of Comparison](#0-scope-of-comparison)
@@ -14,6 +15,7 @@
 
 ---
 
+<a id="0-scope-of-comparison"></a>
 ## 0. Scope of Comparison
 
 ---
@@ -24,6 +26,7 @@ Both are production-grade tooling: SkillSpector ships as a CLI / Docker image. O
 
 ---
 
+<a id="1-bottom-line-first-tldr"></a>
 ## 1. Bottom Line First (TL;DR)
 
 |                        | NVIDIA SkillSpector                                                                                                                                                                                                                                                                   | SanityOps Inspect + Risk                                                                                                                         |
@@ -36,6 +39,7 @@ Both are production-grade tooling: SkillSpector ships as a CLI / Docker image. O
 
 ---
 
+<a id="2-paradigm-layer-scanning-action-vs-governance-closed-loop"></a>
 ## 2. Paradigm Layer: Scanning Action vs. Governance Closed Loop
 
 | Dimension         | SkillSpector                 | Inspect + Risk                                                |
@@ -47,6 +51,7 @@ Both are production-grade tooling: SkillSpector ships as a CLI / Docker image. O
 
 ---
 
+<a id="3-structure-layer-governance-objects"></a>
 ## 3. Structure Layer: Governance Objects
 
 **SkillSpector**: Inspects the Skill package 鈥?everything inside it, including SKILL.md, scripts, and the dependency manifest. Accepts Git repositories, URLs, zips, directories, and single files.
@@ -68,6 +73,7 @@ Risk (Risk Scanning)
 
 ---
 
+<a id="4-lifecycle-layer-coverage-by-phase"></a>
 ## 4. Lifecycle Layer: Coverage by Phase
 
 | Phase                                                    | SkillSpector                                                       | Inspect + Risk                                                                                                           |
@@ -80,6 +86,7 @@ Risk (Risk Scanning)
 
 ---
 
+<a id="5-methodology-layer-where-the-determination-comes-from"></a>
 ## 5. Methodology Layer: Where the Determination Comes From
 
 | Dimension               | SkillSpector                                                | Inspect                                                           | Risk Explicit                                                 | Risk Implicit                                                                     |
@@ -94,6 +101,7 @@ Risk (Risk Scanning)
 
 ---
 
+<a id="6-output-layer-conclusion-form-and-actionability"></a>
 ## 6. Output Layer: Conclusion Form and Actionability
 
 | Dimension                | SkillSpector                                                                             | Inspect                                        | Risk Explicit                                                          |
@@ -106,6 +114,7 @@ Risk (Risk Scanning)
 
 ---
 
+<a id="7-capability-matrix-quick-reference"></a>
 ## 7. Capability Matrix (Quick Reference)
 
 | Capability                                            | SkillSpector | Inspect      | Risk Explicit                     | Risk Implicit |
@@ -121,6 +130,7 @@ Risk (Risk Scanning)
 
 ---
 
+<a id="8-coordination-recommendations"></a>
 ## 8. Coordination Recommendations
 
 1. **Externally sourced Skills** 鈫?gate with SkillSpector first. Dependency CVEs, supply chain, and malicious code are its core strengths, and SanityOps does not cover them.
