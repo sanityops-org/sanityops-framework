@@ -1,4 +1,4 @@
-# SanityOps Framework
+﻿# SanityOps Framework
 
 # Inspect Skill Specification
 
@@ -75,7 +75,7 @@
 
 ## Foreword
 
-### 0.1 Positioning and Scope
+### 0.1 Positioning and Scope {#01-positioning-and-scope}
 
 #### 0.1.1 What This Specification Is
 
@@ -148,7 +148,7 @@ This specification does **not** cover:
 - System-level permission control implementation
 - Skill functional completeness testing
 
-### 0.2 Terminology and Numbering System
+### 0.2 Terminology and Numbering System {#02-terminology-and-numbering-system}
 
 #### 0.2.1 Core Terminology
 
@@ -205,7 +205,7 @@ QD-S-x.y
 | **P1** | 🟡 | Warning: defect impacts behavioral quality; predictable unintended behavior exists | Strongly recommended to fix |
 | **P2** | 🟢 | Advisory: minor specification compliance issue | Recommended to fix; MAY release |
 
-### 0.3 Version and Maintenance Information
+### 0.3 Version and Maintenance Information {#03-version-and-maintenance-information}
 
 #### 0.3.1 Current Version
 
@@ -226,7 +226,7 @@ QD-S-x.y
 
 ## Part 1: Quality Defect Classification System Overview
 
-### 1.1 Five Defect Classification Framework
+### 1.1 Five Defect Classification Framework {#11-five-defect-classification-framework}
 
 Inspect Skill v2.4 classifies defects by **risk principle** rather than structural field, comprising five defect categories:
 
@@ -242,13 +242,13 @@ Inspect Skill v2.4 classifies defects by **risk principle** rather than structur
 
 ## Part 2: QD-S-1 Resource Runaway (Boundary Absence)
 
-### 2.1 Classification Positioning
+### 2.1 Classification Positioning {#21-classification-positioning}
 
 **Risk Principle**: The Skill does not declare critical constraint boundaries (input size, output size, execution resources, data sources). The LLM, in the absence of boundaries, infers the execution scope on its own, and the inferred result is typically broader than the developer intended, causing resource runaway.
 
 **Typical Harms**: API cost explosion, Token Consumption runaway, execution timeout, excessive system load.
 
-### 2.2 Inspection Items in Detail
+### 2.2 Inspection Items in Detail {#22-inspection-items-in-detail}
 
 #### QD-S-1.1 Input Boundary Missing
 
@@ -386,7 +386,7 @@ Query user information.
 - L2 (Medium Risk): 🟡 P1
 - L3 (High Risk): 🟡 P1
 
-### 2.3 QD-S-1 Inspection Checklist
+### 2.3 QD-S-1 Inspection Checklist {#23-qd-s-1-inspection-checklist}
 
 | ID | Inspection Item | Trigger Keywords | L1 | L2 | L3 | Inspection Method |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -400,13 +400,13 @@ Query user information.
 
 ## Part 3: QD-S-2 Unbounded Directive
 
-### 3.1 Classification Positioning
+### 3.1 Classification Positioning {#31-classification-positioning}
 
 **Risk Principle**: The Skill actively includes directives or enumerations that are semantically unbounded, directly driving the LLM toward unbounded execution or unbounded expansion. These defects are not about "what is missing" — they are about "what was written that shouldn't have been."
 
 **Typical Harms**: Infinite retries, infinite output expansion, automatic expansion of execution scope.
 
-### 3.2 Inspection Items in Detail
+### 3.2 Inspection Items in Detail {#32-inspection-items-in-detail}
 
 #### QD-S-2.1 Unbounded Quantity Declaration
 
@@ -517,7 +517,7 @@ All recommendations require human confirmation before execution.
 - L2 (Medium Risk): 🟡 P1
 - L3 (High Risk): 🔴 P0
 
-### 3.3 QD-S-2 Inspection Checklist
+### 3.3 QD-S-2 Inspection Checklist {#33-qd-s-2-inspection-checklist}
 
 | ID | Inspection Item | Trigger Keywords | L1 | L2 | L3 | Inspection Method |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -530,13 +530,13 @@ All recommendations require human confirmation before execution.
 
 ## Part 4: QD-S-3 Ambiguity-Induced Inference
 
-### 4.1 Classification Positioning
+### 4.1 Classification Positioning {#41-classification-positioning}
 
 **Risk Principle**: The Skill description contains semantic ambiguity or leaves critical scenarios undefined. When facing uncertainty, the LLM tends toward "reasonable assumptions" rather than stopping to ask, producing behavior that exceeds expectations.
 
 **Typical Harms**: Mis-triggering, auto-completion of missing content, task scope expansion.
 
-### 4.2 Inspection Items in Detail
+### 4.2 Inspection Items in Detail {#42-inspection-items-in-detail}
 
 #### QD-S-3.1 Vague Trigger Conditions
 
@@ -704,7 +704,7 @@ description: "Use this Skill for read-only database diagnosis"
 - L2 (Medium Risk): 🟡 P1
 - L3 (High Risk): 🔴 P0
 
-### 4.3 QD-S-3 Inspection Checklist
+### 4.3 QD-S-3 Inspection Checklist {#43-qd-s-3-inspection-checklist}
 
 | ID | Inspection Item | Trigger Keywords | L1 | L2 | L3 | Inspection Method |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -719,13 +719,13 @@ description: "Use this Skill for read-only database diagnosis"
 
 ## Part 5: QD-S-4 Failure Escalation
 
-### 5.1 Classification Positioning
+### 5.1 Classification Positioning {#51-classification-positioning}
 
 **Risk Principle**: The Skill does not define handling strategies for failure or exception scenarios. When encountering failure, the LLM's training objective of "complete the task as best you can" drives it to proactively expand its strategy to "solve the problem," creating even greater risk.
 
 **Typical Harms**: Auto-completing content, lowering standards after failure, infinite rewriting, fabricating data.
 
-### 5.2 Inspection Items in Detail
+### 5.2 Inspection Items in Detail {#52-inspection-items-in-detail}
 
 #### QD-S-4.1 Undefined Failure Behavior
 
@@ -837,7 +837,7 @@ Handle exception conditions.
 - L2 (Medium Risk): 🟡 P1
 - L3 (High Risk): 🟡 P1
 
-### 5.3 QD-S-4 Inspection Checklist
+### 5.3 QD-S-4 Inspection Checklist {#53-qd-s-4-inspection-checklist}
 
 | ID | Inspection Item | Trigger Keywords | L1 | L2 | L3 | Inspection Method |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -850,13 +850,13 @@ Handle exception conditions.
 
 ## Part 6: QD-S-5 Permission Overflow
 
-### 6.1 Classification Positioning
+### 6.1 Classification Positioning {#61-classification-positioning}
 
 **Risk Principle**: The Skill does not explicitly declare operational permission boundaries. The LLM interprets broad capability descriptions as implicit authorization, executing high-impact operations beyond what was intended. This category differs from QD-S-1.4 in that: QD-S-1.4 addresses the complete absence of permission boundaries, while QD-S-5 addresses cases where permission declarations exist but are insufficient, or contain loopholes that can be broadly interpreted.
 
 **Typical Harms**: Irreversible operations without confirmation, privilege escalation, data deletion, production environment damage.
 
-### 6.2 Inspection Items in Detail
+### 6.2 Inspection Items in Detail {#62-inspection-items-in-detail}
 
 #### QD-S-5.1 Read/Write/Delete Permissions Not Distinguished
 
@@ -978,7 +978,7 @@ Chained invocation depth must not exceed 1 level.
 - L2 (Medium Risk): 🟡 P1
 - L3 (High Risk): 🔴 P0
 
-### 6.3 QD-S-5 Inspection Checklist
+### 6.3 QD-S-5 Inspection Checklist {#63-qd-s-5-inspection-checklist}
 
 | ID | Inspection Item | Trigger Keywords | L1 | L2 | L3 | Inspection Method |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -991,7 +991,7 @@ Chained invocation depth must not exceed 1 level.
 
 ## Part 7: Skill Tiered Inspection Mechanism
 
-### 7.1 Skill Risk Level Definitions
+### 7.1 Skill Risk Level Definitions {#71-skill-risk-level-definitions}
 
 #### 7.1.1 L1 (Low Risk): Text-Processing Only
 
@@ -1060,7 +1060,7 @@ Chained invocation depth must not exceed 1 level.
 - API invocations
 - Permission operations
 
-### 7.2 Tiered Inspection Checklist
+### 7.2 Tiered Inspection Checklist {#72-tiered-inspection-checklist}
 
 #### 7.2.1 L1 (Low Risk) Inspection Checklist
 
@@ -1118,7 +1118,7 @@ Chained invocation depth must not exceed 1 level.
 - Semi-automated: QD-S-2.4, QD-S-3.3
 - Human: All other items
 
-### 7.3 Standard Inspection Process (6 Steps)
+### 7.3 Standard Inspection Process (6 Steps) {#73-standard-inspection-process-6-steps}
 
 ```
 ┌──────────────────────────────────────────────────┐
@@ -1317,7 +1317,7 @@ Proceeding to Step 6: Generate inspection report
 
 ## Part 8: Review Schema — Detailed Review Dimensions
 
-### 8.1 Six-Dimension Overview and Positioning
+### 8.1 Six-Dimension Overview and Positioning {#81-six-dimension-overview-and-positioning}
 
 The Inspect Skill Review Schema is the inspection Agent's **intermediate review framework** for systematically decomposing and analyzing Skill definitions. It is not a production format — it is a working view.
 
@@ -1332,7 +1332,7 @@ The Inspect Skill Review Schema is the inspection Agent's **intermediate review 
 | **OUTPUT** | Are output size, structure, and partial completion strategy clearly defined? | QD-S-1.2, QD-S-2.3 | Output bloat, content fabrication |
 | **FAILURE** | How are failures, empty input, insufficient input, and user dissatisfaction handled? | QD-S-4.x | Auto-completion, post-failure expansion |
 
-### 8.2 IDENTITY Dimension in Detail
+### 8.2 IDENTITY Dimension in Detail {#82-identity-dimension-in-detail}
 
 **Review Question**: What does this Skill do, not do, and what can it access?
 
@@ -1354,7 +1354,7 @@ The Inspect Skill Review Schema is the inspection Agent's **intermediate review 
 | "Query user data" | purpose: query ✓ / non_goals: ❌ missing / allowed_resources: user-provided only ✓ / forbidden: ❌ others' data not prohibited | QD-S-3.4 P0 + QD-S-1.5 P1 |
 | "Manage database issues" | purpose: vague / non_goals: ❌ missing / allowed_operations: ❌ read/write/delete not distinguished / forbidden_operations: ❌ missing | QD-S-5.1 P0 + QD-S-3.6 P1 |
 
-### 8.3 TRIGGER Dimension in Detail
+### 8.3 TRIGGER Dimension in Detail {#83-trigger-dimension-in-detail}
 
 **Review Question**: When should it trigger, and when should it not?
 
@@ -1374,7 +1374,7 @@ The Inspect Skill Review Schema is the inspection Agent's **intermediate review 
 | "When the user needs help" | allowed_when: vague / forbidden_when: ❌ missing | QD-S-3.1 P1 + QD-S-3.2 P1 |
 | "User provides work notes and requests weekly report" | allowed_when: explicit ✓ / forbidden_when: ✓ "user has not provided notes" | PASS |
 
-### 8.4 INPUT Dimension in Detail
+### 8.4 INPUT Dimension in Detail {#84-input-dimension-in-detail}
 
 **Review Question**: Are input size, format, and overflow behavior clearly defined?
 
@@ -1395,7 +1395,7 @@ The Inspect Skill Review Schema is the inspection Agent's **intermediate review 
 | "Accept a list of work notes" | max_items: ❌ missing / if_exceeds: ❌ missing | QD-S-1.1 P0 |
 | "Process up to 50 items; truncate and notify when exceeded" | max_items: 50 ✓ / if_exceeds: explicit ✓ | PASS |
 
-### 8.5 EXECUTION Dimension in Detail
+### 8.5 EXECUTION Dimension in Detail {#85-execution-dimension-in-detail}
 
 **Review Question**: Are execution boundaries, retries, tool invocations, and chained calls controlled?
 
@@ -1419,7 +1419,7 @@ The Inspect Skill Review Schema is the inspection Agent's **intermediate review 
 | "Keep trying until success" | max_retries: ❌ missing / timeout: ❌ missing | QD-S-1.3 P0 + QD-S-2.2 P0 |
 | "Maximum 3 retries, 60-second timeout" | max_retries: 3 ✓ / timeout_seconds: 60 ✓ | PASS |
 
-### 8.6 OUTPUT Dimension in Detail
+### 8.6 OUTPUT Dimension in Detail {#86-output-dimension-in-detail}
 
 **Review Question**: Are output size, structure, and partial completion strategy clearly defined?
 
@@ -1441,7 +1441,7 @@ The Inspect Skill Review Schema is the inspection Agent's **intermediate review 
 | "Generate a complete weekly report with all sections" | max_total_chars: ❌ missing / partial_result_allowed: ❌ missing | QD-S-1.2 P1 + QD-S-4.2 P1 |
 | "Output not exceeding 1,500 words; skip sections with insufficient information" | max_total_chars: 1500 ✓ / partial_result_allowed: true ✓ | PASS |
 
-### 8.7 FAILURE Dimension in Detail
+### 8.7 FAILURE Dimension in Detail {#87-failure-dimension-in-detail}
 
 **Review Question**: How are failures, empty input, insufficient input, and user dissatisfaction handled?
 
@@ -1465,7 +1465,7 @@ The Inspect Skill Review Schema is the inspection Agent's **intermediate review 
 
 ## Part 9: Usage Examples
 
-### 9.1 L1 Example: WeeklyReportWriter (Personal Productivity Scenario)
+### 9.1 L1 Example: WeeklyReportWriter (Personal Productivity Scenario) {#91-l1-example-weeklyreportwriter-personal-productivity-scenario}
 
 #### 9.1.1 Original Skill
 
@@ -1587,7 +1587,7 @@ Output limits:
 | **Missing content handling** | Undeclared | Skip missing sections and explain why |
 | **Failure handling** | Undeclared | Empty input → ask user; generating examples is prohibited |
 
-### 9.2 L3 Example: DatabaseDiagnosticReporter (Enterprise Operations Scenario)
+### 9.2 L3 Example: DatabaseDiagnosticReporter (Enterprise Operations Scenario) {#92-l3-example-databasediagnosticreporter-enterprise-operations-scenario}
 
 #### 9.2.1 Original Skill
 
@@ -1748,7 +1748,7 @@ Output limits:
 
 ## Part 10: Relationship to Other Sub-Specifications
 
-### 10.1 Placeholder Note
+### 10.1 Placeholder Note {#101-placeholder-note}
 
 This chapter's full coordination relationships with Inspect Prompt and Inspect Tool require dedicated discussion, covering:
 
@@ -1763,7 +1763,7 @@ This chapter's full coordination relationships with Inspect Prompt and Inspect T
 
 ## Part 11: Quantitative Scoring Mechanism
 
-### 11.1 Scoring Principles
+### 11.1 Scoring Principles {#111-scoring-principles}
 
 | Principle | Description |
 | --- | --- |
@@ -1774,7 +1774,7 @@ This chapter's full coordination relationships with Inspect Prompt and Inspect T
 | **Simple rule** | For the same inspection item number, the weight is deducted only once regardless of how many defect instances are found |
 | **Gate condition** | Any P0 defect → evaluation FAIL (score is still output) |
 
-### 11.2 Calculation Steps
+### 11.2 Calculation Steps {#112-calculation-steps}
 
 **Step 1: Determine Skill Level** — Determine L1/L2/L3 according to Part 7
 
@@ -1804,7 +1804,7 @@ else:
     evaluation result = PASS
 ```
 
-### 11.3 Inspection Item Distribution Table
+### 11.3 Inspection Item Distribution Table {#113-inspection-item-distribution-table}
 
 #### L1 (Low Risk) Inspection Item Distribution
 
@@ -1840,7 +1840,7 @@ else:
 
 **L3 Inspection Item List**: All QD-S-0 through QD-S-5 inspection items
 
-### 11.4 Defect Deduction Value Table
+### 11.4 Defect Deduction Value Table {#114-defect-deduction-value-table}
 
 #### L1 Defect Deduction Values
 
@@ -1866,7 +1866,7 @@ else:
 | **P1** | 0.82 × 3 | 2.46 |
 | **P2** | 0.82 × 1 | 0.82 |
 
-### 11.5 Scoring Examples
+### 11.5 Scoring Examples {#115-scoring-examples}
 
 #### Example 1: L1 Skill, 3 Defects Found
 
@@ -1968,7 +1968,7 @@ Gate = FAIL (4 P0 defects exist)
 }
 ```
 
-### 11.6 Multi-Defect Handling Rules
+### 11.6 Multi-Defect Handling Rules {#116-multi-defect-handling-rules}
 
 **Rule**: The same inspection item is deducted only once, regardless of how many defect instances are found.
 
