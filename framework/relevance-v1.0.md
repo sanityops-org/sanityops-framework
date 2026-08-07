@@ -1,4 +1,4 @@
-# SanityOps Framework Relevance
+﻿# SanityOps Framework Relevance
 
 ---
 
@@ -124,6 +124,7 @@
 
 ## Preface
 
+<a id="01-purpose"></a>
 ### 0.1 Purpose
 
 SanityOps Inspect identifies quality defects in Prompts, Skills, Tool Schemas, and cross-artifact relationships; Risk audits explicit risks or validates implicit, dynamic attack risks; Quality evaluates actual Agent service quality.
@@ -148,8 +149,10 @@ This specification establishes formal mapping models between Inspect defects and
 
 ---
 
+<a id="02-scope"></a>
 ## 0.2 Scope
 
+<a id="021-in-scope"></a>
 ### 0.2.1 In Scope
 
 This specification applies to the following static logic artifacts and their relationships:
@@ -160,6 +163,7 @@ This specification applies to the following static logic artifacts and their rel
 - Consistency relationships between Prompt–Skill, Prompt–Tool, and Skill–Tool;
 - Linkage relationships among the above artifacts in security validation, quality supplementary testing, and release governance.
 
+<a id="022-out-of-scope"></a>
 ### 0.2.2 Out of Scope
 
 This specification does not:
@@ -173,6 +177,7 @@ This specification does not:
 
 ---
 
+<a id="03-normative-references-and-version-applicability"></a>
 ## 0.3 Normative References and Version Applicability
 
 This specification establishes mapping relationships based on the following SanityOps documents:
@@ -188,6 +193,7 @@ This specification establishes mapping relationships based on the following Sani
 | Quality Tool-Agent | v1.0 | Uses task success/failure, reliability, and risk-driven testing principles |
 | Quality RAG-Agent | v1.0 | Uses four-dimensional 12 metrics, critical test cases, and regression Gate principles |
 
+<a id="031-source-specification-priority-principle"></a>
 ### 0.3.1 Source Specification Priority Principle
 
 If there is a conflict between this specification and a source sub-specification regarding rule numbering, definitions, severity levels, or release requirements, **the corresponding source sub-specification shall take precedence**.
@@ -196,6 +202,7 @@ The mapping strength, attack surfaces, candidate failure modes, validation recom
 
 ---
 
+<a id="04-core-principles"></a>
 ## 0.4 Core Principles
 
 1. **Correlation is not causation**
@@ -221,6 +228,7 @@ The mapping strength, attack surfaces, candidate failure modes, validation recom
 
 ---
 
+<a id="05-terms-and-abbreviations"></a>
 ## 0.5 Terms and Abbreviations
 
 | Term | Definition |
@@ -254,6 +262,7 @@ The mapping strength, attack surfaces, candidate failure modes, validation recom
 
 ## Chapter 1: Unified Impact Mapping Model
 
+<a id="11-mapping-objectives"></a>
 ### 1.1 Mapping Objectives
 
 Each Inspect defect can be mapped to four types of information:
@@ -270,6 +279,7 @@ Dynamic Evidence, Quality Results, Remediation and Regression Status
 
 Mapping output objectives are not to replace any existing conclusions, but to provide actionable priority recommendations for subsequent activities.
 
+<a id="12-four-section-relationship-structure"></a>
 ### 1.2 Four-Section Relationship Structure
 
 A standard mapping relationship should have at least the following structure:
@@ -281,6 +291,7 @@ A standard mapping relationship should have at least the following structure:
 | Validation Layer | Risk or Quality recommended activities | Injection testing, boundary parameter testing, abnormal input regression |
 | Evidence Layer | Evidence supporting or refuting associations | Schema, call trajectories, shadow environment results, quality test case results |
 
+<a id="13-mapping-strength"></a>
 ### 1.3 Mapping Strength
 
 Mapping strength reflects "whether validation or supplementary testing should be prioritized", not vulnerability severity, nor does it replace P0/P1/P2.
@@ -292,6 +303,7 @@ Mapping strength reflects "whether validation or supplementary testing should be
 | **Conditional** | Requires external knowledge bases, runtime environments, model behaviors, or business rules | As candidate investigation direction, no automatic conclusion |
 | **Not Applicable** | Current Agent type, artifact type, or runtime conditions lack association prerequisites | Do not output this recommendation |
 
+<a id="14-single-defect-mapping"></a>
 ### 1.4 Single Defect Mapping
 
 Single defect mapping is used to identify the risk a single defect may pose under normal conditions.
@@ -305,10 +317,12 @@ Single defect mapping is used to identify the risk a single defect may pose unde
 
 Single defect mapping should not ignore controls external to the artifact. For example, insufficient parameter constraints in a Tool Schema do not imply the backend lacks additional validation; whether it is exploitable should still be determined through dynamic validation.
 
+<a id="15-defect-chain-mapping"></a>
 ### 1.5 Defect Chain Mapping
 
 Defect chains are used to identify candidate exploitation or failure paths formed by multiple defects in combination.
 
+<a id="151-defect-chain-basic-patterns"></a>
 #### 1.5.1 Defect Chain Basic Patterns
 
 ```text
@@ -318,6 +332,7 @@ Boundary deficiency
 = May form an unauthorized access or data exfiltration path
 ```
 
+<a id="152-typical-examples"></a>
 #### 1.5.2 Typical Examples
 
 ```text
@@ -336,6 +351,7 @@ When a defect chain is identified, the following actions should be taken:
 4. Design coordinated remediation using least privilege, strictest constraints, and most conservative failure strategies;
 5. After remediation, perform regression on the complete path, not just re-inspection of individual `QD` items.
 
+<a id="16-conclusion-priority-and-conflict-handling"></a>
 ### 1.6 Conclusion Priority and Conflict Handling
 
 Conclusions from different subsets cannot substitute for each other. When surface-level conflicts arise, they should be interpreted according to their respective problem domains.
@@ -353,6 +369,7 @@ Conclusions from different subsets cannot substitute for each other. When surfac
 
 ## Chapter 2: Security Impact Mapping Model
 
+<a id="21-security-impact-dimensions"></a>
 ### 2.1 Security Impact Dimensions
 
 This specification adopts five types of potential security consequences. Among them, D1, D2, D3 correspond to Risk Explicit harm dimensions, but specific level determinations still follow Risk Explicit v1.0 independently.
@@ -367,6 +384,7 @@ This specification adopts five types of potential security consequences. Among t
 
 > D1/D2/D3 are the formal harm dimensions of Risk Explicit; this specification only records their potential association directions and does not automatically produce D-level determinations.
 
+<a id="22-attack-surface-classification"></a>
 ### 2.2 Attack Surface Classification
 
 | ID | Attack Surface | Definition |
@@ -381,6 +399,7 @@ This specification adopts five types of potential security consequences. Among t
 | `AS-08` | Configuration, Naming, and Supply Chain Confusion | Similar Tool names, Schema changes, dangerous default values, or abnormal callback addresses leading to misuse. |
 | `AS-09` | Cross-Artifact Contract Breach | Inconsistencies in authorization, parameters, output, permissions, or error strategies across Prompt, Skill, and Tool. |
 
+<a id="23-mapping-boundaries-with-risk-explicit"></a>
 ### 2.3 Mapping Boundaries with Risk Explicit
 
 Risk Explicit audits **explicit dangerous instructions, dangerous configurations, or risk expressions already present** in artifacts; Inspect audits the completeness, clarity, boundaries, and consistency defects of artifacts.
@@ -395,6 +414,7 @@ Therefore, the relationship between the two is as follows:
 | Cross permission inconsistency | Prioritize checking cross-object risk expressions, authorization chain forgery, and structural declaration contradictions. |
 | Raw input passthrough | Check for explicit dangerous parameters, script fragments, or abnormal constraints; dynamic exploitability remains under Risk Implicit. |
 
+<a id="231-prohibited-automatic-inference"></a>
 #### 2.3.1 Prohibited Automatic Inference
 
 The following inferences are all invalid:
@@ -412,6 +432,7 @@ QD-PS-1.3 Permission Boundary Consistency Defect
 
 Only when an explicit expression meeting the EX definition exists in the artifact can Risk Explicit independently determine the corresponding `EX` classification.
 
+<a id="24-mapping-relationship-with-risk-implicit"></a>
 ### 2.4 Mapping Relationship with Risk Implicit
 
 Risk Implicit should use impact mapping as the test design input for dynamic validation.
@@ -424,6 +445,7 @@ Risk Implicit should use impact mapping as the test design input for dynamic val
 | Defect chain | Design end-to-end attack paths across Prompt, Skill, and Tool |
 | Remediation recommendations | Form regression attack set after remediation |
 
+<a id="241-dynamic-validation-result-feedback"></a>
 #### 2.4.1 Dynamic Validation Result Feedback
 
 | Risk Result | Significance for Impact Mapping |
@@ -433,6 +455,7 @@ Risk Implicit should use impact mapping as the test design input for dynamic val
 | **Model rejected or not triggered** | Not reproduced under current conditions; must not close static defect based on this. |
 | **Insufficient conditions** | Cannot determine; should supplement shadow environment, permissions, data, or call chain conditions. |
 
+<a id="25-high-priority-security-mapping-rules"></a>
 ### 2.5 High-Priority Security Mapping Rules
 
 The following table contains document-level high-priority mappings. The complete rule set is provided in the appendix.
@@ -466,6 +489,7 @@ The following table contains document-level high-priority mappings. The complete
 | `QD-ST-3.6` Permission Scope Match | AS-04, AS-05, AS-09 | D2, D3 | Skill→Tool actual side effects, least privilege, and confirmation testing |
 | `QD-PT-2.5` / `QD-ST-3.7` Error Handling Gap | AS-07, AS-09 | D1, D2, D3, Availability | End-to-end testing for permission errors, rate limiting, timeouts, format errors, and dependency exceptions |
 
+<a id="26-external-risk-classification-reference-principles"></a>
 ### 2.6 External Risk Classification Reference Principles
 
 This specification may reference OWASP LLM / Agentic risk language to facilitate communication of threat directions, but shall not replace SanityOps numbering with external numbering.
@@ -484,8 +508,10 @@ This specification may reference OWASP LLM / Agentic risk language to facilitate
 
 External mapping is for threat modeling and communication purposes only and does not constitute a declaration of conformity with any external standard.
 
+<a id="27-security-defect-chains-and-defense-in-depth"></a>
 ### 2.7 Security Defect Chains and Defense in Depth
 
+<a id="271-defense-layers"></a>
 #### 2.7.1 Defense Layers
 
 ```text
@@ -498,6 +524,7 @@ Tool: Hard parameter constraints, side effects, internal fields, and data flows
 Backend and Runtime Environment: IAM, server-side validation, approval, audit, isolation
 ```
 
+<a id="272-handling-principles"></a>
 #### 2.7.2 Handling Principles
 
 When a defect chain spans multiple defense layers:
@@ -513,6 +540,7 @@ When a defect chain spans multiple defense layers:
 
 ## Chapter 3: Quality Impact Mapping Model
 
+<a id="31-basic-principles"></a>
 ### 3.1 Basic Principles
 
 The relationship between Inspect defects and Quality results is a **diagnostic association**, not an automatic causal relationship.
@@ -529,8 +557,10 @@ Human + Evidence: Confirm root cause, remediation, and regression
 
 Quality failures may also be caused by issues in the knowledge base, retrieval, re-ranking, model version, context, runtime configuration, external services, or test assets. Therefore, Quality failures must not be used to directly assert that a particular `QD` is the sole root cause.
 
+<a id="32-tool-agent-quality-impact-mapping"></a>
 ### 3.2 Tool-Agent Quality Impact Mapping
 
+<a id="321-quality-determination-boundaries"></a>
 #### 3.2.1 Quality Determination Boundaries
 
 Quality Tool-Agent uses the final task result for binary determination:
@@ -548,6 +578,7 @@ $$
 
 Process information such as tool selection, call order, parameter generation, and output stitching serves as trajectory evidence for diagnosing failure causes and does not independently constitute a first-level quality score.
 
+<a id="322-universal-behavior-failure-modes"></a>
 #### 3.2.2 Universal Behavior Failure Modes
 
 | ID | Candidate Failure Mode | Observable Behavior |
@@ -563,6 +594,7 @@ Process information such as tool selection, call order, parameter generation, an
 | `FM-09` | Boundary action error | Failure to properly handle when clarification, refusal, confirmation, or handoff is required |
 | `FM-10` | Unstable execution or resource runaway | Inconsistent results for same input, looped calls, timeout, budget exhaustion |
 
+<a id="323-main-mapping-relationships"></a>
 #### 3.2.3 Main Mapping Relationships
 
 | Inspect Defect Category | Candidate Failure Modes | Quality Tool-Agent Supplementary Test Recommendations |
@@ -580,8 +612,10 @@ Process information such as tool selection, call order, parameter generation, an
 | Tool side effects, batch limits, or data flow risks | FM-08, FM-09, FM-10 | Batch, cancel, rollback, confirmation, cross-Tool value passing |
 | Cross parameter, output, permission, or failure strategy inconsistency | FM-04, FM-05, FM-06, FM-08 | End-to-end contract, call chain permissions, exception chain, version compatibility |
 
+<a id="33-rag-agent-quality-impact-mapping"></a>
 ### 3.3 RAG-Agent Quality Impact Mapping
 
+<a id="331-quality-determination-boundaries"></a>
 #### 3.3.1 Quality Determination Boundaries
 
 Quality RAG-Agent evaluates user-visible content output and boundary handling, and does not directly score internal components such as Prompt, retrieval, knowledge base, model, or Tool.
@@ -597,6 +631,7 @@ Its four-dimensional 12 metrics are:
 
 The mapping relationship only indicates that a certain type of Inspect defect may affect the relevant quality metrics, making it worth prioritizing supplementary test design or investigation; it does not mean that the defect will necessarily cause a loss of points in that metric.
 
+<a id="332-main-mapping-relationships"></a>
 #### 3.3.2 Main Mapping Relationships
 
 | Inspect Defect Category | Potentially Affected RAG Metrics | Recommended Supplementary Tests |
@@ -612,6 +647,7 @@ The mapping relationship only indicates that a certain type of Inspect defect ma
 | Tool parameter, description, side effect, or competition defects | Correctness, Relevance, Traceability, Format compliance | Retrieval/citation Tool selection, return parsing, source citation |
 | Cross output, parameter, permission, or failure strategy inconsistency | Correctness, Completeness, Consistency, Format compliance, Safety response | End-to-end citation, parameter passing, permission boundaries, error chains |
 
+<a id="333-special-limitations"></a>
 #### 3.3.3 Special Limitations
 
 The following factors may cause RAG quality failures but are not within the current full coverage scope of Inspect mapping:
@@ -622,6 +658,7 @@ The following factors may cause RAG quality failures but are not within the curr
 - Errors in the evaluation test cases, Judge, or rule validators themselves;
 - Missing user identity, real-time business state, or external system state.
 
+<a id="34-quality-supplementary-test-design-rules"></a>
 ### 3.4 Quality Supplementary Test Design Rules
 
 When impact mapping generates Quality supplementary tests, the following rules shall be followed:
@@ -647,6 +684,7 @@ When impact mapping generates Quality supplementary tests, the following rules s
 4. **Distinguish between regression set and exploration set**  
    Discovered defects and their remediations should enter the stable regression set; exploration of unknown risks may enter the exploration set, but exploration results should be confirmed before being escalated to blocking test cases.
 
+<a id="35-reverse-diagnostic-rules-after-quality-failure"></a>
 ### 3.5 Reverse Diagnostic Rules After Quality Failure
 
 After a Quality failure, the platform should output "failure fact + candidate Inspect investigation direction + other possible causes."
@@ -664,6 +702,7 @@ After a Quality failure, the platform should output "failure fact + candidate In
 | Should have refused, clarified, or handed off but answered directly | `QD-P-2.5.2/2.5.3`, `QD-S-3.2`, `QD-S-5.x`, `QD-PS-1.3` | IAM, runtime Guardrail, missing user state |
 | Equivalent questions or multi-turn responses contradictory | `QD-P-1.1.x`, `QD-P-2.5.4`, `QD-S-3.5` | Session memory, context window, model version changes |
 
+<a id="36-quality-regression-rules-after-remediation"></a>
 ### 3.6 Quality Regression Rules After Remediation
 
 After remediating an Inspect defect, passing the static re-inspection alone should not be the basis for closure.
@@ -692,6 +731,7 @@ Remediated artifact has been versioned
 
 ## Chapter 4: Mapping Library, Evidence, and Manual Confirmation
 
+<a id="41-minimum-mapping-library-records"></a>
 ### 4.1 Minimum Mapping Library Records
 
 Each mapping rule should be independently versioned, including at least:
@@ -730,6 +770,7 @@ Mapping library rules and specific finding records must be separated:
 - **Mapping library rules**: Describe which QD(s) may typically be associated with what risks;
 - **Specific finding records**: Describe whether a specific artifact hits the rule, whether it is applicable, and the actual validation results.
 
+<a id="42-evidence-requirements-and-priority"></a>
 ### 4.2 Evidence Requirements and Priority
 
 | Evidence Type | Primary Use | Priority |
@@ -754,8 +795,10 @@ Artifact version
 + Evaluator or evaluator version
 ```
 
+<a id="43-confidence-and-manual-confirmation"></a>
 ### 4.3 Confidence and Manual Confirmation
 
+<a id="431-confidence"></a>
 #### 4.3.1 Confidence
 
 | Confidence | Applicable Scenarios |
@@ -771,6 +814,7 @@ Confidence does not equal:
 - Risk Implicit Signal;
 - Quality score or Gate.
 
+<a id="432-manual-confirmation-status"></a>
 #### 4.3.2 Manual Confirmation Status
 
 | Status | Definition |
@@ -782,6 +826,7 @@ Confidence does not equal:
 | `needs_more_evidence` | Needs supplementary environment, logs, permissions, or test assets |
 | `closed` | Remediation, re-inspection, and necessary regression all completed |
 
+<a id="44-risk-test-template-fields"></a>
 ### 4.4 Risk Test Template Fields
 
 When influencing mapping output of Risk test recommendations, at least the following should be declared:
@@ -800,6 +845,7 @@ When influencing mapping output of Risk test recommendations, at least the follo
 | `safety_constraints` | Shadow environment isolation, anonymization, Mock, side-effect restrictions |
 | `regression_scope` | Templates and variants to re-run after remediation |
 
+<a id="45-quality-supplementary-test-and-diagnostic-fields"></a>
 ### 4.5 Quality Supplementary Test and Diagnostic Fields
 
 | Field | Description |
@@ -815,6 +861,7 @@ When influencing mapping output of Risk test recommendations, at least the follo
 | `diagnostic_evidence` | Call chain, output, citations, scoring rationale, version, and logs |
 | `other_possible_causes` | Candidate root cause directions not belonging to Inspect |
 
+<a id="46-linked-defect-chain-recording-and-escalation"></a>
 ### 4.6 Linked Defect Chain Recording and Escalation
 
 Defect chain records should include at least:
@@ -840,6 +887,7 @@ When any of the following conditions are met, a single defect should be escalate
 - Quality or Risk evidence shows multiple artifacts jointly contributing to failure;
 - Single-point remediation cannot eliminate the complete risk path.
 
+<a id="47-mapping-maintenance-and-change-control"></a>
 ### 4.7 Mapping Maintenance and Change Control
 
 Mapping rules require periodic calibration, especially when the following occur:
@@ -865,6 +913,7 @@ Reason for change
 
 ## Chapter 5: Platform Execution, Reporting, and Governance Closed Loop
 
+<a id="51-platform-execution-workflow"></a>
 ### 5.1 Platform Execution Workflow
 
 ```
@@ -891,6 +940,7 @@ The automation system should distinguish between:
 - **Quality confirmed facts**: e.g., critical test case failure, insufficient reliability, or regression degradation;
 - **Manual conclusions**: e.g., root cause confirmation, risk acceptance, or closure.
 
+<a id="52-automatic-recommendation-rules"></a>
 ### 5.2 Automatic Recommendation Rules
 
 After Inspect hits a defect, the platform may automatically output:
@@ -911,6 +961,7 @@ The platform must NOT automatically output the following conclusions:
 - "External controls are sufficient to permanently replace artifact remediation";
 - "Not executing the mapping recommendation means the risk does not exist."
 
+<a id="53-unified-status-model"></a>
 ### 5.3 Unified Status Model
 
 | Status | Definition |
@@ -927,8 +978,10 @@ The platform must NOT automatically output the following conclusions:
 | `CLOSED` | Required re-inspection and regression completed, confirmed closed |
 | `ACCEPTED_EXCEPTION` | Approved time-limited risk acceptance, must record validity period and compensating controls |
 
+<a id="54-comprehensive-gate-and-release-decision-boundaries"></a>
 ### 5.4 Comprehensive Gate and Release Decision Boundaries
 
+<a id="541-result-merging-principles"></a>
 #### 5.4.1 Result Merging Principles
 
 | Situation | Comprehensive Handling |
@@ -941,6 +994,7 @@ The platform must NOT automatically output the following conclusions:
 | Only B or C exists | Handle per Risk Implicit original rules; should record dependency on external controls or model rejection uncertainty. |
 | Mapping recommendation not executed | The recommendation itself does not constitute an automatic FAIL; however, if the source specification or change policy requires validation, it cannot be considered as having completed pre-release proof. |
 
+<a id="542-risk-acceptance-limitations"></a>
 #### 5.4.2 Risk Acceptance Limitations
 
 Risk acceptance is only applicable to scenarios where the source specification permits exceptions, and must at minimum document:
@@ -955,6 +1009,7 @@ Risk acceptance is only applicable to scenarios where the source specification p
 
 Attack success A, critical quality gate failure, or P0/S3 situations where the source specification explicitly prohibits exceptions must NOT be downgraded or exempted through this specification's "mapping conclusions."
 
+<a id="55-impact-card-format-in-customer-reports"></a>
 ### 5.5 Impact Card Format in Customer Reports
 
 Customer-facing reports must clearly separate "confirmed facts" from "candidate associations."
@@ -993,6 +1048,7 @@ Customer-facing reports must clearly separate "confirmed facts" from "candidate 
 - Minimum Regression: Inspect Tool re-inspection + associated Risk + illegal parameter Quality test cases.
 ```
 
+<a id="551-report-wording-requirements"></a>
 #### 5.5.1 Report Wording Requirements
 
 | Permissible Wording | Prohibited Wording |
@@ -1003,8 +1059,10 @@ Customer-facing reports must clearly separate "confirmed facts" from "candidate 
 | "Relies on compensating controls" | "Completely secure" |
 | "Not reproduced under current test conditions" | "Absolutely unexploitable" |
 
+<a id="56-remediation-re-inspection-and-regression-evidence"></a>
 ### 5.6 Remediation, Re-inspection, and Regression Evidence
 
+<a id="561-remediation-closed-loop"></a>
 #### 5.6.1 Remediation Closed Loop
 
 ```
@@ -1019,6 +1077,7 @@ Discovery
 → Closure Approval
 ```
 
+<a id="562-minimum-evidence-package"></a>
 #### 5.6.2 Minimum Evidence Package
 
 Each closed high-priority defect or defect chain must retain at minimum:
@@ -1033,6 +1092,7 @@ Each closed high-priority defect or defect chain must retain at minimum:
 | Compensating controls | IAM, backend validation, approval, gateway, or isolation configuration and verification evidence |
 | Closure conclusion | Responsible person, reviewer, closure date, residual risk, and subsequent monitoring requirements |
 
+<a id="563-closure-determination"></a>
 #### 5.6.3 Closure Determination
 
 For defect chains that have been dynamically validated as exploitable, closure must not rely solely on "attack payloads no longer succeeding." At minimum, confirm:

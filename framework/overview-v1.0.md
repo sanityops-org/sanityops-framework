@@ -1,4 +1,4 @@
-# SanityOps Framework Overview
+﻿# SanityOps Framework Overview
 
 # — AI Agent Continuous Governance
 
@@ -69,6 +69,7 @@
 
 ## Section 1: Three Challenges in Enterprise AI Deployment
 
+<a id="11-first-challenge-uncommitable-quality"></a>
 ### 1.1 First Challenge: Uncommitable Quality
 
 When deploying RAG Agents for clients, we found that even when **functionality appears normal**, real-world operations still exhibit the following issues:
@@ -83,6 +84,7 @@ The prevalence of this problem has become a major obstacle to enterprise AI depl
 
 ---
 
+<a id="12-second-challenge-invisible-security-black-holes"></a>
 ### 1.2 Second Challenge: Invisible Security Black Holes
 
 Then, clients asked a simple but fatal question:
@@ -97,6 +99,7 @@ Similarly, this problem is highly prevalent, and because security audit has veto
 
 ---
 
+<a id="13-third-challenge-root-cause-localization-black-hole"></a>
 ### 1.3 Third Challenge: Root Cause Localization Black Hole
 
 Most frustrating of all, when we discover these two types of problems using various tools, we can **only point to general problem directions**:
@@ -113,6 +116,7 @@ The result is constant trial-and-error fixes to these logic artifacts, frequent 
 
 ---
 
+<a id="14-real-cost-of-the-problems"></a>
 ### 1.4 Real Cost of the Problems
 
 These three challenges are not isolated cases — latest data proves their universality.
@@ -148,6 +152,7 @@ This means the enterprise AI dilemma is a systemic problem, not a technical one:
 
 Looking back now, what is the root cause of these three challenges? Let's think in reverse:
 
+<a id="21-logic-artifacts-are-like-code-without-a-compiler"></a>
 ### 2.1 Logic Artifacts Are Like "Code Without a Compiler"
 
 In traditional software development, code must pass **compiler checks** before running: Is the syntax correct? Do types match? Are symbols defined? Are interfaces aligned?
@@ -168,8 +173,10 @@ Compilers **force** code to comply with strict structural constraints — this i
 
 ---
 
+<a id="22-industry-status-universality-and-persistence-of-defects"></a>
 ### 2.2 Industry Status: Universality and Persistence of Defects
 
+<a id="221-universality-of-defects"></a>
 #### 2.2.1 Universality of Defects
 
 Unfortunately, we could not find trustworthy statistics on logic artifact defect ratios, but when we ourselves began **systematic, scientific, rigorous defect detection** on real logic artifacts from hundreds of real Agents, the data surprised us:
@@ -184,6 +191,7 @@ Second, LLM default generative reasoning is not based on strict constraint mecha
 
 Therefore, in actual production, logic artifact defects are not an occasional phenomenon, but a universal problem caused by multiple factors.
 
+<a id="222-persistence-of-defects"></a>
 #### 2.2.2 Persistence of Defects
 
 Because the cost of adjusting logic artifacts is extremely low, and the remediation effects are directly perceptible, teams frequently make **instant, temporary, unplanned fine-grained adjustments**. This "hotfix" phenomenon is very common and covers the full lifecycle of Agents.
@@ -198,6 +206,7 @@ Therefore, logic artifact defects are not just a **technical-level quality issue
 
 ---
 
+<a id="23-why-this-makes-enterprise-ai-applications-difficult"></a>
 ### 2.3 Why This Makes Enterprise AI Applications Difficult
 
 **The trust crisis in enterprise AI is not rooted in LLMs not being powerful enough or Agent frameworks not being complete enough, but in logic artifacts falling into the aforementioned "high-frequency fixes, low-efficiency iterations" trap during production.** This directly leads to the three challenges:
@@ -230,6 +239,7 @@ Gartner also points out that **84% of AI project failures stem from governance a
 
 SanityOps consists of three **independent, complete, and flexibly combinable** professional systems.
 
+<a id="41-inspect-logic-artifact-compiler-checks"></a>
 ### 4.1 Inspect — Logic Artifact Compiler Checks
 
 **Core question**: Does the **definition layer** of logic artifacts have defects?
@@ -258,6 +268,7 @@ Includes four sub-tools for defect inspection of System Prompts, Skills, Tool Sc
 
 ---
 
+<a id="42-risk-agent-security-risk-detection"></a>
 ### 4.2 Risk — Agent Security Risk Detection
 
 **Core question**: Does the Agent have **active or passive risk exposure surfaces** in static artifacts or runtime?
@@ -289,6 +300,7 @@ Includes four sub-tools for defect inspection of System Prompts, Skills, Tool Sc
 
 ---
 
+<a id="43-quality-agent-output-quality-assessment"></a>
 ### 4.3 Quality — Agent Output Quality Assessment
 
 **Core question**: Does the Agent's **actual output** or **task completion quality** meet business requirements?
@@ -312,6 +324,7 @@ Includes four sub-tools for defect inspection of System Prompts, Skills, Tool Sc
 
 ---
 
+<a id="44-independent-business-value-of-the-three"></a>
 ### 4.4 Independent Business Value of the Three
 
 Imagine medical diagnosis:
@@ -333,12 +346,14 @@ Each type of examination has independent value and can be done alone; but combin
 
 ## Section 5: Integration with Full Lifecycle and Driving Mechanism
 
+<a id="51-how-to-drive-the-sanityops-closed-loop"></a>
 ### 5.1 How to Drive the SanityOps Closed Loop?
 
 As described in Section 2.2.2, due to the high frequency and quantity of Agent logic artifact "hotfix" iterations compared to traditional programs, and covering the full lifecycle from development to production, and the close relationship between logic artifact defects and Agent quality and risk, when users adopt the complete SanityOps solution, every version iteration of logic artifacts should trigger the SanityOps closed loop.
 
 And in practice, between each version and quantitative scores, the ratchet mechanism is used for binding, ensuring Agent quality and security levels continuously improve and cannot regress.
 
+<a id="52-how-to-integrate-with-logic-artifact-version-iteration"></a>
 ### 5.2 How to Integrate with Logic Artifact Version Iteration?
 
 Many understand "full lifecycle" as "admission inspection from development to deployment", but SanityOps means something completely different:
@@ -382,12 +397,14 @@ SanityOps is first a **quality, security, and governance framework for enterpris
 
 To avoid confusion, the following explains the relationship between SanityOps and representative objects in adjacent domains according to its three subsets. For a more complete item-by-item comparison, see `Comparison.md`.
 
+<a id="61-inspect-static-defect-inspection-of-logic-artifacts"></a>
 ### 6.1 **Inspect (Static Defect Inspection of Logic Artifacts)**
 
 Inspect focuses on logical defects in Prompts, Skills, Tool Schemas themselves and their cross-artifact consistency — contradictions, ambiguities, resource runaway, permission overflow, etc. This is closer to static inspection of "code" itself, rather than the process of building Agents.
 
 Currently, the industry lacks equivalent solutions specifically for systematic static defect inspection of Agent logic artifacts, which is the gap Inspect attempts to fill.
 
+<a id="62-risk-explicit-risk-audit-and-implicit-risk-attack-validation"></a>
 ### 6.2 **Risk (Explicit Risk Audit and Implicit Risk Attack Validation)**
 
 Risk covers two types of work: explicit risk audit of backend logic artifacts, and dynamic validation of implicit vulnerabilities through actual attack execution.
@@ -396,6 +413,7 @@ As reference, OWASP-related standards describe "final forms of attacks" (symptom
 
 Compared to traditional Red Teams or template-based testing tools like Promptfoo that rely on generic attack libraries and blind testing methods, SanityOps Risk emphasizes generating targeted attacks from enterprise-specific artifact defects and completing validation in shadow environments, thus having differentiated design in terms of relevance, production risk, and result quantification.
 
+<a id="63-quality-service-quality-and-reliability"></a>
 ### 6.3 **Quality (Service Quality and Reliability)**
 
 Quality is divided into Tool Agent and RAG Agent evaluation systems by Agent type, because their output essences differ: Tool Agent outputs are structured and binary-determinable, suitable for single reliability metric measurement; RAG Agent outputs are natural language and continuous distribution, requiring multi-dimensional continuous metric systems.
@@ -422,6 +440,7 @@ To ensure enterprises have clear expectations, SanityOps explicitly states the f
 
 ## Section 8: Current Status of SanityOps Framework (v1.0 Completed)
 
+<a id="81-open-source-framework-apache-license-20"></a>
 ### 8.1 Open-Source Framework (Apache License 2.0)
 
 SanityOps **core specifications and governance logic** have been released as open source, freely available for review, use, modification, and derivation:
@@ -451,6 +470,7 @@ SanityOps **core specifications and governance logic** have been released as ope
 
 ---
 
+<a id="82-commercial-platform-enterprise-tooling"></a>
 ### 8.2 Commercial Platform (Enterprise Tooling)
 
 Based on the open-source Framework, we provide **rich tooling delivery**:
@@ -474,6 +494,7 @@ Based on the open-source Framework, we provide **rich tooling delivery**:
 
 Regardless of form (open-source tools, SaaS, CLI, API), SanityOps artifacts follow unified "evidence and decision" language:
 
+<a id="91-inspect-output-defect-discovery"></a>
 ### 9.1 Inspect Output (Defect Discovery)
 
 ```
@@ -486,6 +507,7 @@ Description: The "input parameter range" definition for this Skill is incomplete
 Remediation: Clearly define valid parameter ranges, boundary value handling rules
 ```
 
+<a id="92-relevance-output-diagnostic-association"></a>
 ### 9.2 Relevance Output (Diagnostic Association)
 
 ```
@@ -496,6 +518,7 @@ Association Recommendations:
 Suggested Priority Validation: Dynamically test this Skill's response to extreme values
 ```
 
+<a id="93-risk-implicit-output-attack-validation"></a>
 ### 9.3 Risk Implicit Output (Attack Validation)
 
 ```
@@ -507,6 +530,7 @@ Root Cause Direction (from Relevance diagnosis): QD-2024-001 (defect located)
 Compensating Control: Add parameter length limit at Tool level
 ```
 
+<a id="94-quality-output-quality-assessment"></a>
 ### 9.4 Quality Output (Quality Assessment)
 
 ```
@@ -521,6 +545,7 @@ Failure Analysis:
 Improvement Recommendations: Limit Agent reasoning supplement, strengthen Prompt constraint expressions
 ```
 
+<a id="95-release-decision-report-gate-summary"></a>
 ### 9.5 Release Decision Report (Gate Summary)
 
 ```
@@ -552,6 +577,7 @@ Requirements:
 
 ## Section 10: Quick Start
 
+<a id="101-get-the-open-source-framework"></a>
 ### 10.1 Get the Open-Source Framework
 
 ```bash
@@ -577,6 +603,7 @@ ls -la examples/
 
 ---
 
+<a id="102-use-the-commercial-platform-saas-on-premises"></a>
 ### 10.2 Use the Commercial Platform (SaaS / On-Premises)
 
 **Trial Link** (to be supplemented): https://www.sanityops.org/try
@@ -597,6 +624,7 @@ ls -la examples/
 
 ---
 
+<a id="103-command-line-tools-coming-soon"></a>
 ### 10.3 Command Line Tools (Coming Soon)
 
 ```bash
@@ -622,6 +650,7 @@ sanityops compare v1.0 v2.0 --show-delta
 
 ---
 
+<a id="104-cicd-integration-example"></a>
 ### 10.4 CI/CD Integration Example
 
 ```yaml
@@ -695,6 +724,7 @@ To quickly build a deep understanding of SanityOps, reading in the following ord
 
 ## Section 12: License and Open Source Commitment
 
+<a id="121-framework-open-source-license"></a>
 ### 12.1 Framework Open Source License
 
 **SanityOps Framework uses Apache License 2.0**
@@ -711,6 +741,7 @@ This means:
 
 See: [LICENSE](https://github.com/sanityops-org/sanityops-framework/blob/main/LICENSE)
 
+<a id="122-why-release-as-open-source"></a>
 ### 12.2 Why Release as Open Source
 
 1. **Transparency**: Enterprises have the right to review our governance logic, not blindly trust

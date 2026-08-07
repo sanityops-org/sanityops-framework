@@ -1,4 +1,4 @@
-# SanityOps Framework Core
+﻿# SanityOps Framework Core
 
 ---
 
@@ -129,6 +129,7 @@
 
 # Foreword
 
+<a id="01-purpose"></a>
 ## 0.1 Purpose
 
 The SanityOps Framework has evolved into a specification system spanning Logic Artifact Defect Inspection, Explicit Risk Audit, dynamic risk validation, Tool-Agent quality assessment, RAG-Agent quality assessment, and defect impact mapping.
@@ -145,6 +146,7 @@ This specification establishes the **common semantic layer** for SanityOps. It d
 - Collaboration relationships, conclusion boundaries, and conflict resolution principles across sub-specifications;
 - Consistency migration principles for existing specifications.
 
+<a id="02-what-core-is"></a>
 ## 0.2 What Core Is
 
 SanityOps Core is a **framework-level internal convention specification**. It is not merely a glossary.
@@ -161,6 +163,7 @@ Object Language
 
 Core does not replace any sub-specification's rules, scoring, thresholds, inspection items, or Gates.
 
+<a id="03-what-core-is-not"></a>
 ## 0.3 What Core Is Not
 
 This specification does **not**:
@@ -172,6 +175,7 @@ This specification does **not**:
 5. Substitute for an organization's IAM, backend controls, network security, privacy compliance, production monitoring, or industry regulatory obligations;
 6. Claim that SanityOps has achieved complete coverage of specialized inspection requirements for Knowledge, Memory, Workflow, Identity, A2A, MCP, or Connector domains.
 
+<a id="04-normative-language"></a>
 ## 0.4 Normative Language
 
 Unless otherwise defined by a specific sub-specification, the following terms carry these meanings:
@@ -184,6 +188,7 @@ Unless otherwise defined by a specific sub-specification, the following terms ca
 | **MUST NOT** | Prohibited. |
 | **NOT APPLICABLE** | The preconditions for applicability are not satisfied for the current object or condition. The basis for this applicability determination MUST be documented. |
 
+<a id="05-source-specification-precedence-and-migration-principles"></a>
 ## 0.5 Source-Specification Precedence and Migration Principles
 
 With the publication of Core:
@@ -205,6 +210,7 @@ With the publication of Core:
 
 # Chapter 1: Framework Positioning, Governance Objects, and Lifecycle Boundaries
 
+<a id="11-positioning-of-sanityops"></a>
 ## 1.1 Positioning of SanityOps
 
 SanityOps is a **vendor-neutral quality, security, and governance framework for the full lifecycle of enterprise-grade AI Agents**.
@@ -215,12 +221,15 @@ Its core objective is not to guarantee that Agents are always correct or absolut
 
 SanityOps is designed primarily for enterprise AI/Agent applications. Coverage of all personal-user Agents, open-ended creative tools, or general-purpose chat products is not a primary design objective.
 
+<a id="12-logic-artifacts-as-first-class-governance-assets"></a>
 ## 1.2 Logic Artifacts as First-Class Governance Assets
 
+<a id="121-definition"></a>
 ### 1.2.1 Definition
 
 Based on three criteria — the hosting field, content independence, and direct influence on the LLM — the Logic Artifacts defined by SanityOps are limited to three types: **System Prompt**, **Skill**, and **Tool Schema**.
 
+<a id="122-minimum-governance-requirements"></a>
 ### 1.2.2 Minimum Governance Requirements
 
 Every applicable Logic Artifact MUST support the following capabilities:
@@ -237,6 +246,7 @@ Identifiable
 
 Natural-language form does not reduce governance requirements. Prompts, Skills, and Tool Schemas SHOULD NOT be treated as mere "configuration" or "copy." They are engineering assets that can materially influence the behavioral boundaries of an Agent.
 
+<a id="13-core-problems-and-specification-domains"></a>
 ## 1.3 Core Problems and Specification Domains
 
 | Domain | Core Problem | Primary Conclusions |
@@ -246,6 +256,7 @@ Natural-language form does not reduce governance requirements. Prompts, Skills, 
 | **Quality** | Does the Agent's actual task execution — or the user-visible service — meet the defined quality bar? | Reliability, quality metrics, test case results, Quality Gate, regression conclusions |
 | **Relevance** | Which Attack Surfaces, validation strategies, Failure Modes, and regression requirements might a Static Defect correlate with? | `AS`, `FM`, Defect Chains, mapping recommendations, Candidate Root Causes |
 
+<a id="14-the-non-substitutability-principle"></a>
 ## 1.4 The Non-Substitutability Principle
 
 The following inferences are **not valid**:
@@ -263,6 +274,7 @@ Single test PASS ≠ Long-term security or quality assurance
 
 Each sub-specification draws conclusions only within the boundaries of its own evidence domain.
 
+<a id="15-the-full-lifecycle-governance-closed-loop"></a>
 ## 1.5 The Full-Lifecycle Governance Closed Loop
 
 The target closed loop for SanityOps is:
@@ -300,6 +312,7 @@ Production runtime monitoring, production auditing, incident response, Knowledge
 
 # Chapter 2: Unified Object and Artifact Model
 
+<a id="21-core-objects"></a>
 ## 2.1 Core Objects
 
 | Object | Definition |
@@ -319,6 +332,7 @@ Production runtime monitoring, production auditing, incident response, Knowledge
 | **Finding** | A specific inspection, validation, or quality discovery produced for a particular artifact, version, and environment. |
 | **Exception** | An approved, traceable, time-limited Risk Acceptance or rule exception. |
 
+<a id="22-current-coverage-and-extension-objects"></a>
 ## 2.2 Current Coverage and Extension Objects
 
 | Object | Dedicated Specification Exists? | Current Status |
@@ -340,6 +354,7 @@ Production runtime monitoring, production auditing, incident response, Knowledge
 
 For extension objects, Core defines only the unified object, version, and evidence interfaces. Prior to the publication of dedicated specifications, no corresponding `QD`, Gate, or coverage conclusions SHALL be fabricated.
 
+<a id="23-artifact-relationships"></a>
 ## 2.3 Artifact Relationships
 
 The artifact relationships of a typical Agent can be abstracted as:
@@ -367,6 +382,7 @@ Tool / Connector / A2A / MCP
 Backend / Runtime / External Service
 ```
 
+<a id="24-version-boundaries-and-minimum-identification"></a>
 ## 2.4 Version Boundaries and Minimum Identification
 
 Any conclusion eligible for release, audit, regression, or root-cause investigation MUST be associated with the following minimum version information:
@@ -389,6 +405,7 @@ Where not all fields are available, the missing items and their impact on conclu
 
 # Chapter 3: Unified Terminology, Naming, and Numbering Rules
 
+<a id="31-formal-names-and-historical-aliases"></a>
 ## 3.1 Formal Names and Historical Aliases
 
 The following are Core's recommended formal names:
@@ -407,6 +424,7 @@ The following are Core's recommended formal names:
 
 Aliases in historical documents do not automatically constitute errors, but subsequent revisions and new documents SHALL adopt the formal names uniformly.
 
+<a id="32-numbering-namespaces"></a>
 ## 3.2 Numbering Namespaces
 
 | Object Type | Numbering Example | Maintained By | Purpose |
@@ -424,6 +442,7 @@ Aliases in historical documents do not automatically constitute errors, but subs
 | Finding Instance | `F-*` | Platform or implementing organization | Actual discovery on a specific object |
 | Exception Instance | `EXC-*` | Governance process | Risk Acceptance or rule exception |
 
+<a id="33-distinguishing-rules-from-instances"></a>
 ## 3.3 Distinguishing Rules from Instances
 
 A clear distinction MUST be maintained between "rule definitions" and "actual Findings."
@@ -438,6 +457,7 @@ F-20260719-00128
 
 A single `QD` can produce multiple Findings across multiple artifacts, versions, or environments. A single Finding can also be associated with multiple QD, EX, AS, FM, or Defect Chain entries.
 
+<a id="34-terminology-boundaries"></a>
 ## 3.4 Terminology Boundaries
 
 | Term | Correct Definition | MUST NOT Be Conflated With |
@@ -456,6 +476,7 @@ A single `QD` can produce multiple Findings across multiple artifacts, versions,
 
 # Chapter 4: Grading Models and Risk Semantics
 
+<a id="41-grading-models-must-not-be-conflated"></a>
 ## 4.1 Grading Models Must Not Be Conflated
 
 SanityOps employs multiple grading models for distinct purposes. They answer different questions and **MUST NOT be substituted for one another merely because they all use L, P, S, or numeric designations**.
@@ -472,6 +493,7 @@ SanityOps employs multiple grading models for distinct purposes. They answer dif
 
 Subsequent documents, reports, APIs, and tool interfaces MUST NOT use isolated expressions such as "L2," "high risk," or "severity level 3." The governing model MUST be included, e.g., `OR-L2`, `BI-L3`, `S3`.
 
+<a id="42-agent-complexity-level-ac-l"></a>
 ## 4.2 Agent Complexity Level: `AC-L`
 
 `AC-L` describes an Agent's technical form, collaboration complexity, and execution chain depth. Its purpose is to determine the applicable Inspect depth, Cross inspection scope, and validation combinations.
@@ -487,6 +509,7 @@ Subsequent documents, reports, APIs, and tool interfaces MUST NOT use isolated e
 
 > Note: Where existing sub-specifications contain Agent complexity tiers with different counts or different descriptions, they SHALL be mapped to `AC-L` in subsequent consistency revisions. They MUST NOT be automatically treated as equivalent prior to explicit mapping.
 
+<a id="43-operation-risk-level-or-l"></a>
 ## 4.3 Operation Risk Level: `OR-L`
 
 `OR-L` describes the operational risk a given Skill, Tool, or execution path can produce. Its focus is on permissions, side effects, irreversibility, impact scope, and data exfiltration capability.
@@ -501,6 +524,7 @@ Subsequent documents, reports, APIs, and tool interfaces MUST NOT use isolated e
 
 `OR-L` is not equivalent to an Agent's structural complexity. For example, a structurally simple Agent that can read a full medical dataset may be `AC-L1` and `OR-L3`.
 
+<a id="44-business-impact-level-bi-l"></a>
 ## 4.4 Business Impact Level: `BI-L`
 
 `BI-L` describes the potential business consequences of Tool-Agent task failure, incorrect execution, or erroneous results. Its focus is not the operation itself, but the impact of task failure on users, business, compliance, and the organization.
@@ -515,6 +539,7 @@ Subsequent documents, reports, APIs, and tool interfaces MUST NOT use isolated e
 
 `BI-L` is not equivalent to `OR-L`. A read-only query Tool may be `OR-L1`, but if used for a high-stakes decision, its task error could be `BI-L3`.
 
+<a id="45-change-level-ch-l"></a>
 ## 4.5 Change Level: `CH-L`
 
 `CH-L` describes the potential regression impact scope of a change, to determine the minimum depth of re-inspection, re-validation, and quality regression.
@@ -528,6 +553,7 @@ Subsequent documents, reports, APIs, and tool interfaces MUST NOT use isolated e
 
 `CH-L` is Core's unified change semantic. Which specific `CH-L` levels require re-execution of which sub-specifications is governed by Chapter 8 and the regression requirements of each domain-specific specification.
 
+<a id="46-inspect-defect-disposition-priority-p0p1p2"></a>
 ## 4.6 Inspect Defect Disposition Priority: `P0/P1/P2`
 
 `P0/P1/P2` denotes only the **disposition priority of an Inspect Finding**. The specific defect levels and blocking rules remain governed by the corresponding Inspect sub-specification.
@@ -547,6 +573,7 @@ Subsequent documents, reports, APIs, and tool interfaces MUST NOT use isolated e
 
 These may be correlated, but they MUST be recorded separately.
 
+<a id="47-risk-explicit-severity-level-s0s3"></a>
 ## 4.7 Risk Explicit Severity Level: `S0–S3`
 
 `S0–S3` is the Exclusive Risk severity expression specific to Risk Explicit. Its definition, adjudication evidence, and Gate impact are governed by Risk Explicit.
@@ -558,6 +585,7 @@ Core stipulates:
 3. A single object may simultaneously have a `P0` Finding and an `S3` Explicit Risk, but both MUST retain independent evidence and independent adjudication rationales;
 4. "Highest risk" in reports MUST specify its risk domain, e.g., "Highest Risk Explicit risk is `S3`."
 
+<a id="48-risk-implicit-termination-status-abcd"></a>
 ## 4.8 Risk Implicit Termination Status: `A/B/C/D`
 
 `A/B/C/D` records the Termination Status of a dynamic attack attempt and the corresponding responsibility boundary.
@@ -571,6 +599,7 @@ Core stipulates:
 
 `A/B/C/D` does not indicate severity, remediation priority, or quality level.
 
+<a id="49-composite-risk-profile-expression"></a>
 ## 4.9 Composite Risk Profile Expression
 
 For release, audit, or governance reports, different risk dimensions SHOULD be expressed side-by-side rather than compressed into a sourceless "aggregate risk level."
@@ -592,6 +621,7 @@ If an organization requires an aggregate risk score, a separate scoring model �
 
 # Chapter 5: Unified Finding, Evidence, and Traceability Model
 
+<a id="51-definition-of-a-finding"></a>
 ## 5.1 Definition of a Finding
 
 A **Finding** is a traceable conclusion record produced against a specific object, version, environment, and rule or evaluation condition.
@@ -606,6 +636,7 @@ Findings may originate from:
 
 A Finding is not the rule itself, not a risk level in itself, and not equivalent to a final release decision.
 
+<a id="52-minimum-finding-record"></a>
 ## 5.2 Minimum Finding Record
 
 Every Finding eligible for entry into reports, Gates, Exception processes, regression, or audit scope MUST record at least the following fields:
@@ -665,6 +696,7 @@ ownership:
 
 Implementations MAY add organization-specific fields, but MUST NOT remove key fields that enable locating the object, version, evidence source, and basis of determination.
 
+<a id="53-finding-statuses"></a>
 ## 5.3 Finding Statuses
 
 | Status | Meaning |
@@ -678,6 +710,7 @@ Implementations MAY add organization-specific fields, but MUST NOT remove key fi
 
 `accepted` does not mean the risk has disappeared. `mitigated` does not mean the control has been dynamically validated. `closed` MUST retain historical evidence and the basis for closure.
 
+<a id="54-evidence-tiers"></a>
 ## 5.4 Evidence Tiers
 
 | Evidence Type | Typical Content | Conclusions It Can Support | Conclusions It Cannot Support Alone |
@@ -688,6 +721,7 @@ Implementations MAY add organization-specific fields, but MUST NOT remove key fi
 | Control Evidence | IAM policies, server-side validation, approval records, gateway rules, audit configurations | Control existence, control design and configuration state | Control effectiveness across all attack scenarios |
 | Human Evidence | Review opinions, approvals, root-cause analyses, Exception decisions | Human confirmation, governance decisions, and responsibility attribution | Substitution for required technical or test evidence |
 
+<a id="55-evidence-sufficiency-and-conclusion-strength"></a>
 ## 5.5 Evidence Sufficiency and Conclusion Strength
 
 Conclusion strength MUST match the evidence type:
@@ -711,8 +745,10 @@ Multiple evidence types combined, with human review
 
 No report SHALL use language exceeding the ceiling of the available evidence.
 
+<a id="56-confidence-and-review-status"></a>
 ## 5.6 Confidence and Review Status
 
+<a id="561-confidence"></a>
 ### 5.6.1 Confidence
 
 | Confidence | Meaning |
@@ -723,6 +759,7 @@ No report SHALL use language exceeding the ceiling of the available evidence.
 
 Confidence describes the **credibility of the current determination**, not the severity of the risk.
 
+<a id="562-review-status"></a>
 ### 5.6.2 Review Status
 
 | Status | Meaning |
@@ -733,6 +770,7 @@ Confidence describes the **credibility of the current determination**, not the s
 | `rejected` | Determined upon review to be unfounded, a false positive, or not applicable. |
 | `needs_more_evidence` | Cannot confirm; requires supplementary version, environment, invocation chain, or test evidence. |
 
+<a id="57-not-applicable-na"></a>
 ## 5.7 Not Applicable: `N/A`
 
 `N/A` can only indicate that the applicability preconditions for the current inspection item are not satisfied. It MUST NOT be used as a means to evade inspection, lower the release bar, or substitute for an Exception process.
@@ -754,6 +792,7 @@ If a determination cannot be made due to missing evidence, `uncertain` or `needs
 
 # Chapter 6: Conclusions, Gates, and Release Decision Boundaries
 
+<a id="61-gate-independence"></a>
 ## 6.1 Gate Independence
 
 The Gates of Inspect, Risk Explicit, Risk Implicit, and Quality serve independent purposes and rest on independent evidence foundations.
@@ -767,6 +806,7 @@ The Gates of Inspect, Risk Explicit, Risk Implicit, and Quality serve independen
 
 The passing of any single Gate SHALL NOT automatically substitute for any other applicable Gate.
 
+<a id="62-release-summary-status"></a>
 ## 6.2 Release Summary Status
 
 Organizations, platforms, or final reports MAY use the following composite release statuses, while preserving the original conclusions:
@@ -795,6 +835,7 @@ release_summary:
     - EXC-20260719-003
 ```
 
+<a id="63-minimum-evidence-requirements-for-release-conclusions"></a>
 ## 6.3 Minimum Evidence Requirements for Release Conclusions
 
 A release summary MUST, at minimum, be able to answer:
@@ -807,6 +848,7 @@ A release summary MUST, at minimum, be able to answer:
 6. Which dynamic validations or quality regressions were not executed, failed, or had insufficient evidence;
 7. The final release decision-maker and decision time.
 
+<a id="64-constraints-on-passwithexception"></a>
 ## 6.4 Constraints on `PASS_WITH_EXCEPTION`
 
 `PASS_WITH_EXCEPTION` MAY only be used when all of the following conditions are simultaneously met:
@@ -820,6 +862,7 @@ A release summary MUST, at minimum, be able to answer:
 
 Whether P0, S3, or dynamic attack success can be accepted as an Exception SHALL be separately governed by the organization's risk policy and the corresponding sub-specification. Core does not confer automatic exemption eligibility.
 
+<a id="65-conflicts-and-insufficient-evidence"></a>
 ## 6.5 Conflicts and Insufficient Evidence
 
 When different sub-specifications or different evidence sources produce superficially contradictory conclusions:
@@ -844,6 +887,7 @@ This indicates:
 - The QD MUST NOT be deleted on this basis, nor the Agent's own artifacts declared free of risk;
 - Whether release can proceed depends on the corresponding Gates, Compensating Controls, business risk, and Exception policy.
 
+<a id="66-precedence-in-sub-specification-conflicts"></a>
 ## 6.6 Precedence in Sub-Specification Conflicts
 
 When a conflict in expression exists between Core and a domain-specific sub-specification:
@@ -857,6 +901,7 @@ When a conflict in expression exists between Core and a domain-specific sub-spec
 
 # Chapter 7: Cross-Subset Integration and Causal Boundaries
 
+<a id="71-standard-integration-closed-loop"></a>
 ## 7.1 Standard Integration Closed Loop
 
 The sub-specifications of SanityOps SHALL form the following closed loop:
@@ -879,6 +924,7 @@ Fix, Re-Inspect, Regress, Release, or Exception Decision
 
 This closed loop is designed to establish traceable **candidate associations and validation paths** — not to automatically derive a definitive conclusion in one sub-specification from the result of another.
 
+<a id="72-scope-of-relevance"></a>
 ## 7.2 Scope of Relevance
 
 Relevance connects Inspect, Risk, and Quality, but its mapping conclusions constitute risk associations and validation recommendations.
@@ -901,6 +947,7 @@ Relevance MUST NOT be used alone to support:
 - Directly converting an association mapping into a Risk or Quality FAIL;
 - Treating a Defect Chain as a confirmed complete attack chain or failure chain.
 
+<a id="73-prohibited-inferences"></a>
 ## 7.3 Prohibited Inferences
 
 The following inferences are prohibited:
@@ -914,6 +961,7 @@ The following inferences are prohibited:
 | "A control is configured, therefore it is effective." | "Control configuration proves the control exists; effectiveness still requires applicable test or runtime evidence." |
 | "One regression pass means the risk is permanently eliminated." | "No related issues were observed within the scope of the current version, environment, test cases, and evidence." |
 
+<a id="74-finding-association-types"></a>
 ## 7.4 Finding Association Types
 
 Cross-subset Finding associations SHALL be annotated with a relationship type. Bare links that imply causation are not sufficient.
@@ -930,12 +978,15 @@ Cross-subset Finding associations SHALL be annotated with a relationship type. B
 | `supersedes` | A Finding is superseded by a subsequent Finding due to artifact version or rule changes. |
 | `duplicates` | Two Findings are confirmed to be duplicate records of the same issue. |
 
+<a id="75-single-defects-defect-chains-and-common-cause-issues"></a>
 ## 7.5 Single Defects, Defect Chains, and Common-Cause Issues
 
+<a id="751-single-defects"></a>
 ### 7.5.1 Single Defects
 
 When an issue is independently identified by a single rule in a single specific artifact, and there is insufficient evidence of a cross-artifact amplification relationship, it SHALL be retained as an independent Finding.
 
+<a id="752-defect-chains"></a>
 ### 7.5.2 Defect Chains
 
 When multiple defects are mutually dependent within the same execution path, jointly amplify risk, or may form a risk path, a Defect Chain MAY be established.
@@ -955,6 +1006,7 @@ Chain Identifier
 
 A Defect Chain is not a replacement for its member Findings. Each member Finding SHALL still independently retain its rule, evidence, and disposition status.
 
+<a id="753-common-cause-issues"></a>
 ### 7.5.3 Common-Cause Issues
 
 When multiple Findings, upon analysis, may stem from the same design, configuration, process, or organizational cause, a "common-cause candidate" MAY be established.
@@ -968,6 +1020,7 @@ Multiple Tools simultaneously lack input boundaries
 
 Prior to root-cause confirmation, `candidate_root_cause_for` SHALL be used. Original Findings MUST NOT be directly closed or merged.
 
+<a id="76-remediation-and-regression-integration-principles"></a>
 ## 7.6 Remediation and Regression Integration Principles
 
 When remediating a Finding, the impact on associated objects SHALL be assessed:
@@ -988,6 +1041,7 @@ Remediation SHALL follow the **principle of least-risk remediation**: prioritize
 
 # Chapter 8: Versioning, Change, Baseline, and Compatibility
 
+<a id="81-version-objects-must-be-separated"></a>
 ## 8.1 Version Objects Must Be Separated
 
 SanityOps requires at minimum the following version objects to be distinguished:
@@ -1003,6 +1057,7 @@ SanityOps requires at minimum the following version objects to be distinguished:
 
 A single "version number" MUST NOT be used to vaguely represent all of the above.
 
+<a id="82-definition-of-a-baseline"></a>
 ## 8.2 Definition of a Baseline
 
 A **Baseline** is a confirmed, reproducible, comparable, versioned result snapshot used to identify quality degradation, validation differences, control changes, or rule changes.
@@ -1021,6 +1076,7 @@ Object and Artifact Version
 
 Historical results that lack records of critical environment or asset versions MAY serve as references, but SHALL NOT serve as strict regression Baselines.
 
+<a id="83-change-level-determination"></a>
 ## 8.3 Change Level Determination
 
 Changes SHALL be assigned a `CH-L` based on the affected objects, behavioral boundaries, data flows, permissions, and external dependencies. The determination SHALL NOT be based solely on the number of changed files or the size of textual diffs.
@@ -1035,6 +1091,7 @@ The following circumstances are typically at least `CH-L3`:
 - Modifying the model, structured output mode, context assembly, or system-level Prompt;
 - Modifying external Connectors, MCP Servers, Webhooks, or Callbacks.
 
+<a id="84-minimum-re-inspection-and-regression-principles"></a>
 ## 8.4 Minimum Re-Inspection and Regression Principles
 
 | Change Level | Minimum Requirement |
@@ -1046,6 +1103,7 @@ The following circumstances are typically at least `CH-L3`:
 
 The above are minimum principles. Where `OR-L`, `BI-L`, regulatory requirements, or organizational policy are higher, the more stringent requirement SHALL apply.
 
+<a id="85-rule-or-evaluator-changes"></a>
 ## 8.5 Rule or Evaluator Changes
 
 Changes to rule libraries, mapping libraries, detectors, Judge Prompts, scorers, thresholds, or test assets may alter the comparability of historical conclusions.
@@ -1070,6 +1128,7 @@ The following circumstances typically require re-evaluation of affected objects:
 - Changing attack test payloads, success criteria, or control attribution logic;
 - Changing impact strength or recommended validation paths in Relevance mappings.
 
+<a id="86-compatibility-principles"></a>
 ## 8.6 Compatibility Principles
 
 Compatibility relationships SHALL be maintained between sub-specifications, rule libraries, tool implementations, and report templates.
@@ -1082,6 +1141,7 @@ Compatibility relationships SHALL be maintained between sub-specifications, rule
 | Rule or identifier deprecated | Identifier MUST NOT be reused; deprecation note, replacement rule, and historical result interpretation SHALL be preserved. |
 | New tool version cannot interpret old results | Incompatibility SHALL be explicitly declared; re-run recommendations or conversion tools SHALL be provided. |
 
+<a id="87-document-dependencies-and-applicable-versions"></a>
 ## 8.7 Document Dependencies and Applicable Versions
 
 Each SanityOps sub-specification SHALL declare in its document information or appendix:
@@ -1099,6 +1159,7 @@ Before a complete compatibility matrix is established, reports SHALL at minimum 
 
 # Chapter 9: Governance Roles, Remediation, and Exceptions
 
+<a id="91-minimum-role-model"></a>
 ## 9.1 Minimum Role Model
 
 Organizations MAY merge roles according to their scale, but MUST NOT eliminate separation of duties, approval traceability, or review requirements.
@@ -1116,6 +1177,7 @@ Organizations MAY merge roles according to their scale, but MUST NOT eliminate s
 
 A single person MAY hold multiple roles. However, for high-risk changes, P0, S3, dynamic attack success, or high-business-impact scenarios, the Artifact Owner and Exception Approver SHALL NOT be the same person.
 
+<a id="92-remediation-responsibility-and-closed-loop"></a>
 ## 9.2 Remediation Responsibility and Closed Loop
 
 Every confirmed Finding MUST have at minimum:
@@ -1141,6 +1203,7 @@ Typical disposition paths include:
 
 After remediation is complete, a Finding SHALL NOT be closed based solely on code or configuration changes. Re-inspection, regression, or dynamic validation commensurate with the risk and Change Level MUST be executed.
 
+<a id="93-exceptions-and-risk-acceptance"></a>
 ## 9.3 Exceptions and Risk Acceptance
 
 An Exception is a **time-limited and traceable** Risk Acceptance for a specific Finding or requirement. It is not a permanent exemption.
@@ -1183,6 +1246,7 @@ closure:
   closure_evidence: []
 ```
 
+<a id="94-minimum-conditions-for-exception-approval"></a>
 ## 9.4 Minimum Conditions for Exception Approval
 
 An Exception MUST simultaneously satisfy:
@@ -1204,6 +1268,7 @@ The following SHALL NOT be treated as "default exceptions":
 - Repeated renewal substitutes for a remediation plan;
 - A bare Prompt declaration substitutes for executable controls required for high-risk operations.
 
+<a id="95-exception-review-expiry-and-revocation"></a>
 ## 9.5 Exception Review, Expiry, and Revocation
 
 An Exception MUST be reviewed, and SHALL automatically become invalid if necessary, when any of the following occurs:
@@ -1217,6 +1282,7 @@ An Exception MUST be reviewed, and SHALL automatically become invalid if necessa
 
 Upon expiry or revocation, the associated release status SHALL NOT continue to use `PASS_WITH_EXCEPTION` unless re-approved.
 
+<a id="96-risk-acceptance-and-release-responsibility-boundaries"></a>
 ## 9.6 Risk Acceptance and Release Responsibility Boundaries
 
 Risk Acceptance does not alter the factual Finding, nor does it reduce its original severity.
@@ -1238,6 +1304,7 @@ Risk Acceptance only represents that an authorized entity accepts the residual r
 
 # Chapter 10: Implementation Maturity and Extension Roadmap
 
+<a id="101-implementation-principles"></a>
 ## 10.1 Implementation Principles
 
 SanityOps MAY be adopted in phases. Organizations are not required to implement all capabilities at once in the initial phase, but they SHOULD:
@@ -1247,6 +1314,7 @@ SanityOps MAY be adopted in phases. Organizations are not required to implement 
 - Prioritize more complete controls for high `OR-L`, high `BI-L`, or high `CH-L` scenarios;
 - Avoid representing "not yet built" as "passed" or "not applicable."
 
+<a id="102-implementation-phases"></a>
 ## 10.2 Implementation Phases
 
 | Phase | Objective | Minimum Capabilities |
@@ -1259,6 +1327,7 @@ SanityOps MAY be adopted in phases. Organizations are not required to implement 
 
 These phases are for construction guidance. They do not constitute an organizational maturity rating, certification level, or compliance statement.
 
+<a id="103-future-specialized-specification-extension-order"></a>
 ## 10.3 Future Specialized Specification Extension Order
 
 Subsequent Inspect or governance specifications are recommended to extend in the following order:
@@ -1274,6 +1343,7 @@ Inspect RAG / Knowledge Contract
 
 The priority is based on: the prevalence of the object in enterprise Agents, its impact on quality and security, its dependency relationship with the existing Prompt–Skill–Tool system, and implementability.
 
+<a id="104-current-coverage-statement"></a>
 ## 10.4 Current Coverage Statement
 
 All external materials, product interfaces, or evaluation reports SHALL accurately describe SanityOps' current coverage status:

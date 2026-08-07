@@ -1,4 +1,4 @@
-# SanityOps Framework
+﻿# SanityOps Framework
 
 # Inspect Prompt Specification
 
@@ -71,20 +71,24 @@
 
 ## Foreword
 
+<a id="01-positioning-and-scope"></a>
 ### 0.1 Positioning and Scope
 
+<a id="011-what-this-specification-is"></a>
 #### 0.1.1 What This Specification Is
 
 - **SanityOps Inspect Prompt** is the **industry specification** for AI Agent prompt quality inspection
 - It defines the classification system, inspection criteria, and risk levels for prompt defects
 - It provides an **auditable, multi-implementation** inspection framework
 
+<a id="012-what-this-specification-is-not"></a>
 #### 0.1.2 What This Specification Is Not
 
 - ❌ Not a product user manual
 - ❌ Not a specification for any specific LLM platform (platform-neutral)
 - ❌ Not a runtime behavior specification (that belongs to the Risk subset)
 
+<a id="013-inspection-scope"></a>
 #### 0.1.3 Inspection Scope
 
 | Inspection Object | Description |
@@ -94,6 +98,7 @@
 | **Tool/Skill Descriptions** | Definitions of tool invocation methods, parameters, and return values |
 | **Example Design** | Positive examples, counter-examples, and boundary-condition examples |
 
+<a id="014-out-of-scope"></a>
 #### 0.1.4 Out of Scope
 
 | Out-of-Scope Item | Rationale |
@@ -103,6 +108,7 @@
 | **Infrastructure configuration** | Belongs to the deployment layer |
 | **Business process design** | Belongs to the product design layer |
 
+<a id="015-position-within-the-sanityops-framework"></a>
 #### 0.1.5 Position Within the SanityOps Framework
 
 ```
@@ -122,8 +128,10 @@ SanityOps Six-Subset Framework
     └─ Quality ← Agent and (local) LLM service quality assessment
 ```
 
+<a id="02-terminology-and-abbreviations"></a>
 ### 0.2 Terminology and Abbreviations
 
+<a id="021-core-terminology"></a>
 #### 0.2.1 Core Terminology
 
 | Term | Definition |
@@ -135,6 +143,7 @@ SanityOps Six-Subset Framework
 | **Agent** | An AI application instance with autonomous decision-making capability |
 | **Numbering System** | The classification numbering system using the QD-P prefix to identify prompt defects |
 
+<a id="022-numbering-system-overview"></a>
 #### 0.2.2 Numbering System Overview
 
 | Number Prefix | Meaning | Scope |
@@ -143,6 +152,7 @@ SanityOps Six-Subset Framework
 | QD-T | Quality Defect - Tool | Inspect Tool subset |
 | QD-S | Quality Defect - Skill | Inspect Skill subset |
 
+<a id="023-document-numbering-convention"></a>
 #### 0.2.3 Document Numbering Convention
 
 ```
@@ -164,6 +174,7 @@ Full Examples:
   QD-P-2.5.2 = Part 2 → Constraints/Boundaries → Security Boundary Constraint Missing
 ```
 
+<a id="024-abbreviation-table"></a>
 #### 0.2.4 Abbreviation Table
 
 | Abbreviation | Full Name |
@@ -177,6 +188,7 @@ Full Examples:
 | **Schema** | Data Structure Definition |
 | **API** | Application Programming Interface |
 
+<a id="025-defect-level-definitions-p0p1p2"></a>
 #### 0.2.5 Defect Level Definitions (P0/P1/P2)
 
 | Symbol | Level | Meaning |
@@ -189,8 +201,10 @@ Full Examples:
 
 ## 1 Logic Defects Within LLM Autonomous Detection Capability
 
+<a id="11-defect-characteristics-overview"></a>
 ### 1.1 Defect Characteristics Overview
 
+<a id="111-essential-definition"></a>
 #### 1.1.1 Essential Definition
 
 The defects listed in this part all belong to the **formal logic and semantic consistency** layer, with the following characteristics:
@@ -202,6 +216,7 @@ The defects listed in this part all belong to the **formal logic and semantic co
 | **Binary-decidable** | Present or absent; no gray zone |
 | **LLM-endogenous capability** | Mainstream LLMs have acquired the relevant logical reasoning capabilities during pre-training |
 
+<a id="112-detection-method"></a>
 #### 1.1.2 Detection Method
 
 | Detection Aspect | Description |
@@ -211,6 +226,7 @@ The defects listed in this part all belong to the **formal logic and semantic co
 | **Accuracy** | For typical manifestations, mainstream LLM detection accuracy ≥ 90% |
 | **False positive rate** | May produce false positives for boundary-ambiguous cases; human review required |
 
+<a id="113-positioning-of-this-part"></a>
 #### 1.1.3 Positioning of This Part
 
 The purpose of this part is not to "teach the LLM how to inspect," but rather:
@@ -219,8 +235,10 @@ The purpose of this part is not to "teach the LLM how to inspect," but rather:
 - **For inspection processes**: Clarifies that these problems do not require complex inspection frameworks — simply have the LLM read the text
 - **For defect classification**: Delineates the boundary for "defects requiring explicit prompts" (Part 2)
 
+<a id="12-typical-logic-defect-categories"></a>
 ### 1.2 Typical Logic Defect Categories
 
+<a id="121-contradiction-defects-qd-p-11"></a>
 #### 1.2.1 Contradiction Defects (QD-P-1.1)
 
 ##### QD-P-1.1.1 Direct Contradiction
@@ -307,6 +325,7 @@ The purpose of this part is not to "teach the LLM how to inspect," but rather:
 | **Diagnosis** | The example output exceeds 100 words, contradicting the rule; this weakens the rule's binding force |
 | **Fixed** | Rule: "Answers MUST be concise, no more than 100 words." Example: "User: What's the weather today? Assistant: Sunny, 25°C, suitable for outdoor activities." |
 
+<a id="122-mismatch-defects-qd-p-12"></a>
 #### 1.2.2 Mismatch Defects (QD-P-1.2)
 
 ##### QD-P-1.2.1 Role-Responsibility Mismatch
@@ -395,6 +414,7 @@ The purpose of this part is not to "teach the LLM how to inspect," but rather:
 | **Fixed A** | "Responsibility: Analyze the user's financial situation and provide investment advice. Constraint: Analyzing funds involving suspected money laundering or illegal sources is prohibited." |
 | **Fixed B** | "Responsibility: Provide general investment advice based on a financial summary provided by the user. Constraint: Do not proactively analyze raw financial data." |
 
+<a id="123-scope-definition-defects-qd-p-13"></a>
 #### 1.2.3 Scope Definition Defects (QD-P-1.3)
 
 ##### QD-P-1.3.1 Quantifier Misuse
@@ -481,6 +501,7 @@ The purpose of this part is not to "teach the LLM how to inspect," but rather:
 | **Diagnosis** | "Access" and "organization" boundaries are undefined; may be interpreted as read, modify, delete, etc. |
 | **Fixed** | "You may read documents specified by the user and perform the following operations: summarization, format organization, content proofreading. Prohibited operations: delete, move, rename files." |
 
+<a id="124-redundancy-and-invalidity-defects-qd-p-14"></a>
 #### 1.2.4 Redundancy and Invalidity Defects (QD-P-1.4)
 
 ##### QD-P-1.4.1 Duplicate Constraints
@@ -568,6 +589,7 @@ The purpose of this part is not to "teach the LLM how to inspect," but rather:
 | **Diagnosis** | The Skill and constraint conflict; if the constraint is strictly enforced, the Skill is never invoked |
 | **Fixed** | "Skill: send_email — sends email. Constraint: Explicit user confirmation MUST be obtained before sending an email. Once confirmed, this Skill may be invoked." |
 
+<a id="125-implication-defects-qd-p-15"></a>
 #### 1.2.5 Implication Defects (QD-P-1.5)
 
 ##### QD-P-1.5.1 Responsibilities Do Not Support the Objective
@@ -628,8 +650,10 @@ The purpose of this part is not to "teach the LLM how to inspect," but rather:
 
 > **Note**: This section has no 1.3. The original "Defect Severity Classification" summary table from v1.2 has been removed; severity information is now incorporated into each defect entry's "Severity" field. Number 1.3 is reserved to keep subsequent section numbers (1.4–1.8) unchanged.
 
+<a id="14-detection-methods-and-recommendations"></a>
 ### 1.4 Detection Methods and Recommendations
 
+<a id="141-recommended-detection-instruction"></a>
 #### 1.4.1 Recommended Detection Instruction
 
 Since the defects in this part can be autonomously detected by the LLM, a concise instruction is recommended:
@@ -646,6 +670,7 @@ Focus on:
 - Whether redundant or invalid definitions exist
 ```
 
+<a id="142-detection-timing"></a>
 #### 1.4.2 Detection Timing
 
 | Timing | Description |
@@ -655,6 +680,7 @@ Focus on:
 | **Pre-launch** | Include as part of the pre-launch inspection checklist |
 | **Troubleshooting** | Prioritize logic defect inspection when Agent behavior is anomalous |
 
+<a id="143-important-notes"></a>
 #### 1.4.3 Important Notes
 
 | Note | Description |
@@ -664,6 +690,7 @@ Focus on:
 | **Remediation priority** | P0 defects MUST be fixed; P1 defects SHOULD be fixed; P2 defects MAY be handled as appropriate |
 | **Domain knowledge** | Some semantic judgments require domain knowledge; the LLM may not be sensitive to these |
 
+<a id="15-part-summary"></a>
 ### 1.5 Part Summary
 
 The logic defects listed in this part all fall within the scope of autonomous LLM detection. This means:
@@ -677,8 +704,10 @@ The logic defects listed in this part all fall within the scope of autonomous LL
 
 ---
 
+<a id="16-gray-zone-logic-defects-qd-p-16"></a>
 ## 1.6 Gray-Zone Logic Defects (QD-P-1.6)
 
+<a id="160-positioning-of-this-section"></a>
 ### 1.6.0 Positioning of This Section
 
 **Definition**: Gray-Zone Defects are logic problems that the LLM **has the capability to identify, but detection reliability is unstable**. Unlike the defects in Sections 1.2.1–1.2.5, these problems lack the "binary-decidable" characteristic — the LLM can accurately identify them in some contexts, but may miss or misjudge them in others.
@@ -900,6 +929,7 @@ The logic defects listed in this part all fall within the scope of autonomous LL
 | **Diagnosis** | "The user may update symptom descriptions during the conversation, but the prompt does not define how to revise previous suggestions" |
 | **Fixed** | "Based on the symptoms described by the user, provide possible health suggestions. When the user updates or revises symptom descriptions: (1) Note that previous suggestions may no longer be valid; (2) Re-evaluate based on the latest symptoms; (3) If new suggestions conflict with old ones, clearly explain the reason for the change." |
 
+<a id="17-gray-zone-summary"></a>
 ### 1.7 Gray-Zone Summary
 
 #### Detection Reliability Summary
@@ -949,6 +979,7 @@ Part 1 1.2.1–1.2.5 ──→ Gray Zone 1.6 ──→ Part 2
 
 ---
 
+<a id="18-complete-part-1-structure"></a>
 ## 1.8 Complete Part 1 Structure
 
 ```
@@ -992,8 +1023,10 @@ Part 1: Logic Defects Within LLM Autonomous Detection Capability
 
 ## 2 Defects Requiring Explicit Prompts
 
+<a id="21-defect-characteristics-overview"></a>
 ### 2.1 Defect Characteristics Overview
 
+<a id="211-essential-definition"></a>
 #### 2.1.1 Essential Definition
 
 The defects listed in this part all belong to the **structural, completeness, and explicit declaration** category, with the following characteristics:
@@ -1005,6 +1038,7 @@ The defects listed in this part all belong to the **structural, completeness, an
 | **Structural impact** | The defect affects the structural completeness of the Agent and may cause functional gaps |
 | **Checklist-inspectable** | These defects are suitable for systematic inspection through a structured checklist |
 
+<a id="212-detection-method"></a>
 #### 2.1.2 Detection Method
 
 | Detection Aspect | Description |
@@ -1014,6 +1048,7 @@ The defects listed in this part all belong to the **structural, completeness, an
 | **Accuracy** | With checklist guidance, the LLM can accurately identify |
 | **False positive rate** | Low (structured inspection reduces ambiguity) |
 
+<a id="213-positioning-of-this-part"></a>
 #### 2.1.3 Positioning of This Part
 
 The purpose of this part is:
@@ -1022,8 +1057,10 @@ The purpose of this part is:
 - **For inspection processes**: Requires constructing a structured inspection checklist, not merely relying on LLM reading
 - **For defect classification**: Delineates the boundary for Part 1 — defects beyond logical contradictions fall into this part
 
+<a id="22-typical-defect-categories"></a>
 ### 2.2 Typical Defect Categories
 
+<a id="221-structural-and-normative-defects-qd-p-21"></a>
 #### 2.2.1 Structural and Normative Defects (QD-P-2.1)
 
 ##### QD-P-2.1.1 Format Compliance
@@ -1138,6 +1175,7 @@ The purpose of this part is:
 | **Diagnosis** | Language is redundant; increases Token Consumption |
 | **Fixed** | "Answers must be accurate." |
 
+<a id="222-input-definition-defects-qd-p-22"></a>
 #### 2.2.2 Input Definition Defects (QD-P-2.2)
 
 ##### QD-P-2.2.1 Undeclared Input Source
@@ -1252,6 +1290,7 @@ The purpose of this part is:
 | **Diagnosis** | Handling when input is missing is not defined |
 | **Fixed** | "Generate a report based on user input. If the user has not provided necessary input, prompt the user to supplement. If the user has not provided optional input, use default values." |
 
+<a id="223-output-definition-defects-qd-p-23"></a>
 #### 2.2.3 Output Definition Defects (QD-P-2.3)
 
 ##### QD-P-2.3.1 Undefined Output Format
@@ -1366,6 +1405,7 @@ The purpose of this part is:
 | **Diagnosis** | Privacy filtering is not defined; may cause privacy leaks |
 | **Fixed** | "Output user information. Privacy filtering: Mask national ID numbers, bank card numbers, contact information, and other sensitive information; output only name and non-sensitive data." |
 
+<a id="224-workflow-and-resource-defects-qd-p-24"></a>
 #### 2.2.4 Workflow and Resource Defects (QD-P-2.4)
 
 ##### QD-P-2.4.1 Incomplete Workflow Steps
@@ -1452,6 +1492,7 @@ The purpose of this part is:
 | **Diagnosis** | API invocation specification is not defined; may cause invocation failures |
 | **Fixed** | "Invoke the API to query data. Invocation specification: API name = query_user_data, required parameter = userId, optional parameter = scope. On failure: prompt the user and attempt the local data source." |
 
+<a id="225-constraint-and-boundary-defects-qd-p-25"></a>
 #### 2.2.5 Constraint and Boundary Defects (QD-P-2.5)
 
 ##### QD-P-2.5.1 Missing Termination Constraints
@@ -1599,6 +1640,7 @@ The purpose of this part is:
 | **Diagnosis** | Invocation frequency limits are not defined; may cause API abuse |
 | **Fixed** | "Invoke the API to query data. Frequency limit: Maximum 10 calls per minute. When the limit is exceeded, cache results and prompt the user to try again later." |
 
+<a id="226-exception-handling-defects-qd-p-26"></a>
 #### 2.2.6 Exception Handling Defects (QD-P-2.6)
 
 ##### QD-P-2.6.1 Runtime Exceptions Not Covered
@@ -1685,6 +1727,7 @@ The purpose of this part is:
 | **Diagnosis** | Retry count and interval are not defined; may cause infinite retries |
 | **Fixed** | "If the API call fails, retry up to 3 times, with a 1-second interval. If all 3 attempts fail, prompt the user and log the error." |
 
+<a id="227-example-design-defects-qd-p-27"></a>
 #### 2.2.7 Example Design Defects (QD-P-2.7)
 
 ##### QD-P-2.7.1 Insufficient Positive Example Representativeness
@@ -1770,8 +1813,10 @@ The purpose of this part is:
 | **Diagnosis** | No boundary-case examples provided |
 | **Fixed** | Boundary-case examples: 1. Empty input: User: (empty) Assistant: "Hello, how can I help you?" 2. Excessively long input: User: (text exceeding 1,000 words) Assistant: "Your input is quite long. I have extracted the key information for analysis..." (summarized processing) |
 
+<a id="23-detection-method-checklist-mechanism"></a>
 ### 2.3 Detection Method: Checklist Mechanism
 
+<a id="231-completeness-inspection-checklist"></a>
 #### 2.3.1 Completeness Inspection Checklist
 
 ```
@@ -1816,6 +1861,7 @@ The purpose of this part is:
   □ Are there examples for boundary cases?
 ```
 
+<a id="232-detection-process"></a>
 #### 2.3.2 Detection Process
 
 ```
@@ -1842,6 +1888,7 @@ Step 5: Domain Adaptation Inspection
   → Flag domain adaptation issues
 ```
 
+<a id="24-defect-severity-classification"></a>
 ## 2.4 Defect Severity Classification
 
 | Level | Symbol | Definition | Typical Defects | Disposition Priority |
@@ -1850,8 +1897,10 @@ Step 5: Domain Adaptation Inspection
 | **P1** | 🟡 | May cause behavioral instability or functional defects | Incomplete input/output definitions, undefined constraint priority, missing degradation strategy, unreasonable retry mechanism, insufficient example coverage | **SHOULD be fixed** |
 | **P2** | 🟢 | Affects readability or efficiency, but does not impact functionality | Format compliance, language conciseness, structural hierarchy reasonableness | **MAY be fixed** |
 
+<a id="25-part-summary"></a>
 ## 2.5 Part Summary
 
+<a id="251-core-points"></a>
 ### 2.5.1 Core Points
 
 The defects listed in this part all fall within the scope of things the LLM **will not proactively notice**. This means:
@@ -1860,6 +1909,7 @@ The defects listed in this part all fall within the scope of things the LLM **wi
 - **For inspection processes**: A Checklist MUST be used for item-by-item inspection; cannot rely on the LLM to autonomously discover
 - **For framework design**: This part is the core value of the framework, ensuring completeness
 
+<a id="252-relationship-to-part-1"></a>
 ### 2.5.2 Relationship to Part 1
 
 | Dimension | Part 1 | Part 2 |
@@ -1869,6 +1919,7 @@ The defects listed in this part all fall within the scope of things the LLM **wi
 | **LLM role** | Proactive discovery | Passive response |
 | **Framework value** | List common errors; help avoid | Ensure completeness; no missing critical content |
 
+<a id="253-practice-recommendations"></a>
 ### 2.5.3 Practice Recommendations
 
 ```
@@ -1896,8 +1947,10 @@ Practice Recommendations:
 
 ## 3 Tiered Inspection Mechanism
 
+<a id="31-agent-level-definitions"></a>
 ### 3.1 Agent Level Definitions
 
+<a id="311-three-agent-levels"></a>
 #### 3.1.1 Three Agent Levels
 
 | Level | Name | Definition | Typical Characteristics |
@@ -1906,6 +1959,7 @@ Practice Recommendations:
 | **L2** | Multi-turn Interactive | Requires multi-turn dialogue or simple tool invocations | Multi-turn dialogue, 1–3 tools, simple workflow, limited state |
 | **L3** | Complex Agent | Complex workflow, multi-tool collaboration, strong constraints | 4+ tools, complex workflow, security constraints, permission control, exception handling |
 
+<a id="312-three-level-agent-determination-criteria"></a>
 #### 3.1.2 Three-Level Agent Determination Criteria
 
 | Level | Determination Criteria (any 2 or more satisfied) |
@@ -1914,6 +1968,7 @@ Practice Recommendations:
 | **L2** | ✓ Multi-turn dialogue<br>✓ 1–3 tool invocations<br>✓ Simple workflow (≤ 5 steps)<br>✓ Limited state management |
 | **L3** | ✓ 4+ tool invocations<br>✓ Complex workflow (> 5 steps)<br>✓ Security-sensitive (involves privacy/permissions)<br>✓ Requires exception handling mechanisms |
 
+<a id="313-typical-examples-by-agent-level"></a>
 #### 3.1.3 Typical Examples by Agent Level
 
 | Level | Typical Examples |
@@ -1924,8 +1979,10 @@ Practice Recommendations:
 
 ---
 
+<a id="32-defect-severity-level-definitions"></a>
 ### 3.2 Defect Severity Level Definitions
 
+<a id="321-three-severity-levels"></a>
 #### 3.2.1 Three Severity Levels
 
 | Level | Symbol | Definition | Disposition Priority |
@@ -1934,6 +1991,7 @@ Practice Recommendations:
 | **P1** | 🟡 | May cause behavioral instability or functional defects | **SHOULD be fixed** |
 | **P2** | 🟢 | Affects readability or efficiency, but does not impact functionality | **MAY be fixed** |
 
+<a id="322-relationship-between-severity-level-and-agent-level"></a>
 #### 3.2.2 Relationship Between Severity Level and Agent Level
 
 **Core Principle**: Defect Severity Level and Agent Level are two orthogonal dimensions, but the severity of the same defect may differ across different Agent Levels.
@@ -1945,6 +2003,7 @@ Practice Recommendations:
 | **Synergy** | Agent Level determines the inspection scope → defects within that scope are handled according to their Severity Level |
 | **Special Case** | The same defect may have its severity upgraded at different Agent Levels (because complexity amplifies the impact scope) |
 
+<a id="323-rules-for-severity-variation-across-agent-levels"></a>
 #### 3.2.3 Rules for Severity Variation Across Agent Levels
 
 | Variation Pattern | Description | Typical Example |
@@ -1957,8 +2016,10 @@ Practice Recommendations:
 
 ---
 
+<a id="33-tiered-inspection-checklist"></a>
 ### 3.3 Tiered Inspection Checklist
 
+<a id="331-checklist-design-principles"></a>
 #### 3.3.1 Checklist Design Principles
 
 | Principle | Description |
@@ -1967,6 +2028,7 @@ Practice Recommendations:
 | **Core-focused** | L1 focuses on P0 defects; L2 progressively covers P1; L3 provides full coverage |
 | **Number-ordered** | Inspection items are ordered by Part 1 and Part 2 numbering (QD-P-1.1.1 → QD-P-1.6.7 → QD-P-2.1.1 → QD-P-2.7.3) |
 
+<a id="332-complete-tiered-inspection-checklist"></a>
 #### 3.3.2 Complete Tiered Inspection Checklist
 
 **Part 1: Logic Defects Within LLM Autonomous Detection Capability**
@@ -2026,6 +2088,7 @@ Practice Recommendations:
 | **QD-P-2.7.2** | Insufficient Counter-Example Coverage | 🟡 | 🟡 | 🔴 | L1/L2 P1; L3 P0 (missing counter-examples in complex Agents may cause repeated errors) |
 | **QD-P-2.7.3** | Missing Boundary-Case Examples | 🟡 | 🟡 | 🔴 | L1/L2 P1; L3 P0 (missing boundary cases in complex Agents have greater impact) |
 
+<a id="333-inspection-item-statistics"></a>
 #### 3.3.3 Inspection Item Statistics
 
 | Agent Level | Total Items | P0 Items | P1 Items | P2 Items |
@@ -2036,8 +2099,10 @@ Practice Recommendations:
 
 ---
 
+<a id="34-inspection-process"></a>
 ### 3.4 Inspection Process
 
+<a id="341-standard-inspection-process"></a>
 #### 3.4.1 Standard Inspection Process
 
 ```
@@ -2066,6 +2131,7 @@ Step 5: Confirm Pass
   → Generate inspection report
 ```
 
+<a id="342-recommended-inspection-timing"></a>
 #### 3.4.2 Recommended Inspection Timing
 
 | Timing | Applicable Levels | Inspection Method |
@@ -2076,6 +2142,7 @@ Step 5: Confirm Pass
 | **Continuous iteration** | — | Automated Agent Checklist inspection is recommended for each update |
 | **Troubleshooting** | L1/L2/L3 | Prioritize inspection of the corresponding level's P0 items when Agent behavior is anomalous |
 
+<a id="343-recommended-review-methods"></a>
 #### 3.4.3 Recommended Review Methods
 
 | Agent Level | Review Method |
@@ -2086,8 +2153,10 @@ Step 5: Confirm Pass
 
 ---
 
+<a id="35-usage-examples"></a>
 ### 3.5 Usage Examples
 
+<a id="351-l1-agent-inspection-example"></a>
 #### 3.5.1 L1 Agent Inspection Example
 
 **Scenario**: Translation Assistant
@@ -2109,6 +2178,7 @@ Step 5: Confirm Pass
 
 **Conclusion**: All P0 items passed; P1 items failed. Recommended to fix before launch.
 
+<a id="352-l2-agent-inspection-example"></a>
 #### 3.5.2 L2 Agent Inspection Example
 
 **Scenario**: Customer Service Bot
@@ -2129,6 +2199,7 @@ Step 5: Confirm Pass
 
 **Conclusion**: P0 items failed; MUST be fixed before launch.
 
+<a id="353-l3-agent-inspection-example"></a>
 #### 3.5.3 L3 Agent Inspection Example
 
 **Scenario**: Financial Analysis Agent
@@ -2151,8 +2222,10 @@ Step 5: Confirm Pass
 
 ---
 
+<a id="36-part-summary"></a>
 ### 3.6 Part Summary
 
+<a id="361-core-points"></a>
 #### 3.6.1 Core Points
 
 | Point | Description |
@@ -2162,6 +2235,7 @@ Step 5: Confirm Pass
 | **Severity level orthogonality** | Defect Severity Level is orthogonal to Agent Level, but the same defect may be upgraded at different levels |
 | **Standardized inspection process** | Determine level → Determine scope → Execute inspection → Classify and handle → Confirm pass |
 
+<a id="362-relationship-to-chapters-1-and-2"></a>
 #### 3.6.2 Relationship to Chapters 1 and 2
 
 | Dimension | Part 1 | Part 2 | Part 3 |
@@ -2171,6 +2245,7 @@ Step 5: Confirm Pass
 | **Detection method** | Direct reading | Checklist inspection | Tiered Checklist inspection |
 | **LLM role** | Proactive discovery | Passive response | Passive response (by level) |
 
+<a id="363-practice-recommendations"></a>
 #### 3.6.3 Practice Recommendations
 
 ```
@@ -2201,6 +2276,7 @@ Practice Recommendations:
 > This chapter defines a quantifiable, reviewable scoring method for Inspect Prompt results.  
 > **Note**: The score does not replace compliance determination. If any `P0` defect exists, the result is still FAIL, but the score is still output for analysis.
 
+<a id="41-scoring-principles"></a>
 ### 4.1 Scoring Principles
 
 | Principle | Description |
@@ -2212,6 +2288,7 @@ Practice Recommendations:
 | Simple rule | For the same inspection item number, the weight is deducted only once regardless of how many defect instances are found |
 | Gate condition | Any `P0` defect → evaluation FAIL (score is still output) |
 
+<a id="42-calculation-steps"></a>
 ### 4.2 Calculation Steps
 
 **Step 1: Determine Agent Level**
@@ -2260,6 +2337,7 @@ Practice Recommendations:
 - If any `P0` defect exists → result = FAIL (score is still output)
 - Otherwise → result = PASS
 
+<a id="43-per-sub-standard-inspection-item-distribution-table-inspect-prompt"></a>
 ### 4.3 Per-Sub-Standard Inspection Item Distribution Table (Inspect Prompt)
 
 Based on the statistics from Section 3.3.3:
@@ -2270,6 +2348,7 @@ Based on the statistics from Section 3.3.3:
 | **L2** | 40 | 18 | 20 | 2 | $5\cdot18+3\cdot20+1\cdot2=152$ | $100/152=0.66$ |
 | **L3** | 47 | 35 | 7 | 5 | $5\cdot35+3\cdot7+1\cdot5=201$ | $100/201=0.50$ |
 
+<a id="44-defect-deduction-value-table-example-inspect-prompt-l1"></a>
 ### 4.4 Defect Deduction Value Table (Example: Inspect Prompt L1)
 
 L1: $base=0.98$
@@ -2280,6 +2359,7 @@ L1: $base=0.98$
 | P1 | $base \times 3$ | $0.98\times3=2.94$ |
 | P2 | $base \times 1$ | $0.98\times1=0.98$ |
 
+<a id="45-scoring-examples-including-gate-fail"></a>
 ### 4.5 Scoring Examples (Including Gate: FAIL)
 
 **Example Scenario**: L2 Agent  
@@ -2331,6 +2411,7 @@ $$
 }
 ```
 
+<a id="46-multi-defect-handling-rules"></a>
 ### 4.6 Multi-Defect Handling Rules
 
 - **Same inspection item number is counted as at most one failure**: Repeated triggering of the same inspection item results in only one deduction of that item's corresponding severity-level weight.

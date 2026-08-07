@@ -1,4 +1,4 @@
-# SanityOps Framework
+﻿# SanityOps Framework
 
 # Inspect Cross Specification
 
@@ -77,8 +77,10 @@
 
 ## Foreword
 
+<a id="01-positioning-and-scope"></a>
 ### 0.1 Positioning and Scope
 
+<a id="011-what-this-specification-is"></a>
 #### 0.1.1 What This Specification Is
 
 This specification is one of the core sub-specifications of the SanityOps Framework's Inspect Standard. It defines the inspection standard for **Cross-Artifact Consistency** across AI Agent artifacts.
@@ -89,6 +91,7 @@ This specification is designed to:
 - Provide a unified inspection framework for cross-artifact inspection, review, and governance
 - Provide explicit rule definitions for automated inspection tooling (the Inspect Cross inspection Agent)
 
+<a id="012-what-this-specification-is-not"></a>
 #### 0.1.2 What This Specification Is Not
 
 This specification is **not**:
@@ -98,6 +101,7 @@ This specification is **not**:
 - A runtime monitoring specification: it does not address cross-artifact behavior monitoring during Agent execution
 - A permission management specification: it does not replace system-level permission control mechanisms
 
+<a id="013-inspection-prerequisites-and-boundaries"></a>
 #### 0.1.3 Inspection Prerequisites and Boundaries
 
 **Inspection Prerequisites**:
@@ -112,6 +116,7 @@ This specification is **not**:
 - It does not re-discover defects already covered by single-artifact inspection
 - It does not cover dynamic monitoring of cross-artifact behavior at runtime
 
+<a id="014-position-within-the-sanityops-framework"></a>
 #### 0.1.4 Position Within the SanityOps Framework
 
 ```
@@ -131,6 +136,7 @@ SanityOps Six-Subset Framework
     └─ Quality ← Agent and (local) LLM service quality assessment
 ```
 
+<a id="015-inspection-order-and-scope"></a>
 #### 0.1.5 Inspection Order and Scope
 
 **Execution Order**:
@@ -158,8 +164,10 @@ SanityOps Six-Subset Framework
 
 ---
 
+<a id="02-terminology-and-numbering-system"></a>
 ### 0.2 Terminology and Numbering System
 
+<a id="021-core-terminology"></a>
 #### 0.2.1 Core Terminology
 
 | Term | Definition |
@@ -175,6 +183,7 @@ SanityOps Six-Subset Framework
 | **RS-1/RS-2/RS-3** | Tool Risk Levels (referencing Inspect Tool v2.3) |
 | **SS-1/SS-2/SS-3** | Skill Risk Levels (referencing Inspect Skill v2.3) |
 
+<a id="022-numbering-system"></a>
 #### 0.2.2 Numbering System
 
 This specification uses the **QD-XY-n.m** numbering system:
@@ -200,6 +209,7 @@ QD-XY-n.m
 - `QD-PT-2.4`: Prompt → Tool relationship, inspection item #4 (Permission Granularity Consistency)
 - `QD-ST-3.6`: Skill ↔ Tool relationship, inspection item #6 (Permission Scope Match)
 
+<a id="023-defect-level-definitions-p0p1p2"></a>
 #### 0.2.3 Defect Level Definitions (P0/P1/P2)
 
 | Symbol | Level | Meaning |
@@ -210,6 +220,7 @@ QD-XY-n.m
 
 **Note**: The defect severity levels in this specification follow the P0/P1/P2 definitions from Inspect Skill v2.3.
 
+<a id="024-abbreviation-table"></a>
 #### 0.2.4 Abbreviation Table
 
 | Abbreviation | Full Name | Source Specification |
@@ -227,8 +238,10 @@ QD-XY-n.m
 
 ---
 
+<a id="03-version-information"></a>
 ### 0.3 Version Information
 
+<a id="031-current-version"></a>
 #### 0.3.1 Current Version
 
 - **Version**: v1.2
@@ -236,6 +249,7 @@ QD-XY-n.m
 - **Last Updated**: July 2026
 - **Maintainer**: SanityOps Working Group
 
+<a id="032-version-history"></a>
 #### 0.3.2 Version History
 
 | Version | Release Date | Major Changes |
@@ -248,8 +262,10 @@ QD-XY-n.m
 
 ## Part 1: Cross-Artifact Inspection Overview
 
+<a id="11-why-cross-artifact-inspection"></a>
 ### 1.1 Why Cross-Artifact Inspection
 
+<a id="111-the-limitations-of-single-artifact-inspection"></a>
 #### 1.1.1 The Limitations of Single-Artifact Inspection
 
 Inspect Prompt, Inspect Tool, and Inspect Skill each independently inspect one artifact type. They share the following limitations:
@@ -261,6 +277,7 @@ Inspect Prompt, Inspect Tool, and Inspect Skill each independently inspect one a
 | **Authorization boundary inconsistency** | The authorization scope in the Prompt may not match the declared capabilities of the Skill or Tool |
 | **Broken failure handling chain** | The Prompt's failure handling strategy may have no concrete implementation at the Skill or Tool level |
 
+<a id="112-hidden-defects-under-reasonable-expression"></a>
 #### 1.1.2 Hidden Defects Under Reasonable Expression
 
 **Core Definition**: Cross-Artifact Inspection focuses on problems where the expression of each artifact is individually specification-compliant, but semantic conflicts or constraint gaps emerge when they are combined.
@@ -273,6 +290,7 @@ Inspect Prompt, Inspect Tool, and Inspect Skill each independently inspect one a
 | **Trigger condition conflict** | Prompt workflow requires "strict triggering" ✓; Skill trigger condition is vague ✓ | Combined: Skill may be incorrectly triggered in inappropriate scenarios → uncontrollable behavior |
 | **Parameter constraint gap** | Tool's inputSchema has no maxLength ✓; Prompt has no parameter constraints ✓ | Combined: LLM can pass excessively long parameters → Token runaway |
 
+<a id="113-the-value-of-cross-artifact-inspection"></a>
 #### 1.1.3 The Value of Cross-Artifact Inspection
 
 | Value Dimension | Description |
@@ -284,8 +302,10 @@ Inspect Prompt, Inspect Tool, and Inspect Skill each independently inspect one a
 
 ---
 
+<a id="12-roles-and-responsibilities-of-the-three-artifact-types"></a>
 ### 1.2 Roles and Responsibilities of the Three Artifact Types
 
+<a id="121-prompt-workflow-orchestrator-and-global-constraint-center"></a>
 #### 1.2.1 Prompt: Workflow Orchestrator and Global Constraint Center
 
 **Core Positioning**: The top-level designer of Agent behavior, defining "Who, What, How, When, Why."
@@ -305,6 +325,7 @@ Inspect Prompt, Inspect Tool, and Inspect Skill each independently inspect one a
 | **→ Skill** | Capability authorization, trigger conditions, permission boundaries, failure handling strategy |
 | **→ Tool** | Tool invocation specification, parameter constraints, permission granularity, error handling |
 
+<a id="122-skill-capability-boundary-declarer-and-resource-control-unit"></a>
 #### 1.2.2 Skill: Capability Boundary Declarer and Resource Control Unit
 
 **Core Positioning**: The boundary guardian of a single capability, defining "what it can do, what it cannot do, and to what extent."
@@ -325,6 +346,7 @@ Inspect Prompt, Inspect Tool, and Inspect Skill each independently inspect one a
 | **→ Prompt** | Capability availability, trigger condition recommendations, failure handling requirements |
 | **→ Tool** | Input constraints, output expectations, invocation frequency limits |
 
+<a id="123-tool-execution-contract-and-parameter-constraint-endpoint"></a>
 #### 1.2.3 Tool: Execution Contract and Parameter Constraint Endpoint
 
 **Core Positioning**: The contract guarantor for concrete operations, defining "how to correctly invoke and what to return."
@@ -345,8 +367,10 @@ Inspect Prompt, Inspect Tool, and Inspect Skill each independently inspect one a
 
 ---
 
+<a id="13-introduction-to-the-three-inspection-relationships"></a>
 ### 1.3 Introduction to the Three Inspection Relationships
 
+<a id="131-qd-ps-prompt-skill-capability-authorization-and-boundary-delegation"></a>
 #### 1.3.1 QD-PS: Prompt → Skill (Capability Authorization and Boundary Delegation)
 
 **Inspection Focus**: Does the Prompt's authorization scope cover the Skill's declared boundaries?
@@ -365,6 +389,7 @@ Inspect Prompt, Inspect Tool, and Inspect Skill each independently inspect one a
 - A Skill's permission declarations exceed the Prompt's authorization scope
 - A Skill's failure handling contradicts the Prompt's exception handling strategy
 
+<a id="132-qd-pt-prompt-tool-tool-invocation-contract"></a>
 #### 1.3.2 QD-PT: Prompt → Tool (Tool Invocation Contract)
 
 **Inspection Focus**: Do the Prompt's tool invocation constraints match the Tool's actual capabilities?
@@ -383,6 +408,7 @@ Inspect Prompt, Inspect Tool, and Inspect Skill each independently inspect one a
 - A high-risk Tool has no security boundary declaration in the Prompt
 - The Prompt does not handle all possible error types from the Tool
 
+<a id="133-qd-st-skill-tool-capability-implementation-and-parameter-contract"></a>
 #### 1.3.3 QD-ST: Skill ↔ Tool (Capability Implementation and Parameter Contract)
 
 **Inspection Focus**: Do the Skill's capability boundaries match the Tool's actual capabilities?
@@ -410,8 +436,10 @@ Inspect Prompt, Inspect Tool, and Inspect Skill each independently inspect one a
 
 ---
 
+<a id="14-the-review-schema-value-and-positioning"></a>
 ### 1.4 The Review Schema: Value and Positioning
 
+<a id="141-what-the-review-schema-is"></a>
 #### 1.4.1 What the Review Schema Is
 
 **Core Definition**: The Review Schema is the **intermediate review framework** used by the Inspect Skill inspection Agent to systematically decompose and analyze Skill definitions. It is not a production format — it is a working view.
@@ -427,6 +455,7 @@ Inspect Prompt, Inspect Tool, and Inspect Skill each independently inspect one a
 | **OUTPUT** | Are output size, structure, and partial completion strategy clearly defined? | QD-S-1.2, QD-S-2.3 |
 | **FAILURE** | How are failures, empty inputs, insufficient inputs, and user dissatisfaction handled? | QD-S-4.x |
 
+<a id="142-why-the-review-schema-is-needed"></a>
 #### 1.4.2 Why the Review Schema Is Needed
 
 **Core Value**:
@@ -437,6 +466,7 @@ Inspect Prompt, Inspect Tool, and Inspect Skill each independently inspect one a
 | **Risk behavior presets** | Each dimension flags the "LLM default behavior when absent," helping inspectors anticipate risk |
 | **Organizational framework** | Provides structured organization for inspection items, facilitating automated inspection |
 
+<a id="143-how-the-review-schema-is-used"></a>
 #### 1.4.3 How the Review Schema Is Used
 
 | Inspection Relationship | Review Schema Usage | Rationale |
@@ -445,6 +475,7 @@ Inspect Prompt, Inspect Tool, and Inspect Skill each independently inspect one a
 | **QD-PS** | ⚠️ Selectively use TRIGGER and FAILURE dimensions | Helps align Prompt and Skill trigger and failure handling |
 | **QD-PT** | ❌ Not needed | Directly compares the Prompt's tool invocation specification against the Tool Schema |
 
+<a id="144-the-review-schema-does-not-constrain-llm-reasoning-flexibility"></a>
 #### 1.4.4 The Review Schema Does Not Constrain LLM Reasoning Flexibility
 
 **Key Clarification**: The Review Schema is the "skeleton of the inspection checklist." It does not constrain the LLM's reasoning flexibility.
@@ -457,6 +488,7 @@ Inspect Prompt, Inspect Tool, and Inspect Skill each independently inspect one a
 
 ---
 
+<a id="15-part-summary"></a>
 ### 1.5 Part Summary
 
 | Point | Description |
@@ -470,8 +502,10 @@ Inspect Prompt, Inspect Tool, and Inspect Skill each independently inspect one a
 
 ## Part 2: QD-PS Inspection Items (Prompt → Skill)
 
+<a id="21-inspection-relationship-details"></a>
 ### 2.1 Inspection Relationship Details
 
+<a id="211-content-passed-authorization-trigger-boundary-failure-resources-output"></a>
 #### 2.1.1 Content Passed: Authorization, Trigger, Boundary, Failure, Resources, Output
 
 The QD-PS relationship inspects six categories of content passed from Prompt to Skill:
@@ -485,6 +519,7 @@ The QD-PS relationship inspects six categories of content passed from Prompt to 
 | **Failure handling** | The Prompt's failure handling strategy | QD-P-2.6.x Exception handling | FAILURE dimension |
 | **Output constraints** | The Prompt's output requirements | QD-P-2.3.x Output definition | OUTPUT dimension |
 
+<a id="212-inspection-focus-authorization-coverage-boundary-alignment"></a>
 #### 2.1.2 Inspection Focus: Authorization Coverage, Boundary Alignment
 
 **Core Inspection Questions**:
@@ -494,6 +529,7 @@ The QD-PS relationship inspects six categories of content passed from Prompt to 
 - Are the Skill's permission declarations more permissive than the Prompt's authorization (a risk)?
 - Does the Skill's failure handling contradict the Prompt's exception handling strategy?
 
+<a id="213-common-defect-patterns"></a>
 #### 2.1.3 Common Defect Patterns
 
 | Defect Pattern | Risk Description | Severity |
@@ -505,6 +541,7 @@ The QD-PS relationship inspects six categories of content passed from Prompt to 
 
 ---
 
+<a id="22-six-inspection-items-in-detail"></a>
 ### 2.2 Six Inspection Items in Detail
 
 #### QD-PS-1.1 Skill Authorization Consistency
@@ -671,8 +708,10 @@ The QD-PS relationship inspects six categories of content passed from Prompt to 
 
 ---
 
+<a id="23-localization-and-remediation"></a>
 ### 2.3 Localization and Remediation
 
+<a id="231-localization-mechanism-prompt-side-skill-side"></a>
 #### 2.3.1 Localization Mechanism (Prompt Side / Skill Side)
 
 **Three-Tier Localization**:
@@ -691,6 +730,7 @@ Field level → Prompt's QD-P reference location + Skill's Review Schema dimensi
 | **Prompt side** | QD-P-2.5.3 Permission control boundary missing (if applicable) |
 | **Skill side** | Review Schema IDENTITY dimension → allowed_operations field |
 
+<a id="232-remediation-ownership-rules"></a>
 #### 2.3.2 Remediation Ownership Rules
 
 **Remediation Priority** (principle of least risk):
@@ -705,6 +745,7 @@ Field level → Prompt's QD-P reference location + Skill's Review Schema dimensi
 
 ---
 
+<a id="24-part-summary"></a>
 ### 2.4 Part Summary
 
 | Point | Description |
@@ -718,8 +759,10 @@ Field level → Prompt's QD-P reference location + Skill's Review Schema dimensi
 
 ## Part 3: QD-PT Inspection Items (Prompt → Tool)
 
+<a id="31-inspection-relationship-details"></a>
 ### 3.1 Inspection Relationship Details
 
+<a id="311-content-passed-invocation-specification-parameter-constraints-permission-granularity-error-handling-frequency"></a>
 #### 3.1.1 Content Passed: Invocation Specification, Parameter Constraints, Permission Granularity, Error Handling, Frequency
 
 The QD-PT relationship inspects five categories of content passed from Prompt to Tool:
@@ -732,6 +775,7 @@ The QD-PT relationship inspects five categories of content passed from Prompt to
 | **Error handling** | The Prompt's handling of tool invocation failures | QD-P-2.6.2 Exception handling coverage | Tool's possible error types |
 | **Invocation frequency** | The Prompt's invocation count/frequency limits for tools | QD-P-2.5.5 Resource invocation frequency limit | Tool's side effect documentation |
 
+<a id="312-inspection-focus-contract-match-high-risk-boundaries"></a>
 #### 3.1.2 Inspection Focus: Contract Match, High-Risk Boundaries
 
 **Core Inspection Questions**:
@@ -740,6 +784,7 @@ The QD-PT relationship inspects five categories of content passed from Prompt to
 - Do the Prompt's permission declarations cover the Tool's high-risk operations?
 - Does the Prompt's exception handling cover all possible errors from the Tool?
 
+<a id="313-common-defect-patterns"></a>
 #### 3.1.3 Common Defect Patterns
 
 | Defect Pattern | Risk Description | Severity |
@@ -751,6 +796,7 @@ The QD-PT relationship inspects five categories of content passed from Prompt to
 
 ---
 
+<a id="32-six-inspection-items-in-detail"></a>
 ### 3.2 Six Inspection Items in Detail
 
 #### QD-PT-2.1 Tool Existence
@@ -919,8 +965,10 @@ The QD-PT relationship inspects five categories of content passed from Prompt to
 
 ---
 
+<a id="33-localization-and-remediation"></a>
 ### 3.3 Localization and Remediation
 
+<a id="331-localization-mechanism-prompt-side-tool-side"></a>
 #### 3.3.1 Localization Mechanism (Prompt Side / Tool Side)
 
 **Three-Tier Localization**:
@@ -939,6 +987,7 @@ Field level → Prompt's QD-P reference location + Tool's Schema field location
 | **Prompt side** | QD-P-2.5.2 Security boundary constraint missing (if applicable) |
 | **Tool side** | QD-T-3.x High-risk operation identification |
 
+<a id="332-remediation-ownership-rules"></a>
 #### 3.3.2 Remediation Ownership Rules
 
 **Remediation Priority** (principle of least risk):
@@ -953,6 +1002,7 @@ Field level → Prompt's QD-P reference location + Tool's Schema field location
 
 ---
 
+<a id="34-part-summary"></a>
 ### 3.4 Part Summary
 
 | Point | Description |
@@ -966,8 +1016,10 @@ Field level → Prompt's QD-P reference location + Tool's Schema field location
 
 ## Part 4: QD-ST Inspection Items (Skill ↔ Tool)
 
+<a id="41-inspection-relationship-details"></a>
 ### 4.1 Inspection Relationship Details
 
+<a id="411-bidirectional-transfer-skill-tool-and-tool-skill"></a>
 #### 4.1.1 Bidirectional Transfer: Skill → Tool and Tool → Skill
 
 The QD-ST relationship inspects the bidirectional transfer between Skill and Tool:
@@ -988,6 +1040,7 @@ The QD-ST relationship inspects the bidirectional transfer between Skill and Too
 | **Error types** | The Tool's possible error types | Tool description | FAILURE dimension |
 | **Side effects** | The Tool's write operations, sensitive data handling | QD-T-3.x | forbidden_operations |
 
+<a id="412-inspection-focus-capability-boundary-match-parameter-contract"></a>
 #### 4.1.2 Inspection Focus: Capability Boundary Match, Parameter Contract
 
 **Core Inspection Questions**:
@@ -996,6 +1049,7 @@ The QD-ST relationship inspects the bidirectional transfer between Skill and Too
 - Do the Tool's required parameters have source declarations in the Skill?
 - Do the Skill's permission boundaries cover the Tool's side effects?
 
+<a id="413-review-schema-usage-in-qd-st"></a>
 #### 4.1.3 Review Schema Usage in QD-ST
 
 **Usage**: The Review Schema's six dimensions serve as the analytical framework for the Skill side, aligned dimension-by-dimension with the Tool Schema.
@@ -1009,6 +1063,7 @@ The QD-ST relationship inspects the bidirectional transfer between Skill and Too
 | **OUTPUT** | Output expectations vs. Tool return value structure |
 | **FAILURE** | Failure handling vs. Tool error types |
 
+<a id="414-common-defect-patterns"></a>
 #### 4.1.4 Common Defect Patterns
 
 | Defect Pattern | Risk Description | Severity |
@@ -1020,6 +1075,7 @@ The QD-ST relationship inspects the bidirectional transfer between Skill and Too
 
 ---
 
+<a id="42-seven-inspection-items-in-detail"></a>
 ### 4.2 Seven Inspection Items in Detail
 
 #### QD-ST-3.1 Tool Existence
@@ -1215,8 +1271,10 @@ The QD-ST relationship inspects the bidirectional transfer between Skill and Too
 
 ---
 
+<a id="43-localization-and-remediation"></a>
 ### 4.3 Localization and Remediation
 
+<a id="431-localization-mechanism-skill-side-tool-side"></a>
 #### 4.3.1 Localization Mechanism (Skill Side / Tool Side)
 
 **Three-Tier Localization**:
@@ -1235,6 +1293,7 @@ Field level → Skill's Review Schema dimension location + Tool's Schema field l
 | **Skill side** | Review Schema IDENTITY dimension → allowed_operations field |
 | **Tool side** | QD-T-3.x High-risk operation identification |
 
+<a id="432-remediation-ownership-rules"></a>
 #### 4.3.2 Remediation Ownership Rules
 
 **Remediation Priority** (principle of least risk):
@@ -1251,6 +1310,7 @@ Field level → Skill's Review Schema dimension location + Tool's Schema field l
 
 ---
 
+<a id="44-part-summary"></a>
 ### 4.4 Part Summary
 
 | Point | Description |
@@ -1265,8 +1325,10 @@ Field level → Skill's Review Schema dimension location + Tool's Schema field l
 
 ## Part 5: Inspection Process and Severity Mechanisms
 
+<a id="51-inspection-process-overview"></a>
 ### 5.1 Inspection Process Overview
 
+<a id="511-seven-step-inspection-process"></a>
 #### 5.1.1 Seven-Step Inspection Process
 
 ```
@@ -1328,6 +1390,7 @@ Field level → Skill's Review Schema dimension location + Tool's Schema field l
                     └───────────────────────┘
 ```
 
+<a id="512-process-flow-and-decision-points"></a>
 #### 5.1.2 Process Flow and Decision Points
 
 | Step | Decision Point | Failure Handling |
@@ -1340,8 +1403,10 @@ Field level → Skill's Review Schema dimension location + Tool's Schema field l
 
 ---
 
+<a id="52-prerequisites-and-artifact-relationship-identification"></a>
 ### 5.2 Prerequisites and Artifact Relationship Identification
 
+<a id="521-single-artifact-inspection-pass-criteria"></a>
 #### 5.2.1 Single-Artifact Inspection Pass Criteria
 
 **Pass Criteria**:
@@ -1352,6 +1417,7 @@ Field level → Skill's Review Schema dimension location + Tool's Schema field l
 
 **Inspection Entry Condition**: Single-artifact inspection has passed, and no undisposed P0 defects remain.
 
+<a id="522-artifact-version-consistency-confirmation"></a>
 #### 5.2.2 Artifact Version Consistency Confirmation
 
 **Confirmation Content**:
@@ -1362,6 +1428,7 @@ Field level → Skill's Review Schema dimension location + Tool's Schema field l
 
 **Failure Handling**: When versions are inconsistent, prompt the user for confirmation before executing cross-artifact inspection.
 
+<a id="523-artifact-relationship-extraction-methods"></a>
 #### 5.2.3 Artifact Relationship Extraction Methods
 
 **Skill Declaration Extraction from Prompt**:
@@ -1381,8 +1448,10 @@ Field level → Skill's Review Schema dimension location + Tool's Schema field l
 
 ---
 
+<a id="53-automated-inspection-execution"></a>
 ### 5.3 Automated Inspection Execution
 
+<a id="531-qd-ps-inspection-execution-prompt-skill"></a>
 #### 5.3.1 QD-PS Inspection Execution (Prompt → Skill)
 
 **Execution Method**: Automated (LLM Agent)
@@ -1394,6 +1463,7 @@ Field level → Skill's Review Schema dimension location + Tool's Schema field l
 3. Inspect item-by-item against QD-PS-1.1 through 1.6
 4. Record inconsistencies, mapped to specific locations in the Prompt and Skill
 
+<a id="532-qd-st-inspection-execution-skill-tool"></a>
 #### 5.3.2 QD-ST Inspection Execution (Skill ↔ Tool)
 
 **Execution Method**: Automated (LLM Agent)
@@ -1405,6 +1475,7 @@ Field level → Skill's Review Schema dimension location + Tool's Schema field l
 3. Inspect item-by-item against QD-ST-3.1 through 3.7
 4. Record inconsistencies, mapped to specific locations in the Skill and Tool
 
+<a id="533-qd-pt-inspection-execution-prompt-tool"></a>
 #### 5.3.3 QD-PT Inspection Execution (Prompt → Tool)
 
 **Execution Method**: Automated (LLM Agent)
@@ -1416,6 +1487,7 @@ Field level → Skill's Review Schema dimension location + Tool's Schema field l
 3. Inspect item-by-item against QD-PT-2.1 through 2.6
 4. Record inconsistencies, mapped to specific locations in the Prompt and Tool
 
+<a id="534-inspection-exception-handling"></a>
 #### 5.3.4 Inspection Exception Handling
 
 **Exception Types**:
@@ -1428,8 +1500,10 @@ Field level → Skill's Review Schema dimension location + Tool's Schema field l
 
 ---
 
+<a id="54-severity-levels-and-agent-level-binding"></a>
 ### 5.4 Severity Levels and Agent-Level Binding
 
+<a id="541-three-severity-levels-p0p1p2"></a>
 #### 5.4.1 Three Severity Levels (P0/P1/P2)
 
 **Definitions** (as defined in Inspect Skill v2.3):
@@ -1440,6 +1514,7 @@ Field level → Skill's Review Schema dimension location + Tool's Schema field l
 | **P1** | 🟡 | May cause behavioral instability or functional defects | SHOULD be fixed |
 | **P2** | 🟢 | Affects readability or efficiency, but does not impact functionality | MAY be fixed |
 
+<a id="542-agent-level-definitions-l1l2l3"></a>
 #### 5.4.2 Agent Level Definitions (L1/L2/L3)
 
 **Definitions** (as defined in Inspect Prompt v1.3):
@@ -1450,6 +1525,7 @@ Field level → Skill's Review Schema dimension location + Tool's Schema field l
 | **L2** | Multi-turn Interactive | Requires multi-turn dialogue or simple tool invocations | Multi-turn dialogue, 1-3 tools, simple workflow |
 | **L3** | Complex Agent | Complex workflow, multi-tool collaboration, strong constraints | 4+ tools, complex workflow, security constraints |
 
+<a id="543-level-determination-and-inspection-intensity-differences"></a>
 #### 5.4.3 Level Determination and Inspection Intensity Differences
 
 **Inspection Intensity Differences**:
@@ -1466,12 +1542,14 @@ Field level → Skill's Review Schema dimension location + Tool's Schema field l
 - L2: 12 standard inspection items
 - L3: 19 full inspection items
 
+<a id="544-severity-upgrade-rules"></a>
 #### 5.4.4 Severity Upgrade Rules
 
 The default severity of Cross-Artifact Defects may be upgraded based on Tool Risk Level (RS-3), Skill Risk Level (SS-3), Agent Level (L3), and linked defect relationships. For specific upgrade trigger conditions, per-item mapping tables, and the determination process, see **Appendix C: Severity Upgrade Rules in Detail**.
 
 ---
 
+<a id="55-part-summary"></a>
 ### 5.5 Part Summary
 
 | Point | Description |
@@ -1486,8 +1564,10 @@ The default severity of Cross-Artifact Defects may be upgraded based on Tool Ris
 
 ## Part 6: Localization and Remediation Mechanisms
 
+<a id="61-defect-localization-mechanism"></a>
 ### 6.1 Defect Localization Mechanism
 
+<a id="611-three-tier-localization-relationship-artifact-field"></a>
 #### 6.1.1 Three-Tier Localization: Relationship → Artifact → Field
 
 **Localization Tiers**:
@@ -1506,6 +1586,7 @@ Tier 3: Field level
   → Identifies the specific fields involved
 ```
 
+<a id="612-localization-table-design-and-usage"></a>
 #### 6.1.2 Localization Table Design and Usage
 
 **Localization Table Template**:
@@ -1518,6 +1599,7 @@ Tier 3: Field level
 | **Field level (Side A)** | Specific field | Field value |
 | **Field level (Side B)** | Specific field | Field value |
 
+<a id="613-localization-example"></a>
 #### 6.1.3 Localization Example
 
 **Example**: QD-PS-1.3 Permission Boundary Inconsistency
@@ -1531,8 +1613,10 @@ Tier 3: Field level
 
 ---
 
+<a id="62-impact-assessment-model"></a>
 ### 6.2 Impact Assessment Model
 
+<a id="621-impact-propagation-factors"></a>
 #### 6.2.1 Impact Propagation Factors
 
 **Propagation Factors and Weights**:
@@ -1544,6 +1628,7 @@ Tier 3: Field level
 | **Involves sensitive data** | High | If Tool handles sensitive data → cross-defect directly upgraded to P0 |
 | **Agent Level** | Medium | L3 Agent → P2 upgraded to P1; P1 upgraded to P0 |
 
+<a id="622-linked-defect-identification"></a>
 #### 6.2.2 Linked Defect Identification
 
 **Linked Defect Definition**: A defect involving two or more artifacts, requiring coordinated remediation.
@@ -1553,6 +1638,7 @@ Tier 3: Field level
 - Multiple defects within the same inspection relationship → linked defects
 - Related defects across different inspection relationships (e.g., QD-PS-1.3 + QD-ST-3.6) → linked defects
 
+<a id="623-composite-risk-assessment"></a>
 #### 6.2.3 Composite Risk Assessment
 
 **Risk Assessment Matrix**:
@@ -1566,8 +1652,10 @@ Tier 3: Field level
 
 ---
 
+<a id="63-remediation-priority-rules"></a>
 ### 6.3 Remediation Priority Rules
 
+<a id="631-principle-of-least-risk"></a>
 #### 6.3.1 Principle of Least Risk
 
 **Core Principle**: When remediating, prioritize the solution that introduces the least risk.
@@ -1578,6 +1666,7 @@ Tier 3: Field level
 - Constraint inconsistency → converge toward the stricter constraint
 - Failure handling contradiction → choose the more conservative strategy
 
+<a id="632-remediation-ownership-rules"></a>
 #### 6.3.2 Remediation Ownership Rules
 
 **Remediation Priority** (tool-first principle):
@@ -1588,6 +1677,7 @@ Tier 3: Field level
 | **Second priority** | Skill boundary declarations | Skill is the boundary guardian; only after boundaries are clarified does the LLM have clear constraints |
 | **Third priority** | Prompt workflow specification | Prompt is the top-level design; supplementation ensures global consistency |
 
+<a id="633-remediation-priority-ordering"></a>
 #### 6.3.3 Remediation Priority Ordering
 
 **Ordering Rules**:
@@ -1598,8 +1688,10 @@ Tier 3: Field level
 
 ---
 
+<a id="64-remediation-example-set"></a>
 ### 6.4 Remediation Example Set
 
+<a id="641-permission-inconsistency-remediation-example"></a>
 #### 6.4.1 Permission Inconsistency Remediation Example
 
 **Defect**: QD-PS-1.3 Permission Boundary Inconsistency
@@ -1616,6 +1708,7 @@ Tier 3: Field level
 
 **Recommendation**: Option A (modify Skill), because the Skill is the boundary guardian and should converge toward the narrower permission.
 
+<a id="642-trigger-condition-conflict-remediation-example"></a>
 #### 6.4.2 Trigger Condition Conflict Remediation Example
 
 **Defect**: QD-PS-1.2 Trigger Condition Inconsistency
@@ -1629,6 +1722,7 @@ Tier 3: Field level
 
 - Modify Skill's allowed_when: "Only when the user explicitly requests 'compile weekly report' or 'generate weekly report'"
 
+<a id="643-parameter-constraint-inconsistency-remediation-example"></a>
 #### 6.4.3 Parameter Constraint Inconsistency Remediation Example
 
 **Defect**: QD-PT-2.3 Parameter Constraint Inconsistency
@@ -1642,6 +1736,7 @@ Tier 3: Field level
 
 - Modify Prompt: "Invoke the search tool, passing the user query (query) and result count limit (limit, default 10)"
 
+<a id="644-failure-handling-conflict-remediation-example"></a>
 #### 6.4.4 Failure Handling Conflict Remediation Example
 
 **Defect**: QD-PS-1.5 Failure Handling Contradiction
@@ -1655,6 +1750,7 @@ Tier 3: Field level
 
 - Modify Skill: "on_failure: Stop immediately; report error to user. Attempting other query conditions is prohibited"
 
+<a id="645-linked-defect-remediation-example"></a>
 #### 6.4.5 Linked Defect Remediation Example
 
 **Defect**: QD-PS-1.3 + QD-ST-3.6 (Permission Boundary Inconsistency + Permission Scope Mismatch)
@@ -1673,6 +1769,7 @@ Tier 3: Field level
 
 ---
 
+<a id="65-part-summary"></a>
 ### 6.5 Part Summary
 
 | Point | Description |
@@ -1686,8 +1783,10 @@ Tier 3: Field level
 
 ## Part 7: Inspection Timing and the Ratchet Mechanism
 
+<a id="71-lifecycle-inspection-timing"></a>
 ### 7.1 Lifecycle Inspection Timing
 
+<a id="711-development-phase-single-artifact-inspection"></a>
 #### 7.1.1 Development Phase: Single-Artifact Inspection
 
 **Timing**: On each artifact commit
@@ -1696,6 +1795,7 @@ Tier 3: Field level
 
 **Cross-Artifact Inspection**: Not yet executed
 
+<a id="712-integration-phase-cross-artifact-inspection"></a>
 #### 7.1.2 Integration Phase: Cross-Artifact Inspection
 
 **Timing**: When multiple artifact versions are merged
@@ -1704,6 +1804,7 @@ Tier 3: Field level
 
 **Execution Condition**: All artifacts have passed single-artifact inspection
 
+<a id="713-release-phase-full-validation"></a>
 #### 7.1.3 Release Phase: Full Validation
 
 **Timing**: Full validation before release
@@ -1712,6 +1813,7 @@ Tier 3: Field level
 
 **Execution Condition**: Cross-Artifact Inspection passed; no P0 defects
 
+<a id="714-runtime-phase-periodic-re-inspection"></a>
 #### 7.1.4 Runtime Phase: Periodic Re-Inspection
 
 **Timing**: Periodic re-inspection during Agent runtime
@@ -1732,6 +1834,7 @@ Tier 3: Field level
 - User-reported anomalies
 - Runtime monitoring identifies potential issues
 
+<a id="715-degradation-phase-triggered-re-inspection"></a>
 #### 7.1.5 Degradation Phase: Triggered Re-Inspection
 
 **Timing**: When artifact degradation is detected
@@ -1751,8 +1854,10 @@ Tier 3: Field level
 
 ---
 
+<a id="72-ratchet-mechanism-and-version-binding"></a>
 ### 7.2 Ratchet Mechanism and Version Binding
 
+<a id="721-inspection-history-chain-maintenance"></a>
 #### 7.2.1 Inspection History Chain Maintenance
 
 ```
@@ -1779,6 +1884,7 @@ Inspection History Chain
     └─ Defect List: None
 ```
 
+<a id="722-ratchet-forward-mechanism"></a>
 #### 7.2.2 Ratchet-Forward Mechanism
 
 **Forward Rules**:
@@ -1795,6 +1901,7 @@ Inspection History Chain
 - If degradation (previously passed, now failed): record the degradation cause
 - After degradation remediation: continue appending records forward
 
+<a id="723-version-binding-and-re-inspection-triggers"></a>
 #### 7.2.3 Version Binding and Re-Inspection Triggers
 
 **Version Binding Rules**:
@@ -1820,6 +1927,7 @@ Inspection Result Binding: Based on artifact version combination
 
 ---
 
+<a id="73-part-summary"></a>
 ### 7.3 Part Summary
 
 | Point | Description |
@@ -1833,8 +1941,10 @@ Inspection Result Binding: Based on artifact version combination
 
 ## Part 8: Quantitative Scoring Mechanism
 
+<a id="81-scoring-principles"></a>
 ### 8.1 Scoring Principles
 
+<a id="811-core-principles"></a>
 #### 8.1.1 Core Principles
 
 | Principle | Description |
@@ -1846,6 +1956,7 @@ Inspection Result Binding: Based on artifact version combination
 | **Gate condition** | Any P0 defect present → evaluation result is FAIL (score is still output) |
 | **Deduplication rule** | For the same inspection item number, the weight is deducted only once regardless of how many defect instances are found |
 
+<a id="812-relationship-to-inspect-prompttoolskill-scoring"></a>
 #### 8.1.2 Relationship to Inspect Prompt/Tool/Skill Scoring
 
 | Specification | Inspection Object | Scoring Scope | Relationship |
@@ -1859,8 +1970,10 @@ Inspection Result Binding: Based on artifact version combination
 
 ---
 
+<a id="82-calculation-steps"></a>
 ### 8.2 Calculation Steps
 
+<a id="821-calculation-formula"></a>
 #### 8.2.1 Calculation Formula
 
 **Step 1: Determine Agent Level**
@@ -1898,6 +2011,7 @@ $$Score = \max(100 - \text{Total Deduction}, 0)$$
 - If any P0 defect present → result = FAIL
 - Otherwise → result = PASS
 
+<a id="822-rounding-rules"></a>
 #### 8.2.2 Rounding Rules
 
 - All intermediate calculation results retain full decimal precision
@@ -1906,8 +2020,10 @@ $$Score = \max(100 - \text{Total Deduction}, 0)$$
 
 ---
 
+<a id="83-inspection-item-distribution-table"></a>
 ### 8.3 Inspection Item Distribution Table
 
+<a id="831-per-level-inspection-item-statistics"></a>
 #### 8.3.1 Per-Level Inspection Item Statistics
 
 Based on the inspection item definitions in Part 5 and the Minimum Rule Sets (Appendix B):
@@ -1924,6 +2040,7 @@ Based on the inspection item definitions in Part 5 and the Minimum Rule Sets (Ap
 - L2 inspects standard inspection items
 - L3 inspects all inspection items
 
+<a id="832-per-level-defect-deduction-values"></a>
 #### 8.3.2 Per-Level Defect Deduction Values
 
 **L1 Level**: $base = 3.333...$
@@ -1952,8 +2069,10 @@ Based on the inspection item definitions in Part 5 and the Minimum Rule Sets (Ap
 
 ---
 
+<a id="84-scoring-examples"></a>
 ### 8.4 Scoring Examples
 
+<a id="841-example-1-l2-agent-no-p0-defects-pass"></a>
 #### 8.4.1 Example 1: L2 Agent, No P0 Defects (PASS)
 
 **Scenario**: L2 Agent (Multi-turn Interactive)
@@ -2006,6 +2125,7 @@ $$Score = \text{round}(100 - 15.218) = \text{round}(84.782) = 85$$
 
 ---
 
+<a id="842-example-2-l3-agent-p0-defects-present-fail"></a>
 #### 8.4.2 Example 2: L3 Agent, P0 Defects Present (FAIL)
 
 **Scenario**: L3 Agent (Complex Agent)
@@ -2059,6 +2179,7 @@ $$Score = \text{round}(100 - 17.334) = \text{round}(82.666) = 83$$
 
 ---
 
+<a id="843-example-3-l1-agent-all-passed-pass"></a>
 #### 8.4.3 Example 3: L1 Agent, All Passed (PASS)
 
 **Scenario**: L1 Agent (Single-turn Task)
@@ -2099,8 +2220,10 @@ $$Score = 100 - 0 = 100$$
 
 ---
 
+<a id="85-multi-defect-handling-rules"></a>
 ### 8.5 Multi-Defect Handling Rules
 
+<a id="851-deduplication-rule"></a>
 #### 8.5.1 Deduplication Rule
 
 **Core Rule**: For the same inspection item number, the weight is deducted only once regardless of how many defect instances are found.
@@ -2121,6 +2244,7 @@ Inspection discovers:
 
 **Note**: Although 5 defect instances were found, they involve only 2 inspection item numbers, so only 2 deductions apply.
 
+<a id="852-linked-defect-handling"></a>
 #### 8.5.2 Linked Defect Handling
 
 **Linked Defect Definition**: A defect involving two or more artifacts, requiring coordinated remediation.
@@ -2141,6 +2265,7 @@ QD-PS-1.3 (Permission Boundary Inconsistency) and QD-ST-3.6 (Permission Scope Mi
 
 ---
 
+<a id="86-part-summary"></a>
 ### 8.6 Part Summary
 
 | Point | Description |
@@ -2658,6 +2783,7 @@ INPUT:
 
 ## Part 10: Summary
 
+<a id="101-specification-core-points"></a>
 ### 10.1 Specification Core Points
 
 | Point | Description |
@@ -2672,6 +2798,7 @@ INPUT:
 | **Gate Condition** | Any P0 defect present → FAIL |
 | **Remediation Principle** | Principle of least risk; Tool > Skill > Prompt |
 
+<a id="102-relationship-to-other-sub-specifications"></a>
 ### 10.2 Relationship to Other Sub-Specifications
 
 | Sub-Specification | Inspection Object | Relationship |
@@ -2681,6 +2808,7 @@ INPUT:
 | **Inspect Skill** | Skill artifact | Single-artifact inspection; prerequisite for Cross-Artifact Inspection |
 | **Inspect Cross** | Cross-Artifact relationships | Executed after single-artifact inspections pass; independent scoring system |
 
+<a id="103-practice-recommendations"></a>
 ### 10.3 Practice Recommendations
 
 | Phase | Recommendation |

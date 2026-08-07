@@ -1,4 +1,4 @@
-# SanityOps Framework
+﻿# SanityOps Framework
 
 # Quality RAG-Agent White Paper
 
@@ -151,6 +151,7 @@ These factors may affect final quality and could serve as objects of failure dia
 
 # Chapter 1: Background, Problems, and Scope
 
+<a id="11-enterprise-rag-agent-from-knowledge-storage-to-service-delivery"></a>
 ## 1.1 Enterprise RAG Agent: From Knowledge Storage to Service Delivery
 
 RAG Agent (Retrieval-Augmented Generation Agent) typically retrieves enterprise knowledge bases and combines them with the generative capabilities of large language models to provide users with knowledge-based Q&A, explanations, guidance, and decision support services.
@@ -189,6 +190,7 @@ Compared to consumer-oriented general Q&A products, enterprise RAG Agent respons
 
 ---
 
+<a id="12-from-able-to-answer-to-verifiably-stable-answering"></a>
 ## 1.2 From “Able to Answer” to “Verifiably Stable Answering”
 
 RAG Agent quality issues cannot be judged solely by single demonstrations, human experience, or general semantic similarity scores. A seemingly fluent response may still have the following issues:
@@ -214,6 +216,7 @@ Quality RAG-Agent's goal is not to comprehensively diagnose internal technical c
 
 ---
 
+<a id="13-framework-positioning-quality-subset-of-sanityops-framework"></a>
 ## 1.3 Framework Positioning: Quality Subset of SanityOps Framework
 
 Quality RAG-Agent is a component of SanityOps Framework, not an independent, closed quality system.
@@ -246,6 +249,7 @@ Quality RAG-Agent is oriented toward Agents whose primary capability form is kno
 
 ---
 
+<a id="14-collaboration-boundary-with-sanityops-inspect"></a>
 ## 1.4 Collaboration Boundary with SanityOps Inspect
 
 SanityOps Inspect can function before and after Quality RAG-Agent, but does not replace its quality evaluation responsibility.
@@ -277,6 +281,7 @@ The following boundaries need to be clarified:
 
 ---
 
+<a id="15-assessment-objects-and-non-assessment-objects"></a>
 ## 1.5 Assessment Objects and Non-Assessment Objects
 
 ### Assessment Objects
@@ -310,6 +315,7 @@ This framework typically operates based on the following prerequisites:
 
 # Chapter 2: Overall Framework Design
 
+<a id="21-design-objectives"></a>
 ## 2.1 Design Objectives
 
 The Design Objectives of Quality RAG-Agent are to help organizations establish the following capabilities:
@@ -324,6 +330,7 @@ The framework does not aim to construct an “absolutely correct total score,”
 
 ---
 
+<a id="22-quality-closed-loop"></a>
 ## 2.2 Quality Closed Loop
 
 The overall assessment process consists of six stages:
@@ -372,6 +379,7 @@ After making changes to Agent, knowledge, Prompt, workflow, or model, organizati
 
 ---
 
+<a id="23-four-core-asset-types"></a>
 ## 2.3 Four Core Asset Types
 
 | Asset Type | Purpose | Minimum Content |
@@ -385,6 +393,7 @@ Among these, Baseline Test Case Assets are the foundation of the entire framewor
 
 ---
 
+<a id="24-quality-model-and-applicability-principles"></a>
 ## 2.4 Quality Model and Applicability Principles
 
 RAG Agent capabilities are not fully reflected in all Test Cases. For example:
@@ -412,6 +421,7 @@ Total scores can help observe version trends and overall performance, but the fo
 
 ---
 
+<a id="25-how-to-use-assessment-results"></a>
 ## 2.5 How to Use Assessment Results
 
 Quality RAG-Agent results can be used for decision-making at three levels:
@@ -428,6 +438,7 @@ The framework outputs quality evidence, risk alerts, and priority investigation 
 
 # Chapter 3: Four-Dimensional 12-Metric Quality Model
 
+<a id="31-design-principles"></a>
 ## 3.1 Design Principles
 
 The metric system of Quality RAG-Agent follows four principles:
@@ -448,6 +459,7 @@ In the original version, “refusal capability” was expanded into “Boundary 
 
 ---
 
+<a id="32-four-dimensional-12-metrics"></a>
 ## 3.2 Four-Dimensional 12 Metrics
 
 | Dimension | Metric | Default Weight | Evaluation Focus |
@@ -470,8 +482,10 @@ The above are default weights. Organizations may adjust them according to indust
 
 ---
 
+<a id="33-category-a-knowledge-answer-quality"></a>
 ## 3.3 Category A: Knowledge Answer Quality
 
+<a id="331-correctness"></a>
 ### 3.3.1 Correctness
 
 **Definition**: Key facts, numbers, dates, rules, eligibility conditions, constraints, and core conclusions in the response are correct, without mutual contradictions, hallucinations, or erroneous negations.
@@ -498,6 +512,7 @@ Where $r_k$ is the risk weight of the fact; $c_k$ is the determination result. W
 
 ---
 
+<a id="332-completeness"></a>
 ### 3.3.2 Completeness
 
 **Definition**: Whether the response covers the information points necessary to complete the user's request, including prerequisites, exceptions, constraints, steps, materials, and follow-up actions.
@@ -513,6 +528,7 @@ Where $v_k$ is the importance of the required information point, and $p_k$ indic
 
 ---
 
+<a id="333-relevance"></a>
 ### 3.3.3 Relevance
 
 **Definition**: Whether the response addresses the user's current intent and covers the main requests in multi-intent queries, rather than providing generic introductions or irrelevant answers.
@@ -527,6 +543,7 @@ Relevance is primarily determined by LLM Judge based on the question, context, e
 
 ---
 
+<a id="334-traceability"></a>
 ### 3.3.4 Traceability
 
 **Definition**: Whether key conclusions have identifiable, correct sources that genuinely support the conclusions.
@@ -541,6 +558,7 @@ For scenarios where citations need not be displayed, the system can preserve int
 
 ---
 
+<a id="335-timeliness"></a>
 ### 3.3.5 Timeliness
 
 **Definition**: Whether the response is based on currently effective knowledge, policies, versions, or business states, without using expired content.
@@ -556,8 +574,10 @@ Timeliness is not a real-time commitment for all knowledge, but rather controlle
 
 ---
 
+<a id="34-category-b-dialogue-and-complex-task-quality"></a>
 ## 3.4 Category B: Dialogue and Complex Task Quality
 
+<a id="341-consistency"></a>
 ### 3.4.1 Consistency
 
 **Definition**: For identical or semantically equivalent questions, under the same valid knowledge and configuration conditions, the Agent's core conclusions, key facts, and boundary actions remain stable.
@@ -566,6 +586,7 @@ Differences in wording, order, and examples are allowed; substantive conflicts i
 
 ---
 
+<a id="342-robustness"></a>
 ### 3.4.2 Robustness
 
 **Definition**: Whether the Agent maintains core quality when facing reasonable expression perturbations.
@@ -581,6 +602,7 @@ Robustness does not require the Agent to guess all unclear inputs. If informatio
 
 ---
 
+<a id="343-decomposition-capability"></a>
 ### 3.4.3 Decomposition Capability
 
 **Definition**: For requests containing multiple sub-questions, conditional constraints, or operational steps, whether the Agent can recognize the task structure and complete necessary processing for each item.
@@ -591,6 +613,7 @@ The evaluation focus is on the **completion rate of sub-tasks and constraints**,
 
 ---
 
+<a id="344-coherence"></a>
 ### 3.4.4 Coherence
 
 **Definition**: In multi-turn conversations, whether the Agent correctly inherits known facts, understands references, maintains confirmed constraints, and avoids repeatedly asking for information already obtained.
@@ -604,8 +627,10 @@ Coherence testing should cover:
 
 ---
 
+<a id="35-category-c-expression-and-compliance-quality"></a>
 ## 3.5 Category C: Expression and Compliance Quality
 
+<a id="351-format-compliance"></a>
 ### 3.5.1 Format Compliance
 
 **Definition**: Whether responses comply with defined output specifications, including but not limited to:
@@ -622,8 +647,10 @@ If a specification item pertains to regulatory, contractual, risk warning, or sa
 
 ---
 
+<a id="36-category-d-boundary-and-safety-response-quality"></a>
 ## 3.6 Category D: Boundary and Safety Response Quality
 
+<a id="361-boundary-recognition-capability"></a>
 ### 3.6.1 Boundary Recognition Capability
 
 **Definition**: Whether the Agent can recognize the knowledge scope, permissions, risk level, and information sufficiency of a request, and select the correct handling category.
@@ -642,6 +669,7 @@ Boundary recognition is not equivalent to “refusing to answer whenever possibl
 
 ---
 
+<a id="362-safe-response-capability"></a>
 ### 3.6.2 Safe Response Capability
 
 **Definition**: In identified boundary scenarios, whether the Agent completes expected actions, satisfies necessary elements, and does not trigger prohibited behaviors.
@@ -657,6 +685,7 @@ For example, facing an unconfirmed rule question, a safe response might be expla
 
 ---
 
+<a id="37-metric-applicability-and-total-score"></a>
 ## 3.7 Metric Applicability and Total Score
 
 Each baseline test case should declare `applicable_metrics` before evaluation. Score only applicable metrics:
@@ -690,6 +719,7 @@ Where $A$ is the set of currently configured and applicable metrics, $w_i$ is th
 
 # Chapter 4: Baseline Test Cases and Test Asset System
 
+<a id="41-role-of-baseline-test-cases"></a>
 ## 4.1 Role of Baseline Test Cases
 
 The credibility of quality assessment depends first on whether the testing standards are clear. If questions are ambiguous, answer sources are not authoritative, or versions cannot be identified, automated scoring cannot produce reliable conclusions.
@@ -700,6 +730,7 @@ Atomic FAQs are an important foundation, but they are insufficient to cover mult
 
 ---
 
+<a id="42-sources-and-types-of-baseline-test-cases"></a>
 ## 4.2 Sources and Types of Baseline Test Cases
 
 Baseline Test Cases can come from six types of materials:
@@ -729,6 +760,7 @@ Difficulty stratification can serve as auxiliary labels, such as simple facts, c
 
 ---
 
+<a id="43-from-authoritative-materials-to-baseline-test-cases"></a>
 ## 4.3 From Authoritative Materials to Baseline Test Cases
 
 It is recommended to adopt the process of “automatic generation - business confirmation - version locking”:
@@ -770,6 +802,7 @@ LLMs can be used to generate candidate questions, paraphrased questions, and tes
 
 ---
 
+<a id="44-minimum-structure-of-baseline-test-cases"></a>
 ## 4.4 Minimum Structure of Baseline Test Cases
 
 Each baseline test case is recommended to include at minimum:
@@ -817,6 +850,7 @@ status: confirmed
 
 ---
 
+<a id="45-coverage-and-test-case-scale"></a>
 ## 4.5 Coverage and Test Case Scale
 
 The baseline set should not aim for “the larger the quantity, the better,” but should cover key risks, core business, and typical interactions.
@@ -834,6 +868,7 @@ When materials are incomplete, business confirmation is unfinished, or certain r
 
 ---
 
+<a id="46-test-case-version-management-principles"></a>
 ## 4.6 Test Case Version Management Principles
 
 Baseline Test Cases are quality assets and should not be arbitrarily deleted or modified due to a single low score. Changes must be distinguished as:
@@ -847,6 +882,7 @@ Baseline Test Cases are quality assets and should not be arbitrarily deleted or 
 
 # Chapter 5: Automated Assessment and Scoring Methods
 
+<a id="51-controlled-blind-testing-execution"></a>
 ## 5.1 Controlled Blind Testing Execution
 
 Assessment execution should be as consistent as possible with normal user invocation conditions, but using a controlled environment to record complete evidence.
@@ -874,6 +910,7 @@ Each execution should at least record:
 
 ---
 
+<a id="52-responsibilities-of-three-assessment-types"></a>
 ## 5.2 Responsibilities of Three Assessment Types
 
 Automated assessment does not use a “take the average of Embedding score and LLM Judge score” pattern. Different assessors should handle different types of issues.
@@ -903,6 +940,7 @@ Embedding can be used to discover synonymous expressions, screen obviously irrel
 
 ---
 
+<a id="53-automated-arbitration-and-conflict-queue"></a>
 ## 5.3 Automated Arbitration and Conflict Queue
 
 The following result triage approach is recommended:
@@ -932,6 +970,7 @@ Manual review results should feed back into improving test cases, rules, or Judg
 
 ---
 
+<a id="54-metric-scoring-and-risk-weighting"></a>
 ## 5.4 Metric Scoring and Risk Weighting
 
 (This section implements the metric aggregation principles from Section 3.7 as an execution formula calculated by test case risk weight.)
@@ -958,6 +997,7 @@ Only then can the key test case be considered as passed.
 
 ---
 
+<a id="55-scoring-calibration"></a>
 ## 5.5 Scoring Calibration
 
 Automated assessors themselves also need to be validated. It is recommended to periodically sample cases that have been manually confirmed, compare automated results with human conclusions, and pay attention to:
@@ -974,6 +1014,7 @@ The purpose of calibration is not to pursue complete consistency across all scor
 
 # Chapter 6: Release Gate, Regression, and Continuous Improvement
 
+<a id="61-tiered-test-sets"></a>
 ## 6.1 Tiered Test Sets
 
 It is recommended to maintain four categories of sets based on purpose:
@@ -989,6 +1030,7 @@ The scale of test cases should be determined by business scope and risk. Start w
 
 ---
 
+<a id="62-change-classification"></a>
 ## 6.2 Change Classification
 
 | Level | Typical Changes                                  | Recommended Evaluation Scope            |
@@ -1002,6 +1044,7 @@ Change levels can be escalated based on actual impact. When the scope of impact 
 
 ---
 
+<a id="63-three-layer-release-gate"></a>
 ## 6.3 Three-Layer Release Gate
 
 ### First Layer: Critical Test Case Gate
@@ -1034,6 +1077,7 @@ For example:
 
 ---
 
+<a id="64-baseline-and-comparability"></a>
 ## 6.4 Baseline and Comparability
 
 A baseline is a version snapshot with confirmed quality status, including at minimum:
@@ -1053,6 +1097,7 @@ When incomparable changes occur, the reason should be documented and a new basel
 
 ---
 
+<a id="65-failure-handling-and-continuous-improvement"></a>
 ## 6.5 Failure Handling and Continuous Improvement
 
 The correct chain of actions after quality failure is:

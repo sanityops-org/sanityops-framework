@@ -1,4 +1,4 @@
-# Appendix: Framework-Level Comparison — SanityOps Quality vs. RAGAS
+﻿# Appendix: Framework-Level Comparison — SanityOps Quality vs. RAGAS
 
 ---
 

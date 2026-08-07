@@ -1,4 +1,4 @@
-# SanityOps Framework
+﻿# SanityOps Framework
 
 # Quality Tool-Agent White Paper
 
@@ -68,6 +68,7 @@ This methodology fills the international gap in enterprise Agent quality assessm
 
 ## 2. Introduction
 
+<a id="21-research-background"></a>
 ### 2.1 Research Background
 
 AI Agents are moving from experimental projects to enterprise core business processes. According to industry research, 81% of enterprises limit Agents to single-workflow scenarios with clear success criteria, meaning Tool Agents have become the main form of enterprise AI deployment.
@@ -82,6 +83,7 @@ Current Dilemma:
 └─ Continuous quality assurance missing: Post-deployment quality degradation difficult to detect, lacks version comparison mechanisms
 ```
 
+<a id="22-assessment-object-definition"></a>
 ### 2.2 Assessment Object Definition
 
 **This methodology focuses on Tool Agents**, whose core characteristic is executing deterministic tasks with determinable outputs.
@@ -105,6 +107,7 @@ Typical characteristics of Tool Agents:
 
 **Boundary Case Explanation:** When the Agent's main function is tool invocation with content generation as auxiliary (such as generating confirmation text after querying), it still falls within the Tool Agent category and is assessed according to this methodology.
 
+<a id="23-positioning-in-sanityops-framework"></a>
 ### 2.3 Positioning in SanityOps Framework
 
 SanityOps is a complete Agent quality and security assurance framework, containing three organically connected subsets:
@@ -144,8 +147,10 @@ Closed-loop mechanism:
 
 ## 3. Core Principles
 
+<a id="31-establishment-of-reliability-metrics"></a>
 ### 3.1 Establishment of Reliability Metrics
 
+<a id="311-binary-nature-of-tool-agent-outputs"></a>
 #### 3.1.1 Binary Nature of Tool Agent Outputs
 
 The essential characteristic of Tool Agents is **binary nature of task execution**—tasks either complete successfully or fail, with no intermediate states.
@@ -165,6 +170,7 @@ This binary nature determines that the assessment metric should not be a continu
 
 In enterprise Agent deployment practice, task success rate and task completion rate are widely adopted as core metrics. Research shows top teams (top 15%) achieve Agent reliability 2.2x the average, further validating reliability as the key metric distinguishing Agent quality.
 
+<a id="312-definition-and-measurement-of-reliability"></a>
 #### 3.1.2 Definition and Measurement of Reliability
 
 **Definition:** Reliability is the probability of an Agent successfully completing tasks in multiple independent executions, measured by "success count / total execution count".
@@ -185,6 +191,7 @@ Reliability measurement method:
 └─ Provide reliability interval estimation with confidence level
 ```
 
+<a id="313-why-not-use-multi-metric-systems"></a>
 #### 3.1.3 Why Not Use Multi-Metric Systems
 
 Tool Agent outputs have inherent **binary nature**—tasks either complete successfully or fail, with no intermediate states.
@@ -214,6 +221,7 @@ This binary nature determines:
 
 **Conclusion:** Multi-metric systems are suitable for scenarios where outputs can be continuously scored (such as retrieval relevance, generation quality), while Tool Agent's binary output nature determines its assessment can only be statistical measurement of success rates.
 
+<a id="314-positioning-of-process-metrics"></a>
 #### 3.1.4 Positioning of Process Metrics
 
 In the Agent assessment field, international peers commonly focus on a class of process metrics called "Trajectory Metrics", including:
@@ -247,6 +255,7 @@ Division of labor between assessment and diagnosis:
 
 This division ensures assessment system simplicity and decision effectiveness: **Reliability assessment focuses on result determination, providing decision-capable quality values; process analysis serves problem governance, supporting precise defect localization and remediation.**
 
+<a id="315-comparison-with-rag-agent-assessment"></a>
 #### 3.1.5 Comparison with RAG Agent Assessment
 
 This methodology focuses on Tool Agents, whose core characteristic is output with **binary nature**—structured fields are either completely correct or have errors, with no intermediate states. This characteristic determines the applicability of a single reliability metric.
@@ -282,8 +291,10 @@ The difference between the two assessment systems stems from the **fundamentally
 
 This comparison illustrates: **Assessment methodology design should serve the essential characteristics of the assessment object, not simply apply uniform paradigms.** For result-oriented, output-binary-determinable Tool Agents, a single reliability metric can effectively support release decisions; for content-oriented, output-quality-continuously-distributed RAG Agents, multi-dimensional continuous metric systems are needed to fully reflect service quality.
 
+<a id="32-analysis-of-uncertainty-sources"></a>
 ### 3.2 Analysis of Uncertainty Sources
 
+<a id="321-deterministic-layering-of-agent-behaviors"></a>
 #### 3.2.1 Deterministic Layering of Agent Behaviors
 
 The key to understanding Agent quality lies in identifying sources of uncertainty:
@@ -305,6 +316,7 @@ Agent behavior composition:
 
 If hard-coded program quality is assured through traditional testing, then Agent reliability fluctuations can only come from LLM uncertainty. This means: **Agent quality assessment is essentially assessment of LLM decision-making quality in specific task scenarios.**
 
+<a id="322-root-cause-analysis-of-llm-uncertainty"></a>
 #### 3.2.2 Root Cause Analysis of LLM Uncertainty
 
 Research shows LLM performance is affected by prompt quality, example order, context, and other factors. In Agent scenarios:
@@ -344,6 +356,7 @@ Root cause tracing:
 Conclusion: Root cause of tool selection error often lies in Tool Schema description quality defects
 ```
 
+<a id="323-assessment-governance-closed-loop"></a>
 #### 3.2.3 Assessment-Governance Closed Loop
 
 The above analysis reveals the intrinsic connection between Agent quality assessment and logic artifact governance:
@@ -374,6 +387,7 @@ Limitation 2: Third-party interference factors in production environments
     └─ These factors exceed logic artifact scope, need handling at operations level
 ```
 
+<a id="33-requirements-for-continuous-assessment"></a>
 ### 3.3 Requirements for Continuous Assessment
 
 Tool Agent assessment differs fundamentally from traditional software testing: **Assessment frequency must synchronize with logic artifact iteration frequency.**
@@ -412,8 +426,10 @@ Agent service quality assessment:
 
 ## 4. Assessment Framework
 
+<a id="41-core-elements"></a>
 ### 4.1 Core Elements
 
+<a id="411-shadow-environment"></a>
 #### 4.1.1 Shadow Environment
 
 Shadow environment is an isolated assessment environment equivalent to production, for observing Agent behavior under controlled conditions.
@@ -451,6 +467,7 @@ Shadow environment composition:
 └─ Consistency: Equivalent to production environment, assessment results trustworthy
 ```
 
+<a id="412-mock-data"></a>
 #### 4.1.2 Mock Data
 
 Mock data is preset input-output pairs that drive Agent execution and provide correctness determination baselines.
@@ -520,6 +537,7 @@ Scenario: Student ID query Agent
 
 **Conclusion:** In shadow environments, assessment focuses on **whether LLM correctly executed the task process**, not **whether data is authentic and correct**. Mock data, as long as it conforms to Schema, can effectively drive LLM to complete the reasoning process, thereby achieving effective assessment of Agent reliability.
 
+<a id="413-binary-determination"></a>
 #### 4.1.3 Binary Determination
 
 Each execution output is determined as "success" or "failure", with no intermediate states.
@@ -540,6 +558,7 @@ Determination logic:
     └─ Agent crash/timeout → Failure
 ```
 
+<a id="414-execution-boundary-definition"></a>
 #### 4.1.4 Execution Boundary Definition
 
 **Core principle: Assessment uses final task result as determination unit.**
@@ -576,8 +595,10 @@ Scenario: Complex workflow Agent (query inventory → compare prices → generat
     └─ Analyze root cause (Schema defect, Prompt issue, etc.)
 ```
 
+<a id="42-risk-classification-mechanism"></a>
 ### 4.2 Risk Classification Mechanism
 
+<a id="421-classification-basis"></a>
 #### 4.2.1 Classification Basis
 
 Risk classification essentially assesses "business impact of Agent failure":
@@ -590,6 +611,7 @@ Impact dimensions:
 └─ Operation reversibility: Whether operation can be undone
 ```
 
+<a id="422-three-level-risk-classification"></a>
 #### 4.2.2 Three-Level Risk Classification
 
 | Level | Definition | Typical Scenarios | Failure Impact |
@@ -598,6 +620,7 @@ Impact dimensions:
 | **L2 (Medium Risk)** | State change type, recoverable | Order creation, notification sending, data updates | Can rollback or compensate, controllable impact |
 | **L3 (High Risk)** | Irreversible/sensitive operations | Payment transfers, permission changes, data deletion | Irreversible, severe impact |
 
+<a id="423-classification-corresponding-assessment-strictness"></a>
 #### 4.2.3 Classification Corresponding Assessment Strictness
 
 ```
@@ -617,6 +640,7 @@ L3 → Strict assessment
 └─ High failure cost, safety must be ensured
 ```
 
+<a id="43-assessment-workflow"></a>
 ### 4.3 Assessment Workflow
 
 ```
@@ -654,6 +678,7 @@ Step 7: Result output
 └─ Optional: Trigger SanityOps Inspect for defect localization
 ```
 
+<a id="44-statistical-foundation"></a>
 ### 4.4 Statistical Foundation
 
 Quantitative method for reliability assessment:
@@ -672,12 +697,15 @@ $$
 
 **Configuration basis:** Test counts must meet statistical significance requirements. At 95% confidence, 30 tests all passing can verify true reliability ≥90%; 100 tests all passing can verify true reliability ≥97%.
 
+<a id="45-ratchet-mechanism"></a>
 ### 4.5 Ratchet Mechanism
 
+<a id="451-design-purpose"></a>
 #### 4.5.1 Design Purpose
 
 When Schema remains unchanged, each assessment's reliability metric is recorded as historical data. The ratchet mechanism ensures production environments always run optimal versions, preventing quality degradation.
 
+<a id="452-mechanism-principle"></a>
 #### 4.5.2 Mechanism Principle
 
 ```
@@ -688,6 +716,7 @@ Ratchet mechanism:
 └─ Release recommendation: Recommend releasing to production only when reliability ≥ historical optimal
 ```
 
+<a id="453-application-scenarios"></a>
 #### 4.5.3 Application Scenarios
 
 ```
@@ -707,6 +736,7 @@ Scenario 3: Regression detection
 └─ Decision: Block release, check code change impact
 ```
 
+<a id="454-prerequisites"></a>
 #### 4.5.4 Prerequisites
 
 The effectiveness of the ratchet mechanism relies on the following prerequisites:
@@ -733,8 +763,10 @@ Prerequisite 3: LLM model version stability
 
 ## 5. Implementation Guide
 
+<a id="51-mock-data-generation-strategy"></a>
 ### 5.1 Mock Data Generation Strategy
 
+<a id="511-structured-input-type"></a>
 #### 5.1.1 Structured Input Type
 
 ```
@@ -755,6 +787,7 @@ Strategy:
 └─ Step 4: Record constraint assumptions for subsequent problem localization
 ```
 
+<a id="512-natural-language-input-type"></a>
 #### 5.1.2 Natural Language Input Type
 
 ```
@@ -765,8 +798,10 @@ Generation principles:
 └─ Abnormal inputs: Invalid intents, incomplete information, malicious inputs
 ```
 
+<a id="52-output-determination-mechanism"></a>
 ### 5.2 Output Determination Mechanism
 
+<a id="521-determination-principle"></a>
 #### 5.2.1 Determination Principle
 
 In shadow environments, output determination core is **process correctness**, not data authenticity.
@@ -782,6 +817,7 @@ Determination logic:
 └─ As long as process executed correctly, determined as success
 ```
 
+<a id="522-structured-output-determination"></a>
 #### 5.2.2 Structured Output Determination
 
 For structured outputs, check:
@@ -799,6 +835,7 @@ Example:
 └─ Determination: Fields complete, types correct, format compliant → Success
 ```
 
+<a id="523-natural-language-output-determination"></a>
 #### 5.2.3 Natural Language Output Determination
 
 For natural language outputs, check:
@@ -834,6 +871,7 @@ For natural language output determination, this methodology uses LLM-assisted de
 └─ Recommendation: Manual sampling for edge cases as fallback mechanism
 ```
 
+<a id="524-mixed-output-determination"></a>
 #### 5.2.4 Mixed Output Determination
 
 For outputs containing both structured and natural language components:
@@ -845,6 +883,7 @@ Determination strategy:
 └─ Comprehensive determination: Both parts correct for success
 ```
 
+<a id="525-failure-case-determination"></a>
 #### 5.2.5 Failure Case Determination
 
 ```
@@ -858,6 +897,7 @@ Failure cases:
 └─ Execution interruption: Process failed midway, no final output produced
 ```
 
+<a id="526-multi-turn-dialogue-handling"></a>
 #### 5.2.6 Multi-turn Dialogue Handling
 
 When tasks require multiple rounds of interaction to complete:
@@ -892,8 +932,10 @@ Agent: "Reimbursement application submitted, number RB088"
     └─ Until final output produced, perform determination
 ```
 
+<a id="53-collaboration-with-sanityops-inspect"></a>
 ### 5.3 Collaboration with SanityOps Inspect
 
+<a id="531-pre-check-workflow"></a>
 #### 5.3.1 Pre-check Workflow
 
 ```
@@ -906,6 +948,7 @@ Recommended workflow:
 
 **Value:** Significantly improves first assessment pass rate, reduces iteration costs.
 
+<a id="532-post-hoc-traceability-workflow"></a>
 #### 5.3.2 Post-hoc Traceability Workflow
 
 ```
@@ -923,6 +966,7 @@ When assessment reliability doesn't meet standards:
 
 ## 6. Quality Visualization and Continuous Monitoring
 
+<a id="61-quality-dashboard"></a>
 ### 6.1 Quality Dashboard
 
 SanityOps Quality tool provides visualized dashboard, supporting:
@@ -935,6 +979,7 @@ SanityOps Quality tool provides visualized dashboard, supporting:
 └─ Failure type distribution: Statistical distribution of failure case types
 ```
 
+<a id="62-historical-data-analysis"></a>
 ### 6.2 Historical Data Analysis
 
 ```
@@ -949,6 +994,7 @@ Analysis dimensions:
 
 ## 7. Case Studies
 
+<a id="71-case-1-ticket-intelligent-dispatch-agent"></a>
 ### 7.1 Case 1: Ticket Intelligent Dispatch Agent
 
 ```
@@ -974,6 +1020,7 @@ Follow-up actions:
 └─ New reliability: 97% → Pass
 ```
 
+<a id="72-case-2-payment-transfer-agent"></a>
 ### 7.2 Case 2: Payment Transfer Agent
 
 ```
@@ -1002,6 +1049,7 @@ Ratchet mechanism application:
 
 ## 8. Challenges and Limitations
 
+<a id="81-current-limitations"></a>
 ### 8.1 Current Limitations
 
 **Limitation 1: Mock Data Coverage Limitations**
@@ -1019,6 +1067,7 @@ Ratchet mechanism application:
 - Mock external dependency behaviors may differ from real systems
 - Response: Regular comparison validation, critical dependencies use real services (read-only mode)
 
+<a id="82-methodological-boundaries"></a>
 ### 8.2 Methodological Boundaries
 
 **This methodology does NOT promise:**

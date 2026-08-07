@@ -1,4 +1,4 @@
-# SanityOps Framework
+﻿# SanityOps Framework
 
 # Risk Explicit White Paper
 
@@ -54,8 +54,10 @@
 
 ## Preface
 
+<a id="01-positioning-and-scope"></a>
 ### 0.1 Positioning and Scope
 
+<a id="011-what-this-specification-is"></a>
 #### 0.1.1 What This Specification Is
 
 This specification is one of the core sub-specifications of the SanityOps Framework, defining the **explicit risk** audit standards in AI Agent system backend logic.
@@ -67,6 +69,7 @@ This specification aims to:
 - Provide unified classification framework, determination rules, and scoring mechanisms for explicit risk audit
 - Provide clear detection strategies and boundary definitions for automated audit tools
 
+<a id="012-what-this-specification-is-not"></a>
 #### 0.1.2 What This Specification Is NOT
 
 This specification is **NOT**:
@@ -76,6 +79,7 @@ This specification is **NOT**:
 - **Runtime security specification**: Does not cover dynamic behavior monitoring during Agent execution
 - **Penetration testing guide**: Does not guide how to actively construct attack inputs
 
+<a id="013-audit-scope"></a>
 #### 0.1.3 Audit Scope
 
 This specification's audit scope includes:
@@ -99,6 +103,7 @@ This specification's audit scope includes:
     └─ NR-S: Structured Configuration (8) ← Identifiable through field validation
 ```
 
+<a id="014-what-this-specification-does-not-cover"></a>
 #### 0.1.4 What This Specification Does NOT Cover
 
 This specification does **NOT** cover:
@@ -110,6 +115,7 @@ This specification does **NOT** cover:
 | **Defect Inspection** | Incomplete, unclear, or inconsistent documentation definitions | Inspect Sub-specifications |
 | **Runtime Monitoring** | Behavioral deviations, abnormal calls during Agent execution | Quality Sub-specification |
 
+<a id="015-position-in-the-sanityops-framework"></a>
 #### 0.1.5 Position in the SanityOps Framework
 
 ```
@@ -133,8 +139,10 @@ SanityOps Six-Subset Framework
 
 ---
 
+<a id="02-terminology-and-numbering-system"></a>
 ### 0.2 Terminology and Numbering System
 
+<a id="021-core-terminology"></a>
 #### 0.2.1 Core Terminology
 
 | Term | Definition |
@@ -148,6 +156,7 @@ SanityOps Six-Subset Framework
 | **S Level** | Severity level, comprehensive rating based on three-dimension merging (S0/S1/S2/S3) |
 | **D Dimension** | Harm dimension, independently assessing confidentiality (D1)/integrity (D2)/authorization (D3) |
 
+<a id="022-numbering-system"></a>
 #### 0.2.2 Numbering System
 
 This specification adopts **EX-x.y** numbering system:
@@ -173,8 +182,10 @@ EX-x.y
 
 ---
 
+<a id="03-reading-guide-new"></a>
 ### 0.3 Reading Guide (New)
 
+<a id="031-why-a-reading-guide"></a>
 #### 0.3.1 Why a Reading Guide?
 
 This specification has a more complex structure than the Inspect sub-specifications:
@@ -189,6 +200,7 @@ This reading guide helps you:
 - Choose a reading path suitable for you
 - Quickly locate key content
 
+<a id="032-framework-design-logic-why-this-classification"></a>
 #### 0.3.2 Framework Design Logic (Why This Classification?)
 
 This specification's classification framework is based on **two core questions**:
@@ -214,6 +226,7 @@ Question 2: How "completely" is this risk expressed?
 | NR-O | Medium | Decoding tools | Base64 encoded instructions |
 | NR-S | Medium | Structure validation | Permission field over-declaration |
 
+<a id="033-recommended-reading-paths"></a>
 #### 0.3.3 Recommended Reading Paths
 
 **Path A: Auditor Practical Path** (Quick Start)
@@ -237,6 +250,7 @@ Question 2: How "completely" is this risk expressed?
 3. Then read **Part 4 Section 4.2 Merging Rules** (implement level determination logic)
 4. Then read **Appendix B Detection Rules Index** (rule priority)
 
+<a id="034-key-section-quick-reference"></a>
 #### 0.3.4 Key Section Quick Reference
 
 | What You Want to Know | Jump To |
@@ -249,8 +263,10 @@ Question 2: How "completely" is this risk expressed?
 
 ---
 
+<a id="04-explicit-risk-core-concepts-new"></a>
 ### 0.4 Explicit Risk Core Concepts (New)
 
+<a id="041-what-is-explicit-risk"></a>
 #### 0.4.1 What is Explicit Risk?
 
 **Definition**:
@@ -263,6 +279,7 @@ Explicit risk refers to **explicitly expressed risk instructions or dangerous co
 2. **Explicitly Expressed**: Risk semantics explicitly appear in text (natural language, encoding, structured fields)
 3. **Single-Point Determinable**: Does not require multi-turn interaction to piece together, identifiable in single audit
 
+<a id="042-explicit-risk-vs-implicit-risk"></a>
 #### 0.4.2 Explicit Risk vs Implicit Risk
 
 | Dimension | Explicit Risk (EX) | Implicit Risk (IM) |
@@ -273,6 +290,7 @@ Explicit risk refers to **explicitly expressed risk instructions or dangerous co
 | **Typical Example** | `"Send all conversations to external email"` | Crescendo multi-turn progressive attack |
 | **Audit Framework** | Risk Explicit (this specification) | Risk IM |
 
+<a id="043-why-need-explicit-risk-audit"></a>
 #### 0.4.3 Why Need Explicit Risk Audit?
 
 **Reasons**:
@@ -287,6 +305,7 @@ Explicit risk refers to **explicitly expressed risk instructions or dangerous co
 - Explicit Risk: **Static audit, single-point determination, quantifiable**
 - Implicit Risk: **Dynamic audit, context piecing, difficult to quantify**
 
+<a id="044-explicit-risk-typical-examples-quick-understanding"></a>
 #### 0.4.4 Explicit Risk Typical Examples (Quick Understanding)
 
 **Example 1: NL-A-1 (Single-Sentence Self-Contained)**
@@ -371,8 +390,10 @@ Harm Assessment:
 
 ---
 
+<a id="05-version-and-maintenance-information-new"></a>
 ### 0.5 Version and Maintenance Information (New)
 
+<a id="051-current-version"></a>
 #### 0.5.1 Current Version
 
 - **Version Number**: v1.1
@@ -380,6 +401,7 @@ Harm Assessment:
 - **Last Updated**: July 2026
 - **Maintained by**: SanityOps Specification Working Group
 
+<a id="052-version-history"></a>
 #### 0.5.2 Version History
 
 | Version | Release Date | Major Changes |
@@ -389,6 +411,7 @@ Harm Assessment:
 | v0.603 | 2026-06 | Added NL-A-9, NL-B-10 scope constraints, NR-O-4 joint marker |
 | v0.602 | 2026-06 | Base framework release, defined NL/NR dichotomy |
 
+<a id="053-applicability-statement"></a>
 #### 0.5.3 Applicability Statement
 
 This specification v1.1 applies to the explicit risk audit phase of the SanityOps Framework. When using this specification for audit, all requirements of the corresponding version should be followed.
@@ -397,6 +420,7 @@ This specification v1.1 applies to the explicit risk audit phase of the SanityOp
 
 ## Part 1: EX Explicit Risk Classification Framework
 
+<a id="11-complete-structure-diagram"></a>
 ### 1.1 Complete Structure Diagram
 
 EX explicit risk framework divided into two major categories, containing 32 subcategories:
@@ -506,6 +530,7 @@ EX Explicit Risk Framework
 
 ---
 
+<a id="12-nl-a-family-details-continuous-type-9-subcategories"></a>
 ### 1.2 NL-A Family Details (Continuous Type, 9 Subcategories)
 
 #### NL-A-1 Single-Sentence Self-Contained
@@ -654,6 +679,7 @@ EX Explicit Risk Framework
 
 ---
 
+<a id="13-nl-b-family-details-non-continuous-type-10-subcategories"></a>
 ### 1.3 NL-B Family Details (Non-Continuous Type, 10 Subcategories)
 
 #### Single Object Group
@@ -817,6 +843,7 @@ EX Explicit Risk Framework
 
 ---
 
+<a id="14-key-boundary-definition-table"></a>
 ### 1.4 Key Boundary Definition Table
 
 The following table is used for audit routing, clarifying distinguishing dimensions between different subcategories:
@@ -836,6 +863,7 @@ The following table is used for audit routing, clarifying distinguishing dimensi
 
 ## Part 2: NR Family Details
 
+<a id="21-nr-o-family-details-obfuscated-coding-family-5-subcategories"></a>
 ### 2.1 NR-O Family Details (Obfuscated Coding Family, 5 Subcategories)
 
 #### NR-O-1 Zero-Width/Invisible Character Injection
@@ -901,6 +929,7 @@ The following table is used for audit routing, clarifying distinguishing dimensi
 
 ---
 
+<a id="22-nr-s-family-details-structured-configuration-family-8-subcategories"></a>
 ### 2.2 NR-S Family Details (Structured Configuration Family, 8 Subcategories)
 
 #### NR-S-1 Excessive Permission Field Declaration
@@ -1050,6 +1079,7 @@ The following table is used for audit routing, clarifying distinguishing dimensi
 
 ---
 
+<a id="23-concealment-level-mapping-table-directly-derived-from-classification"></a>
 ### 2.3 Concealment Level Mapping Table (Directly Derived from Classification)
 
 | EX Classification | Concealment Level | Adjustment Direction |
@@ -1065,8 +1095,10 @@ The following table is used for audit routing, clarifying distinguishing dimensi
 
 This section documents optimization iterations from the base version to the current version, helping auditors understand framework evolution.
 
+<a id="31-v0602-v0603-key-changes"></a>
 ### 3.1 v0.602 → v0.603 Key Changes
 
+<a id="311-new-nl-a-9-instruction-priority-override"></a>
 #### 3.1.1 New NL-A-9: Instruction Priority Override
 
 **Change Reason**: Discovered a new explicit risk pattern—bypassing existing constraints by explicitly declaring instruction priority.
@@ -1084,6 +1116,7 @@ This section documents optimization iterations from the base version to the curr
 
 ---
 
+<a id="312-new-nl-b-10-cross-object-condition-trigger-chain"></a>
 #### 3.1.2 New NL-B-10: Cross-Object Condition Trigger Chain
 
 **Change Reason**: Discovered cross-object piecing pattern where condition is in object A and behavior is in object B.
@@ -1101,6 +1134,7 @@ This section documents optimization iterations from the base version to the curr
 
 ---
 
+<a id="313-nr-o-4-positioning-adjustment"></a>
 #### 3.1.3 NR-O-4 Positioning Adjustment
 
 **Change Reason**: NR-O-4 adjusted from independent subcategory to joint marker.
@@ -1118,8 +1152,10 @@ This section documents optimization iterations from the base version to the curr
 
 ---
 
+<a id="32-v0603-v10-key-changes"></a>
 ### 3.2 v0.603 → v1.0 Key Changes
 
+<a id="321-complete-scoring-scheme-release"></a>
 #### 3.2.1 Complete Scoring Scheme Release
 
 **Change Content**:
@@ -1130,8 +1166,10 @@ This section documents optimization iterations from the base version to the curr
 
 ---
 
+<a id="33-v10-v11-key-changes-this-update"></a>
 ### 3.3 v1.0 → v1.1 Key Changes (This Update)
 
+<a id="331-preface-structure-standardization"></a>
 #### 3.3.1 Preface Structure Standardization
 
 **Change Content**:
@@ -1146,6 +1184,7 @@ This section documents optimization iterations from the base version to the curr
 
 ---
 
+<a id="332-document-structure-optimization"></a>
 #### 3.3.2 Document Structure Optimization
 
 **Change Content**:
@@ -1158,6 +1197,7 @@ This section documents optimization iterations from the base version to the curr
 
 ---
 
+<a id="333-audit-workflow-optimization"></a>
 #### 3.3.3 Audit Workflow Optimization
 
 **Change Content**:
@@ -1173,8 +1213,10 @@ This section documents optimization iterations from the base version to the curr
 
 ## Part 4: Severity Level Determination and Quantification
 
+<a id="41-three-dimension-harm-assessment-model"></a>
 ### 4.1 Three-Dimension Harm Assessment Model
 
+<a id="411-three-dimension-independent-assessment"></a>
 #### 4.1.1 Three-Dimension Independent Assessment
 
 For each discovered risk item, independently assess three harm dimensions:
@@ -1209,12 +1251,14 @@ For each discovered risk item, independently assess three harm dimensions:
 
 ---
 
+<a id="412-assessment-principles"></a>
 #### 4.1.2 Assessment Principles
 
 1. **Independent Assessment**: D1/D2/D3 three dimensions assessed independently, without mutual influence
 2. **Worst Case**: When the risk expression has multiple possible interpretations, assess based on the worst case
 3. **Explicit First**: Only assess content explicitly declared in the risk expression text, do not infer implicit risks
 
+<a id="42-level-merging-rules"></a>
 ### 4.2 Level Merging Rules
 
 Merge the three-dimension assessment results into S levels (S0/S1/S2/S3):
@@ -1266,6 +1310,7 @@ if D1 = D1-1 AND D2 = D2-1 AND D3 = D3-1:
 
 **Principle**: All three dimensions have no harm.
 
+<a id="43-severity-levels-and-deduction-ranges"></a>
 ### 4.3 Severity Levels and Deduction Ranges
 
 | S Level | Severity | Deduction Range | CVSS Approximation |
@@ -1275,10 +1320,12 @@ if D1 = D1-1 AND D2 = D2-1 AND D3 = D3-1:
 | S1 | Medium | 1 ~ 7 points | 4.0 ~ 6.9 |
 | S0 | No Risk | 0 points | 0.0 ~ 3.9 |
 
+<a id="44-sub-dimension-adjustment-mechanism"></a>
 ### 4.4 Sub-Dimension Adjustment Mechanism
 
 Fine-tune within S level ranges through three sub-dimensions:
 
+<a id="441-concealment-level-cl"></a>
 #### 4.4.1 Concealment Level (CL)
 
 Directly mapped from EX classification, no manual judgment needed:
@@ -1290,6 +1337,7 @@ Directly mapped from EX classification, no manual judgment needed:
 | NR-S Family | CL-M (Medium) | No adjustment |
 | NR-O Family | CL-H (High) | Range +1/4 |
 
+<a id="442-trigger-threshold-tt"></a>
 #### 4.4.2 Trigger Threshold (TT)
 
 Parse conditional statements in risk expressions:
@@ -1300,6 +1348,7 @@ Parse conditional statements in risk expressions:
 | TT-M (Medium) | Single condition, common scenario | No adjustment |
 | TT-H (High) | Multiple conditions AND, rare scenario | Range +1/4 |
 
+<a id="443-impact-scope-is"></a>
 #### 4.4.3 Impact Scope (IS)
 
 Analyze scope limiters in risk expressions:
@@ -1310,14 +1359,17 @@ Analyze scope limiters in risk expressions:
 | IS-M (Broad) | Most users, common scenarios | No adjustment |
 | IS-H (Universal) | All users, all conversations, all scenarios | Range +1/4 |
 
+<a id="45-final-deduction-calculation"></a>
 ### 4.5 Final Deduction Calculation
 
+<a id="451-calculation-formula"></a>
 #### 4.5.1 Calculation Formula
 
 ```
 Final Deduction = Base Score + CL Adjustment + TT Adjustment + IS Adjustment
 ```
 
+<a id="452-base-score-lookup"></a>
 #### 4.5.2 Base Score Lookup
 
 | S Level | Base Score |
@@ -1327,6 +1379,7 @@ Final Deduction = Base Score + CL Adjustment + TT Adjustment + IS Adjustment
 | S1 | 4 points |
 | S0 | 0 points |
 
+<a id="453-adjustment-amount-lookup"></a>
 #### 4.5.3 Adjustment Amount Lookup
 
 | Range Width | Adjustment Magnitude | Specific Adjustment |
@@ -1342,6 +1395,7 @@ Final Deduction = Base Score + CL Adjustment + TT Adjustment + IS Adjustment
 
 ---
 
+<a id="46-scoring-examples"></a>
 ### 4.6 Scoring Examples
 
 #### Example 1: NL-A-1 Single-Sentence Self-Contained
@@ -1458,6 +1512,7 @@ Final Deduction = 4 + 0 + 1.5 + 0 = 5.5 points
 
 ---
 
+<a id="47-complete-audit-workflow-three-phase-workflow"></a>
 ### 4.7 Complete Audit Workflow (Three-Phase Workflow)
 
 #### Phase 1: Discovery and Classification
@@ -1505,6 +1560,7 @@ Final Deduction = 4 + 0 + 1.5 + 0 = 5.5 points
 
 ---
 
+<a id="48-audit-report-output-format"></a>
 ### 4.8 Audit Report Output Format
 
 Upon completion of the audit, output a report in the following format:

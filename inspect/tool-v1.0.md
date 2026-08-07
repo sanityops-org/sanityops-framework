@@ -1,4 +1,4 @@
-# SanityOps Framework
+﻿# SanityOps Framework
 
 # Inspect Tool Specification
 
@@ -66,8 +66,10 @@
 
 ## Foreword
 
+<a id="01-positioning-and-scope"></a>
 ### 0.1 Positioning and Scope
 
+<a id="011-what-this-specification-is"></a>
 #### 0.1.1 What This Specification Is
 
 This specification is one of the core sub-specifications of the SanityOps Framework. It defines the quality defect inspection standards for **Tool Schemas** in AI Agent systems.
@@ -78,6 +80,7 @@ This specification is designed to:
 - Provide a unified inspection framework for Tool Schema design, review, and audit
 - Provide explicit rule definitions for automated inspection tooling
 
+<a id="012-what-this-specification-is-not"></a>
 #### 0.1.2 What This Specification Is Not
 
 This specification is **not**:
@@ -87,6 +90,7 @@ This specification is **not**:
 - A performance optimization specification: it does not address Tool execution efficiency
 - An API design specification: it does not replace RESTful or GraphQL API design best practices
 
+<a id="013-inspection-scope"></a>
 #### 0.1.3 Inspection Scope
 
 This specification's inspection scope includes:
@@ -116,6 +120,7 @@ This specification's inspection scope includes:
     └─ Compatibility, breaking change determination
 ```
 
+<a id="014-out-of-scope"></a>
 #### 0.1.4 Out of Scope
 
 This specification does **not** cover:
@@ -125,6 +130,7 @@ This specification does **not** cover:
 - Tool performance and response time
 - Tool permission control implementation (only inspects Schema-level risk)
 
+<a id="015-position-within-the-sanityops-framework"></a>
 #### 0.1.5 Position Within the SanityOps Framework
 
 ```
@@ -144,8 +150,10 @@ SanityOps Six-Subset Framework
     └─ Quality ← Agent and (local) LLM service quality assessment
 ```
 
+<a id="02-terminology-and-numbering-system"></a>
 ### 0.2 Terminology and Numbering System
 
+<a id="021-core-terminology"></a>
 #### 0.2.1 Core Terminology
 
 | Term | Definition |
@@ -157,6 +165,7 @@ SanityOps Six-Subset Framework
 | **Agent Level** | The tier (L1/L2/L3) assigned to a Tool based on its operational risk level |
 | **Defect Level** | The severity of a defect's impact on the system (P0/P1/P2) |
 
+<a id="022-numbering-system"></a>
 #### 0.2.2 Numbering System
 
 This specification uses the **QD-T-x.y** numbering system:
@@ -181,6 +190,7 @@ QD-T-x.y
 - `QD-T-2.1`: Parameter Constraint Defects → String Without maxLength
 - `QD-T-3.4`: High-Risk Operation Defects → Internal Parameter Exposure
 
+<a id="023-risk-level-symbols"></a>
 #### 0.2.3 Risk Level Symbols
 
 | Risk Level | Symbol | Definition | Typical Characteristics |
@@ -189,6 +199,7 @@ QD-T-x.y
 | **Medium Risk** | 🟡 | May cause data quality issues or functional anomalies | Write operations, insufficient parameter constraints, semantic ambiguity |
 | **Low Risk** | 🟢 | May cause reduced efficiency or comprehension difficulty | Query operations, incomplete descriptions, minor defects |
 
+<a id="024-abbreviation-table"></a>
 #### 0.2.4 Abbreviation Table
 
 | Abbreviation | Full Name | Meaning |
@@ -197,6 +208,7 @@ QD-T-x.y
 | RS | Risk Sensitivity | Risk sensitivity level |
 | Schema | JSON Schema | JSON data structure definition specification |
 
+<a id="025-defect-level-definitions-p0p1p2"></a>
 #### 0.2.5 Defect Level Definitions (P0/P1/P2)
 
 | Defect Level | Symbol | Definition | Disposition Meaning |
@@ -205,8 +217,10 @@ QD-T-x.y
 | **P1** | ⚠️ | Warning | Requires fix; recommended before release |
 | **P2** | ℹ️ | Advisory | Recommended optimization; MAY be deferred |
 
+<a id="03-version-and-maintenance-information"></a>
 ### 0.3 Version and Maintenance Information
 
+<a id="031-current-version"></a>
 #### 0.3.1 Current Version
 
 - **Version**: v2.3
@@ -214,6 +228,7 @@ QD-T-x.y
 - **Last Updated**: July 2026
 - **Maintainer**: SanityOps Working Group
 
+<a id="032-version-history"></a>
 #### 0.3.2 Version History
 
 | Version | Release Date | Major Changes |
@@ -223,6 +238,7 @@ QD-T-x.y
 | v2.1 | 2026-06 | Added high-risk operation inspection, Cross-Tool Data Flow inspection |
 | v2.0 | 2026-05 | Restructured as a formal specification; added parameter constraint inspection |
 
+<a id="033-applicability-statement"></a>
 #### 0.3.3 Applicability Statement
 
 This specification v2.3 applies to the Tool Schema quality inspection phase of the SanityOps Framework. When using this specification for Tool quality inspection, all requirements of the corresponding version SHALL be followed.
@@ -231,12 +247,15 @@ This specification v2.3 applies to the Tool Schema quality inspection phase of t
 
 ## Part 1: Structural Validity Defects
 
+<a id="11-positioning-of-this-part"></a>
 ### 1.1 Positioning of This Part
 
+<a id="111-inspection-objective"></a>
 #### 1.1.1 Inspection Objective
 
 This part inspects the **basic structural validity** of Tool Schemas, ensuring that Tool definitions can be correctly parsed and understood.
 
+<a id="112-inspection-dimensions"></a>
 #### 1.1.2 Inspection Dimensions
 
 ```
@@ -254,6 +273,7 @@ Structural Validity Inspection
     └─ Whether additional properties are explicitly prohibited or declared
 ```
 
+<a id="113-relationship-to-other-parts"></a>
 #### 1.1.3 Relationship to Other Parts
 
 ```
@@ -267,8 +287,10 @@ Part 4: Schema Changes ← Change Layer
     ↓ Inspects whether changes introduce risk
 ```
 
+<a id="12-defect-classification"></a>
 ### 1.2 Defect Classification
 
+<a id="121-base-field-missing-qd-t-11"></a>
 #### 1.2.1 Base Field Missing (QD-T-1.1)
 
 **Definition**: The Tool Schema is missing required base fields.
@@ -330,6 +352,7 @@ The description field is missing.
 
 **Defect Level**: P0
 
+<a id="122-required-field-inconsistency-qd-t-12"></a>
 #### 1.2.2 Required Field Inconsistency (QD-T-1.2)
 
 **Definition**: The required list contains fields not present in properties, or required fields are not listed in required.
@@ -374,6 +397,7 @@ required includes "date," but "date" is not defined in properties.
 
 **Defect Level**: P0
 
+<a id="123-invalid-enum-constraints-qd-t-13"></a>
 #### 1.2.3 Invalid Enum Constraints (QD-T-1.3)
 
 **Definition**: The enum field definition is invalid, including empty values, duplicate values, or type inconsistencies.
@@ -407,6 +431,7 @@ Duplicate values exist in the enum.
 
 **Defect Level**: P1
 
+<a id="124-uncontrolled-additionalproperties-qd-t-14"></a>
 #### 1.2.4 Uncontrolled additionalProperties (QD-T-1.4)
 
 **Definition**: Object-type parameters do not explicitly declare additionalProperties, allowing arbitrary extra fields.
@@ -445,6 +470,7 @@ additionalProperties is not declared; arbitrary extra fields are permitted by de
 
 **Defect Level**: P1
 
+<a id="13-severity-classification"></a>
 ### 1.3 Severity Classification
 
 | Defect ID | Defect Name | Defect Level | Description |
@@ -454,6 +480,7 @@ additionalProperties is not declared; arbitrary extra fields are permitted by de
 | QD-T-1.3 | Invalid Enum Constraints | P1 | May cause parameter validation failure |
 | QD-T-1.4 | Uncontrolled additionalProperties | P1 | May allow unexpected fields to be passed |
 
+<a id="14-detection-methods"></a>
 ### 1.4 Detection Methods
 
 The defects in this part can be detected automatically through **JSON Schema format validation**:
@@ -471,6 +498,7 @@ Detection Rules:
 └─ Check whether additionalProperties is explicitly declared
 ```
 
+<a id="15-part-summary"></a>
 ### 1.5 Part Summary
 
 This part defines the **basic structural validity inspection** for Tool Schemas, ensuring that Tool definitions can be correctly parsed and understood.
@@ -492,12 +520,15 @@ This part defines the **basic structural validity inspection** for Tool Schemas,
 
 ## Part 2: Parameter Constraint and High-Risk Operation Defects
 
+<a id="21-positioning-of-this-part"></a>
 ### 2.1 Positioning of This Part
 
+<a id="211-inspection-objective"></a>
 #### 2.1.1 Inspection Objective
 
 This part inspects the **parameter constraint completeness** and **high-risk operation identification** of Tool Schemas, ensuring that parameters are adequately constrained and high-risk operations are explicitly identified.
 
+<a id="212-inspection-dimensions"></a>
 #### 2.1.2 Inspection Dimensions
 
 ```
@@ -520,6 +551,7 @@ Parameter Constraint and High-Risk Operation Inspection
     └─ Multi-Tool Semantic Competition
 ```
 
+<a id="213-relationship-to-other-parts"></a>
 #### 2.1.3 Relationship to Other Parts
 
 Building on Part 1's assurance of structural validity, this part further inspects:
@@ -528,8 +560,10 @@ Building on Part 1's assurance of structural validity, this part further inspect
 - Whether high-risk operations are explicitly identified
 - Whether semantics are clear and unambiguous
 
+<a id="22-defect-classification"></a>
 ### 2.2 Defect Classification
 
+<a id="221-parameter-constraint-defects-qd-t-2x"></a>
 #### 2.2.1 Parameter Constraint Defects (QD-T-2.x)
 
 ##### QD-T-2.1 String Type Without Length Constraint
@@ -673,6 +707,7 @@ Building on Part 1's assurance of structural validity, this part further inspect
 
 **Defect Level**: P1 (L2), P0 (L3)
 
+<a id="222-high-risk-operation-defects-qd-t-3x"></a>
 #### 2.2.2 High-Risk Operation Defects (QD-T-3.x)
 
 ##### QD-T-3.1 Write Operation Not Identified
@@ -894,6 +929,7 @@ Tool 2: send_notification(user_id, message) → retrieves email internally
 
 **Defect Level**: P0 (L3)
 
+<a id="223-semantic-clarity-defects-qd-t-4x"></a>
 #### 2.2.3 Semantic Clarity Defects (QD-T-4.x)
 
 ##### QD-T-4.1 Insufficient Description Quality
@@ -1011,6 +1047,7 @@ The two Tools have similar functionality and are difficult to distinguish.
 
 **Defect Level**: P1 (L3)
 
+<a id="23-severity-classification"></a>
 ### 2.3 Severity Classification
 
 | Defect Category | Item Count | High-Risk Items | Medium-Risk Items | Low-Risk Items |
@@ -1020,6 +1057,7 @@ The two Tools have similar functionality and are difficult to distinguish.
 | Semantic Clarity Defects | 3 | 0 | 3 | 0 |
 | **Total** | **12** | **5** | **7** | **0** |
 
+<a id="24-detection-method-checklist-mechanism"></a>
 ### 2.4 Detection Method: Checklist Mechanism
 
 The defects in this part require **Checklist inspection** combined with **human review**:
@@ -1042,6 +1080,7 @@ Detection Process:
     └─ Semantic competition confirmation
 ```
 
+<a id="25-part-summary"></a>
 ### 2.5 Part Summary
 
 This part defines the **parameter constraint and high-risk operation inspection** for Tool Schemas, ensuring that parameters are adequately constrained and high-risk operations are explicitly identified.
@@ -1064,8 +1103,10 @@ This part defines the **parameter constraint and high-risk operation inspection*
 
 ## Part 3: Tiered Inspection Mechanism
 
+<a id="31-tool-risk-level-definitions"></a>
 ### 3.1 Tool Risk Level Definitions
 
+<a id="311-agent-level-classification"></a>
 #### 3.1.1 Agent Level Classification
 
 | Agent Level | Designation | Definition | Typical Characteristics |
@@ -1074,6 +1115,7 @@ This part defines the **parameter constraint and high-risk operation inspection*
 | **Medium Risk** | L2 | State-changing; recoverable | Create, update, send notifications |
 | **High Risk** | L3 | Irreversible / sensitive operations | Delete, payment, permission changes |
 
+<a id="312-level-determination-criteria"></a>
 #### 3.1.2 Level Determination Criteria
 
 **L1 (Low Risk) Determination Criteria**:
@@ -1097,6 +1139,7 @@ This part defines the **parameter constraint and high-risk operation inspection*
 - ✅ Operations are irreversible or difficult to recover
 - ❌ Failure consequence: data loss, financial loss, permission leaks
 
+<a id="313-typical-examples"></a>
 #### 3.1.3 Typical Examples
 
 | Agent Level | Typical Tool Examples |
@@ -1105,8 +1148,10 @@ This part defines the **parameter constraint and high-risk operation inspection*
 | L2 | create_user, update_profile, send_notification, add_to_cart |
 | L3 | delete_user, process_payment, grant_permission, transfer_data |
 
+<a id="32-defect-level-definitions-p0p1p2"></a>
 ### 3.2 Defect Level Definitions (P0/P1/P2)
 
+<a id="321-defect-level-classification"></a>
 #### 3.2.1 Defect Level Classification
 
 | Defect Level | Symbol | Definition | Typical Defects |
@@ -1115,6 +1160,7 @@ This part defines the **parameter constraint and high-risk operation inspection*
 | **P1** | ⚠️ | SHOULD be fixed; may cause functional anomalies | Insufficient parameter constraints, incomplete description |
 | **P2** | ℹ️ | MAY be fixed; affects efficiency or readability | Minor description omissions, non-critical field omissions |
 
+<a id="322-defect-level-upgrade-rules"></a>
 #### 3.2.2 Defect Level Upgrade Rules
 
 **The same defect may have its defect level upgraded based on the Tool's Agent Level**:
@@ -1126,8 +1172,10 @@ This part defines the **parameter constraint and high-risk operation inspection*
 | Write operation not identified | — | P1 (Warning) | P0 (Blocking) |
 | Internal Parameter Exposure | — | — | P0 (Blocking) |
 
+<a id="33-tiered-inspection-checklist"></a>
 ### 3.3 Tiered Inspection Checklist
 
+<a id="331-l1-low-risk-inspection-checklist"></a>
 #### 3.3.1 L1 (Low Risk) Inspection Checklist
 
 | ID | Inspection Item | Defect Level | Inspection Method |
@@ -1142,6 +1190,7 @@ This part defines the **parameter constraint and high-risk operation inspection*
 
 **Inspection Item Count**: 7 (P0: 2, P1: 2, P2: 3)
 
+<a id="332-l2-medium-risk-inspection-checklist"></a>
 #### 3.3.2 L2 (Medium Risk) Inspection Checklist
 
 | ID | Inspection Item | Defect Level | Inspection Method |
@@ -1161,6 +1210,7 @@ This part defines the **parameter constraint and high-risk operation inspection*
 
 **Inspection Item Count**: 12 (P0: 5, P1: 7, P2: 0)
 
+<a id="333-l3-high-risk-inspection-checklist"></a>
 #### 3.3.3 L3 (High Risk) Inspection Checklist
 
 | ID | Inspection Item | Defect Level | Inspection Method |
@@ -1184,8 +1234,10 @@ This part defines the **parameter constraint and high-risk operation inspection*
 
 **Inspection Item Count**: 16 (P0: 14, P1: 2, P2: 0)
 
+<a id="34-standard-inspection-process"></a>
 ### 3.4 Standard Inspection Process
 
+<a id="341-inspection-process-flow"></a>
 #### 3.4.1 Inspection Process Flow
 
 ```
@@ -1258,6 +1310,7 @@ This part defines the **parameter constraint and high-risk operation inspection*
                            └───────────────────────┘
 ```
 
+<a id="342-inspection-process-description"></a>
 #### 3.4.2 Inspection Process Description
 
 **Step 1: Determine Agent Level**
@@ -1307,8 +1360,10 @@ Output a complete inspection report, including:
 - Defect list (sorted by defect level)
 - Remediation recommendations
 
+<a id="35-usage-examples"></a>
 ### 3.5 Usage Examples
 
+<a id="351-l1-example-weather-query-tool"></a>
 #### 3.5.1 L1 Example: Weather Query Tool
 
 **Tool Definition**:
@@ -1361,6 +1416,7 @@ Output a complete inspection report, including:
 }
 ```
 
+<a id="352-l3-example-user-deletion-tool"></a>
 #### 3.5.2 L3 Example: User Deletion Tool
 
 **Tool Definition**:
@@ -1429,6 +1485,7 @@ Output a complete inspection report, including:
 
 (tenantId should be obtained from context and should not be exposed in the Schema)
 
+<a id="36-part-summary"></a>
 ### 3.6 Part Summary
 
 This part defines the **tiered inspection mechanism** for Tool Schemas, providing differentiated inspection intensity based on the Tool's Agent Level.
@@ -1450,12 +1507,15 @@ This part defines the **tiered inspection mechanism** for Tool Schemas, providin
 
 ## Part 4: Schema Change and Compatibility Inspection
 
+<a id="41-positioning-of-this-part"></a>
 ### 4.1 Positioning of This Part
 
+<a id="411-inspection-objective"></a>
 #### 4.1.1 Inspection Objective
 
 This part inspects whether **Tool Schema changes introduce new risks or compatibility issues**. It does not address change management processes.
 
+<a id="412-inspection-scope"></a>
 #### 4.1.2 Inspection Scope
 
 ```
@@ -1477,6 +1537,7 @@ Schema Change Inspection
     └─ System-level impact
 ```
 
+<a id="42-compatibility-inspection"></a>
 ### 4.2 Compatibility Inspection
 
 #### QD-T-5.1 Breaking Change Determination
@@ -1536,8 +1597,10 @@ Impact Scope Dimensions:
 | P1 Medium Impact | Used by a few Agents; moderate invocation frequency | Require notification to relevant parties |
 | P2 Low Impact | Used by a single Agent; low invocation frequency | Direct change permitted |
 
+<a id="43-change-risk-assessment"></a>
 ### 4.3 Change Risk Assessment
 
+<a id="431-risk-assessment-matrix"></a>
 #### 4.3.1 Risk Assessment Matrix
 
 | Change Type | L1 Tool | L2 Tool | L3 Tool |
@@ -1548,6 +1611,7 @@ Impact Scope Dimensions:
 | Tighten constraint | P2 Low Risk | P1 Medium Risk | P0 High Risk |
 | Add optional field | P2 Low Risk | P2 Low Risk | P2 Low Risk |
 
+<a id="432-change-inspection-process"></a>
 #### 4.3.2 Change Inspection Process
 
 ```
@@ -1570,6 +1634,7 @@ Step 4: Composite risk assessment
     └─ Output risk assessment report
 ```
 
+<a id="44-part-summary"></a>
 ### 4.4 Part Summary
 
 This part defines the **compatibility inspection and risk assessment** for Tool Schema changes, helping to identify and assess the risks changes may introduce.
@@ -1590,6 +1655,7 @@ This part defines the **compatibility inspection and risk assessment** for Tool 
 
 ## Part 5: Quantitative Scoring Mechanism
 
+<a id="51-scoring-principles"></a>
 ### 5.1 Scoring Principles
 
 | Principle | Description |
@@ -1601,6 +1667,7 @@ This part defines the **compatibility inspection and risk assessment** for Tool 
 | Simple rule | For the same inspection item number, the weight is deducted only once regardless of how many defect instances are found |
 | Gate condition | Any P0 defect → evaluation FAIL (score is still output) |
 
+<a id="52-calculation-steps"></a>
 ### 5.2 Calculation Steps
 
 **Step 1: Determine Agent Level**  
@@ -1630,6 +1697,7 @@ Actual Score = max(100 − Total Deduction, 0)
 - If any P0 defect exists: evaluation result = FAIL (score is still output)
 - Otherwise: evaluation result = PASS
 
+<a id="521-inspect-tool-inspection-item-distribution-table"></a>
 ### 5.2.1 Inspect Tool Inspection Item Distribution Table
 
 > Note: P0/P1/P2 counts are from the "Tiered Inspection Checklist (3.3)" for the corresponding Agent Level in this document.
@@ -1640,6 +1708,7 @@ Actual Score = max(100 − Total Deduction, 0)
 | **L2** | 12 | 5 | 7 | 0 | $5×5+7×3+0×1=44$ | $100/44≈2.2727$ |
 | **L3** | 16 | 14 | 2 | 0 | $14×5+2×3+0×1=76$ | $100/76≈1.3158$ |
 
+<a id="53-defect-deduction-value-table-example"></a>
 ### 5.3 Defect Deduction Value Table (Example)
 
 **Using Inspect Tool L1 as an example:**
@@ -1652,6 +1721,7 @@ Actual Score = max(100 − Total Deduction, 0)
 | P1 | Base Score × 3 | $5.2632×3≈15.7895$ |
 | P2 | Base Score × 1 | $5.2632×1≈5.2632$ |
 
+<a id="54-scoring-examples"></a>
 ### 5.4 Scoring Examples
 
 **Example**: L2 Agent, N=5 defects found (involving 4 inspection item numbers)
@@ -1694,6 +1764,7 @@ Actual Score = max(100 − Total Deduction, 0)
 }
 ```
 
+<a id="55-multi-defect-handling-rules"></a>
 ### 5.5 Multi-Defect Handling Rules
 
 **Rule**: The same inspection item is deducted only once, regardless of how many defect instances are found.
