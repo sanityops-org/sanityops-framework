@@ -9,6 +9,24 @@ export default defineConfig({
     server: {
       allowedHosts: true,
     },
+    plugins: [
+      {
+        name: 'fix-decode-uri',
+        enforce: 'pre',
+        configureServer(server) {
+          server.middlewares.use((req, res, next) => {
+            try {
+              if (req.url) decodeURI(req.url)
+            } catch {
+              res.statusCode = 400
+              res.end()
+              return
+            }
+            next()
+          })
+        },
+      },
+    ],
   },
 
   head: [
