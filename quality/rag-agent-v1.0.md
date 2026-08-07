@@ -1,4 +1,4 @@
-﻿# SanityOps Framework
+# SanityOps Framework
 
 # Quality RAG-Agent White Paper
 
@@ -17,7 +17,7 @@
   - [Reading Instructions](#reading-instructions)
 - [Chapter 1: Background, Problems, and Scope](#chapter-1-background-problems-and-scope)
 - [1.1 Enterprise RAG Agent: From Knowledge Storage to Service Delivery](#11-enterprise-rag-agent-from-knowledge-storage-to-service-delivery)
-- [1.2 From "Can Answer" to "Verifiably Stable Answering"](#12-from-can-answer-to-verifiably-stable-answering)
+- [1.2 From "Able to Answer" to "Verifiably Stable Answering"](#12-from-able-to-answer-to-verifiably-stable-answering)
 - [1.3 Framework Positioning: Quality Subset of SanityOps Framework](#13-framework-positioning-quality-subset-of-sanityops-framework)
 - [1.4 Collaboration Boundary with SanityOps Inspect](#14-collaboration-boundary-with-sanityops-inspect)
 - [1.5 Assessment Objects and Non-Assessment Objects](#15-assessment-objects-and-non-assessment-objects)

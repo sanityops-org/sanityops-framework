@@ -1,4 +1,4 @@
-﻿# SanityOps Framework
+# SanityOps Framework
 
 # Risk Implicit White Paper
 
@@ -1258,7 +1258,7 @@ OWASP (Open Web Application Security Project) is an authoritative standard in th
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-<a id="83-llm-top-10-sanityops-defect-mapping"></a>
+<a id="83-llm-top-10--sanityops-defect-mapping"></a>
 ### 8.3 LLM Top 10 → SanityOps Defect Mapping
 
 | OWASP LLM | Risk Principle | Prompt Defects | Skill Defects | Tool Defects | Cross Defects |
@@ -1274,7 +1274,7 @@ OWASP (Open Web Application Security Project) is an authoritative standard in th
 | **LLM09** Misinformation | LLM hallucination causing errors | QD-P-2.7.x (Example design defects) | QD-S-4.x (Failure handling defects) | QD-T-4.x (Semantic clarity) | QD-PS-1.5 (Failure strategy contradiction) |
 | **LLM10** Unbounded Consumption | Resource exhaustion | QD-P-2.5.5 (Call frequency limit missing) | QD-S-1.3 (Execution resource boundary missing)<br>QD-S-2.x (Unbounded declaration) | QD-T-2.4 (Array length unconstrained) | QD-PT-2.6 (Call frequency unreasonable) |
 
-<a id="84-agentic-top-10-sanityops-defect-mapping"></a>
+<a id="84-agentic-top-10--sanityops-defect-mapping"></a>
 ### 8.4 Agentic Top 10 → SanityOps Defect Mapping
 
 | OWASP ASI | Risk Principle | Related LLM | Key SanityOps Defect Chain | Defense Depth |

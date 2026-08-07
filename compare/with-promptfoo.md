@@ -1,4 +1,4 @@
-﻿# Appendix: Technical Comparison — Risk Implicit vs. Promptfoo
+# Appendix: Technical Comparison — Risk Implicit vs. Promptfoo
 
 ---
 
@@ -74,7 +74,7 @@ The qualitative distinction is clear: Implicit is **artifact-driven**; Promptfoo
 
 ## 5. Result Adjudication Mechanism
 
-<a id="51-risk-implicit-four-termination-statuses-signalgate"></a>
+<a id="51-risk-implicit-four-termination-statuses--signalgate"></a>
 ### 5.1 Risk Implicit: Four Termination Statuses + Signal/Gate
 
 Risk Implicit employs a multi-layered adjudication model that distinguishes not just _whether_ an attack succeeded, but _how_ the system responded — and what that response implies about the underlying defect.
