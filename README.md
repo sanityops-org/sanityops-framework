@@ -71,7 +71,7 @@ SanityOps Six-Subset Framework
 
 ### Framework Workflow
 
-<img src="/assets/sanityops.svg" alt="SanityOps 架构图" width="650" />
+<img src="/assets/sanityops.svg" alt="SanityOps Architecture" width="650" />
 
 ---
 
