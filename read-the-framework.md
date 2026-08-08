@@ -1,4 +1,4 @@
-# Get Started
+# Read the Framework
 
 Welcome to the SanityOps Framework — a vendor-neutral methodology for AI Agent governance, built on logic-artifact inspection, risk validation, and quality assessment.
 

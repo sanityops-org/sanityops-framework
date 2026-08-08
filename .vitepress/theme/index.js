@@ -20,7 +20,7 @@ const FrameNavPatcher = {
 
     // Map nav button text (prefix match) → landing page route
     const LANDING_MAP = {
-      Framework: '/framework/get-started',
+      Framework: '/framework/read-the-framework',
       Inspect: '/inspect/',
       Risk: '/risk/',
       Quality: '/quality/',

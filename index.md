@@ -7,12 +7,11 @@ hero:
   tagline: Vendor-neutral, built on logical-artifact defect inspection, extending into Risk scan and Quality assessment for AI Agents.
   actions:
     - theme: brand
-      text: Get Started
-      link: /framework/get-started
+      text: Read the Framework
+      link: /framework/read-the-framework
     - theme: alt
-      text: Interactive Demo
-      link: '#demo'
-      # TODO: replace with actual demo URL when available
+      text: Try the Tools
+      link: /framework/try-the-tools
 
 features:
   - icon: 🎯

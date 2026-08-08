@@ -82,7 +82,8 @@ export default defineConfig({
         {
           text: 'Framework',
           items: [
-            { text: 'Get Started', link: '/framework/get-started' },
+            { text: 'Read the Framework', link: '/framework/read-the-framework' },
+            { text: 'Try the Tools', link: '/framework/try-the-tools' },
             { text: 'Overview v1.0', link: '/framework/overview-v1.0' },
             { text: 'Core v1.0', link: '/framework/core-v1.0' },
             { text: 'Relevance v1.0', link: '/framework/relevance-v1.0' },
@@ -142,7 +143,7 @@ export default defineConfig({
     ],
 
     footer: {
-      message: 'v1.0 · Licensed under CC BY 4.0 · hello@sanityops.org',
+      message: 'v1.0 · Licensed under CC BY-SA 4.0 · hello@sanityops.org',
       copyright: 'Copyright © 2026 Sanity AI Labs',
     },
 
