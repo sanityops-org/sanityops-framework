@@ -3,7 +3,12 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: 'SanityOps',
   description: 'AI Agent Continuous Governance Framework',
+  lang: 'en-US',
   lastUpdated: true,
+
+  sitemap: {
+    hostname: 'https://www.sanityops.org',
+  },
 
   vite: {
     server: {
@@ -36,10 +41,23 @@ export default defineConfig({
   },
 
   head: [
-    // TODO: SVG favicon may not be supported by all browsers; replace with .ico or .png when available
-    ['link', { rel: 'icon', href: '/sanityops-logo.svg' }],
+    ['link', { rel: 'icon', href: '/sanityops-logo.png' }],
     ['link', { rel: 'stylesheet', href: '/cookie-consent.css' }],
     ['script', { src: '/cookie-consent.js' }],
+
+    // Open Graph
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:title', content: 'SanityOps — AI Agent Continuous Governance Framework' }],
+    ['meta', { property: 'og:description', content: 'An open, vendor-neutral framework for AI agent governance. Built on logical-artifact defect inspection, extending into Risk scan and Quality assessment.' }],
+    ['meta', { property: 'og:image', content: 'https://www.sanityops.org/sanityops-logo.png' }],
+    ['meta', { property: 'og:url', content: 'https://www.sanityops.org' }],
+    ['meta', { property: 'og:site_name', content: 'SanityOps' }],
+
+    // Twitter Card
+    ['meta', { name: 'twitter:card', content: 'summary' }],
+    ['meta', { name: 'twitter:title', content: 'SanityOps — AI Agent Continuous Governance Framework' }],
+    ['meta', { name: 'twitter:description', content: 'An open, vendor-neutral framework for AI agent governance. Built on logical-artifact defect inspection, extending into Risk scan and Quality assessment.' }],
+    ['meta', { name: 'twitter:image', content: 'https://www.sanityops.org/sanityops-logo.png' }],
   ],
 
   themeConfig: {
