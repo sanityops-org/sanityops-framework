@@ -38,6 +38,8 @@ export default defineConfig({
   head: [
     // TODO: SVG favicon may not be supported by all browsers; replace with .ico or .png when available
     ['link', { rel: 'icon', href: '/sanityops-logo.svg' }],
+    ['link', { rel: 'stylesheet', href: '/cookie-consent.css' }],
+    ['script', { src: '/cookie-consent.js' }],
   ],
 
   themeConfig: {
@@ -149,8 +151,8 @@ export default defineConfig({
     ],
 
     footer: {
-      message: 'v1.0 · Licensed under CC BY-SA 4.0 · hello@sanityops.org',
-      copyright: 'Copyright © 2026 Sanity AI Labs',
+      message: '<a href="/legal/privacy-policy">Privacy Policy</a> · <a href="/legal/terms-of-service">Terms of Service</a> · <a href="/legal/cookie-policy">Cookie Policy</a> · <a href="/legal/security-statement">Security</a> · <span id="cc-footer-preferences">Cookie Preferences</span>',
+      copyright: 'Copyright © 2026 Sanity AI Labs · v1.0 · Licensed under CC BY-SA 4.0',
     },
 
     editLink: {

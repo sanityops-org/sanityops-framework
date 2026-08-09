@@ -1,0 +1,351 @@
+/* Cookie Consent Banner & Preferences Modal */
+/* SanityOps — v1.0 */
+
+:root {
+  --cc-bg: #1a1a2e;
+  --cc-text: #e0e0e0;
+  --cc-text-secondary: #a0a0b8;
+  --cc-border: #2d2d44;
+  --cc-accent: #5b8def;
+  --cc-accent-hover: #4a7de0;
+  --cc-btn-primary: #5b8def;
+  --cc-btn-primary-text: #ffffff;
+  --cc-btn-secondary: transparent;
+  --cc-btn-secondary-text: #e0e0e0;
+  --cc-btn-secondary-border: #4a4a6a;
+  --cc-overlay: rgba(0, 0, 0, 0.65);
+  --cc-toggle-bg: #3a3a55;
+  --cc-toggle-active: #5b8def;
+  --cc-radius: 8px;
+  --cc-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
+  --cc-modal-shadow: 0 8px 48px rgba(0, 0, 0, 0.5);
+  --cc-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --cc-z-banner: 9998;
+  --cc-z-modal: 9999;
+}
+
+/* ===== Banner ===== */
+.cc-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--cc-z-banner);
+  background: var(--cc-bg);
+  color: var(--cc-text);
+  font-family: var(--cc-font);
+  font-size: 14px;
+  line-height: 1.6;
+  box-shadow: var(--cc-shadow);
+  padding: 20px 0;
+  display: none;
+}
+
+.cc-banner.is-visible {
+  display: block;
+}
+
+.cc-banner__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cc-banner__content {
+  min-width: 0;
+}
+
+.cc-banner__title {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 6px 0;
+  color: #ffffff;
+}
+
+.cc-banner__text {
+  margin: 0;
+  color: var(--cc-text-secondary);
+  font-size: 13.5px;
+}
+
+.cc-banner__text a {
+  color: var(--cc-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.cc-banner__text a:hover {
+  color: var(--cc-accent-hover);
+}
+
+.cc-banner__actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cc-banner__actions-right {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* ===== Buttons ===== */
+.cc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 20px;
+  border-radius: var(--cc-radius);
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: all 0.15s ease;
+  font-family: var(--cc-font);
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.cc-btn--primary {
+  background: var(--cc-btn-primary);
+  color: var(--cc-btn-primary-text);
+  border-color: var(--cc-btn-primary);
+}
+
+.cc-btn--primary:hover {
+  background: var(--cc-accent-hover);
+  border-color: var(--cc-accent-hover);
+}
+
+.cc-btn--secondary {
+  background: var(--cc-btn-secondary);
+  color: var(--cc-btn-secondary-text);
+  border-color: var(--cc-btn-secondary-border);
+}
+
+.cc-btn--secondary:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: #6a6a8a;
+}
+
+.cc-btn--text {
+  background: transparent;
+  color: var(--cc-text-secondary);
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 400;
+}
+
+.cc-btn--text:hover {
+  color: #ffffff;
+  background: transparent;
+}
+
+.cc-btn--small {
+  padding: 6px 14px;
+  font-size: 12.5px;
+}
+
+/* ===== Modal Overlay ===== */
+.cc-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--cc-z-modal);
+  background: var(--cc-overlay);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.cc-modal-overlay.is-visible {
+  display: flex;
+}
+
+/* ===== Modal ===== */
+.cc-modal {
+  background: var(--cc-bg);
+  color: var(--cc-text);
+  font-family: var(--cc-font);
+  border-radius: 12px;
+  box-shadow: var(--cc-modal-shadow);
+  max-width: 560px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 28px;
+}
+
+.cc-modal__title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #ffffff;
+}
+
+.cc-modal__desc {
+  font-size: 13.5px;
+  color: var(--cc-text-secondary);
+  margin: 0 0 24px 0;
+  line-height: 1.6;
+}
+
+/* ===== Cookie Category Row ===== */
+.cc-category {
+  border-top: 1px solid var(--cc-border);
+  padding: 16px 0;
+}
+
+.cc-category:last-of-type {
+  border-bottom: 1px solid var(--cc-border);
+}
+
+.cc-category__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cc-category__name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+}
+
+.cc-category__status {
+  font-size: 12px;
+  font-weight: 500;
+  color: #6a9f6a;
+  flex-shrink: 0;
+}
+
+.cc-category__desc {
+  font-size: 13px;
+  color: var(--cc-text-secondary);
+  margin: 6px 0 0 0;
+  line-height: 1.5;
+}
+
+.cc-category__desc a {
+  color: var(--cc-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ===== Toggle Switch ===== */
+.cc-toggle {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.cc-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.cc-toggle__slider {
+  position: absolute;
+  inset: 0;
+  background: var(--cc-toggle-bg);
+  border-radius: 24px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.cc-toggle__slider::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  background: #ffffff;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+.cc-toggle input:checked + .cc-toggle__slider {
+  background: var(--cc-toggle-active);
+}
+
+.cc-toggle input:checked + .cc-toggle__slider::after {
+  transform: translateX(20px);
+}
+
+.cc-toggle input:disabled + .cc-toggle__slider {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ===== Modal Actions ===== */
+.cc-modal__actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+/* ===== Footer Link ===== */
+.cc-footer-link,
+#cc-footer-preferences {
+  color: var(--cc-accent);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-size: inherit;
+}
+
+.cc-footer-link:hover,
+#cc-footer-preferences:hover {
+  color: var(--cc-accent-hover);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 640px) {
+  .cc-banner__inner {
+    gap: 14px;
+  }
+
+  .cc-banner__actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .cc-banner__actions-right {
+    flex-direction: column;
+  }
+
+  .cc-banner__actions-right .cc-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .cc-modal {
+    padding: 20px;
+  }
+
+  .cc-modal__actions {
+    flex-direction: column;
+  }
+
+  .cc-modal__actions .cc-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
