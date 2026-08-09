@@ -10,7 +10,7 @@
 
 **Maintained by**: SanityOps Working Group
 
-**License**: CC BY 4.0
+**License**: CC BY-SA 4.0
 
 ---
 
@@ -475,7 +475,7 @@ SanityOps **core specifications and governance logic** have been released as ope
 - ✅ Establish **industry consensus** and form de facto governance standards
 
 **Repository**: https://github.com/sanityops-org/sanityops-framework
-**License**: CC BY 4.0
+**License**: CC BY-SA 4.0
 
 ---
 
@@ -902,6 +902,6 @@ SanityOps does not want to "solve all problems", but is committed to building fo
 
 ---
 
-© 2026 SanityOps. Licensed under Creative Commons Attribution 4.0 International.
+© 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
 v1.0  ·  July 2026

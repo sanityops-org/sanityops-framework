@@ -1,4 +1,4 @@
-﻿# SanityOps Framework Core
+# SanityOps Framework Core
 
 ---
 
@@ -8,7 +8,7 @@
 
 **Maintainer**: SanityOps Working Group
 
-**License**: CC BY 4.0
+**License**: CC BY-SA 4.0
 
 ---
 
@@ -1687,6 +1687,6 @@ Only when the common objects, terminology, evidence, and decision boundaries are
 
 ---
 
-© 2026 SanityOps. Licensed under Creative Commons Attribution 4.0 International.
+© 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
 v1.0  ·  July 2026

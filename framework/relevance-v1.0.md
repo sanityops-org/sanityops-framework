@@ -1,4 +1,4 @@
-﻿# SanityOps Framework Relevance
+# SanityOps Framework Relevance
 
 ---
 
@@ -8,7 +8,7 @@
 
 **Maintained by**: SanityOps Working Group
 
-**License**: CC BY 4.0
+**License**: CC BY-SA 4.0
 
 ---
 
@@ -1549,6 +1549,6 @@ This specification can reference OWASP risk language, but does not use OWASP num
 
 ---
 
-© 2026 SanityOps. Licensed under Creative Commons Attribution 4.0 International.
+© 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
 v1.0  ·  July 2026

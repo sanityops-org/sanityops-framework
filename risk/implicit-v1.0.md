@@ -10,7 +10,7 @@
 
 **Maintained by**: SanityOps Risk Working Group
 
-**License**: CC BY 4.0
+**License**: CC BY-SA 4.0
 
 ---
 
@@ -1493,6 +1493,6 @@ Implicit has the following limitations that users should be aware of:
 
 ---
 
-© 2026 SanityOps. Licensed under Creative Commons Attribution 4.0 International.
+© 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
 v1.0  ·  July 2026
