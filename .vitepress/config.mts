@@ -8,6 +8,12 @@ export default defineConfig({
   vite: {
     server: {
       allowedHosts: true,
+      watch: {
+        ignored: ['**/.git/**'],
+      },
+      fs: {
+        deny: ['.git'],
+      },
     },
     plugins: [
       {
