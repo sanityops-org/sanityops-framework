@@ -24,6 +24,7 @@ const FrameNavPatcher = {
       Inspect: '/inspect/',
       Risk: '/risk/',
       Quality: '/quality/',
+      About: '/about/',
     }
 
     function patch() {

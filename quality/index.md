@@ -101,4 +101,4 @@ Relevance (Relevance Assessment)
 2. Identify your Agent type: Tool Agent (deterministic tasks) or RAG Agent (knowledge Q&A)
 3. For Tool Agents: follow [Quality Tool-Agent](./tool-agent-v1.0.md) to configure risk level, test counts, and pass rate thresholds
 4. For RAG Agents: follow [Quality RAG-Agent](./rag-agent-v1.0.md) to establish Baseline Test Cases and run the 12-metric assessment
-5. Feed results to [Relevance](/relevance/v1.0) for quality failure → defect diagnostic mapping
+5. Feed results to [Relevance](/framework/relevance-v1.0) for quality failure → defect diagnostic mapping

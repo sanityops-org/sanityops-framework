@@ -14,13 +14,27 @@ export default defineConfig({
     server: {
       allowedHosts: true,
       watch: {
-        ignored: ['**/.git/**', '**/*.crdownload'],
+        ignored: (file: string) => file.includes('/.git/') || file.includes('\\.git\\') || file.endsWith('.crdownload'),
       },
       fs: {
         deny: ['.git'],
       },
     },
     plugins: [
+      {
+        name: 'exclude-dotgit',
+        enforce: 'pre',
+        resolveId(id) {
+          if (id.includes('/.git/') || id.includes('\\.git\\')) {
+            return { id, external: true }
+          }
+        },
+        load(id) {
+          if (id.includes('/.git/') || id.includes('\\.git\\')) {
+            return ''
+          }
+        },
+      },
       {
         name: 'fix-decode-uri',
         enforce: 'pre',
@@ -99,7 +113,13 @@ export default defineConfig({
           { text: 'Tool-Agent', link: '/quality/tool-agent-v1.0' },
         ],
       },
-      { text: 'About', link: '/about' },
+      {
+        text: 'About',
+        items: [
+          { text: 'About', link: '/about/about' },
+          { text: 'Partnership', link: '/about/partnership' },
+        ],
+      },
       { text: 'Community', link: 'https://github.com/sanityops-org/sanityops-framework/discussions' },
     ],
 
@@ -145,6 +165,16 @@ export default defineConfig({
             { text: 'Skill v1.0', link: '/inspect/skill-v1.0' },
             { text: 'Tool v1.0', link: '/inspect/tool-v1.0' },
             { text: 'Cross v1.0', link: '/inspect/cross-v1.0' },
+          ],
+        },
+      ],
+      '/about/': [
+        {
+          text: 'About',
+          items: [
+            { text: 'Overview', link: '/about/' },
+            { text: 'About SanityOps', link: '/about/about' },
+            { text: 'Partnership', link: '/about/partnership' },
           ],
         },
       ],
