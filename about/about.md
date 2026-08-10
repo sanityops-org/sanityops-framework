@@ -57,3 +57,9 @@ To keep expectations honest, SanityOps does not replace:
 SanityOps grew out of real deployments, not a lab exercise — and it's still shaped that way. If you're evaluating, deploying, or governing AI agents in production and hitting problems the current standards don't cover, we want to hear about it.
 
 Review the specifications. Open an issue. Tell us where it breaks.
+
+## Contact
+
+- **General inquiries**: [hello@sanityops.org](mailto:hello@sanityops.org)
+- **Partnership**: [partnership@sanityops.org](mailto:partnership@sanityops.org)
+- **Security & compliance**: [security@sanityops.org](mailto:security@sanityops.org)
