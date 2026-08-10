@@ -14,7 +14,7 @@ export default defineConfig({
     server: {
       allowedHosts: true,
       watch: {
-        ignored: ['**/.git/**'],
+        ignored: ['**/.git/**', '**/*.crdownload'],
       },
       fs: {
         deny: ['.git'],
@@ -41,7 +41,7 @@ export default defineConfig({
   },
 
   head: [
-    ['link', { rel: 'icon', href: '/sanityops-logo.png' }],
+    ['link', { rel: 'icon', href: '/sanityops-logo-github-favicon.png' }],
     ['link', { rel: 'stylesheet', href: '/cookie-consent.css' }],
     ['script', { src: '/cookie-consent.js' }],
 
