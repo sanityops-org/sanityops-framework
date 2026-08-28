@@ -948,7 +948,7 @@ The three form a self-consistent ecosystem narrative: the industry common librar
 >
 > # Output format (every reply must strictly output JSON)
 >
-> {"action": "refund | exchange | manual | query", "content": "<the reply text to the user>", "reason": "<the basis for choosing this action>"}
+> {"action": "refund | exchange | manual | query", "content": "&lt;the reply text to the user&gt;", "reason": "&lt;the basis for choosing this action&gt;"}
 >
 > - action may only take the four values refund / exchange / manual / query.
 > - content carries the specific answer (such as order information, refund amount, rejection reason).

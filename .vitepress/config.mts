@@ -93,6 +93,7 @@ export default defineConfig({
       {
         text: 'Inspect',
         items: [
+          { text: 'Overview', link: '/inspect/' },
           { text: 'Prompt', link: '/inspect/prompt-v1.0' },
           { text: 'Skill', link: '/inspect/skill-v1.0' },
           { text: 'Tool', link: '/inspect/tool-v1.0' },
@@ -102,6 +103,7 @@ export default defineConfig({
       {
         text: 'Risk',
         items: [
+          { text: 'Overview', link: '/risk/' },
           { text: 'Explicit', link: '/risk/explicit-v1.0' },
           { text: 'Implicit', link: '/risk/implicit-v1.0' },
         ],
@@ -109,8 +111,16 @@ export default defineConfig({
       {
         text: 'Quality',
         items: [
+          { text: 'Overview', link: '/quality/' },
           { text: 'RAG-Agent', link: '/quality/rag-agent-v1.0' },
           { text: 'Tool-Agent', link: '/quality/tool-agent-v1.0' },
+        ],
+      },
+      {
+        text: 'Preview',
+        items: [
+          { text: 'Overview', link: '/preview/' },
+          { text: 'DMC', link: '/DMC/DMC-v1.0' },
         ],
       },
       {
@@ -143,6 +153,24 @@ export default defineConfig({
             { text: 'Overview', link: '/quality/' },
             { text: 'RAG-Agent v1.0', link: '/quality/rag-agent-v1.0' },
             { text: 'Tool-Agent v1.0', link: '/quality/tool-agent-v1.0' },
+          ],
+        },
+      ],
+      '/preview/': [
+        {
+          text: 'Preview',
+          items: [
+            { text: 'Overview', link: '/preview/' },
+            { text: 'DMC v1.0', link: '/DMC/DMC-v1.0' },
+          ],
+        },
+      ],
+      '/DMC/': [
+        {
+          text: 'Preview',
+          items: [
+            { text: 'Overview', link: '/preview/' },
+            { text: 'DMC v1.0', link: '/DMC/DMC-v1.0' },
           ],
         },
       ],
