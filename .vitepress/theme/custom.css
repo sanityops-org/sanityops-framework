@@ -39,4 +39,64 @@ html.dark .VPHero .text {
   margin-top: 32px;
 }
 
+/* DMC preview banner — home page, below the features cards */
+.VPHome {
+  position: relative;
+}
+
+.dmc-banner {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 36px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  text-align: center;
+  line-height: 24px;
+}
+
+@media (min-width: 768px) {
+  .dmc-banner {
+    margin-top: 52px;
+  }
+}
+
+.dmc-banner-badge {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--vp-c-brand-1);
+}
+
+.dmc-banner-text {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #000;
+}
+
+.dark .dmc-banner-text {
+  color: #fff;
+}
+
+.dmc-banner-link {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #000;
+  text-decoration: none;
+}
+
+.dark .dmc-banner-link {
+  color: #fff;
+}
+
+.dmc-banner-link:hover {
+  color: var(--vp-c-brand-1);
+}
+
 
