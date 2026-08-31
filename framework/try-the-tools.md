@@ -20,13 +20,11 @@
 
 Defect Inspector is fully open source, allowing the community to freely use, audit, modify, and build upon it.
 
-- **GitHub Repository**: [sanityops-inspect](https://github.com/sanityops-org/sanityops-inspect/tree/main)
+- **GitHub Repository**: [sanityops-cli](https://github.com/sanityops-org/sanityops-cli)
 
-- **CLI Installation** (placeholder, to be updated at launch):
+- **CLI Installation** :
   
-  ```bash
-  npm install -g sanityops-inspect-cli  sanityops-inspect scan ./your-prompt.md  
-  ```
+  See [Installation guide](https://github.com/sanityops-org/sanityops-cli)
 
 - **Use Case**: Static defect inspection of **logical artifacts** (System Prompts, Skills, Tool Schemas), suitable for local development or CI/CD integration.
 
@@ -69,7 +67,7 @@ Within the SanityOps Platform, however, we integrate all three into a unified sy
 
 | What do you want to do?                                  | Recommended path                                                                                               |
 | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| Run static defect checks and integrate it yourself       | Download the [open-source Inspect tool](https://github.com/sanityops-org/sanityops-inspect/tree/main)          |
+| Run static defect checks and integrate it yourself       | Download the [open-source Inspect tool](https://github.com/sanityops-org/sanityops-cli)          |
 | Experience the full governance loop                      | Request an invite code and try the [live demo](https://www.sanityops.org/demo)                                 |
 | Deploy independently, with custom models and code review | Contact `hello@sanityops.org` to discuss self-hosted deployment                                                |
 | Learn the methodology and implement it yourself          | Read the [open-source Framework specification](https://github.com/sanityops-org/sanityops-framework/tree/main) |
