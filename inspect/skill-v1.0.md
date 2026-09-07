@@ -1337,6 +1337,7 @@ Proceeding to Step 6: Generate inspection report
 
 ---
 
+<a id="part-8-review-schema--detailed-review-dimensions"></a>
 ## Part 8: Review Schema — Detailed Review Dimensions
 
 <a id="81-six-dimension-overview-and-positioning"></a>
@@ -1539,9 +1540,9 @@ Do not fabricate facts.
 **Defect QD-S-1.1: Input Boundary Missing**
 
 ```
-【Defect】QD-S-1.1 Input Boundary Missing
+[Defect]QD-S-1.1 Input Boundary Missing
 
-【LLM Default Behavior Inference】
+[LLM Default Behavior Inference]
   If the Skill does not declare an upper limit on the number of input work notes,
   the LLM, driven by its "complete the task as best you can" tendency,
   will attempt to process all records provided by the user. When the user pastes
@@ -1549,19 +1550,19 @@ Do not fabricate facts.
   causing Token Consumption to far exceed expectations, resulting in cost overruns
   or response timeouts.
 
-【Remediation Declaration】
+[Remediation Declaration]
   Process up to 50 work notes.
   When exceeding 50: Process the first 50 and notify the user:
   "Work notes exceed the 50-item limit. The first 50 have been processed.
    Please submit the remaining items separately."
 
-【Remediation Effectiveness Demonstration】
+[Remediation Effectiveness Demonstration]
   The upper limit (50 items) and overflow behavior (truncate and notify) are both
   explicitly defined. The LLM has a clear stop condition during execution and does
   not need to determine boundaries on its own. This remediation effectively
   eliminates the Token runaway risk.
 
-【Verification Conclusion】Remediation is effective; risk eliminated. (Static Pass)
+[Verification Conclusion]Remediation is effective; risk eliminated. (Static Pass)
 ```
 
 #### 9.1.4 Optimized Skill
@@ -1664,9 +1665,9 @@ Be careful with sensitive data.
 **Defect QD-S-5.1: Read/Write/Delete Permissions Not Distinguished**
 
 ```
-【Defect】QD-S-5.1 Read/Write/Delete Permissions Not Distinguished
+[Defect]QD-S-5.1 Read/Write/Delete Permissions Not Distinguished
 
-【LLM Default Behavior Inference】
+[LLM Default Behavior Inference]
   The Skill's name contains "maintenance" and its description contains "fixes."
   In a database context, both words typically imply maintenance and repair
   capabilities, which may include data modification. When the Skill does not
@@ -1678,7 +1679,7 @@ Be careful with sensitive data.
   one of the root causes of the Replit incident: ambiguous permission boundaries
   are functionally equivalent to implicit authorization.
 
-【Remediation Declaration】
+[Remediation Declaration]
   Rename the Skill to `readonly-database-diagnostic-reporter`
   Explicitly declare: This Skill is for read-only diagnosis only.
   The following operations are prohibited:
@@ -1689,12 +1690,12 @@ Be careful with sensitive data.
   All remediation recommendations are labeled as "Suggestions for human review"
   and are not directly executed.
 
-【Remediation Effectiveness Demonstration】
+[Remediation Effectiveness Demonstration]
   Through the explicit name and prohibition list, the LLM no longer has room
   for ambiguous inference. The permission boundary has moved from "ambiguous"
   to "absolutely clear," completely eliminating the permission overflow risk.
 
-【Verification Conclusion】Remediation is effective; risk eliminated. (Static Pass)
+[Verification Conclusion]Remediation is effective; risk eliminated. (Static Pass)
 ```
 
 #### 9.2.4 Optimized Skill
@@ -2072,6 +2073,7 @@ QD-S-2.1 (P1 inspection item): 1 P0 and 1 P1 defect found simultaneously
 
 ---
 
+<a id="appendix-b-l1l2l3-minimum-rule-sets"></a>
 ## Appendix B: L1/L2/L3 Minimum Rule Sets
 
 ### L1 (Low Risk) Minimum Rule Set

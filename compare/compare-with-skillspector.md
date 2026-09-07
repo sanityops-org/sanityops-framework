@@ -1,6 +1,7 @@
-﻿# Appendix: Technical Comparison Inspect & Risk vs. NVIDIA SkillSpector
+# Appendix: Technical Comparison Inspect & Risk vs. NVIDIA SkillSpector
 
-<a id="table-of-contents"></a>
+---
+
 ## Table of Contents
 
 - [0. Scope of Comparison](#0-scope-of-comparison)
@@ -27,19 +28,21 @@ Both are production-grade tooling: SkillSpector ships as a CLI / Docker image. O
 ---
 
 <a id="1-bottom-line-first-tldr"></a>
+
 ## 1. Bottom Line First (TL;DR)
 
-|                        | NVIDIA SkillSpector                                                                                                                                                                                                                                                                   | SanityOps Inspect + Risk                                                                                                                         |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| In one sentence        | "Can this Skill package be installed?"                                                                                                                                                                                                                                                | "Will this logic design cause the Agent to do the wrong thing, how much risk does it carry, and what needs to be re-verified after remediation?" |
-| Essential nature       | A security scanner (one scan, install recommendation)                                                                                                                                                                                                                                 | A Governance Closed Loop (inspection triggered on every Logic Artifact iteration)                                                                |
-| Strongest capabilities | Malicious code patterns, dependency CVEs / supply chain                                                                                                                                                                                                                               | Logic design defects, Cross-Artifact Consistency, runtime dynamic attack validation                                                              |
-| Blind spots            | No logic-design perspective, no cross-artifact perspective, does not execute the target                                                                                                                                                                                               | Does not perform dependency CVE / supply chain detection                                                                                         |
+|                        | NVIDIA SkillSpector                                                                                                                                                                                                                                                                 | SanityOps Inspect + Risk                                                                                                                         |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| In one sentence        | "Can this Skill package be installed?"                                                                                                                                                                                                                                              | "Will this logic design cause the Agent to do the wrong thing, how much risk does it carry, and what needs to be re-verified after remediation?" |
+| Essential nature       | A security scanner (one scan, install recommendation)                                                                                                                                                                                                                               | A Governance Closed Loop (inspection triggered on every Logic Artifact iteration)                                                                |
+| Strongest capabilities | Malicious code patterns, dependency CVEs / supply chain                                                                                                                                                                                                                             | Logic design defects, Cross-Artifact Consistency, runtime dynamic attack validation                                                              |
+| Blind spots            | No logic-design perspective, no cross-artifact perspective, does not execute the target                                                                                                                                                                                             | Does not perform dependency CVE / supply chain detection                                                                                         |
 | Verdict                | **Complementary, not substitutable.** Use SkillSpector to gate externally sourced Skills at the door; use SanityOps for end-to-end governance of internally developed Logic Artifacts. SanityOps explicitly does not replace existing security frameworks it coordinates with them. |                                                                                                                                                  |
 
 ---
 
 <a id="2-paradigm-layer-scanning-action-vs-governance-closed-loop"></a>
+
 ## 2. Paradigm Layer: Scanning Action vs. Governance Closed Loop
 
 | Dimension         | SkillSpector                 | Inspect + Risk                                                |
@@ -52,6 +55,7 @@ Both are production-grade tooling: SkillSpector ships as a CLI / Docker image. O
 ---
 
 <a id="3-structure-layer-governance-objects"></a>
+
 ## 3. Structure Layer: Governance Objects
 
 **SkillSpector**: Inspects the Skill package everything inside it, including SKILL.md, scripts, and the dependency manifest. Accepts Git repositories, URLs, zips, directories, and single files.
@@ -74,11 +78,12 @@ Risk (Risk Scanning)
 ---
 
 <a id="4-lifecycle-layer-coverage-by-phase"></a>
+
 ## 4. Lifecycle Layer: Coverage by Phase
 
 | Phase                                                    | SkillSpector                                                       | Inspect + Risk                                                                                                           |
 | -------------------------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
-| Design / development (logic defects)                     | ✗                                                                 | ✓ Inspect                                                                                                                |
+| Design / development (logic defects)                     | ✗                                                                  | ✓ Inspect                                                                                                                |
 | Import / pre-release (supply chain, CVE, malicious code) | ✓ Core strength                                                    | Partial (Risk Explicit covers risk expressions in artifacts and scripts, but not dependency CVEs)                        |
 | Pre-release (Explicit Risk audit and rating)             | Partial                                                            | ✓ Risk Explicit                                                                                                          |
 | Runtime (dynamic attack validation)                      | ✗ (the trust model stipulates the scanned Skill is never executed) | ✓ Risk Implicit, executed in isolated Shadow Environments                                                                |
@@ -87,6 +92,7 @@ Risk (Risk Scanning)
 ---
 
 <a id="5-methodology-layer-where-the-determination-comes-from"></a>
+
 ## 5. Methodology Layer: Where the Determination Comes From
 
 | Dimension               | SkillSpector                                                | Inspect                                                           | Risk Explicit                                                 | Risk Implicit                                                                     |
@@ -102,6 +108,7 @@ Risk (Risk Scanning)
 ---
 
 <a id="6-output-layer-conclusion-form-and-actionability"></a>
+
 ## 6. Output Layer: Conclusion Form and Actionability
 
 | Dimension                | SkillSpector                                                                             | Inspect                                        | Risk Explicit                                                          |
@@ -115,22 +122,24 @@ Risk (Risk Scanning)
 ---
 
 <a id="7-capability-matrix-quick-reference"></a>
+
 ## 7. Capability Matrix (Quick Reference)
 
 | Capability                                            | SkillSpector | Inspect      | Risk Explicit                     | Risk Implicit |
 | ----------------------------------------------------- | ------------ | ------------ | --------------------------------- | ------------- |
-| Malicious code / dangerous function patterns          | ✓           | ✗           | ✓ (embedded scripts in artifacts) | ✗            |
-| Dependency CVEs / supply chain                        | ✓           | ✗           | ✗                                | ✗            |
-| Text-level Explicit Risks (incl. encoded obfuscation) | Partial      | ✗           | ✓                                | ✗            |
-| Logic design defects                                  | ✗           | ✓           | ✗                                | ✗            |
-| Cross-Artifact Consistency                            | ✗           | ✓           | ✗                                | Indirect      |
-| Runtime attack validation                             | ✗           | ✗           | ✗                                | ✓            |
-| Root-cause localization to Logic Artifact             | ✗           | ✓           | ✓                                | ✓            |
-| Quantitative risk rating                              | ✓ (0–100)    | ✓ (P0/P1/P2) | ✓ (S-level)                       | ✓            |
+| Malicious code / dangerous function patterns          | ✓            | ✗            | ✓ (embedded scripts in artifacts) | ✗             |
+| Dependency CVEs / supply chain                        | ✓            | ✗            | ✗                                 | ✗             |
+| Text-level Explicit Risks (incl. encoded obfuscation) | Partial      | ✗            | ✓                                 | ✗             |
+| Logic design defects                                  | ✗            | ✓            | ✗                                 | ✗             |
+| Cross-Artifact Consistency                            | ✗            | ✓            | ✗                                 | Indirect      |
+| Runtime attack validation                             | ✗            | ✗            | ✗                                 | ✓             |
+| Root-cause localization to Logic Artifact             | ✗            | ✓            | ✓                                 | ✓             |
+| Quantitative risk rating                              | ✓ (0–100)    | ✓ (P0/P1/P2) | ✓ (S-level)                       | ✓             |
 
 ---
 
 <a id="8-coordination-recommendations"></a>
+
 ## 8. Coordination Recommendations
 
 1. **Externally sourced Skills** → gate with SkillSpector first. Dependency CVEs, supply chain, and malicious code are its core strengths, and SanityOps does not cover them.

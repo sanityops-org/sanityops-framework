@@ -500,6 +500,7 @@ Inspect Prompt, Inspect Tool, and Inspect Skill each independently inspect one a
 
 ---
 
+<a id="part-2-qd-ps-inspection-items-prompt--skill"></a>
 ## Part 2: QD-PS Inspection Items (Prompt → Skill)
 
 <a id="21-inspection-relationship-details"></a>
@@ -757,6 +758,7 @@ Field level → Prompt's QD-P reference location + Skill's Review Schema dimensi
 
 ---
 
+<a id="part-3-qd-pt-inspection-items-prompt--tool"></a>
 ## Part 3: QD-PT Inspection Items (Prompt → Tool)
 
 <a id="31-inspection-relationship-details"></a>
@@ -1014,6 +1016,7 @@ Field level → Prompt's QD-P reference location + Tool's Schema field location
 
 ---
 
+<a id="part-4-qd-st-inspection-items-skill--tool"></a>
 ## Part 4: QD-ST Inspection Items (Skill ↔ Tool)
 
 <a id="41-inspection-relationship-details"></a>

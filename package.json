@@ -9,7 +9,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "CC BY-SA 4.0",
   "description": "",
   "devDependencies": {
     "vitepress": "^1.6.4"

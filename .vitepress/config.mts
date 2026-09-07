@@ -1,10 +1,27 @@
 import { defineConfig } from 'vitepress'
 
+// Shared Community sidebar — referenced by both the /about/ and /DMC/ route
+// prefixes so the left navigation stays identical on every Community page.
+const communitySidebar = [
+  {
+    text: 'Community',
+    items: [
+      { text: 'Overview', link: '/about/' },
+      { text: 'About SanityOps', link: '/about/about' },
+      { text: 'Partnership', link: '/about/partnership' },
+      { text: 'DMC v1.4 (Preview)', link: '/DMC/DMC-v1.4.html' },
+    ],
+  },
+]
+
 export default defineConfig({
   title: 'SanityOps',
   description: 'AI Agent Continuous Governance Framework',
   lang: 'en-US',
   lastUpdated: true,
+
+  // Internal reminder file, not part of the website
+  srcExclude: ['PENDING-UPDATES.md'],
 
   sitemap: {
     hostname: 'https://www.sanityops.org',
@@ -117,20 +134,27 @@ export default defineConfig({
         ],
       },
       {
-        text: 'Preview',
+        text: 'Ecosystem',
         items: [
-          { text: 'Overview', link: '/preview/' },
-          { text: 'DMC', link: '/DMC/DMC-v1.0' },
+          { text: 'Overview', link: '/compare/' },
+          { text: 'Positioning', link: '/compare/sanityops-positioning' },
+          { text: 'SanityOps and FDE', link: '/compare/sanityops-and-fde' },
+          { text: 'SanityOps and Harness', link: '/compare/sanityops-and-harness' },
+          { text: 'vs. Promptfoo', link: '/compare/compare-with-promptfoo' },
+          { text: 'vs. RAGAS', link: '/compare/compare-with-ragas' },
+          { text: 'vs. SkillSpector', link: '/compare/compare-with-skillspector' },
         ],
       },
       {
-        text: 'About',
+        text: 'Community',
         items: [
+          { text: 'Overview', link: '/about/' },
           { text: 'About', link: '/about/about' },
           { text: 'Partnership', link: '/about/partnership' },
+          { text: 'DMC v1.4 (Preview)', link: '/DMC/DMC-v1.4.html' },
+          { text: 'Discussions', link: 'https://github.com/sanityops-org/sanityops-framework/discussions' },
         ],
       },
-      { text: 'Community', link: 'https://github.com/sanityops-org/sanityops-framework/discussions' },
     ],
 
     sidebar: {
@@ -156,24 +180,6 @@ export default defineConfig({
           ],
         },
       ],
-      '/preview/': [
-        {
-          text: 'Preview',
-          items: [
-            { text: 'Overview', link: '/preview/' },
-            { text: 'DMC v1.0', link: '/DMC/DMC-v1.0' },
-          ],
-        },
-      ],
-      '/DMC/': [
-        {
-          text: 'Preview',
-          items: [
-            { text: 'Overview', link: '/preview/' },
-            { text: 'DMC v1.0', link: '/DMC/DMC-v1.0' },
-          ],
-        },
-      ],
       '/risk/': [
         {
           text: 'Risk',
@@ -196,26 +202,22 @@ export default defineConfig({
           ],
         },
       ],
-      '/about/': [
-        {
-          text: 'About',
-          items: [
-            { text: 'Overview', link: '/about/' },
-            { text: 'About SanityOps', link: '/about/about' },
-            { text: 'Partnership', link: '/about/partnership' },
-          ],
-        },
-      ],
       '/compare/': [
         {
-          text: 'Comparison',
+          text: 'Ecosystem',
           items: [
-            { text: 'Compare with Promptfoo', link: '/compare/compare-with-promptfoo' },
-            { text: 'Compare with RAGAS', link: '/compare/compare-with-ragas' },
-            { text: 'Compare with Skillspector', link: '/compare/compare-with-skillspector' },
+            { text: 'Overview', link: '/compare/' },
+            { text: 'Positioning', link: '/compare/sanityops-positioning' },
+            { text: 'SanityOps and FDE', link: '/compare/sanityops-and-fde' },
+            { text: 'SanityOps and Harness', link: '/compare/sanityops-and-harness' },
+            { text: 'vs. Promptfoo', link: '/compare/compare-with-promptfoo' },
+            { text: 'vs. RAGAS', link: '/compare/compare-with-ragas' },
+            { text: 'vs. SkillSpector', link: '/compare/compare-with-skillspector' },
           ],
         },
       ],
+      '/about/': communitySidebar,
+      '/DMC/': communitySidebar,
     },
 
     search: {

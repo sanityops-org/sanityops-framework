@@ -48,6 +48,7 @@
   - [Appendix A: Glossary](#appendix-a-glossary)
   - [Appendix B: Test Count Explanation](#appendix-b-test-count-explanation)
 
+<a id="1-executive-summary"></a>
 ## 1. Executive Summary
 
 Enterprises are rapidly deploying Tool Agents to automate critical business processes—from ticket dispatch to financial approval, from order processing to payment execution. However, a fundamental problem troubles every organization: **Is this Agent reliable enough to carry critical business?**
@@ -66,6 +67,7 @@ This methodology fills the international gap in enterprise Agent quality assessm
 
 ---
 
+<a id="2-introduction"></a>
 ## 2. Introduction
 
 <a id="21-research-background"></a>
@@ -145,6 +147,7 @@ Closed-loop mechanism:
 
 ---
 
+<a id="3-core-principles"></a>
 ## 3. Core Principles
 
 <a id="31-establishment-of-reliability-metrics"></a>
@@ -424,6 +427,7 @@ Agent service quality assessment:
 
 ---
 
+<a id="4-assessment-framework"></a>
 ## 4. Assessment Framework
 
 <a id="41-core-elements"></a>
@@ -761,6 +765,7 @@ Prerequisite 3: LLM model version stability
 
 ---
 
+<a id="5-implementation-guide"></a>
 ## 5. Implementation Guide
 
 <a id="51-mock-data-generation-strategy"></a>
@@ -964,6 +969,7 @@ When assessment reliability doesn't meet standards:
 
 ---
 
+<a id="6-quality-visualization-and-continuous-monitoring"></a>
 ## 6. Quality Visualization and Continuous Monitoring
 
 <a id="61-quality-dashboard"></a>
@@ -992,6 +998,7 @@ Analysis dimensions:
 
 ---
 
+<a id="7-case-studies"></a>
 ## 7. Case Studies
 
 <a id="71-case-1-ticket-intelligent-dispatch-agent"></a>
@@ -1047,6 +1054,7 @@ Ratchet mechanism application:
 
 ---
 
+<a id="8-challenges-and-limitations"></a>
 ## 8. Challenges and Limitations
 
 <a id="81-current-limitations"></a>
@@ -1089,6 +1097,7 @@ Ratchet mechanism application:
 
 ---
 
+<a id="9-appendix"></a>
 ## 9. Appendix
 
 ### Appendix A: Glossary

@@ -14,7 +14,6 @@
 
 ---
 
-<a id="table-of-contents"></a>
 ## Table of Contents
 
 - [Section 1: Three Challenges in Enterprise AI Deployment](#section-1-three-challenges-in-enterprise-ai-deployment)
@@ -54,7 +53,7 @@
 - [Section 10: Quick Start](#section-10-quick-start)
   - [10.1 Get the Open-Source Framework](#101-get-the-open-source-framework)
   - [10.2 Use the Commercial Platform (SaaS / On-Premises)](#102-use-the-commercial-platform-saas-on-premises)
-  - [10.3 Command Line Tools (Coming Soon)](#103-command-line-tools-coming-soon)
+  - [10.3 Command Line Tools](#103-command-line-tools)
   - [10.4 CI/CD Integration Example](#104-cicd-integration-example)
 - [Section 11: Recommended Reading Path](#section-11-recommended-reading-path)
 - [Section 12: License and Open Source Commitment](#section-12-license-and-open-source-commitment)
@@ -190,9 +189,11 @@ More surprisingly, even certain Agents whose logic artifacts were written by LLM
 
 First, related to the lack of rigor in the prompts generating these logic artifacts — that is, lack of systematic methodology support;
 
-Second, LLM default generative reasoning is not based on strict constraint mechanisms, but rather to "generate useful content";
+Second, **a principled misconception**: LLMs optimize for "generating useful content," not "satisfying strict constraints" — these are fundamentally different objectives. **Generative reasoning and constraint-based verification are inherently distinct modes**, akin to human "fast intuition" versus "deliberate verification." Consequently:
 
-Therefore, in actual production, logic artifact defects are not an occasional phenomenon, but a universal problem caused by multiple factors.
+- LLM-generated artifacts **also have widespread defects**, though types and distribution differ from human-written ones;
+- As LLM capabilities improve, defect **occurrence rates will decrease**, but defects will **not disappear** as long as "response speed" and "constraint completeness" remain trade-offs;
+- This is why LLM generation **cannot replace** independent, structured inspection — the fundamental reason SanityOps exists.
 
 <a id="222-persistence-of-defects"></a>
 #### 2.2.2 Persistence of Defects
@@ -367,15 +368,15 @@ Many understand "full lifecycle" as "admission inspection from development to de
 ```
 Logic Artifact Iteration (v1)
     ↓
-Execute Inspect + Risk + Quality Complete Closed Loop ——【Generate Evidence Chain】
+Execute Inspect + Risk + Quality Complete Closed Loop —[Generate Evidence Chain]
     ↓
-Fix Defects, Accumulate Regression Rules, Exception Policies, Compensatory Controls ——【Accumulate Knowledge】
+Fix Defects, Accumulate Regression Rules, Exception Policies, Compensatory Controls —[Accumulate Knowledge]
     ↓
-Logic Artifact Iteration (v2) ——【Restart the closed loop each time, based on previous rules】
+Logic Artifact Iteration (v2) —[Restart the closed loop each time, based on previous rules]
     ↓
-Execute Inspect + Risk + Quality ——【Check New Issues + Regression Verification】
+Execute Inspect + Risk + Quality —[Check New Issues + Regression Verification]
     ↓
-Iteration (v3) / (v4) / ... ——【Continuous Loop, Forming Traceable Governance Rhythm】
+Iteration (v3) / (v4) / ... —[Continuous Loop, Forming Traceable Governance Rhythm]
     ↓
 Deployment Decision: Aggregate All Gate Conclusions (Inspect / Risk / Quality)
     ↓
@@ -402,7 +403,7 @@ Before deeply understanding SanityOps, it is necessary to explain its relationsh
 
 SanityOps is first a **quality, security, and governance framework for enterprise AI Agents**. It is not responsible for building, orchestrating, or running Agents, but provides systematic inspection, auditing, and quality measurement capabilities for already-built logic artifacts (System Prompts, Skills, Tool Schemas) and their execution results.
 
-To avoid confusion, the following explains the relationship between SanityOps and representative objects in adjacent domains according to its three subsets. For a more complete item-by-item comparison, see `Comparison.md`.
+To avoid confusion, the following explains the relationship between SanityOps and representative objects in adjacent domains according to its three subsets. For a more complete item-by-item comparison, see the [SanityOps Positioning](/compare/sanityops-positioning.html).
 
 <a id="61-inspect-static-defect-inspection-of-logic-artifacts"></a>
 ### 6.1 **Inspect (Static Defect Inspection of Logic Artifacts)**
@@ -562,19 +563,19 @@ Improvement Recommendations: Limit Agent reasoning supplement, strengthen Prompt
 Artifact Version: Agent_RAG_v3.2.1
 Assessment Date: 2024-XX-XX
 
-【Inspect Gate】
+[Inspect Gate]
 Status: ⚠️ Conditional pass (1 P1 defect exists, listed in remediation plan)
 Conclusion: Allow proceeding to next stage, but P1 defect must be fixed in v3.2.2
 
-【Risk Gate】
+[Risk Gate]
 Status: ✅ Pass (explicit risks: 0; implicit risks: 1 low-risk, compensating control exists)
 Conclusion: From security perspective, meets deployment criteria
 
-【Quality Gate】
+[Quality Gate]
 Status: ⚠️ Conditional pass (quality metrics reached 92%, below target 95%)
 Conclusion: Allow limited-scope deployment, need to establish monitoring alerts
 
-【Comprehensive Decision】
+[Comprehensive Decision]
 ✅ Allow deployment (restricted scope)
 Requirements:
   - User scope: Internal test users
@@ -617,7 +618,7 @@ ls -la examples/
 <a id="102-use-the-commercial-platform-saas-on-premises"></a>
 ### 10.2 Use the Commercial Platform (SaaS / On-Premises)
 
-**Trial Link** (to be supplemented): https://www.sanityops.org/try
+**Trial Link**: https://www.sanityops.org/try
 
 **Features**:
 
@@ -631,12 +632,12 @@ ls -la examples/
 - Hybrid deployment (data local, services cloud)
 - Custom integration (Slack, DingTalk, enterprise knowledge bases, etc.)
 
-**Contact Sales** (to be supplemented): sales@sanityops.org
+**Contact Sales**: partnership@sanityops.org, master.leoyoung@gmail.com
 
 ---
 
-<a id="103-command-line-tools-coming-soon"></a>
-### 10.3 Command Line Tools (Coming Soon)
+<a id="103-command-line-tools"></a>
+### 10.3 Command Line Tools
 
 ```bash
 # Installation
@@ -713,26 +714,26 @@ To quickly build a deep understanding of SanityOps, reading in the following ord
 <a id="foundation-path-3-4-hours"></a>
 ### Foundation Path (3-4 hours)
 
-2. **[Core v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/guide/core-v1.0.md)**
+2. **[Core v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/framework/core-v1.0.md)**
    Unified terminology, object model, classification systems, Gate semantics. **Why**: Build a common language, understand key distinctions such as "Inspect pass ≠ Security pass"
 
-3. **[Relevance v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/quality/relevance-v1.0.md)**
+3. **[Relevance v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/framework/relevance-v1.0.md)**
    How defects map to risk and quality inspection recommendations. **Why**: Understand how the three systems relate to each other and form a closed loop
 
 <a id="professional-path-select-by-business-need"></a>
 ### Professional Path (Select by business need)
 
-4. **[Inspect Prompt v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/inspect-prompt-v1.0.md)**
-+ **[Inspect Skill v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/inspect-skill-v1.0.md)**
+4. **[Inspect Prompt v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/prompt-v1.0.md)**
++ **[Inspect Skill v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/skill-v1.0.md)**
 
-+ **[Inspect Tool v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/inspect-tool-v1.0.md)**
++ **[Inspect Tool v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/tool-v1.0.md)**
 
-+ **[Inspect CROSS v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/inspect-cross-v1.0.md)**
++ **[Inspect CROSS v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/cross-v1.0.md)**
    Static defect specifications, defect classifications, inspection checklists. **Suitable for**: Those who want to deeply understand "what constitutes a good artifact definition"
-5. **[Risk Explicit v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/risk/risk-explicit-v1.0.md) + [Risk Implicit v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/risk/risk-implicit-v1.0.md)**
+5. **[Risk Explicit v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/risk/explicit-v1.0.md) + [Risk Implicit v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/risk/implicit-v1.0.md)**
    Explicit and implicit risks, validation methods, attack scenarios. **Suitable for**: Teams responsible for Agent security audits
 
-6. **[Quality Tool-Agent v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/quality/quality-tool-agent-v1.0.md) + [Quality RAG-Agent v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/quality/quality-rag-agent-v1.0.md)**
+6. **[Quality Tool-Agent v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/quality/tool-agent-v1.0.md) + [Quality RAG-Agent v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/quality/rag-agent-v1.0.md)**
    Quality assessment metrics, threshold definitions, implementation cases. **Suitable for**: Teams responsible for Agent service quality
 
 ---
@@ -885,7 +886,7 @@ SanityOps does not want to "solve all problems", but is committed to building fo
 |:--------- | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | ref:37    | 79% enterprises adopted AI Agents, only 11% in production, 6% trusted for core business         | Harvard Business Review Analytic Services (Dec 2025), sponsored by Workato and AWS           | [Fortune Report](https://fortune.com/2025/12/09/harvard-business-review-survey-only-6-percent-companies-trust-ai-agents/)                                                 |
 | ref:34    | 88% of Agent projects fail to move from POC to production                                       | IDC (in partnership with Lenovo, 2025)                                                       | [Atlan Citation](https://atlan.com/know/ai-agent/ai-agent-scaling-in-production/)                                                                                         |
-| ref:21,25 | 42% of enterprises abandoned most AI projects in 2025, 147% increase from 2024                  | S&P Global Market Intelligence (2025)                                                        | [AWS Official Blog Citation](https://aws.amazon.com/cn/blogs/machine-learning/practical-implementation-considerations-to-close-the-ai-value-gap/)                         |
+| ref:21,25 | 42% of enterprises abandoned most AI projects in 2025, 147% increase from 2024                  | S&P Global Market Intelligence (2025)                                                        | [AWS Official Blog Citation](https://aws.amazon.com/blogs/machine-learning/practical-implementation-considerations-to-close-the-ai-value-gap/)                         |
 | ref:38    | 40% of agentic AI projects will be canceled by end of 2027                                      | Gartner (June 25, 2025 official press release)                                               | [Gartner Newsroom](https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027) |
 | ref:27    | 84% of AI project failures stem from governance and organizational issues, not technical issues | RAND Corporation (Aug 2024), The Root Causes of Failure for Artificial Intelligence Projects | [RAND Full Report](https://www.rand.org/pubs/research_reports/RRA2680-1.html)                                                                                             |
 

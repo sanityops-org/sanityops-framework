@@ -1111,6 +1111,7 @@ For defect chains that have been dynamically validated as exploitable, closure m
 >
 > Risk Explicit content in this appendix only indicates suggested priority review directions; specific `EX` classification must be independently determined by Risk Explicit.
 
+<a id="a1-prompt-defect-mapping"></a>
 ### A.1 Prompt Defect Mapping
 
 | QD Category | Primary Attack Surface | Potential Impact | Recommended Validation |
@@ -1137,6 +1138,7 @@ For defect chains that have been dynamically validated as exploitable, closure m
 | `QD-P-2.6.x` Exception Handling Defects | AS-07 | D1, D2, D3, Availability | Timeout, permission denial, rate limiting, data format errors, and dependency failure testing |
 | `QD-P-2.7.x` Example Design Defects | AS-01, AS-05 | D1, D2, D3 | Adversarial regression testing for positive examples, negative examples, boundary, and dangerous requests |
 
+<a id="a2-skill-defect-mapping"></a>
 ### A.2 Skill Defect Mapping
 
 | QD Category | Primary Attack Surface | Potential Impact | Recommended Validation |
@@ -1156,6 +1158,7 @@ For defect chains that have been dynamically validated as exploitable, closure m
 | `QD-S-5.3` Environment Boundary Not Declared | AS-04, AS-05 | D2, D3 | Test/production environment confusion, production resource access testing |
 | `QD-S-5.4` Chained Call Permissions Not Declared | AS-04, AS-05, AS-07 | D1, D2, D3 | Downstream Skill whitelist, call depth, permission inheritance testing |
 
+<a id="a3-tool-defect-mapping"></a>
 ### A.3 Tool Defect Mapping
 
 | QD Category | Primary Attack Surface | Potential Impact | Recommended Validation |
@@ -1171,6 +1174,7 @@ For defect chains that have been dynamically validated as exploitable, closure m
 | `QD-T-4.1–4.3` Semantic Clarity Defects | AS-05, AS-08 | D2, D3, Availability | Similar Tools, near-synonym expressions, ambiguous tasks, and malicious Tool selection guidance testing |
 | `QD-T-5.1–5.2` Change and Impact Assessment Defects | AS-08, AS-09 | D2, D3, Availability | Old/new Schema replay, caller compatibility, migration, and rollback testing |
 
+<a id="a4-cross-defect-mapping"></a>
 ### A.4 Cross Defect Mapping
 
 | QD Category | Primary Attack Surface | Potential Impact | Recommended Validation |
@@ -1192,6 +1196,7 @@ For defect chains that have been dynamically validated as exploitable, closure m
 
 ## Appendix B: Tool-Agent Failure Mode and Supplementary Test Mapping
 
+<a id="b1-qd-category-to-failure-mode-mapping"></a>
 ### B.1 QD Category to Failure Mode Mapping
 
 | QD Category | Candidate Failure Modes | Recommended Supplementary Tests |
@@ -1213,6 +1218,7 @@ For defect chains that have been dynamically validated as exploitable, closure m
 | Tool Schema change defects | FM-04, FM-05, FM-06 | Historical call replay, old/new version compatibility |
 | Cross contract defects | FM-04, FM-05, FM-06, FM-08 | Prompt→Skill→Tool end-to-end call chain testing |
 
+<a id="b2-failure-fact-reverse-diagnostic-quick-reference"></a>
 ### B.2 Failure Fact Reverse Diagnostic Quick Reference
 
 | Observed Failure | Priority Investigation Direction |
@@ -1230,6 +1236,7 @@ For defect chains that have been dynamically validated as exploitable, closure m
 
 ## Appendix C: RAG-Agent Metrics and Supplementary Test Mapping
 
+<a id="c1-qd-category-to-rag-quality-metrics-mapping"></a>
 ### C.1 QD Category to RAG Quality Metrics Mapping
 
 | QD Category | Potentially Affected Metrics | Recommended Supplementary Tests |
@@ -1248,6 +1255,7 @@ For defect chains that have been dynamically validated as exploitable, closure m
 | Tool parameter and semantic defects | Correctness, Relevance, Traceability, Format Compliance | Retrieval parameters, source return, citation parsing, similar Tools |
 | Cross contract defects | Correctness, Completeness, Consistency, Traceability, Safety Response | End-to-end retrieval, citation, error handling, permission, and output contracts |
 
+<a id="c2-rag-failure-reverse-diagnostic-quick-reference"></a>
 ### C.2 RAG Failure Reverse Diagnostic Quick Reference
 
 | Quality Failure Fact | Priority Inspect Investigation Direction | Non-Inspect Causes to Exclude Simultaneously |
@@ -1268,6 +1276,7 @@ For defect chains that have been dynamically validated as exploitable, closure m
 > Defect chains represent candidate risk paths or failure modes formed by multiple interrelated static defects weakening defense depth or causing task failures.
 > Defect chains do not represent that attacks, data leakage, or quality failures have occurred; they still require confirmation by Risk or Quality results.
 
+<a id="d1-security-defect-chains"></a>
 ### D.1 Security Defect Chains
 
 | ID | Defect Chain | Candidate Risk Result | Recommended Validation |
@@ -1283,6 +1292,7 @@ For defect chains that have been dynamically validated as exploitable, closure m
 | `SC-09` | `QD-T-1.4` `additionalProperties` Not Controlled + `QD-T-3.4` Internal Parameter Exposure + `QD-PT-2.4` Permission Granularity Consistency Defect | Forging tenant, role, or internal control fields to achieve privilege escalation | Additional fields, reserved fields, tenant ID, admin flag tampering testing |
 | `SC-10` | `QD-P-2.2.1` Input Source Not Declared + `QD-S-3.4` Task Scope Not Defined + `QD-T-3.5` Cross-Tool Data Flow Risk | Untrusted content changing task goals and guiding data exfiltration | Indirect injection, goal hijacking, and data exfiltration Tool chain testing |
 
+<a id="d2-tool-agent-quality-defect-chains"></a>
 ### D.2 Tool-Agent Quality Defect Chains
 
 | ID | Defect Chain | Candidate Quality Failure | Recommended Supplementary Tests |
@@ -1295,6 +1305,7 @@ For defect chains that have been dynamically validated as exploitable, closure m
 | `QC-TA-06` | `QD-S-2.1` Unlimited Quantity + `QD-T-2.4` Array No Length Constraint + `QD-T-3.3` Batch Operation Unrestricted | Large batch tasks timing out, partially executing, or failing | Maximum batch, pagination, cancellation, and checkpoint recovery |
 | `QC-TA-07` | `QD-P-1.1.x` Logic Conflict + `QD-P-2.5.4` Constraint Priority Not Defined + `QD-S-3.5` Default Behavior Not Declared | Unstable execution path for same input | Repeated runs, multi-constraint conflicts, and missing information testing |
 
+<a id="d3-rag-agent-quality-defect-chains"></a>
 ### D.3 RAG-Agent Quality Defect Chains
 
 | ID | Defect Chain | Candidate Quality Failure | Recommended Supplementary Tests |
@@ -1308,8 +1319,10 @@ For defect chains that have been dynamically validated as exploitable, closure m
 
 ---
 
+<a id="appendix-e-mapping-record-yaml--json-examples"></a>
 ## Appendix E: Mapping Record YAML / JSON Examples
 
+<a id="e1-single-defect-mapping-record-yaml"></a>
 ### E.1 Single Defect Mapping Record (YAML)
 
 ```yaml
@@ -1397,6 +1410,7 @@ regression_requirements:
   - Re-run associated Tool-Agent Quality test cases
 ```
 
+<a id="e2-defect-chain-record-yaml"></a>
 ### E.2 Defect Chain Record (YAML)
 
 ```yaml
@@ -1443,6 +1457,7 @@ required_regression:
   - Pre-exfiltration permission and confirmation verification
 ```
 
+<a id="e3-api-return-example-json"></a>
 ### E.3 API Return Example (JSON)
 
 ```json
@@ -1498,6 +1513,7 @@ required_regression:
 
 ## Appendix F: Terminology and External Standard Mapping
 
+<a id="f1-sanityops-internal-terminology-cross-reference"></a>
 ### F.1 SanityOps Internal Terminology Cross-Reference
 
 | This Specification Term | Inspect | Risk Explicit | Risk Implicit | Quality |
@@ -1510,6 +1526,7 @@ required_regression:
 | Release Conclusion | Inspect Gate input | Explicit Gate input | Implicit Gate input | Quality Gate input |
 | Root Cause | Candidate static root cause | Explicit risk source | Attack path conditions | Candidate quality root cause |
 
+<a id="f2-relationship-with-cia--authorization-model"></a>
 ### F.2 Relationship with CIA / Authorization Model
 
 | SanityOps Security Consequence | Common Security Model Correspondence | Description |
@@ -1520,6 +1537,7 @@ required_regression:
 | Availability | CIA: Availability | Loops, resource exhaustion, uncontrolled batch operations, service degradation |
 | Audit and Traceability | Accountability / Non-repudiation | Unable to associate sources, parameters, evidence, call chains, or responsible parties |
 
+<a id="f3-relationship-with-owasp-llm--agentic-risks"></a>
 ### F.3 Relationship with OWASP LLM / Agentic Risks
 
 This specification can reference OWASP risk language, but does not use OWASP numbering to replace SanityOps `QD` numbering, nor claims one-to-one correspondence.

@@ -1708,7 +1708,7 @@ Actual Score = max(100 − Total Deduction, 0)
 | **L2** | 12 | 5 | 7 | 0 | $5×5+7×3+0×1=44$ | $100/44≈2.2727$ |
 | **L3** | 16 | 14 | 2 | 0 | $14×5+2×3+0×1=76$ | $100/76≈1.3158$ |
 
-<a id="53-defect-deduction-value-table-example"></a>
+<a id="53-defect-deduction-value-table"></a>
 ### 5.3 Defect Deduction Value Table (Example)
 
 **Using Inspect Tool L1 as an example:**
@@ -1778,6 +1778,7 @@ Actual Score = max(100 − Total Deduction, 0)
 
 ## Appendix A: Minimum Rule Sets
 
+<a id="a1-l1-minimum-rule-set-7-items"></a>
 ### A.1 L1 Minimum Rule Set (7 Items)
 
 **Must-Pass Items**:
@@ -1796,6 +1797,7 @@ Actual Score = max(100 − Total Deduction, 0)
 - QD-T-2.3 Number Without Boundary (P2)
 - QD-T-4.1 Insufficient Description Quality (P2)
 
+<a id="a2-l2-minimum-rule-set-12-items"></a>
 ### A.2 L2 Minimum Rule Set (12 Items)
 
 **Must-Pass Items**:
@@ -1816,6 +1818,7 @@ Actual Score = max(100 − Total Deduction, 0)
 - QD-T-4.1 Insufficient Description Quality (P1)
 - QD-T-4.2 Undeclared Side Effects (P1)
 
+<a id="a3-l3-minimum-rule-set-16-items"></a>
 ### A.3 L3 Minimum Rule Set (16 Items)
 
 **Must-Pass Items (all)**:
@@ -1861,20 +1864,23 @@ Actual Score = max(100 − Total Deduction, 0)
 
 All inspection items in this specification can be automated through the official SanityOps tooling.
 
+<a id="c1-tool-formats"></a>
 ### C.1 Tool Formats
 
 - **Community Edition**: Open-source CLI tool; supports L1/L2-level inspection
 - **Commercial Edition**: Web platform + API interface; full L1/L2/L3 support
 - **Integration Options**: CI/CD pipeline, IDE plugin, Schema Registry integration
 
+<a id="c2-quick-start"></a>
 ### C.2 Quick Start
 
-Visit the [SanityOps Tools Website](https://tools.sanityops.io/) for detailed information.
+Visit the [SanityOps Tools Website](https://www.sanityops.org/framework/try-the-tools.html) for detailed information.
 
 ---
 
 ## Appendix D: Exemptions and Risk Acceptance
 
+<a id="d1-exemption-application-conditions"></a>
 ### D.1 Exemption Application Conditions
 
 Exemptions may be applied for under the following circumstances:
@@ -1883,6 +1889,7 @@ Exemptions may be applied for under the following circumstances:
 - Third-party Tools whose Schemas are beyond the organization's control
 - Business urgency requiring temporary risk acceptance
 
+<a id="d2-risk-acceptance-statement"></a>
 ### D.2 Risk Acceptance Statement
 
 For defects that cannot be remediated, a Risk Acceptance statement must be signed:

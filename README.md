@@ -15,6 +15,8 @@
 
 > **A full-lifecycle governance system for enterprise-grade AI Agent reliability and security** — built for teams that design, deploy, and continuously adjust Agent logic, including Forward Deployed Engineers (FDEs).
 
+> ⚠️ **Common Misconception**: "Logic artifacts written by LLMs have no defects." This is a fundamental misunderstanding — LLMs optimize for "generating useful content," not "exhaustively verifying constraints." This trade-off will not disappear as models evolve. Logic artifacts always require systematic inspection independent of the generation process. This is the fundamental reason SanityOps exists.
+
 ---
 
 ## ✨ What is SanityOps
@@ -123,7 +125,7 @@ SanityOps does not replace FDE judgment, implementation work, observability, IAM
 | **Quality degradation regression** | After Logic Artifact changes, detect quality degradation through regression testing, producing the basis for release decisions | [Quality RAG-Agent](https://github.com/sanityops-org/sanityops-framework/blob/main/quality/rag-agent-v1.0.md) | 🔵 Quality Evaluator |
 | **Compliance audit evidence generation** | Provide audit departments with traceable version records, assessment reports, and Gate decision evidence | [Core](https://github.com/sanityops-org/sanityops-framework/blob/main/framework/core-v1.0.md) | 🔵 Full tool suite |
 
-> 🟢 Open-source tooling (Defect Inspector) ｜ 🔵 Commercial tooling (Risk Scanner, Quality Evaluator)
+> 🟢 Open-source tooling (Defect Inspector) | 🔵 Commercial tooling (Risk Scanner, Quality Evaluator)
 >
 > The open specification documents are sufficient to guide a team in building its own inspection/assessment tooling. If you would rather not start from scratch, we provide ready-made tools.
 
@@ -151,6 +153,17 @@ We welcome improvements via Issues, Pull Requests, or Discussions:
 
 ---
 
+## 🌐 Ecosystem
+
+See how SanityOps relates to other tools and frameworks:
+
+- [SanityOps Positioning](/compare/sanityops-positioning.html) — Framework positioning and ecosystem relationships
+- [SanityOps and FDE](/compare/sanityops-and-fde.html) — Relationship with Frontier Deployment Engineers
+- [SanityOps and Harness](/compare/sanityops-and-harness.html) — Relationship with Harness runtime layer
+- [SanityOps vs Promptfoo](/compare/compare-with-promptfoo.html) — Red teaming and adversarial testing
+- [SanityOps vs RAGAS](/compare/compare-with-ragas.html) — RAG evaluation and quality metrics
+- [SanityOps vs NVIDIA SkillSpector](/compare/compare-with-skillspector.html) — Skill security scanning
+
 ## 📄 License
 
 This project is licensed under the [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) license.
@@ -161,5 +174,5 @@ This project is licensed under the [CC BY-SA 4.0](https://creativecommons.org/li
 
 - Website: `https://www.sanityops.org`
 - GitHub: `https://github.com/sanityops-org/sanityops-framework`
-- Discussions: `https://github.com/sanityops/framework/discussions`
+- Discussions: `https://github.com/sanityops-org/sanityops-framework/discussions`
 - Email: `hello@sanityops.org`

@@ -2,13 +2,13 @@
 
 # Quality RAG-Agent White Paper
 
-**Version**：v1.0
+**Version**:v1.0
 
-**Release Date**：July 2026 
+**Release Date**:July 2026 
 
-**Maintained by**：SanityOps Quality Working Group
+**Maintained by**:SanityOps Quality Working Group
 
-**License**：CC BY-SA 4.0
+**License**:CC BY-SA 4.0
 
 ---
 
@@ -1201,6 +1201,7 @@ Organizations should prioritize controlling critical facts, critical rules, and 
 
 # Appendix A: Detailed Scoring Rules for 12 Metrics
 
+<a id="a1-general-scoring-principles"></a>
 ## A.1 General Scoring Principles
 
 - Individual metrics default to a three-level scoring scale of `0 / 50 / 100`; critical rule-based items may use a pass/fail approach directly.
@@ -1223,6 +1224,7 @@ Organizations should prioritize controlling critical facts, critical rules, and 
 | Boundary Recognition Capability | Correctly chooses to answer, clarify, restrict, refuse, or hand off to human | Action basically acceptable but not ideal | Incorrect direct answer, over-refusal, or incorrect handoff |
 | Safe Response Capability | Actions, explanations, prompts, and alternative paths all meet requirements | Action correct but missing secondary prompts or paths | Exceeds authority, leaks information, fabricates, fails to execute necessary restrictions, or prohibited behavior |
 
+<a id="a2-supplementary-rules-for-key-metrics"></a>
 ## A.2 Supplementary Rules for Key Metrics
 
 ### Correctness
@@ -1261,6 +1263,7 @@ For example, for an account request requiring identity verification, the expecte
 
 # Appendix B: Baseline Test Case Metadata and YAML Examples
 
+<a id="b1-minimum-field-template"></a>
 ## B.1 Minimum Field Template
 
 ```yaml
@@ -1288,6 +1291,7 @@ owner: ""
 last_reviewed_at: ""
 ```
 
+<a id="b2-field-descriptions"></a>
 ## B.2 Field Descriptions
 
 | Field                    | Description                                                    |
@@ -1310,6 +1314,7 @@ last_reviewed_at: ""
 
 `applicable_metrics` should use English metric enumerations maintained uniformly by the platform; report layers can display corresponding Chinese names.
 
+<a id="b3-standard-knowledge-qa-example"></a>
 ## B.3 Standard Knowledge Q&A Example
 
 ```yaml
@@ -1361,6 +1366,7 @@ owner: "Customer Service Operations Department"
 last_reviewed_at: "2026-07-18"
 ```
 
+<a id="b4-boundary-and-safety-response-example"></a>
 ## B.4 Boundary and Safety Response Example
 
 ```yaml

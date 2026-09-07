@@ -199,6 +199,7 @@ Full Examples:
 
 ---
 
+<a id="1-logic-defects-within-llm-autonomous-detection-capability"></a>
 ## 1 Logic Defects Within LLM Autonomous Detection Capability
 
 <a id="11-defect-characteristics-overview"></a>
@@ -704,7 +705,7 @@ The logic defects listed in this part all fall within the scope of autonomous LL
 
 ---
 
-<a id="16-gray-zone-logic-defects-qd-p-16"></a>
+<a id="16-gray-zone-logic-defects"></a>
 ## 1.6 Gray-Zone Logic Defects (QD-P-1.6)
 
 <a id="160-positioning-of-this-section"></a>
@@ -1021,6 +1022,7 @@ Part 1: Logic Defects Within LLM Autonomous Detection Capability
 
 ---
 
+<a id="2-defects-requiring-explicit-prompts"></a>
 ## 2 Defects Requiring Explicit Prompts
 
 <a id="21-defect-characteristics-overview"></a>
@@ -1945,6 +1947,7 @@ Practice Recommendations:
 
 ---
 
+<a id="3-tiered-inspection-mechanism"></a>
 ## 3 Tiered Inspection Mechanism
 
 <a id="31-agent-level-definitions"></a>
@@ -2271,6 +2274,7 @@ Practice Recommendations:
 
 ---
 
+<a id="4-quantitative-scoring-mechanism"></a>
 ## 4 Quantitative Scoring Mechanism
 
 > This chapter defines a quantifiable, reviewable scoring method for Inspect Prompt results.  
@@ -2337,7 +2341,7 @@ Practice Recommendations:
 - If any `P0` defect exists → result = FAIL (score is still output)
 - Otherwise → result = PASS
 
-<a id="43-per-sub-standard-inspection-item-distribution-table-inspect-prompt"></a>
+<a id="43-per-sub-standard-inspection-item-distribution-table"></a>
 ### 4.3 Per-Sub-Standard Inspection Item Distribution Table (Inspect Prompt)
 
 Based on the statistics from Section 3.3.3:
@@ -2348,7 +2352,7 @@ Based on the statistics from Section 3.3.3:
 | **L2** | 40 | 18 | 20 | 2 | $5\cdot18+3\cdot20+1\cdot2=152$ | $100/152=0.66$ |
 | **L3** | 47 | 35 | 7 | 5 | $5\cdot35+3\cdot7+1\cdot5=201$ | $100/201=0.50$ |
 
-<a id="44-defect-deduction-value-table-example-inspect-prompt-l1"></a>
+<a id="44-defect-deduction-value-table"></a>
 ### 4.4 Defect Deduction Value Table (Example: Inspect Prompt L1)
 
 L1: $base=0.98$
@@ -2359,7 +2363,7 @@ L1: $base=0.98$
 | P1 | $base \times 3$ | $0.98\times3=2.94$ |
 | P2 | $base \times 1$ | $0.98\times1=0.98$ |
 
-<a id="45-scoring-examples-including-gate-fail"></a>
+<a id="45-scoring-examples"></a>
 ### 4.5 Scoring Examples (Including Gate: FAIL)
 
 **Example Scenario**: L2 Agent  
@@ -2424,6 +2428,7 @@ $$
 
 > **Minimum Rule Sets** define the inspection items that MUST be passed for each Agent Level, forming the core basis for compliance determination.
 
+<a id="a1-l1-minimum-rule-set"></a>
 ### A.1 L1 Minimum Rule Set (8 P0 Items)
 
 | QD-P ID | Defect Name | Category |
@@ -2439,6 +2444,7 @@ $$
 
 > **L1 Agent Compliance Determination**: MUST pass the above 8 P0 inspection items. P1 items SHOULD be fixed; P2 items MAY be fixed.
 
+<a id="a2-l2-minimum-rule-set"></a>
 ### A.2 L2 Minimum Rule Set (18 P0 Items)
 
 | QD-P ID | Defect Name | Category |
@@ -2464,6 +2470,7 @@ $$
 
 > **L2 Agent Compliance Determination**: MUST pass the above 18 P0 inspection items. P1 items SHOULD be fixed; P2 items MAY be fixed.
 
+<a id="a3-l3-minimum-rule-set"></a>
 ### A.3 L3 Minimum Rule Set (34 P0 Items)
 
 | QD-P ID | Defect Name | Category |
@@ -2505,6 +2512,7 @@ $$
 
 > **L3 Agent Compliance Determination**: MUST pass the above 34 P0 inspection items. P1 items SHOULD be fixed; P2 items MAY be fixed.
 
+<a id="a4-minimum-rule-set-usage-notes"></a>
 ### A.4 Minimum Rule Set Usage Notes
 
 #### A.4.1 Rapid Determination Process

@@ -1091,6 +1091,7 @@ The following table is used for audit routing, clarifying distinguishing dimensi
 
 ---
 
+<a id="part-3-framework-optimization-updates"></a>
 ## Part 3: Framework Optimization Updates (v0.602 → v1.1)
 
 This section documents optimization iterations from the base version to the current version, helping auditors understand framework evolution.
@@ -1607,6 +1608,7 @@ Total Time: [XX] minutes
 
 ---
 
+<a id="appendix"></a>
 ## Appendix A: Quick Reference Card
 
 ### A.1 EX Classification Quick Reference

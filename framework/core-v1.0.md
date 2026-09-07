@@ -848,7 +848,7 @@ A release summary MUST, at minimum, be able to answer:
 6. Which dynamic validations or quality regressions were not executed, failed, or had insufficient evidence;
 7. The final release decision-maker and decision time.
 
-<a id="64-constraints-on-passwithexception"></a>
+<a id="64-constraints-on-pass_with_exception"></a>
 ## 6.4 Constraints on `PASS_WITH_EXCEPTION`
 
 `PASS_WITH_EXCEPTION` MAY only be used when all of the following conditions are simultaneously met:
@@ -1382,6 +1382,7 @@ All external materials, product interfaces, or evaluation reports SHALL accurate
 
 # Appendix B: Status, Level, and Grading Model Quick Reference
 
+<a id="b1-grading-models"></a>
 ## B.1 Grading Models
 
 | Code | Meaning | What It Does NOT Indicate |
@@ -1391,6 +1392,7 @@ All external materials, product interfaces, or evaluation reports SHALL accurate
 | `BI-L` | Business consequences of task error | Tool operational permission risk |
 | `CH-L` | Change impact and regression scope | Current inherent system risk |
 
+<a id="b2-conclusions-and-disposition-levels"></a>
 ## B.2 Conclusions and Disposition Levels
 
 | Status / Level | Domain | Meaning |
@@ -1404,6 +1406,7 @@ All external materials, product interfaces, or evaluation reports SHALL accurate
 | `NEEDS_REVIEW` | Release Summary | Unresolved conflict in evidence, applicability, or conclusions |
 | `ERROR` | Release Summary | Inspection or assessment conditions incomplete, unexecutable, or invalid |
 
+<a id="b3-finding-lifecycle-statuses"></a>
 ## B.3 Finding Lifecycle Statuses
 
 ```text
@@ -1425,6 +1428,7 @@ An `accepted` Finding continues to exist; its risk is accepted only within the a
 
 # Appendix C: Unified Record Templates
 
+<a id="c1-finding-record"></a>
 ## C.1 Finding Record
 
 ```yaml
@@ -1482,6 +1486,7 @@ ownership:
   due_date: "2026-07-26"
 ```
 
+<a id="c2-evidence-record"></a>
 ## C.2 Evidence Record
 
 ```yaml
@@ -1501,6 +1506,7 @@ integrity:
 summary: ""
 ```
 
+<a id="c3-exception-record"></a>
 ## C.3 Exception Record
 
 ```yaml
