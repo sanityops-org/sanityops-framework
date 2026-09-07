@@ -10,6 +10,7 @@ const communitySidebar = [
       { text: 'About SanityOps', link: '/about/about' },
       { text: 'Partnership', link: '/about/partnership' },
       { text: 'DMC v1.4 (Preview)', link: '/DMC/DMC-v1.4.html' },
+      { text: 'Contact', link: '/about/about#contact' },
     ],
   },
 ]
@@ -153,6 +154,7 @@ export default defineConfig({
           { text: 'Partnership', link: '/about/partnership' },
           { text: 'DMC v1.4 (Preview)', link: '/DMC/DMC-v1.4.html' },
           { text: 'Discussions', link: 'https://github.com/sanityops-org/sanityops-framework/discussions' },
+          { text: 'Contact', link: '/about/about#contact' },
         ],
       },
     ],
@@ -229,7 +231,7 @@ export default defineConfig({
     ],
 
     footer: {
-      message: '<a href="/legal/privacy-policy">Privacy Policy</a> · <a href="/legal/terms-of-service">Terms of Service</a> · <a href="/legal/cookie-policy">Cookie Policy</a> · <a href="/legal/security-statement">Security</a> · <span id="cc-footer-preferences">Cookie Preferences</span>',
+      message: '<a href="/legal/privacy-policy">Privacy Policy</a> · <a href="/legal/terms-of-service">Terms of Service</a> · <a href="/legal/cookie-policy">Cookie Policy</a> · <a href="/legal/security-statement">Security</a> · <span id="cc-footer-preferences">Cookie Preferences</span> · <a href="mailto:hello@sanityops.org">Contact: hello@sanityops.org</a>',
       copyright: 'Copyright © 2026 Sanity AI Labs · v1.0 · Licensed under CC BY-SA 4.0',
     },
 
