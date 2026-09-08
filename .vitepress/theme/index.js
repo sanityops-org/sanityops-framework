@@ -18,7 +18,7 @@ const DmcBanner = () =>
   h('div', { class: 'dmc-banner' }, [
     h('span', { class: 'dmc-banner-badge' }, 'New · Preview'),
     h('span', { class: 'dmc-banner-text' }, 'Tops the charts. Fails in prod. Real-world deployability scoring for derivative models.'),
-    h('a', { class: 'dmc-banner-link', href: '/DMC/DMC-v1.4.html' }, 'Explore DMC →'),
+    h('a', { class: 'dmc-banner-link', href: '/DMC/DMC.html' }, 'Explore DMC →'),
   ])
 
 // Internal component that patches nav group buttons with landing page links
