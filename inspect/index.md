@@ -1,4 +1,4 @@
-# Inspect — Logic Artifact Inspection
+﻿# Inspect — Logic Artifact Inspection
 
 **The entry point for AI Agent defect discovery. Systematically scans System Prompts, Skills, and Tool Schemas for quality defects and consistency breaks before deployment.**
 
@@ -21,7 +21,7 @@ The reliability of an AI Agent depends on the quality of its **Logic Artifacts**
 
 <div class="grid cards" markdown>
 
-- ### [Inspect Prompt](./prompt-v1.0.md)
+- ### [Inspect Prompt](./prompt.md)
 
     Static defect inspection framework for System Prompts.
 
@@ -29,7 +29,7 @@ The reliability of an AI Agent depends on the quality of its **Logic Artifacts**
 
     **Numbering system**: QD-P-x.y
 
-- ### [Inspect Skill](./skill-v1.0.md)
+- ### [Inspect Skill](./skill.md)
 
     Quality defect inspection standard for Skills.
 
@@ -37,7 +37,7 @@ The reliability of an AI Agent depends on the quality of its **Logic Artifacts**
 
     **Numbering system**: QD-S-x.y
 
-- ### [Inspect Tool](./tool-v1.0.md)
+- ### [Inspect Tool](./tool.md)
 
     Defect inspection specification for Tool Schemas.
 
@@ -45,7 +45,7 @@ The reliability of an AI Agent depends on the quality of its **Logic Artifacts**
 
     **Numbering system**: QD-T-x.y
 
-- ### [Inspect Cross](./cross-v1.0.md)
+- ### [Inspect Cross](./cross.md)
 
     Cross-Artifact consistency inspection standard.
 
@@ -100,6 +100,6 @@ Relevance (Relevance Assessment)
 
 ## Quick Start
 
-1. Read the [Overview](/framework/overview-v1.0) for the full SanityOps framework picture
+1. Read the [Overview](/framework/overview) for the full SanityOps framework picture
 2. Navigate to the sub-specification matching your artifact type and begin inspection
-3. After completing single-artifact inspection, run [Inspect Cross](./cross-v1.0.md) for cross-artifact consistency inspection
+3. After completing single-artifact inspection, run [Inspect Cross](./cross.md) for cross-artifact consistency inspection

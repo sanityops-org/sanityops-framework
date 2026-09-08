@@ -1,4 +1,4 @@
-# Quality — Agent Service Quality Assessment
+﻿# Quality — Agent Service Quality Assessment
 
 **Quantitative assessment of AI Agent output quality and task completion reliability. Establishes measurable quality thresholds, release gates, and continuous improvement loops for enterprise deployment decisions.**
 
@@ -23,7 +23,7 @@ Quality fills this gap with two complementary assessment methodologies tailored 
 
 <div class="grid cards" markdown>
 
-- ### [Quality RAG-Agent](./rag-agent-v1.0.md)
+- ### [Quality RAG-Agent](./rag-agent.md)
 
     Multi-dimensional quality assessment for knowledge-based RAG Agents.
 
@@ -31,7 +31,7 @@ Quality fills this gap with two complementary assessment methodologies tailored 
 
     **Assessment types**: Rule Verification, LLM-as-Judge, Embedding Assistance
 
-- ### [Quality Tool-Agent](./tool-agent-v1.0.md)
+- ### [Quality Tool-Agent](./tool-agent.md)
 
     Reliability-focused assessment for deterministic Tool Agents.
 
@@ -99,6 +99,6 @@ Relevance (Relevance Assessment)
 
 1. Complete [Inspect](/inspect/) and [Risk](/risk/) first — Quality assessment is most effective when defect and risk context is available
 2. Identify your Agent type: Tool Agent (deterministic tasks) or RAG Agent (knowledge Q&A)
-3. For Tool Agents: follow [Quality Tool-Agent](./tool-agent-v1.0.md) to configure risk level, test counts, and pass rate thresholds
-4. For RAG Agents: follow [Quality RAG-Agent](./rag-agent-v1.0.md) to establish Baseline Test Cases and run the 12-metric assessment
-5. Feed results to [Relevance](/framework/relevance-v1.0) for quality failure → defect diagnostic mapping
+3. For Tool Agents: follow [Quality Tool-Agent](./tool-agent.md) to configure risk level, test counts, and pass rate thresholds
+4. For RAG Agents: follow [Quality RAG-Agent](./rag-agent.md) to establish Baseline Test Cases and run the 12-metric assessment
+5. Feed results to [Relevance](/framework/relevance) for quality failure → defect diagnostic mapping

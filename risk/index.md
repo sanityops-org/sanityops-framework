@@ -1,4 +1,4 @@
-# Risk — Agent Security Risk Detection
+﻿# Risk — Agent Security Risk Detection
 
 **Proactive security validation for AI Agents. Audits explicit risks embedded in Logic Artifacts and dynamically validates implicit vulnerabilities through attack execution in shadow environments.**
 
@@ -21,7 +21,7 @@ Traditional runtime Guardrails face an **impossible triangle** of real-time dete
 
 <div class="grid cards" markdown>
 
-- ### [Risk Explicit](./explicit-v1.0.md)
+- ### [Risk Explicit](./explicit.md)
 
     Static audit of explicit risks expressed in Logic Artifacts.
 
@@ -29,7 +29,7 @@ Traditional runtime Guardrails face an **impossible triangle** of real-time dete
 
     **Numbering system**: EX-x.y — NL-A, NL-B, NR-O, NR-S
 
-- ### [Risk Implicit](./implicit-v1.0.md)
+- ### [Risk Implicit](./implicit.md)
 
     Dynamic validation of implicit runtime vulnerabilities.
 
@@ -118,6 +118,6 @@ Relevance (Relevance Assessment)
 ## Quick Start
 
 1. Complete [Inspect](/inspect/) first — Risk Explicit and Implicit both depend on defect data from Inspect
-2. Run [Risk Explicit](./explicit-v1.0.md) to audit artifacts for dangerous expressions, scripts, and dangerous authorizations
-3. Run [Risk Implicit](./implicit-v1.0.md) in a Shadow Environment to validate whether identified defects form real attack surfaces
-4. Feed results to [Relevance](/framework/relevance-v1.0) for defect → risk diagnostic mapping
+2. Run [Risk Explicit](./explicit.md) to audit artifacts for dangerous expressions, scripts, and dangerous authorizations
+3. Run [Risk Implicit](./implicit.md) in a Shadow Environment to validate whether identified defects form real attack surfaces
+4. Feed results to [Relevance](/framework/relevance) for defect → risk diagnostic mapping

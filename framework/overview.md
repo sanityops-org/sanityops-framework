@@ -714,26 +714,26 @@ To quickly build a deep understanding of SanityOps, reading in the following ord
 <a id="foundation-path-3-4-hours"></a>
 ### Foundation Path (3-4 hours)
 
-2. **[Core v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/framework/core-v1.0.md)**
+2. **[Core](https://github.com/sanityops-org/sanityops-framework/blob/main/framework/core.md)**
    Unified terminology, object model, classification systems, Gate semantics. **Why**: Build a common language, understand key distinctions such as "Inspect pass ≠ Security pass"
 
-3. **[Relevance v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/framework/relevance-v1.0.md)**
+3. **[Relevance](https://github.com/sanityops-org/sanityops-framework/blob/main/framework/relevance.md)**
    How defects map to risk and quality inspection recommendations. **Why**: Understand how the three systems relate to each other and form a closed loop
 
 <a id="professional-path-select-by-business-need"></a>
 ### Professional Path (Select by business need)
 
-4. **[Inspect Prompt v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/prompt-v1.0.md)**
-+ **[Inspect Skill v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/skill-v1.0.md)**
+4. **[Inspect Prompt](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/prompt.md)**
++ **[Inspect Skill](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/skill.md)**
 
-+ **[Inspect Tool v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/tool-v1.0.md)**
++ **[Inspect Tool](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/tool.md)**
 
-+ **[Inspect CROSS v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/cross-v1.0.md)**
++ **[Inspect Cross](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/cross.md)**
    Static defect specifications, defect classifications, inspection checklists. **Suitable for**: Those who want to deeply understand "what constitutes a good artifact definition"
-5. **[Risk Explicit v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/risk/explicit-v1.0.md) + [Risk Implicit v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/risk/implicit-v1.0.md)**
+5. **[Risk Explicit](https://github.com/sanityops-org/sanityops-framework/blob/main/risk/explicit.md) + [Risk Implicit](https://github.com/sanityops-org/sanityops-framework/blob/main/risk/implicit.md)**
    Explicit and implicit risks, validation methods, attack scenarios. **Suitable for**: Teams responsible for Agent security audits
 
-6. **[Quality Tool-Agent v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/quality/tool-agent-v1.0.md) + [Quality RAG-Agent v1.0](https://github.com/sanityops-org/sanityops-framework/blob/main/quality/rag-agent-v1.0.md)**
+6. **[Quality Tool-Agent](https://github.com/sanityops-org/sanityops-framework/blob/main/quality/tool-agent.md) + [Quality RAG-Agent](https://github.com/sanityops-org/sanityops-framework/blob/main/quality/rag-agent.md)**
    Quality assessment metrics, threshold definitions, implementation cases. **Suitable for**: Teams responsible for Agent service quality
 
 ---

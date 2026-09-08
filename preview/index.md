@@ -1,4 +1,4 @@
-# Preview — Upcoming Research & Releases
+﻿# Preview — Upcoming Research & Releases
 
 **Sharing SanityOps' next research directions and version plans with the community. Some entries are exploratory directions, others are already-formed framework methodologies — the first release opened here is DMC v1.4.**
 
@@ -16,7 +16,7 @@ DMC's quantitative assessment of derivative-model capability degradation — and
 
 <div class="grid cards" markdown>
 
-- ### [DMC v1.4](/DMC/DMC-v1.4.html)
+- ### [DMC v1.4](/DMC/DMC.html)
 
     Derivative Model Capability Assessment.
 
@@ -52,6 +52,6 @@ SanityOps Framework v2.0 (planned December 2026)
 
 ## Quick Start
 
-1. Read the [DMC v1.4 Specification](/DMC/DMC-v1.4.html) for the full methodology
-2. Review the [Framework overview](/framework/overview-v1.0) to understand where Preview fits
+1. Read the [DMC v1.4 Specification](/DMC/DMC.html) for the full methodology
+2. Review the [Framework overview](/framework/overview) to understand where Preview fits
 3. Share feedback through [GitHub Discussions](https://github.com/sanityops-org/sanityops-framework/discussions)
