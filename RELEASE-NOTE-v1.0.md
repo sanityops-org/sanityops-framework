@@ -1,4 +1,4 @@
-﻿# SanityOps Framework v1.0
+# SanityOps Framework v1.0
 
 **Release Date**: August 2026  
 **Version**: v1.0  
@@ -63,16 +63,16 @@ SanityOps v1.0 is our answer: **a governance framework that treats Logic Artifac
 
 | Document | Purpose |
 |----------|---------|
-| [Core v1.0](framework/core.md) | Unified terminology, object model, evidence standards, Gate semantics |
-| [Inspect Prompt v1.0](inspect/prompt.md) | System Prompt static defect inspection |
-| [Inspect Skill v1.0](inspect/skill.md) | Skill definition defect inspection |
-| [Inspect Tool v1.0](inspect/tool.md) | Tool Schema defect inspection |
-| [Inspect Cross v1.0](inspect/cross.md) | Cross-artifact consistency inspection |
-| [Risk Explicit v1.0](risk/explicit.md) | Explicit risk classification and audit |
-| [Risk Implicit v1.0](risk/implicit.md) | Runtime attack validation methodology |
-| [Quality Tool-Agent v1.0](quality/tool-agent.md) | Tool-Agent reliability assessment |
-| [Quality RAG-Agent v1.0](quality/rag-agent.md) | RAG-Agent 4-dimension 12-metric assessment |
-| [Relevance v1.0](framework/relevance.md) | Defect-to-risk/quality diagnostic mapping |
+| [Core](framework/core.md) | Unified terminology, object model, evidence standards, Gate semantics |
+| [Inspect Prompt](inspect/prompt.md) | System Prompt static defect inspection |
+| [Inspect Skill](inspect/skill.md) | Skill definition defect inspection |
+| [Inspect Tool](inspect/tool.md) | Tool Schema defect inspection |
+| [Inspect Cross](inspect/cross.md) | Cross-artifact consistency inspection |
+| [Risk Explicit](risk/explicit.md) | Explicit risk classification and audit |
+| [Risk Implicit](risk/implicit.md) | Runtime attack validation methodology |
+| [Quality Tool-Agent](quality/tool-agent.md) | Tool-Agent reliability assessment |
+| [Quality RAG-Agent](quality/rag-agent.md) | RAG-Agent 4-dimension 12-metric assessment |
+| [Relevance](framework/relevance.md) | Defect-to-risk/quality diagnostic mapping |
 
 ### Tooling
 
