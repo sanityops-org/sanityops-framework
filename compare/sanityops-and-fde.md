@@ -178,7 +178,7 @@ Phase 5: Continuous Operations
 
 - [SanityOps Framework Core](../framework/core.html) — Framework core terminology and decision baselines
 - [SanityOps and Harness](./sanityops-and-harness.html) — The relationship between SanityOps and Harness
-- [DMC v1.4](../DMC/DMC-v1.4.html) — Derivative model capability assessment methodology (v2.0 preview)
+- [DMC v1.4](../DMC/DMC.html) — Derivative model capability assessment methodology (v2.0 preview)
 
 ---
 

@@ -1,4 +1,4 @@
-# Community
+﻿# Community
 
 Join the SanityOps community. Learn about the project, explore partnership opportunities, and connect with other practitioners.
 
@@ -9,7 +9,7 @@ Join the SanityOps community. Learn about the project, explore partnership oppor
 
 ## Preview Features
 
-- [DMC v1.4 (Preview)](/DMC/DMC-v1.4.html) — Dynamic Model Capability evaluation (v2.0 preview)
+- [DMC v1.4 (Preview)](/DMC/DMC.html) — Dynamic Model Capability evaluation (v2.0 preview)
 
 ## Connect
 
