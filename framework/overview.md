@@ -42,7 +42,7 @@
   - [6.3 Quality (Service Quality and Reliability)](#63-quality-service-quality-and-reliability)
 - [Section 7: What SanityOps Is Not (Clear Boundaries)](#section-7-what-sanityops-is-not-clear-boundaries)
 - [Section 8: Current Status of SanityOps Framework (v1.0 Completed)](#section-8-current-status-of-sanityops-framework-v10-completed)
-  - [8.1 Open-Source Framework (Apache License 2.0)](#81-open-source-framework-apache-license-20)
+  - [8.1 Open-Source Framework (CC BY-SA 4.0)](#81-open-source-framework-cc-by-sa-40)
   - [8.2 Commercial Platform (Enterprise Tooling)](#82-commercial-platform-enterprise-tooling)
 - [Section 9: What SanityOps Output Looks Like](#section-9-what-sanityops-output-looks-like)
   - [9.1 Inspect Output (Defect Discovery)](#91-inspect-output-defect-discovery)
@@ -450,8 +450,8 @@ To ensure enterprises have clear expectations, SanityOps explicitly states the f
 <a id="section-8-current-status-of-sanityops-framework-v10-completed"></a>
 ## Section 8: Current Status of SanityOps Framework (v1.0 Completed)
 
-<a id="81-open-source-framework-apache-license-20"></a>
-### 8.1 Open-Source Framework (Apache License 2.0)
+<a id="81-open-source-framework-cc-by-sa-40"></a>
+### 8.1 Open-Source Framework (CC BY-SA 4.0)
 
 SanityOps **core specifications and governance logic** have been released as open source, freely available for review, use, modification, and derivation:
 
@@ -744,17 +744,16 @@ To quickly build a deep understanding of SanityOps, reading in the following ord
 <a id="121-framework-open-source-license"></a>
 ### 12.1 Framework Open Source License
 
-**SanityOps Framework uses Apache License 2.0**
+**The SanityOps Framework specification is released under CC BY-SA 4.0.**
 
 This means:
 
-- ✅ Free use: Personal, enterprise, academic all free
-- ✅ Free modification: Can modify specifications or implementations as needed
-- ✅ Free distribution: Can share modified versions with others
-- ✅ Commercial derivative: Can develop commercial products based on Framework
-- ✅ Patent protection: We commit not to file patent lawsuits against Framework users
+- ✅ Free to use and share: commercial and non-commercial, for individuals, enterprises, and academia
+- ✅ Free to adapt: modify and build upon the specification
+- ✅ Attribution: retain the license notice and credit the original authors
+- ✅ ShareAlike: any derivative must be released under CC BY-SA 4.0
 
-**Only requirement**: Retain open-source license and copyright notices
+**Note**: CC BY-SA 4.0 is a documentation/specification license and does not grant patent rights. The open-source Inspect CLI is separately licensed under Apache 2.0.
 
 See: [LICENSE](https://github.com/sanityops-org/sanityops-framework/blob/main/LICENSE)
 

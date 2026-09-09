@@ -1,152 +1,77 @@
 # SanityOps Framework v1.0
 
 **Release Date**: August 2026  
-**Version**: v1.0  
-**License**: CC BY-SA 4.0  
-**Repository**: https://github.com/sanityops-org/sanityops-framework
+**Version**: v1.0.0  
+**License**: CC BY-SA 4.0
 
 ---
 
-## The Problem: AI Agents Have a "Missing Compiler"
+## What's New
 
-79% of enterprises have adopted AI Agents. Only 11% run them in production. Just 6% trust them for core business.
+### Framework Core
+- Complete governance framework for AI Agent Logic Artifacts
+- Unified terminology and evidence standards
+- Gate-based release workflow
 
-The reason isn't model capability. It's **governance**.
+### Specification Documents (10)
+| Module | Documents |
+|--------|-----------|
+| Inspect | Prompt, Skill, Tool, Cross-Artifact defect inspection |
+| Risk | Explicit risk audit, Implicit attack validation |
+| Quality | Tool-Agent reliability, RAG-Agent assessment |
+| Relevance | Defect-to-risk/quality diagnostic mapping |
 
-When you write a System Prompt, Skill definition, or Tool Schema, you're writing **executable logic**—but unlike code, it has no compiler. No static checks. No type system. Defects (contradictions, unclear boundaries, missing constraints) aren't caught at writing time. They're projected directly into LLM reasoning, surfacing as:
-
-- Output that drifts between runs
-- Security holes you can't see until exploited
-- Production issues you can't trace to a root cause
-
-SanityOps v1.0 is our answer: **a governance framework that treats Logic Artifacts as first-class assets**, with static inspection, risk validation, and quality assessment built for Agent lifecycles.
-
-> **Design Philosophy**: A common misconception holds that LLM-generated logic should be defect-free. This misunderstands the fundamental trade-off: LLMs optimize for usefulness, not constraint verification. SanityOps exists because this gap is structural — not a temporary limitation, but a permanent need for independent validation.
-
----
-
-## Three Design Decisions That Matter
-
-### 1. Static Defect Inspection for Logic Artifacts
-
-**What**: Inspect System Prompts, Skills, Tool Schemas, and Cross-Artifact relationships for definition defects—non-standard, incomplete, unclear, contradictory, structurally unsound.
-
-**How**: Structured defect IDs (`QD-P-*`, `QD-S-*`, `QD-T-*`, `QD-PS-*` for cross-artifact), severity levels (`P0/P1/P2`), and clause-level localization. Think compiler warnings for Prompts.
-
-**Why it matters**: When production breaks, you point to **which line of which artifact**—not "seems like a prompt problem."
+### Open Source Tooling
+- **Defect Inspector CLI** — Static defect inspection for Logic Artifacts
 
 ---
 
-### 2. Root-Cause Localization via Relevance Mapping
+## Downloads
 
-**What**: Connect defects (`QD-*`) to attack surfaces (`AS-*`) and failure modes (`FM-*`) through explicit diagnostic mappings.
-
-**How**: When `Risk Implicit` detects an exploit or `Quality` detects a failure, the report includes: "Root cause likely: `QD-P-2.5.2` (ambiguous boundary definition)." Fixes become targeted; regression tests validate specific defect remediation.
-
-**Why it matters**: Most existing tools answer *whether* something failed. SanityOps is designed to also answer *why*—and *where to fix it*. Different layers, not substitutes.
-
----
-
-### 3. Artifact-Driven Attack Generation
-
-**What**: Generate attacks from the specific defects found in *your* artifacts, not generic templates.
-
-**How**: `Risk Implicit` pipeline: defect entry → attack strategy derivation → test case generation → shadow environment execution. Attacks are tailored to your actual weaknesses. Four termination statuses (`A/B/C/D`) distinguish "exploited" from "blocked by external guardrail"—the latter doesn't mean your Agent is secure.
-
-**Why it matters**: You validate vulnerabilities that exist in *your* Agent, not just whether you can block common jailbreak prompts.
-
----
-
-## What's Included
-
-### 10 Specification Documents
-
-| Document | Purpose |
-|----------|---------|
-| [Core](framework/core.md) | Unified terminology, object model, evidence standards, Gate semantics |
-| [Inspect Prompt](inspect/prompt.md) | System Prompt static defect inspection |
-| [Inspect Skill](inspect/skill.md) | Skill definition defect inspection |
-| [Inspect Tool](inspect/tool.md) | Tool Schema defect inspection |
-| [Inspect Cross](inspect/cross.md) | Cross-artifact consistency inspection |
-| [Risk Explicit](risk/explicit.md) | Explicit risk classification and audit |
-| [Risk Implicit](risk/implicit.md) | Runtime attack validation methodology |
-| [Quality Tool-Agent](quality/tool-agent.md) | Tool-Agent reliability assessment |
-| [Quality RAG-Agent](quality/rag-agent.md) | RAG-Agent 4-dimension 12-metric assessment |
-| [Relevance](framework/relevance.md) | Defect-to-risk/quality diagnostic mapping |
-
-### Tooling
-
-| Tool | Status | Access |
-|------|--------|--------|
-| **Defect Inspector** | Open Source | [Free CLI](https://github.com/sanityops-org/sanityops-framework/releases) |
-| **Risk Scanner** | Commercial | SaaS / On-Premises |
-| **Quality Evaluator** | Commercial | SaaS / On-Premises |
-
-### What You Can Download
-
-| Asset | Format | Access |
-|-------|--------|--------|
-| **SanityOps Framework v1.0** (all specs) | Markdown | Included in this repo |
-| **Defect Inspector CLI** | Binary / PyPI | Open source — see Quick Start below |
+| Asset | Description | Link |
+|-------|-------------|------|
+| `sanityops-cli-v1.0-linux-x64.tar.gz` | Linux x64 CLI | [Download](url) |
+| `sanityops-cli-v1.0-macos-x64.tar.gz` | macOS x64 CLI | [Download](url) |
+| `sanityops-cli-v1.0-macos-arm64.tar.gz` | macOS ARM64 CLI | [Download](url) |
+| `sanityops-cli-v1.0-windows-x64.zip` | Windows x64 CLI | [Download](url) |
+| `sanityops-framework-v1.0.zip` | Source code (zip) | [Download](url) |
+| `sanityops-framework-v1.0.tar.gz` | Source code (tar.gz) | [Download](url) |
+| `checksums-sha256.txt` | SHA256 checksums | [Download](url) |
 
 ---
 
 ## Quick Start
 
 ```bash
-# Clone and explore
-git clone https://github.com/sanityops-org/sanityops-framework.git
-cd sanityops-framework
+# Install via PyPI
+pip install sanityops-defect-inspector
 
-# Read the specs
-ls framework/ && ls inspect/ && ls risk/ && ls quality/
+# Or download binary from releases above
 
-# Install the open-source Defect Inspector CLI
-# Via PyPI:
-#   pip install sanityops-defect-inspector
-# Via CURL (Linux/macOS):
-#   curl -fsSL https://sanityops.org/install-cli | sh
+# Run inspection
+sanityops inspect --prompt ./system-prompt.md
 ```
 
 ---
 
-## Why This Exists: The Data
+## Documentation
 
-| Statistic | Source |
-|-----------|--------|
-| 88% of Agent projects fail to move from POC to production | IDC, 2025 |
-| 42% of enterprises abandoned most AI projects in 2025 | S&P Global, 2025 |
-| 84% of AI project failures stem from governance, not technology | RAND Corporation, 2024 |
-| 40% of agentic AI projects predicted to fail by 2027 due to inadequate risk management | Gartner, 2025 |
-
-We built SanityOps because we watched this happen—at scale—and couldn't find a systematic way to prevent it.
+- [Full Documentation](https://github.com/sanityops-org/sanityops-framework)
+- [Website](https://www.sanityops.org)
+- [Discussions](https://github.com/sanityops-org/sanityops-framework/discussions)
 
 ---
 
-## Roadmap
+## Known Issues
 
-| Milestone | Status |
-|-----------|--------|
-| Framework Core + All Subspecs (v1.0) | ✅ Complete |
-| Defect Inspector (Open Source CLI) | ✅ Available |
-| Risk Scanner / Quality Evaluator (Commercial) | ✅ Available |
-| DMC (Derivative Model Capability) — *v2.0, Nov 2026* | 🔄 In Progress |
-| Runtime Monitoring & Production Audit | 📋 Planned |
+None.
 
 ---
 
-## License
+## Breaking Changes
 
-CC BY-SA 4.0 — Free to use, modify, distribute, including commercially. Retain license and attribution.
-
----
-
-## Contact
-
-- **Website**: https://www.sanityops.org
-- **Discussions**: https://github.com/sanityops-org/sanityops-framework/discussions
-- **Email**: hello@sanityops.org
+None (initial release).
 
 ---
 
-*SanityOps Framework v1.0 — August 2026 — Sanity AI Labs*
+*SanityOps Framework v1.0 — August 2026*

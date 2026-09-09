@@ -13,20 +13,20 @@
 仓库公开后，请验证以下链接可正常访问：
 
 - 仓库主页：`https://github.com/sanityops-org/sanityops-framework`
-  - 引用位置：`.vitepress/config.mts`（社交链接、导航 Discussions）、`framework/overview-v1.0.md`（约 478、899 行）、`about/index.md:16`、`preview/index.md:57`、`README.md:176`
+  - 引用位置：`.vitepress/config.mts`（社交链接、导航 Discussions）、`framework/overview.md`（约 478、899 行）、`about/index.md:16`、`preview/index.md:57`、`README.md:176`
 - Issues / Discussions / Releases：
-  - `framework/overview-v1.0.md`（约 797、799、901 行）
+  - `framework/overview.md`（约 797、799、901 行）
   - `RELEASE-NOTE-v1.0.md:81,147`
 - **`sanityops-inspect` 工具仓库**（若会创建）：
   - `framework/try-the-tools.md:23` 和 `:72` 指向 `https://github.com/sanityops-org/sanityops-inspect/tree/main`
   - 若不创建该仓库，需将这两处改为其他获取方式说明
 - 文件 blob 链接（旧路径已于 2026-09-07 修正为重构后的新路径）：
-  - `framework/overview-v1.0.md` 约 717–759 行、`README.md:115–126`
+  - `framework/overview.md` 约 717–759 行、`README.md:115–126`
 
 ## 2. Discord 社区建立后
 
 - 待创建 Discord 服务器并生成 `https://discord.gg/sanityops` 邀请后：
-  - 打开 `framework/overview-v1.0.md` 约 **798 行**
+  - 打开 `framework/overview.md` 约 **798 行**
   - 将 `[Discord](https://discord.gg/sanityops) (to be established)` 中的
     **"(to be established)"** 字样删除
   - 验证邀请链接有效
@@ -35,8 +35,8 @@
 
 页面 `https://www.sanityops.org/try` 当前不存在（返回空壳）。上线后验证：
 
-- `framework/overview-v1.0.md` 约 **620 行**：`**Trial Link**: https://www.sanityops.org/try`
-- `framework/overview-v1.0.md` 约 **900 行**：Quick Navigation 中的 SaaS Trial 链接
+- `framework/overview.md` 约 **620 行**：`**Trial Link**: https://www.sanityops.org/try`
+- `framework/overview.md` 约 **900 行**：Quick Navigation 中的 SaaS Trial 链接
 
 ## 4. Live Demo 页 `/demo` 上线后
 
@@ -46,11 +46,21 @@
 - `framework/try-the-tools.md` 约 **73 行**：表格中的 `[live demo](...)` 链接
 - `about/partnership.md` 约 **94 行**：`[sanityops.org/demo](...)` 链接
 
-## 5. （可选）tools.sanityops.io 子域名启用后
+## 5. Live Demo 页 `/demo` 内容完善后
 
-`inspect/tool-v1.0.md` 约 **1871 行** 的 "SanityOps Tools Website" 链接目前
-临时指向站内页面 `/framework/try-the-tools.html`。若未来 `tools.sanityops.io`
-子域名正式部署，可将该链接改回子域名地址。
+`inspect/tool.md` 约 **1871 行** 的 "SanityOps Tools Website" 链接目前
+临时指向站内页面 `/framework/try-the-tools.html`。若未来 `/demo` 页面
+内容完善，可将该链接改为指向 `/demo`。
+
+## 6. RELEASE-NOTE 发布前检查
+
+**RELEASE-NOTE-v1.0.md** 中以下内容需在发布前二次确认：
+
+- [ ] **CLI 下载链接**：所有 `sanityops-cli-v1.0-*.tar.gz` / `.zip` 的实际下载地址
+- [ ] **Source Code 下载链接**：`.zip` 和 `.tar.gz` 的 GitHub Release 地址
+- [ ] **SHA256 checksums 文件**：`checksums-sha256.txt` 的下载地址
+- [ ] **PyPI 包名**：`pip install sanityops-defect-inspector` 确认已发布
+- [ ] **CLI 命令**：`sanityops inspect --prompt ./system-prompt.md` 验证可执行
 
 ---
 
@@ -61,3 +71,4 @@
 - [x] 修复 `compare/sanityops-positioning.md:141` 错误组织名 `github.com/SanityOps`
 - [x] 修复 AWS 中文站链接（`/cn/blogs/` → `/blogs/`）
 - [x] 清理中文残留：汉字"沉淀"、中文标点【】——：｜
+- [x] 重构：移除所有文档文件名中的版本号后缀（2026-09-08）
