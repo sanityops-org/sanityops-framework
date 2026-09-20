@@ -28,7 +28,7 @@ Defect Inspector is fully open source, allowing the community to freely use, aud
 
 - **Use Case**: Static defect inspection of **logical artifacts** (System Prompts, Skills, Tool Schemas), suitable for local development or CI/CD integration.
 
-- **Note**: The open-source CLI provides one-off static checks. On the Platform, Inspect results are cross-linked with Risk and Quality findings and archived into the version-level evidence chain.
+- **Note**: The open-source CLI provides the full Inspect capability (inspection, suggestions, and remediation). On the Platform, Inspect results are cross-linked with Risk and Quality findings and archived into the version-level evidence chain.
 
 ---
 

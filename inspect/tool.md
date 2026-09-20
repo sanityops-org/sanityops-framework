@@ -1867,8 +1867,6 @@ All inspection items in this specification can be automated through the official
 <a id="c1-tool-formats"></a>
 ### C.1 Tool Formats
 
-- **Community Edition**: Open-source CLI tool; supports L1/L2-level inspection
-- **Commercial Edition**: Web platform + API interface; full L1/L2/L3 support
 - **Integration Options**: CI/CD pipeline, IDE plugin, Schema Registry integration
 
 <a id="c2-quick-start"></a>

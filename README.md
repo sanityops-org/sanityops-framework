@@ -1,4 +1,4 @@
-﻿<picture>
+<picture>
   <source srcset="/assets/sanityops-logo-github-w.svg" media="(prefers-color-scheme: dark)" />
   <img src="/assets/sanityops-logo-github-b.svg" alt="SanityOps Logo" width="260" />
 </picture>
@@ -149,7 +149,7 @@ SanityOps does not replace FDE judgment, implementation work, observability, IAM
 - **DMC (Derivative Model Capability Assessment)** — Evaluates whether weight-modified models (quantized / pruned / distilled / fine-tuned) can still undertake given enterprise task classes
   - Reverse-generates test cases from enterprise Logic Artifacts
   - Five capability dimensions × three functional roles (Generative / Evidential / Executing)
-  - [Read DMC v1.4 Preview](/DMC/DMC.html)
+  - [Read DMC v1.4 Preview](/community/DMC.html)
 
 ### Research Directions
 

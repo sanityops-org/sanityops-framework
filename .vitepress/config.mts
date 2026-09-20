@@ -1,16 +1,16 @@
 import { defineConfig } from 'vitepress'
 
-// Shared Community sidebar — referenced by both the /about/ and /DMC/ route
-// prefixes so the left navigation stays identical on every Community page.
+// Shared Community sidebar — referenced by the /community/ route prefix
+// so the left navigation stays identical on every Community page.
 const communitySidebar = [
   {
     text: 'Community',
+    link: '/community/',
     items: [
-      { text: 'Overview', link: '/about/' },
-      { text: 'About SanityOps', link: '/about/about' },
-      { text: 'Partnership', link: '/about/partnership' },
-      { text: 'DMC (Preview)', link: '/DMC/DMC.html' },
-      { text: 'Contact', link: '/about/about#contact' },
+      { text: 'About SanityOps', link: '/community/about' },
+      { text: 'Partnership', link: '/community/partnership' },
+      { text: 'DMC (Preview)', link: '/community/DMC.html' },
+      { text: 'Contact', link: '/community/about#contact' },
     ],
   },
 ]
@@ -104,40 +104,38 @@ export default defineConfig({
         text: 'Framework',
         items: [
           { text: 'Overview', link: '/framework/overview' },
-      { text: 'Core', link: '/framework/core' },
-      { text: 'Relevance', link: '/framework/relevance' },
+          { text: 'Core', link: '/framework/core' },
+          { text: 'Relevance', link: '/framework/relevance' },
+          { text: 'Read the Framework', link: '/framework/read-the-framework' },
+          { text: 'Try the Tools', link: '/framework/try-the-tools' },
         ],
       },
       {
         text: 'Inspect',
         items: [
-          { text: 'Overview', link: '/inspect/' },
           { text: 'Prompt', link: '/inspect/prompt' },
-      { text: 'Skill', link: '/inspect/skill' },
-      { text: 'Tool', link: '/inspect/tool' },
-      { text: 'Cross', link: '/inspect/cross' },
+          { text: 'Skill', link: '/inspect/skill' },
+          { text: 'Tool', link: '/inspect/tool' },
+          { text: 'Cross', link: '/inspect/cross' },
         ],
       },
       {
         text: 'Risk',
         items: [
-          { text: 'Overview', link: '/risk/' },
           { text: 'Explicit', link: '/risk/explicit' },
-      { text: 'Implicit', link: '/risk/implicit' },
+          { text: 'Implicit', link: '/risk/implicit' },
         ],
       },
       {
         text: 'Quality',
         items: [
-          { text: 'Overview', link: '/quality/' },
           { text: 'RAG-Agent', link: '/quality/rag-agent' },
-      { text: 'Tool-Agent', link: '/quality/tool-agent' },
+          { text: 'Tool-Agent', link: '/quality/tool-agent' },
         ],
       },
       {
         text: 'Ecosystem',
         items: [
-          { text: 'Overview', link: '/compare/' },
           { text: 'Positioning', link: '/compare/sanityops-positioning' },
           { text: 'SanityOps and FDE', link: '/compare/sanityops-and-fde' },
           { text: 'SanityOps and Harness', link: '/compare/sanityops-and-harness' },
@@ -149,12 +147,11 @@ export default defineConfig({
       {
         text: 'Community',
         items: [
-          { text: 'Overview', link: '/about/' },
-          { text: 'About', link: '/about/about' },
-          { text: 'Partnership', link: '/about/partnership' },
-          { text: 'DMC (Preview)', link: '/DMC/DMC.html' },
+          { text: 'About', link: '/community/about' },
+          { text: 'Partnership', link: '/community/partnership' },
+          { text: 'DMC (Preview)', link: '/community/DMC.html' },
           { text: 'Discussions', link: 'https://github.com/sanityops-org/sanityops-framework/discussions' },
-          { text: 'Contact', link: '/about/about#contact' },
+          { text: 'Contact', link: '/community/about#contact' },
         ],
       },
     ],
@@ -163,20 +160,21 @@ export default defineConfig({
       '/framework/': [
         {
           text: 'Framework',
+          link: '/framework/',
           items: [
-            { text: 'Read the Framework', link: '/framework/read-the-framework' },
-            { text: 'Try the Tools', link: '/framework/try-the-tools' },
             { text: 'Overview', link: '/framework/overview' },
             { text: 'Core', link: '/framework/core' },
             { text: 'Relevance', link: '/framework/relevance' },
+            { text: 'Read the Framework', link: '/framework/read-the-framework' },
+            { text: 'Try the Tools', link: '/framework/try-the-tools' },
           ],
         },
       ],
       '/quality/': [
         {
           text: 'Quality',
+          link: '/quality/',
           items: [
-            { text: 'Overview', link: '/quality/' },
             { text: 'RAG-Agent', link: '/quality/rag-agent' },
             { text: 'Tool-Agent', link: '/quality/tool-agent' },
           ],
@@ -185,8 +183,8 @@ export default defineConfig({
       '/risk/': [
         {
           text: 'Risk',
+          link: '/risk/',
           items: [
-            { text: 'Overview', link: '/risk/' },
             { text: 'Explicit Risk', link: '/risk/explicit' },
             { text: 'Implicit Risk', link: '/risk/implicit' },
           ],
@@ -195,8 +193,8 @@ export default defineConfig({
       '/inspect/': [
         {
           text: 'Inspect',
+          link: '/inspect/',
           items: [
-            { text: 'Overview', link: '/inspect/' },
             { text: 'Prompt', link: '/inspect/prompt' },
             { text: 'Skill', link: '/inspect/skill' },
             { text: 'Tool', link: '/inspect/tool' },
@@ -207,8 +205,8 @@ export default defineConfig({
       '/compare/': [
         {
           text: 'Ecosystem',
+          link: '/compare/',
           items: [
-            { text: 'Overview', link: '/compare/' },
             { text: 'Positioning', link: '/compare/sanityops-positioning' },
             { text: 'SanityOps and FDE', link: '/compare/sanityops-and-fde' },
             { text: 'SanityOps and Harness', link: '/compare/sanityops-and-harness' },
@@ -218,8 +216,7 @@ export default defineConfig({
           ],
         },
       ],
-      '/about/': communitySidebar,
-      '/DMC/': communitySidebar,
+      '/community/': communitySidebar,
     },
 
     search: {

@@ -1,18 +1,21 @@
-﻿# The Relationship Between SanityOps and FDE
+# The Relationship Between SanityOps and FDE
 
-
+**Version**: v1.0  
+**Release Date**: September 2026  
+**Maintained by**: SanityOps Working Group  
+**License**: CC BY-SA 4.0
 
 ---
 
 ## 1. Foundational Positioning
 
-| Dimension             | FDE (Frontier Deployment Engineer)                                 | SanityOps (with DMC, v2.0 Preview)                                                                                               |
-| --------------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
-| **Essential Nature**  | Hybrid engineering role (person)                                   | AI system governance framework (methodology + tooling)                                                                           |
-| **Core Objective**    | Transform AI capabilities into business outcomes                   | Ensure AI system logic is correct, risks are controllable, and quality is assessable                                             |
-| **Operational Layer** | Business site + engineering implementation + continuous operations | Logic design layer + runtime verification layer                                                                                  |
-| **Deliverables**      | Production systems, reusable assets, business value                | Defect reports, risk assessments, quality gates, model capability matrices                                                       |
-| **Key Activities**    | On-site deployment, closed-loop delivery, Harness engineering      | Inspect (defect inspection), Risk (risk scanning), Quality (quality assessment), DMC (model capability assessment, v2.0 preview) |
+| Dimension | FDE (Frontier Deployment Engineer) | SanityOps (with DMC) |
+|-----------|-----------------------------------|----------------------|
+| **Essential Nature** | Hybrid engineering role (person) | AI system governance framework (methodology + tooling) |
+| **Core Objective** | Transform AI capabilities into business outcomes | Ensure AI system logic is correct, risks are controllable, and quality is assessable |
+| **Operational Layer** | Business site + engineering implementation + continuous operations | Logic design layer + runtime verification layer |
+| **Deliverables** | Production systems, reusable assets, business value | Defect reports, risk assessments, quality gates, model capability matrices |
+| **Key Activities** | On-site deployment, closed-loop delivery, Harness engineering | Inspect (defect inspection), Risk (risk scanning), Quality (quality assessment), DMC (model capability assessment, v2.0 preview) |
 
 **In one sentence**: FDE is the executor; SanityOps is the engineering methodology and tooling set that enables FDE to deliver high-quality AI systems.
 
@@ -42,29 +45,27 @@ FDE Workflow                    SanityOps Support Phase
 
 Inspect performs static defect inspection on Logic Artifacts (System Prompt, Skill, Tool Schema), serving as the core quality assurance during FDE's **engineering implementation phase**.
 
-| Inspect Check Item                       | FDE Responsibility                                                                    | Typical Defect Example                                                                                              |
-| ---------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Inspect Check Item | FDE Responsibility | Typical Defect Example |
+|-------------------|-------------------|----------------------|
 | **Dangling References / Pseudo-Actions** | Ensure consistency between Skill and Tool Schema to prevent model hallucination calls | `booking_management.policy.allowed_actions` includes `add_service`, but this tool does not exist in the Tool Schema |
-| **Missing Parameter Constraints**        | Complete boundary constraints in Tool Schema                                          | `request_refund.amount_requested` lacks a `maximum` constraint, creating over-refund risk                           |
-| **Cross-Artifact Consistency**           | Ensure consistency across Prompt, Skill, Schema, and code                             | System Prompt requires name masking as `CHEN / M***`, but code outputs full names directly                          |
-| **Security / PII Rules**                 | Implement desensitization, validation, and confirmation gates as security boundaries  | `checkin_boarding` involves mutating tools but lacks `require_confirmation`                                         |
-| **Missing Confirmation Gates**           | Set up human confirmation mechanisms for mutating operations                          | `cancel_booking`'s `refund_requested` defaults to `true`, potentially bypassing policy confirmation                 |
+| **Missing Parameter Constraints** | Complete boundary constraints in Tool Schema | `request_refund.amount_requested` lacks a `maximum` constraint, creating over-refund risk |
+| **Cross-Artifact Consistency** | Ensure consistency across Prompt, Skill, Schema, and code | System Prompt requires name masking as `CHEN / M***`, but code outputs full names directly |
+| **Security / PII Rules** | Implement desensitization, validation, and confirmation gates as security boundaries | `checkin_boarding` involves mutating tools but lacks `require_confirmation` |
+| **Missing Confirmation Gates** | Set up human confirmation mechanisms for mutating operations | `cancel_booking`'s `refund_requested` defaults to `true`, potentially bypassing policy confirmation |
 
 **Key Principle**: Inspect is the prerequisite gate for DMC — Logic Artifacts must pass quality inspection before being used to generate DMC test cases.
 
-### 3.2 DMC (Derivative Model Capability Assessment, v2.0 Preview) ↔ FDE's "Model Selection" Decisions
-
-> **Note**: DMC (Derivative Model Capability) is a module introduced in SanityOps v2.0 (expected release: November 2026) and is currently in preview.
+### 3.2 DMC (Derivative Model Capability Assessment) ↔ FDE's "Model Selection" Decisions
 
 DMC assesses the **derivative model itself** (quantized, pruned, distilled, or fine-tuned models) across five capability dimensions, providing FDE with objective evidence for **model selection and task matching**.
 
-| DMC Assessment Dimension  | Assessment Content                    | FDE Application Scenario                                                                                                         |
-| ------------------------- | ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| **Complex Reasoning**     | Multi-step inference capability       | Determine whether the derivative model can handle multi-step compliance reasoning tasks (e.g., refund eligibility determination) |
-| **Long Context**          | Long-text positioning and correlation | Assess model capability for long-text scenarios such as historical order retrieval                                               |
-| **Domain Expertise**      | Industry rule mastery                 | Verify model mastery of enterprise-specific knowledge such as EU261 regulations                                                  |
-| **Safety Boundaries**     | Refusal when appropriate              | Confirm whether the model maintains safe refusal capabilities after compression                                                  |
-| **Instruction Following** | Format constraint execution           | Verify stability of structured constraints such as JSON format output                                                            |
+| DMC Assessment Dimension | Assessment Content | FDE Application Scenario |
+|-------------------------|-------------------|------------------------|
+| **Complex Reasoning** | Multi-step inference capability | Determine whether the derivative model can handle multi-step compliance reasoning tasks (e.g., refund eligibility determination) |
+| **Long Context** | Long-text positioning and correlation | Assess model capability for long-text scenarios such as historical order retrieval |
+| **Domain Expertise** | Industry rule mastery | Verify model mastery of enterprise-specific knowledge such as EU261 regulations |
+| **Safety Boundaries** | Refusal when appropriate | Confirm whether the model maintains safe refusal capabilities after compression |
+| **Instruction Following** | Format constraint execution | Verify stability of structured constraints such as JSON format output |
 
 **Key DMC Boundaries**:
 
@@ -78,12 +79,12 @@ DMC assesses the **derivative model itself** (quantized, pruned, distilled, or f
 
 Risk dynamically validates Agent system behavior under attack, serving as the security assurance during FDE's **production validation phase**.
 
-| Risk Scan Item                   | FDE Responsibility                                                                                    |
-| -------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| **Injection Attack Testing**     | Verify completeness of Tool parameter validation to prevent path traversal such as `../../etc/passwd` |
-| **Privilege Escalation Testing** | Ensure authentication mechanisms are effective to prevent unauthorized access                         |
-| **PII Leakage Testing**          | Verify implementation of data desensitization rules to prevent sensitive information disclosure       |
-| **Tool Abuse Testing**           | Detect whether the model may call unauthorized tools or perform out-of-scope operations               |
+| Risk Scan Item | FDE Responsibility |
+|---------------|-------------------|
+| **Injection Attack Testing** | Verify completeness of Tool parameter validation to prevent path traversal such as `../../etc/passwd` |
+| **Privilege Escalation Testing** | Ensure authentication mechanisms are effective to prevent unauthorized access |
+| **PII Leakage Testing** | Verify implementation of data desensitization rules to prevent sensitive information disclosure |
+| **Tool Abuse Testing** | Detect whether the model may call unauthorized tools or perform out-of-scope operations |
 
 **Division of Labor with Inspect**: Inspect discovers design defects such as "parameter lacks validation"; Risk validates whether that defect can actually be exploited.
 
@@ -91,11 +92,11 @@ Risk dynamically validates Agent system behavior under attack, serving as the se
 
 Quality assesses Agent runtime output quality, supporting FDE's **continuous operations** phase.
 
-| Quality Assessment Item       | FDE Responsibility                                                                                        |
-| ----------------------------- | --------------------------------------------------------------------------------------------------------- |
-| **Output Stability**          | Monitor model response consistency and detect drift                                                       |
-| **Effectiveness Assessment**  | Establish evaluation sets and drive iteration through the "define-measure-attribute-improve-regress" loop |
-| **Business Metrics Tracking** | Monitor accuracy, processing time, user satisfaction, and other business outcomes                         |
+| Quality Assessment Item | FDE Responsibility |
+|------------------------|-------------------|
+| **Output Stability** | Monitor model response consistency and detect drift |
+| **Effectiveness Assessment** | Establish evaluation sets and drive iteration through the "define-measure-attribute-improve-regress" loop |
+| **Business Metrics Tracking** | Monitor accuracy, processing time, user satisfaction, and other business outcomes |
 
 ---
 
@@ -113,12 +114,12 @@ FDE is not a passive user of SanityOps but an **active quality accountability ow
 
 ### 4.2 How SanityOps Empowers FDE
 
-| FDE Capability Dimension               | SanityOps Empowerment Approach                                                            |
-| -------------------------------------- | ----------------------------------------------------------------------------------------- |
-| **Business Problem Definition**        | Inspect provides acceptance criteria for "clear rule boundaries"                          |
-| **AI Engineering Delivery**            | Inspect + Risk + Quality provide end-to-end quality validation                            |
-| **Harness Continuous Taming**          | Logic Artifact quality checks ensure Harness has correct rules to execute                 |
-| **EDD and Production Operations**      | Quality provides the measurement foundation for evaluation-driven development             |
+| FDE Capability Dimension | SanityOps Empowerment Approach |
+|-------------------------|------------------------------|
+| **Business Problem Definition** | Inspect provides acceptance criteria for "clear rule boundaries" |
+| **AI Engineering Delivery** | Inspect + Risk + Quality provide end-to-end quality validation |
+| **Harness Continuous Taming** | Logic Artifact quality checks ensure Harness has correct rules to execute |
+| **EDD and Production Operations** | Quality provides the measurement foundation for evaluation-driven development |
 | **On-Site Leadership and Asset Reuse** | Defect reports, evaluation sets, and assessment matrices become reusable knowledge assets |
 
 ### 4.3 Integration with Harness
@@ -165,12 +166,12 @@ Phase 5: Continuous Operations
 
 ## 6. Summary
 
-| Question               | Answer                                                                                                                                                       |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **What is SanityOps?** | An AI system governance framework providing Inspect, Risk, and Quality quality assurance systems; DMC (v2.0 preview) supplements model capability assessment |
-| **What is FDE?**       | Frontier Deployment Engineer — a hybrid engineering role responsible for transforming AI capabilities into business outcomes                                 |
-| **Relationship?**      | SanityOps is FDE's **quality infrastructure** — FDE uses SanityOps to ensure delivered systems are "worth deploying" and "risks are controllable"            |
-| **Core Value?**        | FDE engineering delivery capability × SanityOps quality governance capability = **Reliable deployment of enterprise-grade AI systems**                       |
+| Question | Answer |
+|---------|--------|
+| **What is SanityOps?** | An AI system governance framework providing Inspect, Risk, Quality, and DMC quality assurance systems |
+| **What is FDE?** | Frontier Deployment Engineer — a hybrid engineering role responsible for transforming AI capabilities into business outcomes |
+| **Relationship?** | SanityOps is FDE's **quality infrastructure** — FDE uses SanityOps to ensure delivered systems are "worth deploying" and "risks are controllable" |
+| **Core Value?** | FDE engineering delivery capability × SanityOps quality governance capability = **Reliable deployment of enterprise-grade AI systems** |
 
 ---
 
@@ -178,8 +179,8 @@ Phase 5: Continuous Operations
 
 - [SanityOps Framework Core](../framework/core.html) — Framework core terminology and decision baselines
 - [SanityOps and Harness](./sanityops-and-harness.html) — The relationship between SanityOps and Harness
-- [DMC v1.4](../DMC/DMC.html) — Derivative model capability assessment methodology (v2.0 preview)
+- [DMC v1.5](../community/DMC.html) — Derivative model capability assessment methodology
 
 ---
 
-*This document is based on SanityOps Framework v1.0 and DMC v1.4*
+*This document is based on SanityOps Framework v1.0 and DMC v1.5*

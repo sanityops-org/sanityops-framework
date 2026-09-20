@@ -1,15 +1,15 @@
-﻿# Community
+# Community
 
 Join the SanityOps community. Learn about the project, explore partnership opportunities, and connect with other practitioners.
 
 ## About & Partnership
 
-- [About SanityOps](/about/about) — Origin story, mission, and framework philosophy
-- [Partnership](/about/partnership) — Collaboration opportunities for FDE teams, AI platforms, and governance partners
+- [About SanityOps](/community/about) — Origin story, mission, and framework philosophy
+- [Partnership](/community/partnership) — Collaboration opportunities for FDE teams, AI platforms, and governance partners
 
 ## Preview Features
 
-- [DMC v1.4 (Preview)](/DMC/DMC.html) — Dynamic Model Capability evaluation (v2.0 preview)
+- [DMC v1.4 (Preview)](/community/DMC.html) — Dynamic Model Capability evaluation (v2.0 preview)
 
 ## Connect
 

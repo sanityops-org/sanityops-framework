@@ -30,13 +30,13 @@
 
 | Asset | Description | Link |
 |-------|-------------|------|
-| `sanityops-cli-v1.0-linux-x64.tar.gz` | Linux x64 CLI | [Download](url) |
-| `sanityops-cli-v1.0-macos-x64.tar.gz` | macOS x64 CLI | [Download](url) |
-| `sanityops-cli-v1.0-macos-arm64.tar.gz` | macOS ARM64 CLI | [Download](url) |
-| `sanityops-cli-v1.0-windows-x64.zip` | Windows x64 CLI | [Download](url) |
-| `sanityops-framework-v1.0.zip` | Source code (zip) | [Download](url) |
-| `sanityops-framework-v1.0.tar.gz` | Source code (tar.gz) | [Download](url) |
-| `checksums-sha256.txt` | SHA256 checksums | [Download](url) |
+| `sanityops-cli-v1.0-linux-x64.tar.gz` | Linux x64 CLI | [Download](#) |
+| `sanityops-cli-v1.0-macos-x64.tar.gz` | macOS x64 CLI | [Download](#) |
+| `sanityops-cli-v1.0-macos-arm64.tar.gz` | macOS ARM64 CLI | [Download](#) |
+| `sanityops-cli-v1.0-windows-x64.zip` | Windows x64 CLI | [Download](#) |
+| `sanityops-framework-v1.0.zip` | Source code (zip) | [Download](#) |
+| `sanityops-framework-v1.0.tar.gz` | Source code (tar.gz) | [Download](#) |
+| `checksums-sha256.txt` | SHA256 checksums | [Download](#) |
 
 ---
 
