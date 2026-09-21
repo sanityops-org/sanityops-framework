@@ -39,12 +39,12 @@ html.dark .VPHero .text {
   margin-top: 32px;
 }
 
-/* DMC preview banner — home page, below the features cards */
+/* Preview banner — home page, below the features cards */
 .VPHome {
   position: relative;
 }
 
-.dmc-banner {
+.permission-banner {
   position: absolute;
   top: 100%;
   left: 0;
@@ -61,33 +61,33 @@ html.dark .VPHero .text {
 }
 
 @media (min-width: 768px) {
-  .dmc-banner {
+  .permission-banner {
     margin-top: 52px;
   }
 }
 
-.dmc-banner-badge {
+.permission-banner-badge {
   font-size: 15px;
   font-weight: 700;
   color: #e5484d;
 }
 
-.dark .dmc-banner-badge {
+.dark .permission-banner-badge {
   color: #ff6b6b;
 }
 
-.dmc-banner-text {
+.permission-banner-text {
   font-size: 15px;
   font-weight: 400;
   line-height: 24px;
   color: #000;
 }
 
-.dark .dmc-banner-text {
+.dark .permission-banner-text {
   color: #fff;
 }
 
-.dmc-banner-link {
+.permission-banner-link {
   font-size: 15px;
   font-weight: 400;
   line-height: 24px;
@@ -95,11 +95,11 @@ html.dark .VPHero .text {
   text-decoration: none;
 }
 
-.dark .dmc-banner-link {
+.dark .permission-banner-link {
   color: #fff;
 }
 
-.dmc-banner-link:hover {
+.permission-banner-link:hover {
   color: var(--vp-c-brand-1);
 }
 

@@ -2,11 +2,10 @@
 
 ## 1. Why This Document Exists
 
-An enterprise may have already procured AI development platforms to build Agents, deployed security products to intercept attack traffic, and introduced testing tools to run test cases. However, when Agent counts grow from dozens to thousands, and when underlying models undergo quantization/distillation/fine-tuning with shifting capabilities, enterprises discover: **No existing system covers the complete closed loop of "Logic Artifact defects → security risk validation → service quality assessment → root-cause traceability."**
+An enterprise may have already procured AI development platforms to build Agents, deployed security products to intercept attack traffic, and introduced testing tools to run test cases. However, when Agent counts grow from dozens to thousands, enterprises discover: **No existing system covers the complete closed loop of "Logic Artifact defects → security risk validation → service quality assessment → root-cause traceability."**
 
 - Security products can intercept attacks that have already occurred, but cannot discover static defects in System Prompts, Skills, and Tool Schemas before production deployment;
 - Testing tools can produce pass rates, but cannot answer "which Logic Artifact is the root cause of failed test cases, and which test cases need regression after remediation";
-- Model benchmarks can provide general scores, but cannot reflect capability degradation of enterprise-deployed derivative models on real business tasks.
 
 SanityOps was designed precisely to fill this gap — it is a quality, security, and governance framework for enterprise-grade AI Agents. It does not handle building, orchestrating, or running Agents, but rather provides systematic inspection, audit, and quality measurement capabilities for Logic Artifacts that have already been built and their runtime results. It does not promise that Agent governance will always be correct or absolutely secure, but systematically reduces the uncertainty of Agent behavior and its associated business and security risks.
 
@@ -94,25 +93,6 @@ The following three specialized tools have technical value in their respective d
 
 > **Key Principle**: The above tools have technical value within their design scope and can serve as candidate technical components for corresponding SanityOps phases. However, the two do not constitute a same-level substitution relationship — specialized tools answer "did this test pass?" while SanityOps answers "can this Agent be released, where is the problem, how to sustain quality, and is the evidence complete?"
 
-### 3.3 DMC Positioning (v2.0 Preview)
-
-> **Note**: DMC (Derivative Model Capability) is the fourth module introduced in SanityOps v2.0 (expected release: November 2026) and is currently in preview.
-
-```
-SanityOps Framework
-├─ Inspect (Defect Inspection) — Static analysis of Logic Artifacts to discover potential defects
-├─ Risk (Risk Scanning) — Dynamic validation to assess security risks
-├─ Quality (Quality Assessment) — Runtime quality assessment
-└─ DMC (Derivative Model Capability Assessment) — Assess models with modified weights themselves (v2.0)
-```
-
-DMC assesses whether enterprise-deployed quantized/pruned/distilled/fine-tuned models themselves can execute specific tasks, while SanityOps Inspect / Risk / Quality governs Agent Logic Artifacts and their runtime results. The two belong to different layers:
-
-- **Lower Layer (DMC)**: Model capability baseline — whether capabilities are degraded after weight changes;
-- **Upper Layer (SanityOps)**: Agent Logic Artifact governance — whether Logic Artifacts have defects, risks, and whether service quality meets standards.
-
-Together they constitute a comprehensive capability management system from model to Agent. DMC does not measure end-to-end quality of Agent systems; SanityOps does not assess model capability degradation itself — the two are complementary rather than substitutive.
-
 ---
 
 ## 4. Detailed Comparison Entry Points
@@ -136,7 +116,6 @@ If you are seeking answers to the following questions, welcome to join the discu
 - Before Agent production deployment, how to systematically discover defects in Prompts / Skills / Tool Schemas?
 - After security testing produces Pass/Fail results, how to localize root causes to specific Logic Artifacts?
 - How do quality assessment results support release admission decisions?
-- After model quantization/fine-tuning, how to assess capability degradation impact on Agents?
 
 **Repository**: [SanityOps GitHub](https://github.com/sanityops-org/sanityops-framework)  
 **Discussion Channels**: Comparisons · Q&A · Announcements

@@ -6,7 +6,7 @@
 
 An Agent system can be understood as two parts: **Logic Design (Blueprint)** and **Runtime Implementation (Execution Engine)**.
 
-- **SanityOps** operates at the logic design layer: System Prompt → Skill → Tool Schema, sequentially defining the Agent's goal boundaries, capability scope, and hard constraints on callable capabilities. Through three core phases — Inspect (static defect inspection), Risk (risk validation), and Quality (service quality assessment) — plus DMC (derivative model capability assessment, v2.0 preview, does not participate in Gate decisions), it answers "whether this design blueprint is correct and whether boundaries are clear."
+- **SanityOps** operates at the logic design layer: System Prompt → Skill → Tool Schema, sequentially defining the Agent's goal boundaries, capability scope, and hard constraints on callable capabilities. Through three core phases — Inspect (static defect inspection), Risk (risk validation), and Quality (service quality assessment) — it answers "whether this design blueprint is correct and whether boundaries are clear."
 - **Harness** operates at the runtime layer: it is the glue code outside the Model, responsible for tool call orchestration, control loops, context management, and safety guardrails, transforming the rules defined in the blueprint into actual executable behavior.
 
 **Core Principle**: The parameter constraints defined in the Tool Schema are precisely the rules Harness relies on for runtime orchestration and interception. If the blueprint itself has defects (e.g., a parameter "lacks constraints and format validation"), Harness cannot automatically fill this gap even when operating strictly according to the rules.

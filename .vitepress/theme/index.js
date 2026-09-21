@@ -8,17 +8,17 @@ export default {
   Layout: () => {
     return h(DefaultTheme.Layout, null, {
       'layout-top': () => h(FrameNavPatcher),
-      'home-features-after': () => h(DmcBanner),
+      'home-features-after': () => h(PermissionBanner),
     })
   },
 }
 
-// DMC preview banner — home page, below the features cards
-const DmcBanner = () =>
-  h('div', { class: 'dmc-banner' }, [
-    h('span', { class: 'dmc-banner-badge' }, 'New · Preview'),
-    h('span', { class: 'dmc-banner-text' }, 'Tops the charts. Fails in prod. Real-world deployability scoring for derivative models.'),
-    h('a', { class: 'dmc-banner-link', href: '/community/DMC.html' }, 'Explore DMC →'),
+// Permission preview banner — home page, below the features cards
+const PermissionBanner = () =>
+  h('div', { class: 'permission-banner' }, [
+    h('span', { class: 'permission-banner-badge' }, 'New · Preview'),
+    h('span', { class: 'permission-banner-text' }, 'Too much access. Too little need. Verify authority matches responsibility.'),
+    h('a', { class: 'permission-banner-link', href: '/inspect/permission.html' }, 'Explore Permission →'),
   ])
 
 // Internal component that patches nav group buttons with landing page links

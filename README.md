@@ -146,18 +146,15 @@ SanityOps does not replace FDE judgment, implementation work, observability, IAM
 
 ### Upcoming: SanityOps Framework v2.0 (December 2026)
 
-- **DMC (Derivative Model Capability Assessment)** — Evaluates whether weight-modified models (quantized / pruned / distilled / fine-tuned) can still undertake given enterprise task classes
-  - Reverse-generates test cases from enterprise Logic Artifacts
-  - Five capability dimensions × three functional roles (Generative / Evidential / Executing)
-  - [Read DMC v1.4 Preview](/community/DMC.html)
+- **Inspect Permission (Permission Baseline Domain)** — Verifies the authority granted to an Agent is proportionate to its responsibilities
+  - Fifth Inspect subset (QD-PM), extending Prompt / Skill / Tool / Cross
+  - [Read Permission Preview](/inspect/permission.html)
 
 ### Research Directions
 
-- Correlation analysis between self-deployed model capability degradation and AI service quality/risk
-- DMC adaptation tooling release
 - More comprehensive governance of the enterprise AI ecosystem
 
-> Preview is how SanityOps shares upcoming research directions and version plans with the community. Some entries are exploratory directions, while others are already-formed framework methodologies — DMC v1.4 is the first subsystem previewed here.
+> Preview is how SanityOps shares upcoming research directions and version plans with the community. Some entries are exploratory directions, while others are already-formed framework methodologies — Permission is the first Inspect subset previewed here.
 
 ---
 

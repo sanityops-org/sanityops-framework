@@ -9,7 +9,6 @@ const communitySidebar = [
     items: [
       { text: 'About SanityOps', link: '/community/about' },
       { text: 'Partnership', link: '/community/partnership' },
-      { text: 'DMC (Preview)', link: '/community/DMC.html' },
       { text: 'Contact', link: '/community/about#contact' },
     ],
   },
@@ -117,6 +116,7 @@ export default defineConfig({
           { text: 'Skill', link: '/inspect/skill' },
           { text: 'Tool', link: '/inspect/tool' },
           { text: 'Cross', link: '/inspect/cross' },
+          { text: 'Permission (Preview)', link: '/inspect/permission' },
         ],
       },
       {
@@ -149,7 +149,6 @@ export default defineConfig({
         items: [
           { text: 'About', link: '/community/about' },
           { text: 'Partnership', link: '/community/partnership' },
-          { text: 'DMC (Preview)', link: '/community/DMC.html' },
           { text: 'Discussions', link: 'https://github.com/sanityops-org/sanityops-framework/discussions' },
           { text: 'Contact', link: '/community/about#contact' },
         ],
@@ -199,6 +198,7 @@ export default defineConfig({
             { text: 'Skill', link: '/inspect/skill' },
             { text: 'Tool', link: '/inspect/tool' },
             { text: 'Cross', link: '/inspect/cross' },
+            { text: 'Permission (Preview)', link: '/inspect/permission' },
           ],
         },
       ],
