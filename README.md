@@ -127,7 +127,7 @@ SanityOps does not replace FDE judgment, implementation work, observability, IAM
 
 > 🟢 Open-source tooling (Defect Inspector) | 🔵 Commercial tooling (Risk Scanner, Quality Evaluator)
 >
-> The open specification documents are sufficient to guide a team in building its own inspection/assessment tooling. If you would rather not start from scratch, we provide ready-made tools.
+> The open specification documents are sufficient to guide a team in building its own inspection/assessment tooling. If you would rather not start from scratch, we provide ready-made tools: `pip install sanityops-cli` for the open-source Defect Inspector, and the [hosted platform](https://demo.sanityops.org/) for Risk and Quality.
 
 ---
 

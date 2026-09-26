@@ -594,16 +594,13 @@ Requirements:
 
 ```bash
 git clone https://github.com/sanityops-org/sanityops-framework.git
-cd framework
+cd sanityops-framework
 
-# View complete specification documents
-ls -la docs/
+# Inspect, Risk and Quality specifications
+ls inspect/ risk/ quality/
 
-# View reference implementations
-ls -la reference-impl/
-
-# View usage examples
-ls -la examples/
+# Framework core, and the defect → risk/quality mapping
+ls framework/
 ```
 
 **Framework includes**:
@@ -618,13 +615,17 @@ ls -la examples/
 <a id="102-use-the-commercial-platform-saas-on-premises"></a>
 ### 10.2 Use the Commercial Platform (SaaS / On-Premises)
 
-**Trial Link**: https://www.sanityops.org/try
+**Trial Link**: <https://demo.sanityops.org/>
+
+Registration on the trial platform is invite-gated — click **Get Code** on the registration form to see the address to request one from. See [Try the Tools](try-the-tools.md) for the full walkthrough.
 
 **Features**:
 
-- Web UI: Upload artifacts via browser, view analysis results
-- 3 artifacts free trial
-- Support exporting complete reports
+- Project management with artifact version history
+- Git repository integration — sync a repository and scan its Prompt, Skill, and Tool artifacts automatically
+- Security checks: implicit attack testing, LLM security checks, retrieval-agent checks, and execution checks
+- Task monitoring, dashboards, and exportable reports
+- API key management, for connecting the open-source CLI
 
 **Enterprise Deployment**:
 
@@ -639,35 +640,39 @@ ls -la examples/
 <a id="103-command-line-tools"></a>
 ### 10.3 Command Line Tools
 
+The open-source Defect Inspector CLI (`sanityops-cli`) implements the Inspect subset. Install options, check levels, and configuration are documented in full in [Try the Tools](try-the-tools.md).
+
 ```bash
 # Installation
 pip install sanityops-cli
 
-# Inspect: Check artifacts for specification defects
-sanityops inspect <artifact-path>
+# Create .sanityops/inspect_config.yaml in the current directory
+sanityops-cli init
 
-# Risk: Security risk audit
-sanityops risk --explicit <artifact-path>          # Explicit risks
-sanityops risk --implicit <artifact-path>          # Implicit risks (environment configuration required)
+# Inspect the artifacts listed in that config file
+sanityops-cli inspect
+sanityops-cli inspect --check-level L1     # fast
+sanityops-cli inspect --check-level L3     # deep
 
-# Quality: Quality assessment
-sanityops quality --task <task-definition>
+# Generate repairs from the latest report
+sanityops-cli inspect repair
 
-# Generate report
-sanityops report <session-id> --format json|html
-
-# Version control and regression
-sanityops compare v1.0 v2.0 --show-delta
+# Optional: connect to the Platform (omit to stay fully local)
+sanityops-cli config server.api_key
 ```
+
+> `inspect` reads `.sanityops/inspect_config.yaml` — it does not accept an artifact path as an argument. Risk and Quality checks are delivered through the Platform rather than the open-source CLI.
 
 ---
 
 <a id="104-cicd-integration-example"></a>
 ### 10.4 CI/CD Integration Example
 
+Commit `.sanityops/inspect_config.yaml` to the repository (the generated `.sanityops/.gitignore` keeps credentials out of it) and inject the LLM credentials as pipeline secrets:
+
 ```yaml
-# .github/workflows/sanityops-check.yml
-name: SanityOps Checks
+# .github/workflows/sanityops-inspect.yml
+name: SanityOps Inspect
 
 on: [push, pull_request]
 
@@ -675,28 +680,24 @@ jobs:
   inspect:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: sanityops/inspect-action@v1
-        with:
-          artifacts-path: ./agents/
-          fail-on: P0,P1
+      - uses: actions/checkout@v4
 
-  risk:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: sanityops/risk-action@v1
+      - uses: actions/setup-python@v5
         with:
-          artifacts-path: ./agents/
-          risk-threshold: S0,S1
+          python-version: "3.11"
 
-  quality:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: sanityops/quality-action@v1
-        with:
-          task-config: ./quality/config.yaml
-          min-score: 90
+      - run: pip install sanityops-cli
+
+      # Credentials come from repository secrets — never commit them.
+      - run: sanityops-cli inspect
+        env:
+          LLM_PROVIDER: ${{ secrets.LLM_PROVIDER }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_MODEL_ID: ${{ secrets.LLM_MODEL_ID }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
 ```
+
+The CLI doubles as the release gate through its exit code: `0` when the artifacts are clean, `1` when defects are found, `2` on error. A non-zero status fails the pipeline step, so no extra `fail-on` configuration is needed. To archive results to the Platform, add `SANITYOPS_API_KEY` and `SANITYOPS_BASE_URL` to the step's environment — the scanned artifacts are then pushed to a project version on each run.
 
 ---
 
@@ -896,7 +897,7 @@ SanityOps does not want to "solve all problems", but is committed to building fo
 
 - 🌐 **Official Website**: [https://www.sanityops.org](https://www.sanityops.org)
 - 📚 **Framework Open Source Repository**: [https://github.com/sanityops-org/sanityops-framework](https://github.com/sanityops-org/sanityops-framework)
-- 🚀 **SaaS Trial**: [https://www.sanityops.org/try](https://www.sanityops.org/try)
+- 🚀 **SaaS Trial**: [https://demo.sanityops.org](https://demo.sanityops.org)
 - 💬 **Community Discussion**: [GitHub Discussions](https://github.com/sanityops-org/sanityops-framework/discussions)
 - 📧 **Contact Us**: [hello@sanityops.org](mailto:hello@sanityops.org)
 

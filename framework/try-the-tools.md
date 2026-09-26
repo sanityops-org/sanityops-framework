@@ -20,15 +20,126 @@
 
 Defect Inspector is fully open source, allowing the community to freely use, audit, modify, and build upon it.
 
-- **GitHub Repository**: [sanityops-cli](https://github.com/sanityops-org/sanityops-cli)
-
-- **CLI Installation** :
-  
-  See [Installation guide](https://github.com/sanityops-org/sanityops-cli)
+- **GitHub Repository**: [sanityops-cli](https://github.com/sanityops-org/sanityops-cli) — Apache 2.0
 
 - **Use Case**: Static defect inspection of **logical artifacts** (System Prompts, Skills, Tool Schemas), suitable for local development or CI/CD integration.
 
 - **Note**: The open-source CLI provides the full Inspect capability (inspection, suggestions, and remediation). On the Platform, Inspect results are cross-linked with Risk and Quality findings and archived into the version-level evidence chain.
+
+### Install
+
+**Requirements**: Python ≥ 3.11, and an LLM API key of your own (see Step 2 below — the inspection model runs on your credentials).
+
+```
+# macOS / Linux — install script
+curl -fsSL https://downloads.sanityops.org/sanityops-cli/install.sh | bash
+
+# Windows — PowerShell
+irm https://downloads.sanityops.org/sanityops-cli/install.ps1 | iex
+
+# Or via PyPI
+pip install sanityops-cli
+
+# Or from source
+git clone https://github.com/sanityops-org/sanityops-cli.git
+cd sanityops-cli
+pip install -e .
+```
+
+Both install scripts verify the downloaded binary against `checksums.txt` before installing. If you would rather read the PowerShell script before running it:
+
+```powershell
+irm https://downloads.sanityops.org/sanityops-cli/install.ps1 -OutFile install.ps1
+Get-Content .\install.ps1
+.\install.ps1
+```
+
+### Quick Start
+
+**1. Create the configuration**
+
+```bash
+sanityops-cli init
+```
+
+This writes `.sanityops/inspect_config.yaml` into the current directory, along with a `.sanityops/.gitignore` so credentials stay out of version control.
+
+**2. Configure your artifacts and model**
+
+Edit the generated file — point it at your artifacts and supply the LLM credentials that run the inspection:
+
+```yaml
+project:
+  id: "00000000-0000-0000-0000-000000000000"   # placeholder; replaced automatically on first upload
+  name: ""
+
+model:                                          # optional — remove to use LLM_* env vars instead
+  provider: anthropic                           # anthropic, openai, azure, etc.
+  api_key: ""                                   # Required: keep this file out of git
+  model_id: claude-sonnet-4-20250514
+  base_url: ""                                  # optional: custom endpoint
+
+prompts:
+  - file: prompts/system_prompt.md
+
+tools:
+  - file: tools/search_tools.json
+
+skills:
+  - file: skills/code_review.md                 # file only, not directories
+```
+
+Artifact entries accept any plaintext format (`.md`, `.json`, `.py`, `.ts`, …). To configure credentials through the environment instead of the file, drop the `model:` section and set `LLM_PROVIDER`, `LLM_API_KEY`, `LLM_MODEL_ID`, and `LLM_BASE_URL`.
+
+**3. Run the inspection**
+
+```bash
+sanityops-cli inspect                       # standard depth (L2)
+sanityops-cli inspect --check-level L1      # fast
+sanityops-cli inspect --check-level L3      # deep
+```
+
+| Level | Description | Use Case |
+| --- | --- | --- |
+| L1 | Fast | Quick validation during development |
+| L2 | Standard | Default, balanced depth for regular use |
+| L3 | Deep | Comprehensive analysis for production releases |
+
+Add `--skip-defect-check` to scan and upload artifacts without running the defect analysis, `--config <path>` to use a config file elsewhere, and `--model` / `--provider` to override the model for one run.
+
+**4. Generate fixes (optional)**
+
+```bash
+sanityops-cli inspect repair
+```
+
+Reads the latest inspection report and produces repaired artifacts. Use `--report <path>` to target a specific report.
+
+### Two Ways to Run the CLI
+
+| Mode | What you need | What happens |
+| --- | --- | --- |
+| **Local only** | An LLM API key in `model.api_key` | Inspection runs entirely on your machine. No account and no upload required. |
+| **Connected to the Platform** | Additionally a Platform API key in `server.api_key` | Inspection still runs locally; the scanned artifacts are then pushed to a Platform project as a new version. |
+
+To connect the CLI to the Platform, take an API key from **Personal → API Keys** and store it:
+
+```bash
+sanityops-cli config server.api_key        # masked prompt
+sanityops-cli config --list                # verify
+```
+
+A project is created automatically on the first upload, and its id is written back into your config file. If no Platform API key is set, the upload step is skipped silently and the CLI stays fully local. `SANITYOPS_API_KEY` and `SANITYOPS_BASE_URL` environment variables override the stored values.
+
+### CI/CD Integration
+
+1. Commit `.sanityops/inspect_config.yaml` to the repository — the generated `.sanityops/.gitignore` already prevents secrets from being committed.
+2. Inject the LLM credentials as pipeline secrets via the `LLM_*` environment variables described above.
+3. Run the inspection as a step:
+
+```bash
+sanityops-cli inspect
+```
 
 ---
 
@@ -36,10 +147,10 @@ Defect Inspector is fully open source, allowing the community to freely use, aud
 
 Risk Scanner and Quality Evaluator are delivered as SaaS and self-hosted deployments. Their methodology is fully open source; the tool implementation is not currently released as public source code.
 
-- **Live Demo**: https://www.sanityops.org/demo
-  - The demo platform is currently in an early access phase. Because core detection features rely on third-party LLM API calls, access is currently invite-only to ensure service quality and manageable cost.
-  - **How to request access**: Email `hello@sanityops.org`  describing your use case, and we will send you an invite code promptly.
-  - **Free quota**: 5 free evaluations per IP per day on the SaaS platform (limited by backend LLM inference cost).
+- **Live Demo**: https://demo.sanityops.org/
+  - The demo platform is currently in an early access phase. Because core detection features rely on third-party LLM API calls, access is invite-only to keep service quality high and inference cost manageable.
+  - **How to request access**: Open the demo and click **Register**. A code is required to complete registration — click **Get Code** on the registration form and the dialog shows the address to write to. Send your request from the email address you register with to `hello@sanityops.org`, describing your use case, and we will send you an invite code.
+  - **Usage quota**: The CLI's local mode is unmetered — it runs on your own model credentials. For the hosted platform there is no fixed public per-day limit; quota is confirmed together with your invite code.
 - **Enterprise Self-Hosted Deployment**:
   - Full-stack self-hosted deployment (detection engine, database, dashboards) within your enterprise VPC;
   - **Decoupled model layer**: bring your own LLM, including locally hosted models, with no dependency on external APIs;
@@ -68,6 +179,7 @@ Within the SanityOps Platform, however, we integrate all three into a unified sy
 | What do you want to do?                                  | Recommended path                                                                                               |
 | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | Run static defect checks and integrate it yourself       | Download the [open-source Inspect tool](https://github.com/sanityops-org/sanityops-cli)          |
-| Experience the full governance loop                      | Request an invite code and try the [live demo](https://www.sanityops.org/demo)                                 |
+| Connect your CLI runs to the Platform                    | Take an API key from **Personal → API Keys**, then `sanityops-cli config server.api_key`                        |
+| Experience the full governance loop                      | Request an invite code and try the [live demo](https://demo.sanityops.org/)                                     |
 | Deploy independently, with custom models and code review | Contact `hello@sanityops.org` to discuss self-hosted deployment                                                |
 | Learn the methodology and implement it yourself          | Read the [open-source Framework specification](https://github.com/sanityops-org/sanityops-framework/tree/main) |
