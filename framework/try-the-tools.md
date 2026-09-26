@@ -16,13 +16,13 @@
 
 ---
 
-## Inspect — Open-Source Tooling, Free for Everyone
+## Inspect — Open-Source CLI
 
 Defect Inspector is fully open source, allowing the community to freely use, audit, modify, and build upon it.
 
 - **GitHub Repository**: [sanityops-cli](https://github.com/sanityops-org/sanityops-cli) — Apache 2.0
 
-- **Use Case**: Static defect inspection of **logical artifacts** (System Prompts, Skills, Tool Schemas), suitable for local development or CI/CD integration.
+- **Use Case**: Static defect inspection of **Logic Artifacts** (System Prompts, Skills, Tool Schemas), suitable for local development or CI/CD integration.
 
 - **Note**: The open-source CLI provides the full Inspect capability (inspection, suggestions, and remediation). On the Platform, Inspect results are cross-linked with Risk and Quality findings and archived into the version-level evidence chain.
 
@@ -141,21 +141,40 @@ A project is created automatically on the first upload, and its id is written ba
 sanityops-cli inspect
 ```
 
+> The [repository README](https://github.com/sanityops-org/sanityops-cli) is the authoritative reference for the CLI — every command, flag, and configuration key is documented there.
+
 ---
 
-## Risk & Quality — Try the Demo, or Deploy for Your Enterprise
+## Risk, Quality & Permission — Hosted Platform
 
-Risk Scanner and Quality Evaluator are delivered as SaaS and self-hosted deployments. Their methodology is fully open source; the tool implementation is not currently released as public source code.
+Risk Scanner, Quality Evaluator, and the Permission baseline are delivered as a hosted platform, with self-hosted deployments for enterprise. Their methodology is fully open source; the tool implementation is not currently released as public source code.
+
+| Module | What it adds |
+| --- | --- |
+| **Defects** | Inspect results, cross-linked with Risk and Quality findings |
+| **Quality** | Agent and LLM service quality assessment |
+| **Security** | Explicit risk audit and Implicit risk validation |
+| **Permission** | Permission baseline (preview) — authority granted vs. responsibility held |
+| **Overview** | Governance posture, version timeline, and trend across runs |
+
+Beyond the modules themselves, the Platform is what turns a point-in-time scan into governance: artifact versioning, check history, defect → risk/quality correlation, and exportable reports you can hand to an auditor.
+
+### Getting Access
 
 - **Live Demo**: https://demo.sanityops.org/
-  - The demo platform is currently in an early access phase. Because core detection features rely on third-party LLM API calls, access is invite-only to keep service quality high and inference cost manageable.
-  - **How to request access**: Open the demo and click **Register**. A code is required to complete registration — click **Get Code** on the registration form and the dialog shows the address to write to. Send your request from the email address you register with to `hello@sanityops.org`, describing your use case, and we will send you an invite code.
-  - **Usage quota**: The CLI's local mode is unmetered — it runs on your own model credentials. For the hosted platform there is no fixed public per-day limit; quota is confirmed together with your invite code.
-- **Enterprise Self-Hosted Deployment**:
-  - Full-stack self-hosted deployment (detection engine, database, dashboards) within your enterprise VPC;
-  - **Decoupled model layer**: bring your own LLM, including locally hosted models, with no dependency on external APIs;
-  - **Code-reviewable access (under NDA)**: contracted enterprise customers may obtain source-code review access under NDA to independently verify how governance logic is implemented — consistent with the transparency principle behind open-sourcing our Framework: **governance tooling should be transparent, not a black box.**
-- **Contact Sales**: `hello@sanityops.org` 
+- The demo platform is currently in an early access phase. Because core detection features rely on third-party LLM API calls, access is invite-only to keep service quality high and inference cost manageable.
+- **How to request access**: Open the demo and click **Register**. A code is required to complete registration — click the **Get Code** button next to the **Invitation code** field, and the dialog shows the address to write to. Send your request from the email address you register with to [hello@sanityops.org](mailto:hello@sanityops.org), describing your use case, and we will send you an invite code.
+- **Usage quota**: The CLI's local mode is unmetered — it runs on your own model credentials. For the hosted platform there is no fixed public per-day limit; quota is confirmed together with your invite code.
+- **Module availability** depends on your invitation code — modules that are not enabled on your account are shown greyed out. **Permission** is available on every account.
+
+> Once you are signed in, the Platform walks you through the rest in place: creating a project, pulling artifacts from Git or adding them manually, configuring an LLM or agent endpoint, running a check, and exporting the report. This page does not duplicate that walkthrough.
+
+### Enterprise Self-Hosted Deployment
+
+- Full-stack self-hosted deployment (detection engine, database, dashboards) within your enterprise VPC;
+- **Decoupled model layer**: bring your own LLM, including locally hosted models, with no dependency on external APIs;
+- **Code-reviewable access (under NDA)**: contracted enterprise customers may obtain source-code review access under NDA to independently verify how governance logic is implemented — consistent with the transparency principle behind open-sourcing our Framework: **governance tooling should be transparent, not a black box.**
+- **Contact Sales**: [partnership@sanityops.org](mailto:partnership@sanityops.org) · [master.leoyoung@gmail.com](mailto:master.leoyoung@gmail.com)
 
 ---
 
@@ -181,5 +200,5 @@ Within the SanityOps Platform, however, we integrate all three into a unified sy
 | Run static defect checks and integrate it yourself       | Download the [open-source Inspect tool](https://github.com/sanityops-org/sanityops-cli)          |
 | Connect your CLI runs to the Platform                    | Take an API key from **Personal → API Keys**, then `sanityops-cli config server.api_key`                        |
 | Experience the full governance loop                      | Request an invite code and try the [live demo](https://demo.sanityops.org/)                                     |
-| Deploy independently, with custom models and code review | Contact `hello@sanityops.org` to discuss self-hosted deployment                                                |
+| Deploy independently, with custom models and code review | Contact [partnership@sanityops.org](mailto:partnership@sanityops.org) or [master.leoyoung@gmail.com](mailto:master.leoyoung@gmail.com) to discuss self-hosted deployment |
 | Learn the methodology and implement it yourself          | Read the [open-source Framework specification](https://github.com/sanityops-org/sanityops-framework/tree/main) |
