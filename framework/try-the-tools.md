@@ -186,10 +186,9 @@ Within the SanityOps Platform, however, we integrate all three into a unified sy
 
 - **Correlated Root-Cause Analysis**: Defects surfaced by Inspect are mapped against Risk's attack-surface findings and Quality's failure-mode patterns, enabling rapid root-cause localization behind output anomalies or risk incidents;
 - **Logical Artifact Version Management**: Every artifact iteration (e.g., `Agent_RAG_v3.2.1 → v3.2.2`) has its defect inspection, risk audit, and quality evaluation results consolidated into a traceable, auditable evidence chain;
-- **Analytics Dashboards & Reporting**: Searchable, exportable dashboards and compliance reports support cross-version trend comparisons of governance posture;
-- **Multi-User Collaboration**: Team-based user and permission management, integrated with existing CI/CD pipelines, code repositories, and knowledge bases.
+- **Analytics Dashboards & Reporting**: Searchable, exportable dashboards and compliance reports support cross-version trend comparisons of governance posture.
 
-> In short: **the open-source tools give you point-in-time detection capability; the Platform gives you correlated root-cause analysis, version traceability, and team collaboration in a continuous governance loop.** Each subset works independently — the Platform's value lies in organizing them into a persistent, collaborative, and auditable governance system, rather than simply bundling features together.
+> In short: **the open-source tools give you point-in-time detection capability; the Platform gives you correlated root-cause analysis and version traceability in a continuous governance loop.** Each subset works independently — the Platform's value lies in organizing them into a persistent and auditable governance system, rather than simply bundling features together.
 
 ---
 
