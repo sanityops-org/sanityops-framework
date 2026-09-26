@@ -1,6 +1,6 @@
 <picture>
-  <source srcset="/assets/sanityops-logo-github-w.svg" media="(prefers-color-scheme: dark)" />
-  <img src="/assets/sanityops-logo-github-b.svg" alt="SanityOps Logo" width="260" />
+  <source srcset="assets/sanityops-logo-github-w.svg" media="(prefers-color-scheme: dark)" />
+  <img src="assets/sanityops-logo-github-b.svg" alt="SanityOps Logo" width="260" />
 </picture>
 
 # SanityOps Framework
@@ -148,7 +148,7 @@ SanityOps does not replace FDE judgment, implementation work, observability, IAM
 
 - **Inspect Permission (Permission Baseline Domain)** — Verifies the authority granted to an Agent is proportionate to its responsibilities
   - Fifth Inspect subset (QD-PM), extending Prompt / Skill / Tool / Cross
-  - [Read Permission Preview](/inspect/permission.html)
+  - [Read Permission Preview](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/permission.md)
 
 ### Research Directions
 
@@ -173,12 +173,12 @@ We welcome improvements via Issues, Pull Requests, or Discussions:
 
 See how SanityOps relates to other tools and frameworks:
 
-- [SanityOps Positioning](/compare/sanityops-positioning.html) — Framework positioning and ecosystem relationships
-- [SanityOps and FDE](/compare/sanityops-and-fde.html) — Relationship with Frontier Deployment Engineers
-- [SanityOps and Harness](/compare/sanityops-and-harness.html) — Relationship with Harness runtime layer
-- [SanityOps vs Promptfoo](/compare/compare-with-promptfoo.html) — Red teaming and adversarial testing
-- [SanityOps vs RAGAS](/compare/compare-with-ragas.html) — RAG evaluation and quality metrics
-- [SanityOps vs NVIDIA SkillSpector](/compare/compare-with-skillspector.html) — Skill security scanning
+- [SanityOps Positioning](https://github.com/sanityops-org/sanityops-framework/blob/main/compare/sanityops-positioning.md) — Framework positioning and ecosystem relationships
+- [SanityOps and FDE](https://github.com/sanityops-org/sanityops-framework/blob/main/compare/sanityops-and-fde.md) — Relationship with Frontier Deployment Engineers
+- [SanityOps and Harness](https://github.com/sanityops-org/sanityops-framework/blob/main/compare/sanityops-and-harness.md) — Relationship with Harness runtime layer
+- [SanityOps vs Promptfoo](https://github.com/sanityops-org/sanityops-framework/blob/main/compare/compare-with-promptfoo.md) — Red teaming and adversarial testing
+- [SanityOps vs RAGAS](https://github.com/sanityops-org/sanityops-framework/blob/main/compare/compare-with-ragas.md) — RAG evaluation and quality metrics
+- [SanityOps vs NVIDIA SkillSpector](https://github.com/sanityops-org/sanityops-framework/blob/main/compare/compare-with-skillspector.md) — Skill security scanning
 
 ## 📄 License
 
@@ -188,7 +188,7 @@ This project is licensed under the [CC BY-SA 4.0](https://creativecommons.org/li
 
 ## 📬 Contact
 
-- Website: `https://www.sanityops.org`
-- GitHub: `https://github.com/sanityops-org/sanityops-framework`
-- Discussions: `https://github.com/sanityops-org/sanityops-framework/discussions`
-- Email: `hello@sanityops.org`
+- Website: [www.sanityops.org](https://www.sanityops.org)
+- GitHub: [sanityops-org/sanityops-framework](https://github.com/sanityops-org/sanityops-framework)
+- Discussions: [GitHub Discussions](https://github.com/sanityops-org/sanityops-framework/discussions)
+- Email: [hello@sanityops.org](mailto:hello@sanityops.org)
