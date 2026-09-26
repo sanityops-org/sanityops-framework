@@ -49,26 +49,23 @@ SanityOps therefore starts from Logic Artifacts: it converts the writing and opt
 
 ## 🏗️ Architecture
 
-### Division of Labor Across the Six Subsets
+### Division of Labor Across the Professional Systems
 
 ```
-SanityOps Six-Subset Framework
+SanityOps Framework
 │
 ├─ Inspect (Defect Inspection)
+│   ├─ Inspect Tool ← Tool Schema defect inspection
 │   ├─ Inspect Prompt ← System Prompt defect inspection
 │   ├─ Inspect Skill ← Skill defect inspection
-│   ├─ Inspect Tool ← Tool Schema defect inspection
-│   └─ Inspect Cross ← Cross-Artifact Consistency inspection
+│   └─ Inspect Cross ← Cross-Artifact defect inspection
 │
 ├─ Risk (Risk Scanning)
-│   ├─ Risk Explicit ← Explicit Risk Audit
-│   └─ Risk Implicit ← Implicit Risk Dynamic Validation
+│   ├─ Risk Explicit ← Explicit Logic Artifact risk detection
+│   └─ Risk Implicit ← Implicit Agent runtime vulnerability scanning
 │
-├─ Quality (Service Quality)
-│   └─ Quality ← Agent and LLM service quality assessment
-│
-└─ Relevance (Impact Mapping)
-    └─ Relevance ← defect → risk/quality diagnostic mapping
+└─ Quality (Service Quality)
+    └─ Quality ← Agent and (local) LLM service quality assessment
 ```
 
 ### Framework Workflow

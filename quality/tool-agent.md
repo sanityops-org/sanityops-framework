@@ -115,7 +115,7 @@ Typical characteristics of Tool Agents:
 SanityOps is a complete Agent quality and security assurance framework, containing three organically connected subsets:
 
 ```
-SanityOps Six-Subset Framework
+SanityOps Framework
 │
 ├─ Inspect (Defect Inspection)
 │   ├─ Inspect Tool ← Tool Schema defect inspection

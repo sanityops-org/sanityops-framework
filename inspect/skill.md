@@ -100,7 +100,7 @@ This specification is **not**:
 #### 0.1.3 Position Within the SanityOps Framework
 
 ```
-SanityOps Six-Subset Framework
+SanityOps Framework
 │
 ├─ Inspect (Defect Inspection)
 │   ├─ Inspect Tool ← Tool Schema defect inspection

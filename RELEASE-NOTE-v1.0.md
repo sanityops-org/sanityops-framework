@@ -1,7 +1,7 @@
 # SanityOps Framework v1.0
 
-**Release Date**: August 2026  
-**Version**: v1.0.0  
+**Release Date**: July 2026  
+**Version**: v1.0  
 **License**: CC BY-SA 4.0
 
 ---
@@ -75,4 +75,4 @@ None (initial release).
 
 ---
 
-*SanityOps Framework v1.0 — August 2026*
+*SanityOps Framework v1.0 — July 2026*

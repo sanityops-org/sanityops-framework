@@ -393,7 +393,7 @@ Benefiting from artifact-driven high efficiency, Validate can be **seamlessly in
 Validate is a subset within the SanityOps framework, which adopts a three-dimension, six-subset architecture:
 
 ```
-SanityOps Three-Dimension Six-Subset Framework
+SanityOps Framework
 │
 ├─ Inspect (Defect Inspection) — Static Analysis, Discover Potential Defects
 │   ├─ Inspect Tool     ← Tool Schema Defects

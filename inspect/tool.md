@@ -134,7 +134,7 @@ This specification does **not** cover:
 #### 0.1.5 Position Within the SanityOps Framework
 
 ```
-SanityOps Six-Subset Framework
+SanityOps Framework
 │
 ├─ Inspect (Defect Inspection)
 │   ├─ Inspect Tool ← Tool Schema defect inspection ← You are here
