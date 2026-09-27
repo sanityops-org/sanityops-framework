@@ -26,6 +26,30 @@ The other four subsets answer **"whether Logic Artifacts are written correctly a
 
 > **Whether the authority granted to this Agent is proportionate to the responsibilities assigned to it.**
 
+Within the framework, this subset occupies the following position:
+
+```
+SanityOps Framework
+│
+├─ Inspect (Defect Inspection)
+│   ├─ Inspect Tool ← Tool Schema defect inspection
+│   ├─ Inspect Prompt ← System Prompt defect inspection
+│   ├─ Inspect Skill ← Skill defect inspection
+│   ├─ Inspect Cross ← Cross-Artifact defect inspection
+│   └─ Inspect Permission ← Permission-responsibility proportionality inspection (QD-PM) ← You are here
+│
+├─ Risk (Risk Scanning)
+│   ├─ Risk Explicit ← Explicit Logic Artifact risk detection
+│   └─ Risk Implicit ← Implicit Agent runtime vulnerability scanning
+│
+└─ Quality (Service Quality)
+    ├─ Quality RAG-Agent ← RAG-Agent service quality assessment
+    └─ Quality Tool-Agent ← Tool-Agent service quality assessment
+│
+└─ Relevance (Impact Mapping)
+    └─ Relevance ← defect → risk/quality diagnostic mapping
+```
+
 ##### 0.1.1.0 Significance for Enterprise-Level Implementation
 
 In addition to serving as a static inspection specification for Inspect, this subset provides strong guidance for **enterprise users establishing AI service permission management systems, policies, and platforms**: it extracts permissions from "a scattered side aspect of Artifacts" into a **Permission Baseline Domain** that can be independently executed, concluded, and integrated with downstream systems (see 1.5, Appendix E). Its outputs—including responsibility-permission proportionality determinations, permission inventories, and their business purpose descriptions—can serve as **direct inputs** for enterprises to formulate least-privilege policies, approval and audit workflows, and IAM / PEP / runtime monitoring platforms (see 0.1.4 Downstream Integration Interface Description). Enterprises that use this subset as the kernel to build permission management systems and governance platforms are advised to follow a phased roadmap of "static extraction and determination → declaration-grant deviation detection → runtime monitoring and aggregated governance," and to elevate the control granularity of high-risk permissions (`OR-L3`) from the operation level to the permission-item level.
