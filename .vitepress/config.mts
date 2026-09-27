@@ -116,7 +116,7 @@ export default defineConfig({
           { text: 'Skill', link: '/inspect/skill' },
           { text: 'Tool', link: '/inspect/tool' },
           { text: 'Cross', link: '/inspect/cross' },
-          { text: 'Permission (Preview)', link: '/inspect/permission' },
+          { text: 'Permission', link: '/inspect/permission' },
         ],
       },
       {
@@ -198,7 +198,7 @@ export default defineConfig({
             { text: 'Skill', link: '/inspect/skill' },
             { text: 'Tool', link: '/inspect/tool' },
             { text: 'Cross', link: '/inspect/cross' },
-            { text: 'Permission (Preview)', link: '/inspect/permission' },
+            { text: 'Permission', link: '/inspect/permission' },
           ],
         },
       ],

@@ -252,7 +252,7 @@ SanityOps consists of three **independent, complete, and flexibly combinable** p
 
 **Specifically includes**:
 
-Includes five sub-tools for defect inspection of System Prompts, Skills, Tool Schemas, CROSS cross-artifacts, and Permission-responsibility proportionality.
+Includes five sub-tools for defect inspection of System Prompts, Skills, Tool Schemas, Cross cross-artifacts, and Permission-responsibility proportionality.
 
 - **Non-standard**: Structure and style do not conform to accepted norms
 - **Incomplete**: Critical information missing, constraint conditions incomplete
@@ -461,7 +461,7 @@ SanityOps **core specifications and governance logic** have been released as ope
 2. **Inspect Prompt v1.0**: System Prompt static defect framework
 3. **Inspect Skill v1.0**: Skill static defect framework
 4. **Inspect Tool v1.0**: Tool Schema static defect framework
-5. **Inspect CROSS v1.0**: Cross-artifact static defect framework
+5. **Inspect Cross v1.0**: Cross-artifact static defect framework
 6. **Inspect Permission v1.0**: Permission-responsibility proportionality inspection framework
 7. **Risk Explicit v1.0**: Explicit risk classification and audit framework
 8. **Risk Implicit v1.0**: Runtime risk detection methodology white paper

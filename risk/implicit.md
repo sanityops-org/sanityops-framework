@@ -390,24 +390,28 @@ Benefiting from artifact-driven high efficiency, Validate can be **seamlessly in
 <a id="17-sanityops-framework-positioning"></a>
 ### 1.7 SanityOps Framework Positioning
 
-Validate is a subset within the SanityOps framework, which adopts a three-dimension, six-subset architecture:
+Validate is a subset within the SanityOps framework, which adopts a three-dimension architecture:
 
 ```
-SanityOps Three-Dimension Six-Subset Framework
+SanityOps Framework
 │
 ├─ Inspect (Defect Inspection) — Static Analysis, Discover Potential Defects
-│   ├─ Inspect Tool     ← Tool Schema Defects
-│   ├─ Inspect Prompt   ← System Prompt Defects
-│   ├─ Inspect Skill    ← Skill Logic Defects
-│   ├─ Inspect CROSS    ← Cross-logic Artifact Defects
-│   └─ Inspect Permission ← Permission-responsibility proportionality defects (QD-PM)
+│   ├─ Inspect Tool     ← Tool Schema defect inspection
+│   ├─ Inspect Prompt   ← System Prompt defect inspection
+│   ├─ Inspect Skill    ← Skill defect inspection
+│   ├─ Inspect Cross    ← Cross-Artifact defect inspection
+│   └─ Inspect Permission ← Permission-responsibility proportionality inspection (QD-PM)
 │
 ├─ Risk (Risk Scanning) — Dynamic Validation, Assess Risk
-│   ├─ Risk Explicit ← Explicit Risk Scanning
-│   └─ Risk Implicit ← Implicit Risk Validation ← I am here 😊
+│   ├─ Risk Explicit ← Explicit Logic Artifact risk detection
+│   └─ Risk Implicit ← Implicit Agent runtime vulnerability scanning ← I am here 😊
 │
 └─ Quality (Service Quality) — Runtime Quality Assessment
-    └─ Quality ← Agent & LLM Service Quality Assessment
+    ├─ Quality RAG-Agent ← RAG-Agent service quality assessment
+    └─ Quality Tool-Agent ← Tool-Agent service quality assessment
+│
+└─ Relevance (Impact Mapping)
+    └─ Relevance ← defect → risk/quality diagnostic mapping
 ```
 
 **Risk Implicit's Position in the Framework**:
@@ -464,7 +468,7 @@ Implicit Vulnerabilities (Only Triggerable at Runtime)
 | **Inspect Tool** | Schema missing parameter validation, incomplete permission definitions | Construct boundary values, injection attack cases |
 | **Inspect Prompt** | Instruction ambiguity, fuzzy permission boundaries | Multi-turn context poisoning attacks |
 | **Inspect Skill** | Condition check omissions, process logic vulnerabilities | Step skipping, state tampering attacks |
-| **Inspect CROSS** | Permission inheritance errors, dependency relationship vulnerabilities | Cross-artifact combination attacks |
+| **Inspect Cross** | Permission inheritance errors, dependency relationship vulnerabilities | Cross-artifact combination attacks |
 
 These defects are converted into verifiable implicit risks through **attack case execution**.
 
@@ -523,7 +527,7 @@ Seamless CI/CD integration, making security validation a standard development st
 <a id="311-inspect-completed"></a>
 #### 3.1.1 Inspect Completed
 
-- All five Inspect subsets (Tool, Prompt, Skill, CROSS, Permission) have output defect lists
+- All five Inspect subsets (Tool, Prompt, Skill, Cross, Permission) have output defect lists
 - Defect lists contain necessary structured information (defect ID, type, component, description, severity)
 
 **Rationale**: Implicit's attack test cases are generated based on discovered defects. Without a defect list, attacks will lack targeting.

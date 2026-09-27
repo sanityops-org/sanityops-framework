@@ -10,7 +10,7 @@ This guide recommends a reading path through the core documents. You can also ju
 
 ### 1. Overview
 
-Start here for the big picture — what SanityOps is, why it exists, and how the six subsets fit together.
+Start here for the big picture — what SanityOps is, why it exists, and how the professional systems fit together.
 
 → [Overview](/framework/overview)
 

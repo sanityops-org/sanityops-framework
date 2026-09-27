@@ -46,7 +46,7 @@ Relevance serves as the connector: from defects (QD), candidate attack surfaces 
 
 ### Current Coverage Boundaries
 
-SanityOps v1.0 has primarily defined: Inspect (including Tool / Prompt / Skill / CROSS / Permission subsets), Risk Explicit, Risk Implicit, Quality Tool-Agent, Quality RAG-Agent, and Inspect defect impact and linkage mapping. Production runtime monitoring, incident response, and Knowledge / Memory / Identity / A2A governance are directions for subsequent expansion; the above directions should not be characterized as currently fully covered specialized specification capabilities.
+SanityOps v1.0 has primarily defined: Inspect (including Tool / Prompt / Skill / Cross / Permission subsets), Risk Explicit, Risk Implicit, Quality Tool-Agent, Quality RAG-Agent, and Inspect defect impact and linkage mapping. Production runtime monitoring, incident response, and Knowledge / Memory / Identity / A2A governance are directions for subsequent expansion; the above directions should not be characterized as currently fully covered specialized specification capabilities.
 
 ### Delivery Form
 

@@ -14,19 +14,13 @@
 
 ---
 
-> **Note:**
->
-> The Permission subset (Inspect Permission Governance Specification) is the fifth subset of the Inspect dimension, integrated with the other SanityOps subsets as of Framework v1.0.
-
----
-
 ## Preface
 
 ### 0.1 Positioning and Scope
 
 #### 0.1.1 Position of This Subset Within the Framework
 
-The Inspect Permission Governance Specification (prefix `QD-PM`) is the **fifth subset of the Inspect dimension** in the SanityOps Framework, alongside existing Prompt (`QD-P`), Skill (`QD-S`), Tool (`QD-T`), and Cross (`QD-PS` / `QD-PT` / `QD-ST`).
+The Inspect Permission Governance Specification (prefix `QD-PM`) is the **fifth subset of the Inspect dimension** in the SanityOps Framework, alongside Prompt (`QD-P`), Skill (`QD-S`), Tool (`QD-T`), and Cross (`QD-PS` / `QD-PT` / `QD-ST`).
 
 The other four subsets answer **"whether Logic Artifacts are written correctly and consistent with each other"**; this subset answers a separate question:
 

@@ -225,20 +225,23 @@ Quality RAG-Agent is a component of SanityOps Framework, not an independent, clo
 ```text
 SanityOps Framework
 │
-├─ Inspect: Logic Artifact Defect Inspection
-│  ├─ Inspect Tool
-│  ├─ Inspect Prompt
-│  ├─ Inspect Skill
-│  ├─ Inspect CROSS
-│  └─ Inspect Permission ← Permission-responsibility proportionality inspection
+├─ Inspect (Defect Inspection)
+│   ├─ Inspect Tool ← Tool Schema defect inspection
+│   ├─ Inspect Prompt ← System Prompt defect inspection
+│   ├─ Inspect Skill ← Skill defect inspection
+│   ├─ Inspect Cross ← Cross-Artifact defect inspection
+│   └─ Inspect Permission ← Permission-responsibility proportionality inspection (QD-PM)
 │
-├─ Risk: Risk Scanning
-│  ├─ Risk EX
-│  └─ Risk IM
+├─ Risk (Risk Scanning)
+│   ├─ Risk Explicit ← Explicit Logic Artifact risk detection
+│   └─ Risk Implicit ← Implicit Agent runtime vulnerability scanning
 │
-└─ Quality: User-Visible Service Quality Evaluation
-   ├─ Quality RAG-Agent
-   └─ Quality Tool-Agent
+└─ Quality (Service Quality)
+    ├─ Quality RAG-Agent ← RAG-Agent service quality assessment ← This white paper
+    └─ Quality Tool-Agent ← Tool-Agent service quality assessment
+│
+└─ Relevance (Impact Mapping)
+    └─ Relevance ← defect → risk/quality diagnostic mapping
 ```
 
 Within this framework:

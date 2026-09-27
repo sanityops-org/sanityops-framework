@@ -100,7 +100,7 @@ This specification is **not**:
 #### 0.1.3 Position Within the SanityOps Framework
 
 ```
-SanityOps Six-Subset Framework
+SanityOps Framework
 │
 ├─ Inspect (Defect Inspection)
 │   ├─ Inspect Tool ← Tool Schema defect inspection
@@ -114,7 +114,11 @@ SanityOps Six-Subset Framework
 │   └─ Risk Implicit ← Implicit Agent runtime vulnerability scanning
 │
 └─ Quality (Service Quality)
-    └─ Quality ← Agent and (local) LLM service quality assessment
+    ├─ Quality RAG-Agent ← RAG-Agent service quality assessment
+    └─ Quality Tool-Agent ← Tool-Agent service quality assessment
+│
+└─ Relevance (Impact Mapping)
+    └─ Relevance ← defect → risk/quality diagnostic mapping
 ```
 
 #### 0.1.4 Inspection Scope

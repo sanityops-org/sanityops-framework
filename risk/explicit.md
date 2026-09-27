@@ -119,23 +119,25 @@ This specification does **NOT** cover:
 #### 0.1.5 Position in the SanityOps Framework
 
 ```
-SanityOps Six-Subset Framework
+SanityOps Framework
 │
 ├─ Inspect (Defect Inspection)
 │   ├─ Inspect Tool ← Tool Schema defect inspection
 │   ├─ Inspect Prompt ← System Prompt defect inspection
-│   ├─ Inspect Skill ← Skill defect inspection (v2.4 completed)
-│   ├─ Inspect CROSS ← Cross-logic artifact defect inspection
+│   ├─ Inspect Skill ← Skill defect inspection
+│   ├─ Inspect Cross ← Cross-Artifact defect inspection
 │   └─ Inspect Permission ← Permission-responsibility proportionality inspection (QD-PM)
 │
 ├─ Risk (Risk Scanning)
-│   ├─ Risk Explicit ← Explicit Risk Audit ← Here
-│   │                   Focuses on explicit risk expression in static text
-│   └─ Risk IM ← Implicit Risk Scanning
-│                   Focuses on dynamic vulnerabilities in runtime context
+│   ├─ Risk Explicit ← Explicit Logic Artifact risk detection ← Here
+│   └─ Risk Implicit ← Implicit Agent runtime vulnerability scanning
 │
 └─ Quality (Service Quality)
-    └─ Quality ← Agent and LLM service quality assessment
+    ├─ Quality RAG-Agent ← RAG-Agent service quality assessment
+    └─ Quality Tool-Agent ← Tool-Agent service quality assessment
+│
+└─ Relevance (Impact Mapping)
+    └─ Relevance ← defect → risk/quality diagnostic mapping
 ```
 
 ---
@@ -1818,7 +1820,7 @@ SanityOps Complete Audit Workflow
 │   ├─ Inspect Skill → Check Skill definitions
 │   ├─ Inspect Tool → Check Tool Schema
 │   ├─ Inspect Prompt → Check System Prompt
-│   ├─ Inspect CROSS → Check cross-logic artifact consistency
+│   ├─ Inspect Cross → Check cross-logic artifact consistency
 │   └─ Inspect Permission → Check permission-responsibility proportionality (QD-PM)
 │
 ├─ Phase 2: Risk Scanning

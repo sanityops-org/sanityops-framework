@@ -8,18 +8,9 @@ export default {
   Layout: () => {
     return h(DefaultTheme.Layout, null, {
       'layout-top': () => h(FrameNavPatcher),
-      'home-features-after': () => h(PermissionBanner),
     })
   },
 }
-
-// Permission preview banner — home page, below the features cards
-const PermissionBanner = () =>
-  h('div', { class: 'permission-banner' }, [
-    h('span', { class: 'permission-banner-badge' }, 'New · Preview'),
-    h('span', { class: 'permission-banner-text' }, 'Too much access. Too little need. Verify authority matches responsibility.'),
-    h('a', { class: 'permission-banner-link', href: '/inspect/permission.html' }, 'Explore Permission →'),
-  ])
 
 // Internal component that patches nav group buttons with landing page links
 const FrameNavPatcher = {

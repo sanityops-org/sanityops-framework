@@ -115,22 +115,25 @@ Typical characteristics of Tool Agents:
 SanityOps is a complete Agent quality and security assurance framework, containing three organically connected subsets:
 
 ```
-SanityOps Six-Subset Framework
+SanityOps Framework
 │
 ├─ Inspect (Defect Inspection)
 │   ├─ Inspect Tool ← Tool Schema defect inspection
 │   ├─ Inspect Prompt ← System Prompt defect inspection
 │   ├─ Inspect Skill ← Skill defect inspection
-│   ├─ Inspect CROSS ← Cross-logic-artifact defect inspection
+│   ├─ Inspect Cross ← Cross-Artifact defect inspection
 │   └─ Inspect Permission ← Permission-responsibility proportionality inspection (QD-PM)
 │
 ├─ Risk (Risk Scanning)
-│   ├─ Risk EX ← Explicit logic artifact risk detection
-│   └─ Risk IM ← Implicit Agent runtime logic vulnerability scanning
+│   ├─ Risk Explicit ← Explicit Logic Artifact risk detection
+│   └─ Risk Implicit ← Implicit Agent runtime vulnerability scanning
 │
 └─ Quality (Service Quality)
     ├─ Quality RAG-Agent ← RAG-Agent service quality assessment
     └─ Quality Tool-Agent ← Tool-Agent service quality assessment ← This white paper
+│
+└─ Relevance (Impact Mapping)
+    └─ Relevance ← defect → risk/quality diagnostic mapping
 ```
 
 **Quality's Responsibilities in the Framework:**
