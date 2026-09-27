@@ -121,7 +121,8 @@ SanityOps Six-Subset Framework
 │   ├─ Inspect Tool ← Tool Schema defect inspection
 │   ├─ Inspect Prompt ← System Prompt defect inspection
 │   ├─ Inspect Skill ← Skill defect inspection
-│   └─ Inspect CROSS ← Cross-logic-artifact defect inspection
+│   ├─ Inspect CROSS ← Cross-logic-artifact defect inspection
+│   └─ Inspect Permission ← Permission-responsibility proportionality inspection (QD-PM)
 │
 ├─ Risk (Risk Scanning)
 │   ├─ Risk EX ← Explicit logic artifact risk detection

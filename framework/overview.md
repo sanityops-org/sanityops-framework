@@ -6,7 +6,7 @@
 
 **Version**: v1.0
 
-**Release Date**: July 2026
+**Release Date**: September 2026
 
 **Maintained by**: SanityOps Working Group
 
@@ -252,7 +252,7 @@ SanityOps consists of three **independent, complete, and flexibly combinable** p
 
 **Specifically includes**:
 
-Includes four sub-tools for defect inspection of System Prompts, Skills, Tool Schemas, and CROSS cross-artifacts.
+Includes five sub-tools for defect inspection of System Prompts, Skills, Tool Schemas, CROSS cross-artifacts, and Permission-responsibility proportionality.
 
 - **Non-standard**: Structure and style do not conform to accepted norms
 - **Incomplete**: Critical information missing, constraint conditions incomplete
@@ -455,18 +455,19 @@ To ensure enterprises have clear expectations, SanityOps explicitly states the f
 
 SanityOps **core specifications and governance logic** have been released as open source, freely available for review, use, modification, and derivation:
 
-**10 complete sub-frameworks or methodology white papers**:
+**11 complete sub-frameworks or methodology white papers**:
 
 1. **Core v1.0**: Unified terminology, object model, evidence standards, Gate definitions, classification and decision semantics
 2. **Inspect Prompt v1.0**: System Prompt static defect framework
 3. **Inspect Skill v1.0**: Skill static defect framework
 4. **Inspect Tool v1.0**: Tool Schema static defect framework
 5. **Inspect CROSS v1.0**: Cross-artifact static defect framework
-6. **Risk Explicit v1.0**: Explicit risk classification and audit framework
-7. **Risk Implicit v1.0**: Runtime risk detection methodology white paper
-8. **Quality Tool-Agent v1.0**: Tool-Agent service quality assessment methodology white paper
-9. **Quality RAG-Agent v1.0**: RAG-Agent service quality assessment framework
-10. **Relevance v1.0**: Inspect defect and Risk/Quality diagnostic mapping framework
+6. **Inspect Permission v1.0**: Permission-responsibility proportionality inspection framework
+7. **Risk Explicit v1.0**: Explicit risk classification and audit framework
+8. **Risk Implicit v1.0**: Runtime risk detection methodology white paper
+9. **Quality Tool-Agent v1.0**: Tool-Agent service quality assessment methodology white paper
+10. **Quality RAG-Agent v1.0**: RAG-Agent service quality assessment framework
+11. **Relevance v1.0**: Inspect defect and Risk/Quality diagnostic mapping framework
 
 **Benefits of open-source framework**:
 
@@ -904,4 +905,4 @@ SanityOps does not want to "solve all problems", but is committed to building fo
 
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  July 2026
+v1.0  ·  September 2026

@@ -6,7 +6,7 @@
 
 **Version**: v1.0
 
-**Release Date**: July 2026
+**Release Date**: September 2026
 
 **Maintainer**: SanityOps Inspect Working Group
 
@@ -140,7 +140,8 @@ SanityOps Six-Subset Framework
 │   ├─ Inspect Tool ← Tool Schema defect inspection ← You are here
 │   ├─ Inspect Prompt ← System Prompt defect inspection
 │   ├─ Inspect Skill ← Skill defect inspection
-│   └─ Inspect Cross ← Cross-Artifact defect inspection
+│   ├─ Inspect Cross ← Cross-Artifact defect inspection
+│   └─ Inspect Permission ← Permission-responsibility proportionality inspection (QD-PM)
 │
 ├─ Risk (Risk Scanning)
 │   ├─ Risk Explicit ← Explicit Logic Artifact risk detection
@@ -223,9 +224,9 @@ QD-T-x.y
 <a id="031-current-version"></a>
 #### 0.3.1 Current Version
 
-- **Version**: v2.3
-- **Release Status**: Internal industry specification version
-- **Last Updated**: July 2026
+- **Version**: v1.0
+- **Release Status**: Initial release
+- **Last Updated**: September 2026
 - **Maintainer**: SanityOps Working Group
 
 <a id="032-version-history"></a>
@@ -233,15 +234,12 @@ QD-T-x.y
 
 | Version | Release Date | Major Changes |
 | --- | --- | --- |
-| v2.3 | 2026-07 | Added standardized foreword, Tool Risk Level definitions, tiered inspection mechanism |
-| v2.2 | 2026-07 | Added QD-T numbering system; completed rule code index |
-| v2.1 | 2026-06 | Added high-risk operation inspection, Cross-Tool Data Flow inspection |
-| v2.0 | 2026-05 | Restructured as a formal specification; added parameter constraint inspection |
+| v1.0 | 2026-09 | Initial release |
 
 <a id="033-applicability-statement"></a>
 #### 0.3.3 Applicability Statement
 
-This specification v2.3 applies to the Tool Schema quality inspection phase of the SanityOps Framework. When using this specification for Tool quality inspection, all requirements of the corresponding version SHALL be followed.
+This specification v1.0 applies to the Tool Schema quality inspection phase of the SanityOps Framework. When using this specification for Tool quality inspection, all requirements of the corresponding version SHALL be followed.
 
 ---
 

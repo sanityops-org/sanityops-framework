@@ -120,7 +120,7 @@
 | Short Name | SanityOps Core |
 | Version | v1.0 |
 | Status | Published |
-| Date | July 2026 |
+| Date | September 2026 |
 | Scope | All current and future SanityOps sub-specifications, rule assets, tool implementations, reports, CI/CD pipelines, and governance processes |
 | Maintainer | SanityOps Working Group |
 | Document Nature | Framework-level normative baseline |
@@ -341,6 +341,7 @@ Production runtime monitoring, production auditing, incident response, Knowledge
 | Skill | Yes, Inspect Skill | Covered |
 | Tool / Tool Schema | Yes, Inspect Tool | Covered |
 | Prompt–Skill–Tool Cross | Yes, Inspect Cross | Covered |
+| Permission | Yes, Inspect Permission | Covered |
 | Explicit Risk Expression | Yes, Risk Explicit | Covered |
 | Dynamic Attack Validation | Yes, Risk Implicit | Covered |
 | Tool-Agent Task Quality | Yes, Quality Tool-Agent | Covered |
@@ -416,6 +417,7 @@ The following are Core's recommended formal names:
 | `Inspect Skill` | Inspect Skill Standard | Use formal name |
 | `Inspect Tool` | Inspect Tool Standard | Use formal name |
 | `Inspect Cross` | Inspect CROSS, Inspect Cross Standard | Use `Inspect Cross` |
+| `Inspect Permission` | Inspect Permission Standard | Use formal name |
 | `Risk Explicit` | Risk EX, Explicit | May note `EX` as classification prefix on first occurrence |
 | `Risk Implicit` | Risk IM, Implicit | May note `IM` as historical abbreviation on first occurrence |
 | `Quality Tool-Agent` | Sanity Quality Tool-Agent, Quality Tool Agent | Use `Quality Tool-Agent` |
@@ -433,6 +435,7 @@ Aliases in historical documents do not automatically constitute errors, but subs
 | Skill Defect | `QD-S-*` | Inspect Skill | Skill Static Defects |
 | Tool Defect | `QD-T-*` | Inspect Tool | Tool / Schema Static Defects |
 | Cross Defect | `QD-PS-*`, `QD-PT-*`, `QD-ST-*` | Inspect Cross | Cross-Artifact relationship defects |
+| Permission Defect | `QD-PM-*` | Inspect Permission | Permission-responsibility proportionality defects |
 | Explicit Risk | `NL-A-*`, `NL-B-*`, `NR-O-*`, `NR-S-*` | Risk Explicit | Explicit Risk classification |
 | Attack Surface | `AS-*` | Relevance | Security impact mapping |
 | Behavioral Failure Mode | `FM-*` | Relevance | Tool-Agent quality diagnostic mapping |
@@ -483,8 +486,8 @@ SanityOps employs multiple grading models for distinct purposes. They answer dif
 
 | Grade Code | Formal Name | Question Answered | Primary Source |
 | --- | --- | --- | --- |
-| `AC-L` | Agent Complexity Level | How complex is the Agent's structure, collaboration pattern, and execution form? | Inspect Prompt, Inspect Cross |
-| `OR-L` | Operation Risk Level | How high is the risk of the operations a Skill or Tool can perform? | Inspect Skill, Inspect Tool |
+| `AC-L` | Agent Complexity Level | How complex is the Agent's structure, collaboration pattern, and execution form? | Inspect Prompt, Inspect Cross, Inspect Permission |
+| `OR-L` | Operation Risk Level | How high is the risk of the operations a Skill or Tool can perform? | Inspect Skill, Inspect Tool, Inspect Permission |
 | `BI-L` | Business Impact Level | How severe are the business consequences of task failure or incorrect results? | Quality Tool-Agent |
 | `CH-L` | Change Level | What is the scale, impact scope, and regression intensity of the change? | Quality RAG-Agent and subsequent change governance |
 | `P0/P1/P2` | Inspect Defect Disposition Priority | At what priority should discovered Static Defects be addressed? | All Inspect sub-specifications |
@@ -1564,6 +1567,7 @@ closure:
 | Inspect Skill | Objects, Findings, `OR-L`, versioning and evidence | Outputs `QD-S-*` to Relevance |
 | Inspect Tool | Objects, Findings, `OR-L`, versioning and evidence | Outputs `QD-T-*` to Relevance; strong association with Risk / Quality |
 | Inspect Cross | Object relationships, `AC-L`, versioning and evidence | Handles Prompt–Skill–Tool contract and boundary issues |
+| Inspect Permission | Objects, Findings, `OR-L`, `AC-L`, versioning and evidence | Outputs `QD-PM-*` to Relevance; subject to Gate-0 preconditions |
 | Risk Explicit | `S0–S3`, Findings, evidence boundaries | May reference Inspect / Relevance risk signals |
 | Risk Implicit | `A/B/C/D`, dynamic evidence, control boundaries | Consumes Inspect / Relevance validation recommendations; outputs dynamic validation evidence |
 | Quality Tool-Agent | `BI-L`, Baselines, quality evidence | May associate with `FM-*` and Candidate Root Causes |
@@ -1695,4 +1699,4 @@ Only when the common objects, terminology, evidence, and decision boundaries are
 
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  July 2026
+v1.0  ·  September 2026

@@ -58,7 +58,8 @@ SanityOps Six-Subset Framework
 │   ├─ Inspect Prompt ← System Prompt defect inspection
 │   ├─ Inspect Skill ← Skill defect inspection
 │   ├─ Inspect Tool ← Tool Schema defect inspection
-│   └─ Inspect Cross ← Cross-Artifact Consistency inspection
+│   ├─ Inspect Cross ← Cross-Artifact Consistency inspection
+│   └─ Inspect Permission ← Permission-responsibility proportionality inspection (QD-PM)
 │
 ├─ Risk (Risk Scanning)
 │   ├─ Risk Explicit ← Explicit Risk Audit
@@ -116,6 +117,7 @@ SanityOps does not replace FDE judgment, implementation work, observability, IAM
 | **Skill definition audit** | Inspect whether a Skill's trigger conditions, permission declarations, and failure strategies contain logic loopholes | [Inspect Skill](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/skill.md) | 🟢 Defect Inspector |
 | **Tool Schema compliance check** | Verify whether a Tool Schema's parameter constraints and side-effect declarations comply with the specification | [Inspect Tool](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/tool.md) | 🟢 Defect Inspector |
 | **Cross-Artifact Consistency verification** | Verify that authorization, parameters, and contracts are consistent across Prompt–Skill–Tool | [Inspect Cross](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/cross.md) | 🟢 Defect Inspector |
+| **Permission-responsibility proportionality check** | Verify that the authority granted to an Agent is proportionate to its responsibilities | [Inspect Permission](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/permission.md) | 🟢 Defect Inspector |
 | **Explicit Risk Audit** | Audit and quantitatively rate dangerous expressions, scripts, and dangerous authorizations in Logic Artifacts | [Risk Explicit](https://github.com/sanityops-org/sanityops-framework/blob/main/risk/explicit.md) | 🔵 Risk Scanner |
 | **Implicit Risk attack validation** | Simulate complex logic attacks in a Shadow Environment to detect runtime vulnerabilities | [Risk Implicit](https://github.com/sanityops-org/sanityops-framework/blob/main/risk/implicit.md) | 🔵 Risk Scanner |
 | **Tool-Agent reliability assessment** | Evaluate the task success rate of tool-based Agents; establish risk-driven test rigor | [Quality Tool-Agent](https://github.com/sanityops-org/sanityops-framework/blob/main/quality/tool-agent.md) | 🔵 Quality Evaluator |
@@ -139,22 +141,6 @@ SanityOps does not replace FDE judgment, implementation work, observability, IAM
 - ✅ A complete methodology system across Inspect, Risk, Quality, and Relevance
 - ✅ Defect Inspector fully open sourced, with a free CLI
 - ✅ Risk Scanner and Quality Evaluator available as commercial SaaS / self-hosted offerings
-
----
-
-## 🔮 Roadmap & Preview
-
-### Upcoming: SanityOps Framework v2.0 (December 2026)
-
-- **Inspect Permission (Permission Baseline Domain)** — Verifies the authority granted to an Agent is proportionate to its responsibilities
-  - Fifth Inspect subset (QD-PM), extending Prompt / Skill / Tool / Cross
-  - [Read Permission Preview](/inspect/permission.html)
-
-### Research Directions
-
-- More comprehensive governance of the enterprise AI ecosystem
-
-> Preview is how SanityOps shares upcoming research directions and version plans with the community. Some entries are exploratory directions, while others are already-formed framework methodologies — Permission is the first Inspect subset previewed here.
 
 ---
 

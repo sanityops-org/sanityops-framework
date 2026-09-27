@@ -6,7 +6,7 @@
 
 **Version**: v1.0
 
-**Release Date**: July 2026
+**Release Date**: September 2026
 
 **Maintainer**: SanityOps Inspect Working Group
 
@@ -118,7 +118,8 @@ SanityOps Six-Subset Framework
 │   ├─ Inspect Tool ← Tool Schema defect inspection
 │   ├─ Inspect Prompt ← System Prompt defect inspection ← You are here
 │   ├─ Inspect Skill ← Skill defect inspection
-│   └─ Inspect Cross ← Cross-Artifact defect inspection
+│   ├─ Inspect Cross ← Cross-Artifact defect inspection
+│   └─ Inspect Permission ← Permission-responsibility proportionality inspection (QD-PM)
 │
 ├─ Risk (Risk Scanning)
 │   ├─ Risk Explicit ← Explicit Logic Artifact risk detection

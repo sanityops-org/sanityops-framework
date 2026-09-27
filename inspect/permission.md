@@ -2,11 +2,9 @@
 
 # Inspect Permission Governance Specification
 
-(Permission Baseline Domain)
-
 ---
 
-**Version**: v1.1
+**Version**: v1.0
 
 **Release Date**: September 2026
 
@@ -18,7 +16,7 @@
 
 > **Note:**
 >
-> Although the Permission subset (Inspect Permission Governance Specification, Permission Baseline Domain) has already reached a mature version (v1.1), it has not yet been integrated with the other SanityOps subsets. Its official release is therefore deferred and will be released together with SanityOps Framework v2.0.
+> The Permission subset (Inspect Permission Governance Specification) is the fifth subset of the Inspect dimension, integrated with the other SanityOps subsets as of Framework v1.0.
 
 ---
 
@@ -28,7 +26,7 @@
 
 #### 0.1.1 Position of This Subset Within the Framework
 
-The Inspect Permission Governance Specification (Permission Baseline Domain) (prefix `QD-PM`) is the **fifth subset of the Inspect dimension** in the SanityOps Framework, alongside existing Prompt (`QD-P`), Skill (`QD-S`), Tool (`QD-T`), and Cross (`QD-PS` / `QD-PT` / `QD-ST`).
+The Inspect Permission Governance Specification (prefix `QD-PM`) is the **fifth subset of the Inspect dimension** in the SanityOps Framework, alongside existing Prompt (`QD-P`), Skill (`QD-S`), Tool (`QD-T`), and Cross (`QD-PS` / `QD-PT` / `QD-ST`).
 
 The other four subsets answer **"whether Logic Artifacts are written correctly and consistent with each other"**; this subset answers a separate question:
 
@@ -177,8 +175,8 @@ All risk insights of this subset are grouped autonomously according to the relat
 
 | Item    | Value                                                          |
 | ---- | ---------------------------------------------------------- |
-| Document Name | SanityOps Framework — Inspect Permission Governance Specification (Permission Baseline Domain)        |
-| Version   | v1.1                                                       |
+| Document Name | SanityOps Framework — Inspect Permission Governance Specification        |
+| Version   | v1.0                                                       |
 | Dimension | Inspect                                                    |
 | Numbering Prefix | `QD-PM`                                                    |
 | Dependencies | Core v1.0 (leveling model, state terminology, evidence requirements); Inspect v1.0 (conventions, scoring isomorphism, Cross inspection relationships) |
@@ -724,6 +722,651 @@ First three are unidirectional dependencies, order cannot be swapped. §2.5 hori
 4. **§2.2.5 parameterized tool routing target** — Parameterized tools "operation objects determined by actual arguments", current §2.5.1 priority 2 routes to blocking points 3.3 / 4.8; but 3.3's determination object is "replacing specific operation authorization with role or identity", 4.8 is "permissions introduced via external protocols or external services", neither characterizes "non-closed set" this form. Whether to add dedicated check item or routing, pending arbitration.
 
 ---
+## Part III QD-PM-1 Permission Alignment
+
+### 3.1 Inspection Relationship Explained
+
+#### 3.1.1 This Group's Inspection Relationship
+
+The Permission Alignment group inspects a **unidirectional explanatory relationship**:
+
+```
+Responsibility Baseline (from System Prompt / Skill declaration)
+        ↓  explains
+Permission Item (from Skill capability declaration / Tool Schema operation semantics)
+```
+
+For each permission item, the inspector must be able to locate **a specific responsibility statement** in the responsibility baseline to explain "why this permission exists." Conversely, for each responsibility in the baseline that requires external operations, the corresponding permission item must be locatable.
+
+This differs from Cross in relationship form: Cross inspects **Artifact A statement ↔ Artifact B statement** bidirectional consistency; this group inspects **permission → responsibility** explainability. The two have overlapping data sources but non-intersecting determination structures.
+
+#### 3.1.2 Risk Surface Derivation for This Group
+
+Risks introduced by the Agent at the "alignment" level can be exhaustively enumerated by the set relationship between permissions and responsibilities:
+
+| Set Relationship | Risk Form | Check Item Required |
+| ---------------- | --------- | ------------------- |
+| Permission ∈ responsibility-required | Normal | No |
+| Permission ∉ responsibility-required, and unrelated to responsibility domain | **Irrelevant Permission** (caused by reusing generic Skill, reserving future functionality) | Yes |
+| Permission ∉ responsibility-required, but related to responsibility domain | **Excessive Permission** (hardest to determine, most common) | Yes |
+| Responsibility-required ∉ permission | **Insufficient Permission** (causes inevitable failure or inevitable circumvention) | Yes |
+| Responsibility baseline itself undeterminable | Cannot determine (Gate-0 already intercepts G0-3 absence scenarios, but "exists but vague" still slips through) | Yes |
+| Multiple permissions individually explainable, but combined exceed responsibility | **Aggregate Overreach** | Yes |
+| Permission action type not identified (read/write/delete/exfiltrate conflated) | Determination prerequisite missing | Yes |
+
+From this, **7 check items** are derived for this group.
+
+---
+
+### 3.2 Check Item Details
+
+#### **QD-PM-1.1　Permission exists that cannot be explained by responsibility baseline**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | A permission item cannot locate any statement in the responsibility baseline that explains its business purpose |
+| **Determination Basis** | Must provide "scope of responsibility statements searched", not merely claim "cannot find" |
+| **Applicability (AC-L)** | Applicable to all levels |
+| **Severity Level (OR-L)** | Permission corresponds to operation `OR-L1` → P2; `OR-L2` → P1; `OR-L3` → P0 |
+| **Typical Cause** | Reusing generic Skill template; reserving permissions for future functionality |
+
+> **Determination Discipline**: The conclusion of this item is "cannot explain", not "definitely harmful." The inspection report must state "failed to locate explanatory basis in responsibility baseline"; the remediation step decides whether to remove the permission or supplement the responsibility declaration.
+
+#### **QD-PM-1.2　Permission related to responsibility domain but exceeds responsibility requirements**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | Permission falls within the business domain of the responsibility, but the responsibility baseline only requires a smaller operation set |
+| **Example Form** | Responsibility is "query order status", permission is "all operations on order object" |
+| **Applicability** | Applicable to all levels |
+| **Severity Level** | Based on `OR-L`; if exceeded portion contains write/delete/exfiltrate, directly rated by that operation's `OR-L` |
+
+Distinction from 1.1: 1.1 is **domain-unrelated** (order Agent holds personnel data permission), 1.2 is **intra-domain excessive width**. The two have different causes and remediation paths, not merged.
+
+#### **QD-PM-1.3　Operation required by responsibility lacks corresponding permission**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | Responsibility baseline explicitly requires external operation, but no corresponding permission exists in Skill / Tool |
+| **Consequence** | Agent necessarily fails on this path, or LLM circumvents implementation using other permissions |
+| **Applicability** | Applicable to all levels |
+| **Severity Level** | If circumventable path exists (i.e., Agent can achieve same effect with other permissions), rated by **circumvent path permission's** `OR-L`; otherwise rated `OR-L1` as P2 |
+
+> **Why "insufficient" is also a permission defect**: Insufficient permission is not safe. It transfers the "responsibility—permission" gap to the LLM, and the LLM's typical response is to seek alternative paths, often using coarser permissions to accomplish narrower tasks.
+
+#### **QD-PM-1.4　Responsibility baseline statement is vague, insufficient to support proportionality determination**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | Responsibility statement exists but uses boundary-less wording ("assist with handling related matters", "may perform operations when necessary", etc.), making any permission "explainable" |
+| **Relationship with Gate-0** | Gate-0's G0-3 only verifies whether responsibility boundary statements **exist and are locatable**; this item verifies whether they **are discriminative** |
+| **Applicability** | Applicable to all levels |
+| **Severity Level** | Determined by the highest `OR-L` permission held by this Agent: highest is `OR-L3` → P0; `OR-L2` → P1; `OR-L1` → P2 |
+
+This item is this group's **meta-check item**: when it hits, the confidence of this group's other check item conclusions decreases, and the report must annotate this accordingly.
+
+#### **QD-PM-1.5　Permission action type not explicitly identified**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | Tool Schema's `name` / `description` / parameter description cannot determine whether this operation is read, write, delete, or external send |
+| **Relationship with Gate-0** | G0-4 verifies field **completeness**; this item verifies whether complete fields **actually express operation semantics** |
+| **Applicability** | Applicable to all levels |
+| **Severity Level** | Always P1; if this Tool acts on production environment or sensitive data (`OR-L3`) then P0 |
+
+Determination cannot rely on literal good faith of Tool names. Names like `sync_data`, `process_record`, `maintenance` often implicitly contain write or delete semantics; the Inspect Skill subset has already documented such defect forms where "name and description imply contradiction".
+
+#### **QD-PM-1.6　Permission combination produces aggregate capability exceeding responsibility**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | Each permission individually can be explained by responsibility, but combined can achieve effects not authorized by responsibility baseline |
+| **Typical Chain** | Read + export + exfiltrate = data exfiltration chain; read + write = self-tampering; query + delete = trace erasure |
+| **Applicability** | `AC-L2` and above (`AC-L1` usually does not have multi-Tool combination form; if `AC-L1` does have multiple Tools, then applicable) |
+| **Severity Level** | Rated by `OR-L` of achievable effect after aggregation, **not by individual permission's `OR-L`** |
+
+> **Key Rule**: Aggregate risk rating baseline is **combined effect** not constituent parts. Three read-only permissions each at `OR-L1`, if combined into a data exfiltration chain, rated as `OR-L3` → P0.
+
+> **Division of Labor with Other Items**: This item judges "granted a combination that should not be granted"; 3.6 judges "splitting method forces runtime combination"; the two have same determination object but opposite causes, when both hit simultaneously follow this item for establishment, 3.6 marked `INHERITED` (see 9.6).
+
+#### **QD-PM-1.7　Permission-Responsibility mapping table incomplete**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | In the permission-responsibility mapping table produced by inspection, there exists permission items with no determination given (neither marked "proportional" nor "excessive/insufficient") |
+| **Nature** | Process completeness check item, ensuring this group has no silent omissions |
+| **Applicability** | Applicable to all levels |
+| **Severity Level** | Always P1 (when uncovered item involves `OR-L3` operation, P0) |
+
+---
+
+### 3.3 Localization and Remediation Suggestions
+
+#### 3.3.1 Localization Table Format
+
+Following the Inspect layered localization table format, but because this group's relationship is "permission → responsibility", the localization table is divided into **permission side** and **responsibility side**:
+
+**Localization Table Example** (QD-PM-1.2 permission exceeds responsibility requirements):
+
+| Level | Position |
+| ----- | -------- |
+| **Group** | QD-PM-1 (Permission Alignment) |
+| **Permission Side** | Tool Schema → `order_admin` → `description` declared executable operation set |
+| **Responsibility Side** | System Prompt → role definition section → "responsible for answering customer order status queries" |
+| **Related Upstream Item** | QD-ST-3.6 (if Cross already hit same location, mark `INHERITED`) |
+| **Rating Basis** | Exceeded portion contains order deletion, belongs to `OR-L3` → P0 |
+
+#### 3.3.2 Remediation Paths
+
+Each defect type in this group has **two directions** of remediation; the inspection report must provide both, leaving the decision to the architect:
+
+| Defect | Direction A (Restrict Permission) | Direction B (Modify Responsibility) |
+| ------ | --------------------------------- | ----------------------------------- |
+| 1.1 Unexplainable | Remove this permission | If responsibility indeed requires, supplement responsibility statement to make it explainable |
+| 1.2 Excessive | Narrow to responsibility-required subset | If responsibility has indeed expanded, update responsibility baseline and re-run this group |
+| 1.3 Insufficient | Supplement missing permissions (minimum set) | Narrow responsibility declaration, remove unsupported commitments |
+| 1.4 Vague responsibility | — | Rewrite responsibility statement as discriminative expression (enumerate allowed operation types and object scope) |
+| 1.5 Unclear semantics | Rewrite Tool `description`, explicitly declare action type and side effects | — |
+| 1.6 Aggregate Overreach | Split Agent, or remove one link in chain | If combination is indeed responsibility-required, must explicitly declare that combination's purpose in responsibility baseline |
+| 1.7 Incomplete mapping | — | Complete determination and re-issue this group's conclusion |
+
+> **Remediation Discipline**: Direction B is not "relaxing standards." Expanding responsibility declarations simultaneously expands the determination baseline for all subsequent groups (scope, granularity, propagation, boundary), and may trigger `OR-L` re-rating. When choosing Direction B, this subset must be re-run in its entirety; partial reuse of old conclusions is prohibited.
+
+---
+
+### 3.4 Summary
+
+| Item | Content |
+| ---- | ------- |
+| **Group No. / Name** | QD-PM-1　Permission Alignment |
+| **Core Question** | Can each permission be explained by responsibility baseline; does each responsibility have permission support |
+| **Check Item Count** | 7 (1.1 irrelevant / 1.2 excessive / 1.3 insufficient / 1.4 vague responsibility / 1.5 unclear semantics / 1.6 aggregate / 1.7 mapping completeness) |
+| **Meta-Check Items** | 1.4, 1.5, 1.7 — three items affecting confidence of this group's remaining item determinations |
+| **AC-L Sensitive Item** | Only 1.6 (`AC-L2`+) |
+| **Mandatory Output** | Permission-Responsibility Mapping Table |
+
+---
+
+## Part IV QD-PM-2 Permission Scope
+
+### 4.1 Inspection Relationship Explained
+
+#### 4.1.1 This Group's Division of Labor with QD-PM-1
+
+The Alignment group answers "**should this permission exist**"; the Scope group answers "**on which objects should this permission act**."
+
+Scope group inspection is only performed on permissions **already determined as proportional**. If a permission has already been determined as excessive in 1.1 / 1.2, it no longer enters scope inspection (avoiding issuing scope conclusions for a permission that will be removed).
+
+#### 4.1.2 Dimensional Decomposition of Scope
+
+A permission's scope of action can be described along four orthogonal axes, each corresponding to an independent loss-of-control form:
+
+| Axis | Meaning | Loss-of-Control Form |
+| ---- | ------- | -------------------- |
+| **Resource Axis** | Which object instances can be acted upon | Wildcard, full table, no ownership constraint |
+| **Data Axis** | Which fields can be read/written | Returns all fields, including sensitive fields unrelated to responsibility |
+| **Environment Axis** | In which environments can be executed | No distinction between dev/test/prod |
+| **Condition Axis** | Under what prerequisites can be executed | No time, frequency, or status preconditions |
+
+All four axes are **implicit scopes not automatically covered by the responsibility baseline** — a responsibility statement saying "query orders" usually does not specify "only current user's orders, only non-sensitive fields, only production read-only, only during work hours." This is precisely why the Scope group must exist independently.
+
+From this, **8 check items** are derived for this group.
+
+---
+
+### 4.2 Check Item Details
+
+#### **QD-PM-2.1　Resource access scope not restricted**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | Permission does not declare set of resources it can act upon, or uses wildcard expressions ("all", "any", "related") |
+| **Applicability** | Applicable to all levels |
+| **Severity Level** | Read-only `OR-L1` → P1; writable `OR-L2` → P1; production write/delete `OR-L3` → P0 |
+
+#### **QD-PM-2.2　Missing ownership or affiliation constraint**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | Permission can access same-type resources across subjects, without declaring constraint "limited to requester themselves / this tenant / this department" |
+| **Risk Nature** | Lateral overreach. This is the typical gap between resource-side permission control and responsibility-side permission control — resource permission allows reading this table, responsibility permission only allows reading this user's rows |
+| **Applicability** | Applicable to all levels |
+| **Severity Level** | When involving personal data, financial data, or cross-tenant data, rated `OR-L3` → P0; otherwise P1 |
+
+> **Scope Three Items Division of Labor and Deduplication**: 2.1 judges "whether resource set is restricted", 2.2 judges "whether bound by affiliation constraint", 2.8 judges "whether that constraint can be expressed by the tool"; the three can simultaneously hit on the same permission item, but are counted once per check item number, not penalized repeatedly for the same fact.
+
+#### **QD-PM-2.3　Field-level scope not restricted**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | Reads or returns all fields, without excluding sensitive fields not needed by responsibility |
+| **Applicability** | Applicable to all levels (whenever structured data access is involved) |
+| **Severity Level** | Contains sensitive fields (credentials, identity identifiers, financial, health) → P0; only contains redundant non-sensitive fields → P2 |
+
+> **Distinction from 1.2**: 1.2 judges "this permission's operation set is too wide", 2.3 judges "operation set is correct but returned content is too wide". The former is verb too wide, the latter is object too wide.
+
+#### **QD-PM-2.4　Environment boundary not declared**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | Workpiece does not declare environment applicable to this permission, or does not explicitly prohibit executing high-risk operations in production environment |
+| **Applicability** | Applicable to all levels |
+| **Severity Level** | Permission contains write or delete → P0; read-only → P1 |
+
+The Inspect Skill subset has already listed "environment boundary not declared" as a P0-level defect form; this item inherits the same qualitative determination from the permission perspective, but severity is now driven by `OR-L`.
+
+#### **QD-PM-2.5　No operation magnitude upper limit**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | Batch operation permission does not declare single-execution object quantity upper limit or batch prohibition |
+| **Risk Nature** | Single write and ten-thousand write may be equally "allowed" by responsibility, but impact scope differs by several orders of magnitude |
+| **Applicability** | `AC-L2` and above (requires batch operation form, otherwise `N/A`) |
+| **Severity Level** | Batch write/delete → P0; batch read → P1 |
+
+#### **QD-PM-2.6　No time or time-period constraint**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | High-risk permission does not declare executable time window, or does not declare credential/authorization validity period requirement |
+| **Applicability** | Only applicable when responsibility baseline itself contains time-period semantics (e.g., "process approvals during work hours") or the permission is `OR-L3`; otherwise mark `N/A` |
+| **Severity Level** | `OR-L3` → P1; `OR-L2` → P2 |
+| **Scope Note** | This item only checks whether **declared** in workpiece; does not check token expiration engineering implementation (belongs to deployment layer, see 0.1.4) |
+
+#### **QD-PM-2.7　No frequency or call count constraint**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | Permission that can repeatedly trigger side effects does not declare frequency upper limit or idempotency requirement |
+| **Risk Nature** | LLM-driven retry loops can amplify a single acceptable operation into continuous side effects |
+| **Applicability** | Only applicable to permissions with side effects (read-only permissions mark `N/A`) |
+| **Severity Level** | Irreversible operation `OR-L3` → P0; reversible write `OR-L2` → P1 |
+
+#### **QD-PM-2.8　Declared scope constraint inconsistent with actually reachable scope**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | Workpiece declares scope limitation (e.g., "only query my own orders"), but Tool parameter design cannot express that constraint (e.g., no user identifier parameter, or that parameter can be freely filled by the model) |
+| **Nature** | Gap between declaration and executability, belongs to **Constraint Failure** |
+| **Applicability** | Applicable to all levels |
+| **Severity Level** | Failed constraint protects `OR-L3` assets → P0; otherwise P1 |
+
+> This item is the Scope group's **verification item**: 2.1–2.7 check "whether constraint exists", 2.8 checks "whether existing constraint can actually take effect". Without this item, the Scope group would be systematically circumvented by the practice of "writing one restriction sentence passes".
+
+---
+
+### 4.3 Localization and Remediation Suggestions
+
+#### 4.3.1 Localization Table Example (QD-PM-2.3 field-level scope not restricted)
+
+| Level | Position |
+| ----- | -------- |
+| **Group** | QD-PM-2 (Permission Scope) |
+| **Permission Side** | Tool Schema → `get_customer` → returned field description (no field whitelist declared) |
+| **Responsibility Side** | System Prompt → "provide customer contact status to customer service representative" |
+| **Scope Axis** | Data Axis |
+| **Rating Basis** | Returned fields contain ID number and billing information, belongs to sensitive data → P0 |
+
+#### 4.3.2 Remediation Paths
+
+| Axis | Remediation Action |
+| ---- | ------------------ |
+| Resource Axis | Replace wildcard with enumeration or determinable condition; supplement affiliation constraint and provide field in Tool parameters to carry that constraint |
+| Data Axis | Declare field whitelist; sensitive fields changed to desensitized return or removed from return set |
+| Environment Axis | Explicitly declare applicable environment; for production environment write/delete operations supplement prohibition statement or approval prerequisite |
+| Condition Axis | Supplement magnitude upper limit, time-period window, frequency upper limit, and idempotency requirements |
+| Constraint Failure (2.8) | Modify Tool parameter design so constraint can be expressed; constraint parameters that should not be freely filled by model must be changed to injected by caller |
+
+> **Remediation Priority Rule**: When the same permission hits on multiple axes, **first fix 2.8 (Constraint Failure), then fix remaining axes**. Supplementing scope declarations when constraints cannot take effect only increases documentation compliance without changing actual risk surface.
+
+---
+
+### 4.4 Summary
+
+| Item | Content |
+| ---- | ------- |
+| **Group No. / Name** | QD-PM-2　Permission Scope |
+| **Core Question** | For permissions already determined proportional, whether their scope of action is narrowed to responsibility requirements |
+| **Check Item Count** | 8 (2.1 resource / 2.2 affiliation / 2.3 fields / 2.4 environment / 2.5 magnitude / 2.6 time / 2.7 frequency / 2.8 constraint failure) |
+| **Four Axes** | Resource Axis, Data Axis, Environment Axis, Condition Axis |
+| **High N/A Items** | 2.5 (requires batch form), 2.6 (requires time-period semantics or `OR-L3`), 2.7 (requires side effects) |
+| **Prerequisite Dependency** | Only executed on permissions determined "proportional" by QD-PM-1 |
+
+---
+
+## Part V QD-PM-3 Permission Granularity
+
+### 5.1 Inspection Relationship Explained
+
+#### 5.1.1 Difference Between Granularity and Scope
+
+This is the pair of concepts most easily confused in this subset; they must be strictly distinguished:
+
+| | Scope (QD-PM-2) | Granularity (QD-PM-3) |
+| --- | --------------- | --------------------- |
+| Question | Where does this permission **act** | Into how many pieces is this permission **split** |
+| Counter-example | "Can access all orders" | "Order management" one permission simultaneously contains query, modify, delete |
+| Fix | Narrow acting object set | Split into multiple independently grantable permissions |
+| One sentence | Boundary problem | Structure problem |
+
+A permission can have extremely narrow scope but extremely coarse granularity ("all operations on order #123"), or extremely fine granularity but extremely wide scope ("read-only query on all orders"). The two are independent groups.
+
+#### 5.1.2 Derivation of Granularity Loss-of-Control Forms
+
+| Form | Description | Check Item Required |
+| ---- | ----------- | ------------------- |
+| Action not split | Read/write/delete bundled in one permission | Yes |
+| Risk level mixed | High-risk and low-risk operations share one permission | Yes |
+| Role replacing permission | Granting "administrator" rather than specific operations | Yes |
+| High-risk operation lacks independent control | Irreversible operations not separated from routine operations with confirmation/approval | Yes |
+| Granularity coarser than responsibility statement | Responsibility already distinguishes scenarios, but permission does not follow suit | Yes |
+| Granularity too fine causes circumvention | Split too finely, Agent forced to combine equivalent coarse permission | Yes |
+
+From this, **6 check items** are derived for this group.
+
+---
+
+### 5.2 Check Item Details
+
+#### **QD-PM-3.1　Read, write, delete permissions not distinguished**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | Same permission item simultaneously covers read and modify (or delete) semantics, cannot grant one individually |
+| **Determination Signal** | Name or description uses covering verbs such as "manage", "maintain", "process", "synchronize", without enumerating specific operations |
+| **Applicability** | Applicable to all levels |
+| **Severity Level** | Bundle contains delete or production write (`OR-L3`) → P0; contains reversible write (`OR-L2`) → P1 |
+
+The Inspect Skill subset has already listed "read/write/delete permissions not distinguished" as a P0 defect, and noted that wording like `maintenance`, `fixes` implies modifiable data. This item uses the same identification signal from the permission perspective, with severity driven by `OR-L`.
+
+#### **QD-PM-3.2　Operations of different risk levels share same permission item**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | In the operation set covered by one permission, highest `OR-L` and lowest `OR-L` differ by more than one level |
+| **Consequence** | This permission's actual risk is determined by the highest item, but is usually understood and approved by the lowest item |
+| **Applicability** | Applicable to all levels |
+| **Severity Level** | Highest item is `OR-L3` → P0; highest item is `OR-L2` → P1 |
+
+> **Rating Baseline Rule**: For one permission with excessively coarse granularity, its `OR-L` is always taken as **the highest-risk operation contained**, not average, not primary use.
+
+> **Division of Labor with 3.1**: 3.1 judges "whether action types (read / write / delete) are distinguished"; this item judges "whether operations within same permission item are layered by risk"; the former is type not separated, the latter is risk not separated.
+
+#### **QD-PM-3.3　Role or identity replaces specific operation authorization**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | Workpiece uses identity expressions such as "has administrator permissions", "runs as operations identity", "has full access" in place of operation list |
+| **Risk Nature** | The permission set of an identity is defined outside the workpiece and changes over time, causing static inspection to lose its determination object, and making responsibility-permission mapping unestablishable |
+| **Applicability** | Applicable to all levels |
+| **Severity Level** | Identity can achieve `OR-L3` operation → P0; otherwise P1 |
+
+When this item hits, this permission item **cannot produce valid determinations** in QD-PM-1, QD-PM-2, and must be annotated in the report as "not evaluated due to granularity undeterminable", not defaulting to proportional.
+
+#### **QD-PM-3.4　High-risk and irreversible operations not separated from routine operations**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | Irreversible operations (delete, fund transfer, external publishing, production deployment) share the same authorization path with routine operations, not separately identified and bound with confirmation or approval requirements |
+| **Applicability** | Only applicable when this Agent holds irreversible operation permissions; otherwise `N/A` |
+| **Severity Level** | Always P0 (irreversible operations are `OR-L3` by definition) |
+
+> This item complements Scope group 2.7 (frequency constraint): 2.7 restricts repeated execution, 3.4 requires first execution to be independently controlled.
+
+#### **QD-PM-3.5　Permission granularity coarser than responsibility baseline differentiation**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | Responsibility baseline already distinguishes scenarios or conditions ("only modify address after customer confirmation"), but permission does not follow suit to split, causing conditions to lose their carrier object |
+| **Applicability** | Only applicable when responsibility baseline contains conditional authorization statements; otherwise `N/A` |
+| **Severity Level** | Condition-protected operation `OR-L3` → P0; `OR-L2` → P1 |
+
+This item is the connection point between Granularity group and Alignment group: when responsibility is finer than permission, the gap is equivalent to **unconditional excessive permission**.
+
+#### **QD-PM-3.6　Granularity too fine causes equivalent coarse permission Combination Bypass**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | Permissions are split to the extent that Agent cannot complete routine responsibilities with a single permission, forcing it to combine multiple permissions, and the combination result is equivalent to a coarse permission that was not granted |
+| **Applicability** | `AC-L2` and above |
+| **Severity Level** | Combined equivalent effect `OR-L3` → P0; `OR-L2` → P1; `OR-L1` → P2 |
+
+> **Significance of this item**: Granularity refinement is not monotonically beneficial. Excessive refinement shifts authorization decisions from "at grant time" to "at runtime combined by LLM", substantially weakening controllability. This item and QD-PM-1.6 (Aggregate Overreach) have the same determination object but opposite causes — 1.6 stems from granting a combination that should not be granted, 3.6 stems from splitting method forcing Agent to self-combine. When both hit simultaneously, follow 1.6 for establishment, 3.6 marked `INHERITED`.
+
+---
+
+### 5.3 Localization and Remediation Suggestions
+
+#### 5.3.1 Localization Table Example (QD-PM-3.1 read/write/delete not distinguished)
+
+| Level | Position |
+| ----- | -------- |
+| **Group** | QD-PM-3 (Permission Granularity) |
+| **Permission Side** | Tool Schema → `db_maintenance` → `name` and `description` |
+| **Responsibility Side** | System Prompt → "troubleshoot and report database anomalies" |
+| **Bundled Operation Set** | Query (`OR-L1`), Update (`OR-L2`), Delete (`OR-L3`) |
+| **Rating Basis** | Highest item is production delete → P0 |
+| **Related Upstream Item** | QD-S-5.1 (if Skill subset already hit, mark `INHERITED`) |
+
+#### 5.3.2 Remediation Paths
+
+| Defect | Remediation Action |
+| ------ | ---------------- |
+| 3.1 Action bundling | Split by action type into independent permission items, re-run QD-PM-1 determination for each |
+| 3.2 Risk mixing | Split by `OR-L` layering, high `OR-L` items independently granted and independently approved |
+| 3.3 Role replacement | Expand identity into explicit operation list written into workpiece; if cannot expand, this Agent may not enter Permission evaluation |
+| 3.4 High-risk not separated | Establish independent permission item for irreversible operations, bind with secondary confirmation or manual approval prerequisite |
+| 3.5 Granularity coarser than responsibility | Split permissions by responsibility's condition dimension, making each condition correspond to one independently grantable permission |
+| 3.6 Too fine causing circumvention | Provide one scope-restricted composite permission for routine responsibility paths, replacing runtime combination |
+
+> **Remediation Order Rule**: 3.3 takes priority over this group's remaining items. Before identity expressions are expanded into operation lists, 3.1, 3.2, 3.4, 3.5 have no determination object, and their "pass" conclusions are invalid.
+
+> **Re-run Requirement After Splitting**: Any item remediation in this group changes the permission item set. After remediation, QD-PM-1 (Alignment) and QD-PM-2 (Scope) must be re-run on **the new permission item set**; conclusions from before splitting must not be reused.
+
+---
+
+### 5.4 Summary
+
+| Item | Content |
+| ---- | ------- |
+| **Group No. / Name** | QD-PM-3　Permission Granularity |
+| **Core Question** | Whether permissions are split to a granularity that can be independently granted and independently approved |
+| **Check Item Count** | 6 (3.1 action bundling / 3.2 risk mixing / 3.3 role replacement / 3.4 high-risk not separated / 3.5 coarser than responsibility / 3.6 too fine circumvention) |
+| **Distinction from Scope Group** | Scope = boundary problem; Granularity = structure problem |
+| **Blocking Item** | When 3.3 hits, this permission item's determinations in groups 1, 2 are invalid |
+| **Bidirectional Principle** | Granularity can be both too coarse (3.1–3.5) and too fine (3.6), both are defects |
+| **Re-run Requirement** | After granularity remediation, QD-PM-1 and QD-PM-2 must be re-run |
+
+---
+
+## Part VI QD-PM-4 Permission Propagation
+
+### 6.1 Inspection Relationship Explained
+
+#### 6.1.1 This Group's Inspection Relationship
+
+The first three groups inspect **a static permission point**; this group inspects **deformation when permission moves along a chain**.
+
+Propagation occurs on two chains:
+
+```
+Chain A (Vertical · Intra-workpiece)
+  System Prompt responsibility constraint
+        ↓ whether inherited
+  Skill capability declaration
+        ↓ whether inherited
+  Tool Schema parameters and constraints
+
+Chain B (Horizontal · Inter-Agent)
+  Main Agent permission set
+        ↓ delegation
+  Sub-Agent / called Agent permission set
+```
+
+This group's determination principle has only one:
+
+> **When permission propagates along a chain, it can only narrow or hold steady, never expand.**
+
+#### 6.1.2 Boundary with Cross Subset
+
+Chain A overlaps with Cross's constraint propagation inspection in data sources. This group unifies two types of problems under the "propagation" relationship: first, "constraint propagation" (Prompt→Skill→Tool vertical consistency), second, "permission delegation" (whether permission is narrowed during delegation, whether privilege escalation exists, whether delegation chain is traceable, whether circular delegation exists).
+
+Their division of labor in this framework:
+
+| | Cross (Constraint Propagation) | Permission (Permission Propagation) |
+| ---- | ------------------------------ | ----------------------------------- |
+| Determination | Whether downstream **mentions** upstream constraint | Whether downstream power **is not greater than** upstream power |
+| Pass Condition | Statement consistency | Power monotonic narrowing |
+| Blind Spot | When all three layers consistently relax, all pass | Can detect |
+
+Per Rule 1.5.4, when same location hits simultaneously, Cross takes priority, Permission marks `INHERITED`.
+
+#### 6.1.3 Risk Surface Derivation
+
+| Form | Chain | Check Item Required |
+| ---- | ----- | ------------------- |
+| Upstream constraint disappears downstream | A | Yes |
+| Downstream power greater than upstream authorization | A | Yes |
+| Permission not narrowed during delegation | B | Yes |
+| Delegation produces privilege escalation | B | Yes |
+| Delegation chain untraceable | B | Yes |
+| Circular or infinite delegation | B | Yes |
+| Proxy Confusion (caller identity and executor identity misaligned) | B | Yes |
+| External workpiece (e.g., MCP Server) introduced permissions not incorporated into this Agent's permission set | A/B | Yes |
+
+Delegation chain traceability, circular delegation, privilege escalation, Confused Deputy, and MCP permission consistency risks, in this framework are grouped under the unified "propagation" relationship, no longer maintained as parallel dimensions.
+
+From this, **8 check items** are derived for this group.
+
+---
+
+### 6.2 Check Item Details
+
+#### **QD-PM-4.1　Upstream permission constraint not inherited downstream**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | Permission constraints declared in System Prompt or Skill (prohibitions, conditions, scope limitations) have no corresponding carrier in downstream Skill / Tool declarations and parameter design |
+| **Applicability** | Applicable to all levels |
+| **Severity Level** | Lost constraint protects `OR-L3` operation → P0; `OR-L2` → P1; `OR-L1` → P2 |
+
+> Difference from Scope group 2.8 (Constraint Failure): 2.8 is **intra-layer** declaration mismatch with parameter design; 4.1 is **cross-layer** constraint disappearance.
+
+#### **QD-PM-4.2　Downstream declared power exceeds upstream authorization**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | Tool executable operations exceed Skill declared scope, or Skill declared capabilities exceed Prompt authorization scope |
+| **Relationship with Cross** | If Cross already established item for same location, mark `INHERITED`; if Cross did not hit because all three layers are statement-consistent, Permission independently establishes item |
+| **Applicability** | Applicable to all levels |
+| **Severity Level** | Determined by exceeded portion's `OR-L` |
+
+#### **QD-PM-4.3　Permission not narrowed when delegating task**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | When main Agent delegates task to sub-Agent, passes complete permission set rather than minimum subset required for that task |
+| **Applicability** | `AC-L4` (multi-Agent collaboration form); when delegation form not present, mark `N/A` |
+| **Severity Level** | Passed set contains `OR-L3` operation → P0; `OR-L2` → P1 |
+
+> **Determination Baseline**: The reference for narrowing is **the delegated task**, not the main Agent's responsibility baseline. The sub-Agent undertakes a slice of the task, and its permission ceiling should be determined by that slice.
+
+#### **QD-PM-4.4　Privilege escalation exists in delegation chain**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | Sub-Agent or called Agent holds permissions that main Agent does not possess, making delegation a channel to bypass main Agent's permission restrictions |
+| **Risk Nature** | This is the most severe form in the Propagation group — it invalidates all narrowing conclusions of the first three groups for the main Agent |
+| **Applicability** | `AC-L4`; otherwise `N/A` |
+| **Severity Level** | Escalated operation `OR-L3` → P0; `OR-L2` → P0 (escalation itself is a structural defect); `OR-L1` → P1 |
+
+#### **QD-PM-4.5　Delegation chain untraceable**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | Workpiece does not declare source identifier and chain information to be passed during delegation, making final operation unable to trace back to initiator and authorization basis |
+| **Applicability** | `AC-L4`; otherwise `N/A` |
+| **Severity Level** | Chain end can reach `OR-L3` operation → P0; otherwise P1 |
+| **Scope Note** | This item checks whether **declared** in workpiece; does not check logging system implementation (belongs to observability layer, see 0.1.4) |
+
+#### **QD-PM-4.6　Delegation relationship does not declare termination condition**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | Workpiece does not declare delegation depth upper limit, or does not prohibit circular delegation (A delegates B, B delegates back to A) |
+| **Consequence** | Permission is repeatedly reinterpreted in the loop, and each hop may lose one layer of constraints |
+| **Applicability** | `AC-L4`; otherwise `N/A` |
+| **Severity Level** | Chain contains side-effect operations → P0; pure read-only chain → P1 |
+
+#### **QD-PM-4.7　Execution identity and request source misaligned (Proxy Confusion)**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | Agent executes operations triggered by external input or downstream request using its own identity (usually higher permissions), and workpiece does not declare that requester's access qualifications for that resource must be verified |
+| **Risk Nature** | Confused deputy problem. Agent's permissions are used as someone else's permissions, and resource-side controls completely fail to identify |
+| **Applicability** | `AC-L2` and above (whenever Agent accepts external input and calls tools on behalf) |
+| **Severity Level** | Can execute `OR-L3` operation on behalf → P0; `OR-L2` → P1 |
+
+This item complements Scope group 2.2 (affiliation constraint): 2.2 requires "limited to requester's resources", 4.7 requires "first confirm who the requester is and whether they are qualified".
+
+#### **QD-PM-4.8　Permissions introduced via external protocol or external service not incorporated into permission set**
+
+| Item | Content |
+| ---- | ------- |
+| **Determination** | Operations executable by Agent through external tool protocols (e.g., MCP Server) or third-party services are not declared in this Agent's workpiece, and thus do not enter QD-PM-1~3 determination scope |
+| **Risk Nature** | Permission set incomplete. Undeclared permissions are not detected as "excessive", because they are not in the inventory at all |
+| **Applicability** | Only applicable when Agent connects to external tool protocol or external service; otherwise `N/A` |
+| **Severity Level** | External-introduced operations contain write/delete/exfiltrate → P0; read-only → P1 |
+| **Boundary Note** | This item only requires **declaring** in workpiece the operation list introduced externally; actual policy configuration on external service side belongs to deployment layer, not within this subset's scope |
+
+> When this item hits, all conclusions of other groups in this subset must be annotated "based on incomplete permission set", until external permissions are supplemented and declared, then re-run.
+
+---
+
+### 6.3 Localization and Remediation Suggestions
+
+#### 6.3.1 Localization Table Example (QD-PM-4.3 delegation not narrowed)
+
+| Level | Position |
+| ----- | -------- |
+| **Group** | QD-PM-4 (Permission Propagation) |
+| **Chain** | Chain B (Inter-Agent) |
+| **Upstream Side** | Main Agent → Skill `dispatch_subtask` → delegation declaration section |
+| **Downstream Side** | Sub-Agent → System Prompt → available tool list |
+| **Propagation Deformation** | Main Agent's full tool set passed as a whole, not trimmed by sub-task |
+| **Rating Basis** | Passed set contains production data write → P0 |
+
+#### 6.3.2 Remediation Paths
+
+| Defect | Remediation Action |
+| ------ | ---------------- |
+| 4.1 Constraint not inherited | Explicitly restate constraint in downstream workpiece, and provide field in Tool parameters to carry that constraint |
+| 4.2 Downstream exceeds upstream | Narrow downstream declaration; if indeed required, must first expand upstream authorization and re-run QD-PM-1 |
+| 4.3 Delegation not narrowed | Define minimum permission subset by sub-task, delegate step by step and trim step by step |
+| 4.4 Privilege escalation | Make sub-Agent permission set a subset of main Agent permission set; if sub-Agent indeed requires higher permissions, must evaluate it as independent Agent separately, not implicitly obtain through delegation chain |
+| 4.5 Chain untraceable | Declare in workpiece that delegation must pass initiator identifier, original task, and authorization basis |
+| 4.6 No termination condition | Declare maximum delegation depth; explicitly prohibit back-reference delegation |
+| 4.7 Proxy Confusion | Declare requester qualification verification as operation prerequisite; high-risk operations require judging by requester qualification rather than Agent identity |
+| 4.8 External permissions not incorporated | Write operation list exposed by external protocol/service into workpiece, re-run QD-PM-1~3 |
+
+> **Remediation Order Rule**: 4.8 takes priority over this group's remaining items, followed by 4.4. When permission set is incomplete or escalation channel exists, narrowing effects of other remediations can all be circumvented.
+
+---
+
+### 6.4 Summary
+
+| Item | Content |
+| ---- | ------- |
+| **Group No. / Name** | QD-PM-4　Permission Propagation |
+| **Core Principle** | Permission along chain can only narrow or hold steady, never expand |
+| **Two Chains** | Chain A (Prompt→Skill→Tool); Chain B (Inter-Agent delegation) |
+| **Check Item Count** | 8 (4.1 constraint not inherited / 4.2 downstream exceeds upstream / 4.3 delegation not narrowed / 4.4 privilege escalation / 4.5 chain untraceable / 4.6 no termination condition / 4.7 Proxy Confusion / 4.8 external permissions not incorporated) |
+| **`AC-L4` Exclusive Items** | 4.3, 4.4, 4.5, 4.6 |
+| **Blocking Item** | 4.8 (when permission set incomplete, all subset conclusions must be annotated) |
+| **Relationship with Cross** | Chain A overlap marked `INHERITED` per 1.5.4 |
+
+---
+
 ## Part VII QD-PM-5 Permission Boundary
 
 ### 7.1 Inspection Relationship Explained
@@ -1111,7 +1754,7 @@ Three Gate-0 conditions each have **corresponding deep inspection items** in thi
 When any Gate-0 condition is not passed, this subset's output **only contains** the following:
 
 ```
-Subset: Inspect Permission Governance Specification (Permission Baseline Domain) (QD-PM)
+Subset: Inspect Permission Governance Specification (QD-PM)
 Execution Status: Not Executed
 Unsatisfied Conditions: G0-2, G0-4
 Blocking Reasons:
@@ -1817,6 +2460,459 @@ Follow Inspect existing scope boundaries:
 
 Extraction layer §2.6 sensitivity classification table serves as evidence generator for severity level (P0/P1/P2) values, applicability boundaries see §2.6.1. Fixed level items (3.4, 5.4, 6.3, 6.5) and aggregate items (1.6, 3.6) not adjusted by this table.
 
+## Appendix A: Complete Inspection Item Index (43 Items)
+
+**Legend**: `✓` = Unconditionally applicable｜`条` = Determined by artifact facts｜`—` = Not applicable｜Blank in the Fixed Level column means the level is determined by `OR-L`
+
+| No. | Name | AC-L1 | AC-L2 | AC-L3 | AC-L4 | Fixed Level | Remarks |
+| -------------------- | ------------------ | --- | --- | --- | --- | ------ | --------------------------- |
+| **QD-PM-1 Permission Alignment (7)** | | | | | | | |
+| 1.1 | Permission that cannot be explained by the Responsibility Baseline | ✓ | ✓ | ✓ | ✓ | | Domain-agnostic |
+| 1.2 | Permission is domain-related but exceeds what is required | ✓ | ✓ | ✓ | ✓ | | Overly broad within domain |
+| 1.3 | Required operations for the duty lack corresponding permissions | ✓ | ✓ | ✓ | ✓ | | Insufficient permission is also a defect |
+| 1.4 | Responsibility Baseline is too vague to support proportionality determination | ✓ | ✓ | ✓ | ✓ | | Meta-check item; corresponds to G0-3 |
+| 1.5 | Action type of permission is not explicitly identified | ✓ | ✓ | ✓ | ✓ | | Meta-check item; corresponds to G0-4 |
+| 1.6 | Permission combination yields aggregate capabilities beyond the duty | 条 | ✓ | ✓ | ✓ | | Level by combination effect (R3) |
+| 1.7 | Permission–Duty mapping table is incomplete | ✓ | ✓ | ✓ | ✓ | | Process completeness item |
+| **QD-PM-2 Permission Scope (8)** | | | | | | | |
+| 2.1 | Resource access scope is not restricted | ✓ | ✓ | ✓ | ✓ | | Resource axis |
+| 2.2 | Ownership or attribution constraint is missing | ✓ | ✓ | ✓ | ✓ | | Resource axis; horizontal privilege escalation |
+| 2.3 | Field-level scope is not restricted | ✓ | ✓ | ✓ | ✓ | | Data axis |
+| 2.4 | Environment boundary is not declared | ✓ | ✓ | ✓ | ✓ | | Environment axis |
+| 2.5 | No operation volume upper limit | 条 | ✓ | ✓ | ✓ | | Condition axis; requires batch form |
+| 2.6 | No time or period constraint | 条 | 条 | 条 | 条 | | Condition axis |
+| 2.7 | No frequency or call count constraint | 条 | 条 | 条 | 条 | | Condition axis; requires side effects |
+| 2.8 | Declared scope constraint inconsistent with actually reachable scope | ✓ | ✓ | ✓ | ✓ | | Verification item; prioritize fixing |
+| **QD-PM-3 Permission Granularity (6)** | | | | | | | |
+| 3.1 | Read, write, and delete permissions are not distinguished | ✓ | ✓ | ✓ | ✓ | | Action bundling |
+| 3.2 | Operations of different risk levels share the same permission item | ✓ | ✓ | ✓ | ✓ | | Level by highest item (R2) |
+| 3.3 | Role or identity used in place of specific operation authorization | ✓ | ✓ | ✓ | ✓ | | **Blocking Point** |
+| 3.4 | High-risk and irreversible operations are not separated from routine operations | 条 | 条 | 条 | 条 | **P0** | |
+| 3.5 | Permission granularity is coarser than the differentiation of the Responsibility Baseline | 条 | 条 | 条 | 条 | | Requires conditional authorization statement |
+| 3.6 | Overly fine granularity leads to Combination Bypass of equivalent coarse permissions | — | ✓ | ✓ | ✓ | | Mark `INHERITED` when overlapping with 1.6 |
+| **QD-PM-4 Permission Propagation (8)** | | | | | | | |
+| 4.1 | Upstream permission constraints not inherited downstream | ✓ | ✓ | ✓ | ✓ | | Chain A |
+| 4.2 | Downstream claimed authority exceeds upstream authorization | ✓ | ✓ | ✓ | ✓ | | Chain A; overlaps with Cross |
+| 4.3 | Permissions not narrowed when delegating tasks | — | — | — | ✓ | | Chain B |
+| 4.4 | Permission elevation exists in delegation chain | — | — | — | ✓ | | R4 structural escalation |
+| 4.5 | Delegation chain is not traceable | — | — | — | ✓ | | Judge declaration only |
+| 4.6 | Delegation relationship termination condition not declared | — | — | — | ✓ | | Cycle / depth |
+| 4.7 | Execution identity misaligned with request source (Proxy Confusion) | — | ✓ | ✓ | ✓ | | Complements 2.2 |
+| 4.8 | Permissions introduced by external protocol/service not included in Permission Set | 条 | 条 | 条 | 条 | | **Blocking Point** |
+| **QD-PM-5 Permission Boundary (7)** | | | | | | | |
+| 5.1 | Authority boundary is not explicitly declared | ✓ | ✓ | ✓ | ✓ | | Missing deny list |
+| 5.2 | Boundary statement can be interpreted expansively | ✓ | ✓ | ✓ | ✓ | | Self-judgment qualifier |
+| 5.3 | Disposal rule for out-of-bounds request is missing | ✓ | ✓ | ✓ | ✓ | | |
+| 5.4 | Isolation used in place of permission control | ✓ | ✓ | ✓ | ✓ | **P0** | Highest fix priority (in this group) |
+| 5.5 | Permission boundary and isolation boundary not declared jointly | 条 | 条 | 条 | 条 | | Requires isolation declaration |
+| 5.6 | Boundary can be rewritten by external input | ✓ | ✓ | ✓ | ✓ | | |
+| 5.7 | Exception and exemption channel is not controlled | 条 | 条 | 条 | 条 | | Connects to Core exception management |
+| **QD-PM-6 Permission Auditability (7)** | | | | | | | |
+| 6.1 | Permission lacks business purpose statement | ✓ | ✓ | ✓ | ✓ | | R5 caps at P1 |
+| 6.2 | High-risk operation does not declare logging requirement | 条 | 条 | 条 | 条 | | Requires `OR-L2`+ |
+| 6.3 | High-risk operation does not declare human confirmation or pre-approval | 条 | 条 | 条 | 条 | **P0** | Requires `OR-L3` |
+| 6.4 | Decision basis for permission use is not recoverable | 条 | 条 | 条 | 条 | | R5 caps at P1 |
+| 6.5 | Permission list cannot be completely enumerated | ✓ | ✓ | ✓ | ✓ | **P0** | Mark `INHERITED` when 3.3 or 4.8 hit |
+| 6.6 | Permission does not declare review and expiration mechanism | — | ✓ | ✓ | ✓ | | Connects to Ratchet mechanism |
+| 6.7 | Sensitive data processing lacks compliance statement | 条 | 条 | 条 | 条 | **P1** | Does not judge compliance itself |
+
+**Statistical Summary (Maximum Applicability Count)**
+
+| Item | Value |
+| ------------ | ---------------------------- |
+| Total inspection items | 43 |
+| Items with `N/A` conditions | 20 |
+| Fixed-level items | 5 (P0: 3.4, 5.4, 6.3, 6.5; P1: 6.7) |
+| Blocking Points | 2 (3.3, 4.8) |
+| Meta-check items | 3 (1.4, 1.5, 1.7) |
+| AC-L4 exclusive items | 4 (4.3 ~ 4.6) |
+| Maximum applicable items per level | AC-L1=36｜AC-L2=39｜AC-L3=39｜AC-L4=43 |
+
+---
+
+> **Execution Set Note**: Quick Mode and Must-Inspect Set by `AC-L` grade see Appendix D.
+
+## Appendix B: Glossary
+
+> This table only includes terms newly introduced or requiring specific definition in this subset. General terms such as Agent, Logic Artifact, Finding, Control, Baseline, Gate, and Exception adopt the Core definitions.
+
+| Term | Definition |
+| ------------------ | ----------------------------------------------------------- |
+| **Responsibility Baseline** | The set of locatable duty statements extracted from System Prompt / Skill declarations; the sole reference for all proportionality determinations in this subset; construction method see §2.1 |
+| **Permission Item** | The minimally independent operation unit enumerated from Skill capability declarations and Tool Schema operation semantics; construction method see §2.2 |
+| **Permission Set** | The set of all permission items of an Agent; when not enumerable, conclusions of this subset are incomplete (see 6.5) |
+| **Proportionality** | Whether a permission can be explained by a specific statement in the Responsibility Baseline for its existence |
+| **Resource Permission / Duty Permission** | The former is granted by the resource-side system (which systems can be accessed), the latter is defined by the duty (what should be done); confusing the two is a major cause of Agent permission risk |
+| **Four Axes of Scope** | Resource axis, Data axis, Environment axis, and Condition axis, describing the scope of a permission |
+| **Constraint Failure** | A scope limit is declared in the artifact, but the Tool parameter design cannot express or reliably carry that limit (2.8) |
+| **Aggregate Overreach** | Each individual permission is explainable, but their combination achieves an effect not authorized by the duty (1.6) |
+| **Combination Bypass** | Granularity is split too finely, forcing the Agent to combine equivalent coarse permissions at runtime (3.6) |
+| **Proxy Confusion** | The Agent executes operations on behalf of an external request using its own higher permissions, without verifying the requester's qualification (4.7) |
+| **Chain A / Chain B** | The former is vertical propagation Prompt→Skill→Tool, the latter is horizontal propagation between Agents via delegation |
+| **Monotonic Narrowing** | Permissions can only narrow or remain unchanged when propagated along a chain, and must not expand |
+| **Permission Boundary / Isolation Boundary** | The former constrains "what can be done to systems one has access to", the latter constrains "which systems can be affected"; they cannot substitute for each other (5.4) |
+| **Gate-0** | The execution entry conditions of this subset (G0-1~G0-4), not inspection items and not scored; when not passed, no list or score is output |
+| **Blocking Point** | An inspection item that, when hit, aborts subsequent groups (3.3, 4.8), different from Gate-0 pre-execution blocking |
+| **`INHERITED`** | The issue has been identified by the framework and logged upstream or in a primary item; included in the list but not scored and not counted in the denominator here; neither "pass" nor "exemption" |
+| **Two Types of `N/A`** | Level not applicable (determined by `AC-L`) and condition not triggered (determined by artifact facts); denominator treatment is consistent but must be recorded separately |
+| **Direction A / Direction B** | Two directions for remediation: narrow permissions / revise duties; the report must list both, and the decision authority rests with the architect |
+| **Ratchet** | A cross-round constraint mechanism where fixed defects must not silently recur and narrowed permissions must not silently expand |
+| **Regression / Relaxation / Silent Addition** | Three types of Ratchet events; regression triggers a one-level escalation in severity |
+| **Permission–Duty Mapping Table** | A mandatory artifact of this subset, covering all permission items, supporting mechanical verification of 1.7 and cross-round comparison by the Ratchet |
+| **BaselineAdvice** | Input material for downstream IAM / PEP / audit; not a directly deployable policy configuration |
+| **Extraction Layer** | Part II; specifies the construction method for permission items and the Responsibility Baseline, providing the objects to be judged for the six groups |
+| **Five Channels** | Five channels for permission item sources: T (Tool Schema) / S (Skill declaration) / X (external artifacts and protocols) / G (delegation) / A (credential authorization) |
+| **`DERIVED`** | In baseline padding, a duty entry label derived from the expansion of a covering verb; only supports the "insufficient" direction determination |
+| **`∅`** | Permission item field value: the scope limit is not declared in the artifact, pointing to "overly broad scope" defects |
+| **`?`** | Permission item field value: written in the artifact but semantically indeterminate, pointing to "unclear semantics" defects; must be handled per §2.5 |
+| **Fingerprint** | The stable identifier of a permission item = channel + operation semantics family; used for cross-round matching; resource type and Four Axes of Scope are not included in the fingerprint |
+| **Parameterized Tool** | The third form of a non-closed set: tool operation semantics expand with parameter changes (e.g. sql_query, http_request) |
+| **Reentrant** | A layer attribute of the Extraction Layer: not a one-time pre-layer; after a Blocking Point is hit, must return to Step 5 for re-extraction, and maintain stable identifiers across rounds |
+
+---
+
+## Appendix C: End-to-End Walkthrough Example (SkyCare Airline Customer Service Agent)
+
+> This section uses the SkyCare artifact in `demo/` to fully demonstrate Step 4 → Step 10, verifying the executability of this subset and calibrating the determination scope. The example artifact is for simulation/testing purposes.
+
+### C.1 Artifact and Classification
+
+| Item | Value |
+| --- | --- |
+| Artifact | System Prompt (8 sections), Skill (8), Tool Schema (13 functions) |
+| Channel input | T = 13; S = present (8 Skills, no additional permission items); X / G / A = none |
+| `AC-L` | **AC-L3** (multiple Skills, multiple Tools, chain calls, state passing) |
+| `OR-L` | **OR-L3** (`cancel_booking`, `request_refund` involve refunds and funds) |
+
+Applicability trimming (per 9.3.3): 4.3~4.6 are level `N/A` under `AC-L3`; further removing condition-not-triggered items 2.5 (no batch), 5.5 (no isolation declaration), 4.8 (no external protocol) by artifact facts → **36 items applicable this time**.
+
+> **Gate-0 Note**: This walkthrough assumes the artifact has passed Gate-0. Note that the **original** SkyCare artifact in `demo/` actually **does not satisfy G0-4** (10/13 tools have missing parameter descriptions), and per §2.5.2 should be judged as Gate-0 failed, Permission not executed (Core aggregates as `ERROR`). This example demonstrates the judgment layer under the premise "parameter descriptions have been supplemented" to ensure a complete walkthrough; mechanical verification results for the original artifact are in the executable regression sample `demo/permission/`.
+
+### C.2 Step 5 Permission Item Table (T Channel)
+
+| ID | Tool | Operation Semantics | Resource Axis | Data Axis | Environment Axis | Condition Axis | `OR-L` |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| P-001 | `lookup_booking` | Read | Any booking | Name / ticket number / segment / fare | `∅` | `∅` | OR-L1 |
+| P-002 | `get_flight_status` | Read | Any flight | Flight status | `∅` | `∅` | OR-L1 |
+| P-003 | `search_flights` | Read | Any route | Availability / fare | `∅` | `∅` | OR-L1 |
+| P-004 | `get_refund_policy` | Read | Any booking | Refund/change policy | `∅` | `∅` | OR-L1 |
+| P-005 | `get_baggage_info` | Read | Any booking | Baggage allowance | `∅` | `∅` | OR-L1 |
+| P-006 | `get_frequent_flyer_info` | Read | Any member | Miles / tier | `∅` | `∅` | OR-L1 |
+| P-007 | `create_booking` | Write | New booking | Passenger PII / contact | `∅` | User confirmation | OR-L2 |
+| P-008 | `rebook_flight` | Write | Any booking | Flight / cabin | `∅` | User confirmation | OR-L2 |
+| P-009 | `check_in` | Write | Any booking | Seat / boarding pass | `∅` | Check-in window (Skill 5) | OR-L2 |
+| P-010 | `create_lost_baggage_case` | Write | Baggage ticket | Baggage / contact | `∅` | `∅` | OR-L2 |
+| P-011 | `create_service_case` | Write | Service ticket | Request summary | `∅` | `∅` | OR-L2 |
+| P-012 | `cancel_booking` | Write / Delete | Any booking | Cancel + refund flag | `∅` | User confirmation | **OR-L3** |
+| P-013 | `request_refund` | Write / Send-out | Any booking | Refund amount | `∅` | User confirmation | **OR-L3** |
+
+> S channel has no additional permission items (Skill `steps` all fall within the above tools); X / G / A channels have no input (artifact does not declare external protocols, delegation, or credential scope), so no permission items are produced.
+
+### C.3 Step 6 Baseline Table
+
+| ID | Class | Normalized Statement | Constrained By |
+| --- | --- | --- | --- |
+| D-01 | D | Query booking | R-01 |
+| D-02 | D | Create booking | R-03 |
+| D-03 | D | Cancel booking | R-03 |
+| D-04 | D | Rebook | R-03 |
+| D-05 | D | Query flight status / availability | — |
+| D-06 | D | Check-in / boarding | — |
+| D-07 | D | Baggage allowance / lost baggage ticket | — |
+| D-08 | D | Explain refund / compensation policy and submit refund | R-03, R-04 |
+| D-09 | D | Create ticket and escalate to human | R-06, R-07 |
+| D-10 | D | Query frequent flyer miles | — |
+| R-01 | R | At least two identity elements | — |
+| R-02 | R | PII desensitized, plaintext echo prohibited | — |
+| R-03 | R | Change-type operations must be executed after user confirmation | — |
+| R-04 | R | Must not proactively promise compensation | — |
+| R-05 | R | Must not forge documents / proof | — |
+| R-06 | R | Escalate to human if exceeding self-service limit | — |
+| R-07 | R | Safety / medical / strong emotion escalate immediately | — |
+| C-01 | C | Serve air passengers | — |
+| C-02 | C | Apply EU261 / UK261 / civil aviation rules by route | — |
+
+> The "self-service limit" in `R-06` is **not defined** in the artifact — this statement does not enter the baseline, and is logged per 5.7 (see C.4).
+
+### C.4 Step 7 Hit List
+
+| No. | Determination | Evidence (permission side → duty side) | `OR-L` → Level |
+| --- | --- | --- | --- |
+| 1.3 Insufficient permission | Hit | Prompt §5 / Skill 2 references non-existent `get_compensation_policy`; Prompt §3 references `get_booking` (actually `lookup_booking`) → D-08 lacks support | No alternative path → OR-L1 → **P2** (expected to overlap with Cross → `INHERITED`) |
+| 2.1 Resource scope not restricted | Hit | All 13 permission items have resource axis `∅`, no declared set of actionable objects | Contains OR-L3 write/delete/send-out → **P0** (deduplicated by number, count 1) |
+| 2.2 Missing ownership constraint | Hit | P-001 / P-006 can query across subjects, no "requester-only" constraint at tool layer | Personal data → **P0** |
+| 2.3 Field-level scope not restricted | Hit | P-001 returns full fields `name` / `ticket_number`, no field whitelist, desensitization relies solely on Prompt R-02 | Sensitive fields → **P0** |
+| 2.4 Environment boundary not declared | Hit | All 13 tools have no environment axis value, directly connect to production PSS | Contains write → **P0** |
+| 2.6 No time period constraint | Hit | P-013 (OR-L3) does not declare time window | OR-L3 → **P1** |
+| 2.7 No idempotency / frequency constraint | Hit | P-012 / P-013 can be triggered repeatedly for refund | OR-L3 → **P0** |
+| 2.8 Constraint Failure | Hit | R-02 desensitization constraint cannot be expressed or carried by tool parameters | Protects OR-L3 asset → **P0** |
+| 3.2 Risk levels mixed | Hit | P-012 contains "cancel" (OR-L2) and "trigger payout" (`refund_requested` defaults to true, OR-L3) | Highest item → **P0** |
+| 4.2 Downstream exceeds upstream | Hit | Skill `booking_management.allowed_actions` contains `add_service`, not authorized by Prompt | Excess part OR-L2 → **P1** |
+| 5.7 Exemption channel not controlled | Hit | "self-service limit / threshold" not defined trigger condition and approver | Can cover OR-L3 → **P0** |
+| 6.1 Permission lacks business purpose | Hit | Permission list has no attached business purpose statement | OR-L3 → **P1** |
+| 6.2 Logging requirement not declared | Hit | Refund / cancellation does not require recording object, parameters, trigger source, authorization basis | OR-L3 → **P0** |
+| 6.4 Basis not recoverable | Hit | Does not require high-risk calls to synchronously explain trigger basis | OR-L3 → **P1** |
+| 6.6 No review / expiration mechanism | Hit | Artifact does not declare permission review cycle or expiration condition | OR-L3 → **P1** |
+| 6.7 No compliance statement | Hit | Involves PII and financial data, no declared purpose limitation and retention boundary | Fixed **P1** |
+
+> **Note on 2.1**: All 13 permission items hit this inspection item, but per 12.1 "same inspection item number is only deducted once" deduplication, only count 1.
+
+### C.5 Positive Passes and `N/A` (to prove "not all red")
+
+| Result | Inspection Item | Basis |
+| --- | --- | --- |
+| **Pass (positive)** | 1.4 / 1.5 | Duty boundary and tool semantics clearly stated, no boundary wording |
+| | 1.6 Aggregate Overreach | No send-out channel, read + write combination is the duty itself, no overreach chain formed |
+| | 3.1 Read/write/delete not distinguished | Read / write tools are already separated, no "management-type" merged tool |
+| | 3.4 High-risk not separated | Refund and cancellation are already independent tools, bound to confirmation gate |
+| | 4.1 Upstream constraints not inherited | R-01 (≥2 elements), R-02 (desensitization), R-03 (confirmation) are all inherited in Skill |
+| | 4.7 Proxy Confusion | §4 already declares requester qualification verification with ≥2 elements |
+| | 5.1 / 5.3 / 5.6 | Out of Scope, out-of-bounds escalation to human, and rejection of rewrite instruction are already explicitly declared |
+| | 6.3 High-risk lacks human confirmation | Refund / cancellation already bound to confirmation gate |
+| | 6.5 List not enumerable | 13 tools can be fully enumerated |
+| **`N/A` (level)** | 4.3 ~ 4.6 | Not `AC-L4`, no delegation form |
+| **`N/A` (condition)** | 2.5 / 5.5 / 4.8 | No batch operation / no isolation declaration / no external protocol |
+
+### C.6 Step 9 Mapping Table and Gate Conclusion
+
+| Permission Item | Operation Semantics | `OR-L` | Corresponding Duty Entry | Determination | Defect No. |
+| --- | --- | --- | --- | --- | --- |
+| P-001 | Read booking | OR-L1 | D-01 | Over (scope / data) | 2.1 / 2.2 / 2.3 |
+| P-012 | Write cancel | OR-L3 | D-03 | Over (granularity) | 3.2 |
+| P-013 | Write refund | OR-L3 | D-08 | Over (scope / auditability) | 2.6 / 2.7 / 6.2 |
+| — (missing) | Read compensation policy | OR-L1 | D-08 | Under | 1.3 |
+
+**Gate Conclusion**: P0 × 9 hit this time → **FAIL**.
+
+> Note: The 100-point score requires item-by-item grading for all 36 items and calculation per Part XII; this example omits it. Per the current round "subtraction" suggestion, the score is positioned as a trend comparison tool, and the primary criteria are Gate and defect list (see Appendix D and subsequent simplified items).
+
+### C.7 Step 10 Remediation Ruling (both directions listed)
+
+| Defect | Direction A (narrow permissions / modify artifact) | Direction B (revise duty) |
+| --- | --- | --- |
+| 3.2 | Split `cancel_booking.refund_requested` into an independent permission item, route refunds uniformly through `request_refund` | If "cancel implies refund" is indeed required, must explicitly declare the combined purpose in Prompt and rerun entirely |
+| 2.4 | Add environment dimension declaration or parameters for write tools, prohibit default action on production | — |
+| 5.7 | Define self-service threshold trigger condition, approver, and logging, and include in Core exception management | — |
+| 1.3 | Add `get_compensation_policy`, or change §5 reference to `get_refund_policy` | Narrow D-08 duty statement, remove unsupported promises |
+
+**Fix Order** (per 10.2.3): This example did not hit 4.8 / 3.3 / 6.5 / 4.4 / 5.4 / 1.4, so fix **2.8 (Constraint Failure)** first, then sort remaining P0 by `OR-L`.
+
+### C.8 Second Round Ratchet Events (Example)
+
+| Permission Item | This Round Determination | Last Round Determination | Change | Ratchet Event |
+| --- | --- | --- | --- | --- |
+| P-001 | Suited (field whitelist added) | Over | Narrowed | None (positive) |
+| P-014 (new `send_email`) | Over | (does not exist) | New | **Silent Addition** |
+| 5.7 (recurred after fixed) | Over | Closed | Recurred | **Regression** → level escalated by one |
+
+---
+
+## Appendix D: Minimum Rule Sets (by `AC-L` Grade)
+
+> Purpose: In addition to the full 43 items, provide phased execution sets. `AC-L` determines **whether applicable**, `OR-L` determines **severity level** (see 9.3.3, 9.4). Three tiers from weak to strong: **Quick Mode → Must-Inspect Set → Full set (43 items)**.
+
+### D.1 Quick Mode (Inventory, 12 items)
+
+Only run items that "can block release / are structurally irreversible", for the first-round screening of large-scale existing Agents:
+
+```
+1.1 Unexplainable permission · 1.3 Insufficient permission · 2.4 Environment boundary not declared · 3.3 Role substitution ·
+3.4 High-risk not separated · 4.2 Downstream exceeds upstream · 4.4 Delegation escalation · 4.8 External permission ·
+5.4 Isolation substitution · 5.7 Exemption uncontrolled · 6.3 No human confirmation · 6.5 List not enumerable
+```
+
+### D.2 Must-Inspect Set (Must)
+
+= Items marked `✓` (**unconditionally applicable**) under this `AC-L` in the 9.3.3 applicability matrix. Conditional items and level-not-applicable items are not included in this set:
+
+| `AC-L` | Must-Inspect Set (numbers) | Count |
+| --- | --- | --- |
+| AC-L1 | 1.1~1.5, 1.7, 2.1~2.4, 2.8, 3.1~3.3, 4.1, 4.2, 5.1~5.4, 5.6, 6.1, 6.5 | 23 |
+| AC-L2 | AC-L1 + 1.6, 2.5, 3.6, 4.7, 6.6 | 28 |
+| AC-L3 | Same as AC-L2 | 28 |
+| AC-L4 | AC-L2 + 4.3~4.6 | 32 |
+
+### D.3 Conditional Set (triggered by artifact facts)
+
+```
+1.6 · 2.5 · 2.6 · 2.7 · 3.4 · 3.5 · 4.8 · 5.5 · 5.7 · 6.2 · 6.3 · 6.4 · 6.7
+```
+
+> Conditional items must record trigger basis; `N/A` without basis is counted in the denominator and treated as failure per R-N3.
+
+### D.4 Usage Recommendations
+
+- **Inventory** (thousands of Agents initial screening): Quick Mode (D.1);
+- **New / changed Agent**: Must-Inspect Set (D.2) + Conditional Set triggered by artifact (D.3);
+- **High-risk (`OR-L3`) or `AC-L4` Agent**: Full set of 43 items.
+
+---
+
+## Appendix E: Interface Schema (v0.1, Draft)
+
+> **Positioning**: This appendix solidifies the three types of artifacts of this subset into **machine-readable data shapes**, serving as an **interface contract** between the platform and downstream (IAM / PEP / audit). It only defines "what the data looks like", not storage, batch execution, or aggregation implementation (those belong to the platform layer, see 0.1.4). Field names are identified in English.
+
+### E.1 Three Object Types and Relationships
+
+```
+PermissionItem ──1:*──▶ Finding
+        │
+        └──1:*──▶ BaselineAdvice
+
+Ledger = aggregated view of PermissionItem (rows = permission items, columns = Agent × version)
+```
+
+- **Stable ID**: `PermissionItem.item_id` is derived from "channel + operation semantics family" (§2.4.2 fingerprint), stable across rounds, not changing due to artifact renaming or scope narrowing.
+- **Version binding**: All objects must be bound to Core `object` + `version` (Core evidence requirement).
+
+### E.2 PermissionItem
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `item_id` | string | Stable ID (derived from fingerprint) |
+| `agent_ref` | string | Agent identifier |
+| `artifact_version` | string | Artifact version |
+| `round` | int | Inspection round |
+| `channel` | enum | T / S / X / G / A |
+| `op_semantics` | enum | read / write / delete / send / exec / `?` |
+| `resource_axis` / `data_axis` / `env_axis` / `condition_axis` | string | Four Axes of Scope; `∅` = not declared, `?` = indeterminate |
+| `io` | object | `{accepts: [...], produces: [...]}` (for combination effect calculation) |
+| `location` | object | `{prompt, skill, tool}` three-layer positioning |
+| `baseline_refs` | array | Corresponding Responsibility Baseline entries (D-xx / R-xx / C-xx) |
+| `or_level` | enum | OR-L1 / OR-L2 / OR-L3 |
+| `verdict` | enum | suited / over / under / structural |
+| `finding_ids` | array | Associated defect numbers |
+| `change_type` | enum | new / split / merged / narrowed / removed / - |
+| `sensitivity_assumed` | bool | "Sensitivity assumption" flag when data axis is unknown |
+
+### E.3 Finding (Solidified §13.5)
+
+| Field | Description |
+| --- | --- |
+| `finding_id` | `QD-PM-<group>.<seq>` |
+| `object` / `version` | Core object and version |
+| `location_permission` / `location_duty` | Bilateral positioning (10.1.2) |
+| `verdict` | over / under / structural |
+| `basis` | Determination basis (why the two ends are not proportional) |
+| `severity` | P0 / P1 / P2 |
+| `or_basis` | `OR-L` determination chain (9.4.3) |
+| `overlap_status` | independent / inherited (with primary item number) |
+| `remediation` | `{direction_a, direction_b}` listed side by side |
+| `ratchet_status` | none / regression / relaxed / silent_new / approved_relaxation |
+| `evidence_refs` | Evidence location list (`anchors` of regression samples are their guards) |
+
+### E.4 BaselineAdvice
+
+| Field | Description |
+| --- | --- |
+| `item_id` | Associated permission item |
+| `operation` | Operation semantics + resource pattern |
+| `env` | Applicable environment |
+| `condition` | Precondition |
+| `expectation` | allow / deny / require_approval / require_log |
+| `rationale` | Points to duty entry |
+| `or_level` | Determines control strength |
+
+> **Target Mapping**: `expectation` should be mappable to concrete policy languages. Example (SkyCare, OPA / Rego snippet):
+
+```rego
+# Refund: OR-L3, requires human approval + logging; and limited to own bookings only
+deny[msg] {
+  input.action == "request_refund"
+  not input.approval_id
+  msg := "request_refund requires human approval"
+}
+```
+
+### E.5 Example (SkyCare, excerpted from Appendix C)
+
+```json
+{
+  "item_id": "p_013",
+  "agent_ref": "skycare",
+  "artifact_version": "1.0.0",
+  "round": 1,
+  "channel": "T",
+  "op_semantics": "write",
+  "resource_axis": "任意预订",
+  "data_axis": "退款金额",
+  "env_axis": "∅",
+  "condition_axis": "用户确认",
+  "io": { "accepts": ["booking_ref", "reason"], "produces": ["refund_result"] },
+  "location": { "prompt": "D-08", "skill": "refund_compensation.confirmation_gate", "tool": "request_refund" },
+  "baseline_refs": ["D-08", "R-03", "R-04"],
+  "or_level": "OR-L3",
+  "verdict": "over",
+  "finding_ids": ["QD-PM-2.6", "QD-PM-2.7", "QD-PM-6.2"],
+  "change_type": "-",
+  "sensitivity_assumed": false
+}
+```
+
+### E.6 Relationship with Regression Samples (`demo/permission/`)
+
+| Sample Artifact | Mapping to Schema |
+| --- | --- |
+| `mechanical` `FINDING` items | `Finding` (severity derived from `or_basis`) |
+| `advisory` clues | Candidate `Finding` pending manual confirmation (ungraded) |
+| `anchors` | Existence guards for `Finding.evidence_refs` |
+| `gate0` | Determines whether `Finding` generation is allowed; if not passed, only outputs blocking objects |
+
+> **v0.1 Note**: This schema is a draft. **Executable implementation**: JSON Schema files and ledger keys/indexes have been landed in `demo/permission/schema/` (`permission-item` / `finding` / `baseline-advice` / `ledger` four files); regression samples can use `py run_regression.py --emit-schema` to generate schema-compliant Findings (`demo/permission/out/findings.json`) and self-check.
+
+---
+
+## Appendix F: Enterprise Platform Integration and Tool/Agent Separation Architecture Recommendations (Non-Normative)
+
+> This appendix only provides integration navigation and architecture recommendations, and does not carry any QD-PM determination, scoring, or threshold; it does not produce inspection items or participate in scoring. Inspection logic is based on the main text.
+
+### F.1 Three-Layer Positioning
+
+This subset assumes the role of **configuration layer (static)** in the "Agent Permission Management Platform", together with runtime execution and governance monitoring forming three layers:
+
+| Layer | Responsibility | Implementation Object |
+| --- | --- | --- |
+| Configuration Layer (Static) | Extract permission baseline, determine proportionality, generate policy advice | This subset (QD-PM) |
+| Runtime Execution Layer | Execute permission decisions (PEP/PDP) | API Gateway / LLM-API Gateway (not covered by this subset) |
+| Governance Monitoring Layer | Identity binding, audit, drift and anomaly detection | IAM/IdP, observability layer, Risk (partially covered by this subset: Ratchet / Ledger) |
+
+> This subset does not replace runtime execution and governance monitoring; a PASS conclusion does not equal runtime permission security (see 0.1.4).
+
+### F.2 Gateway Integration Interface
+
+1. `BaselineAdvice.expectation` → compiled into gateway policies (environment axis → environment policy; `OR-L3` → `require_approval`; data axis → field whitelist);
+2. A channel (credential scope declared by artifact) vs T channel (Tool declaration) comparison → detect "declaration–grant deviation" (4.8 / 6.7);
+3. Permission Ledger + Ratchet → drift detection (alert when permissions only increase but never decrease).
+
+### F.3 Tool Permission and Agent Permission Separation (Architecture Recommendation)
+
+In enterprise scenarios, the same Tool is often reused by multiple Agents. It is recommended to model permissions in two layers:
+
+| Object | Semantics | Determination Question | Ownership |
+| --- | --- | --- | --- |
+| **Tool Permission (Capability Surface)** | What this Tool is inherently capable of doing | Whether the capability surface itself is too broad / high-risk | Tool owner |
+| **Agent Permission (Grant)** | The subset that an Agent receives from the capability surface | Whether the subset is proportional to the duty | Agent owner |
+
+The relationship between the two is the application of the **Monotonic Narrowing principle** in this document §6.1.1 "permissions can only narrow or remain unchanged when propagated along a chain, and must not expand" between the Tool capability surface and the Agent grant: the Agent grant is a narrowed subset of the Tool capability surface.
+
+### F.4 Responsibility Boundary with Relevance
+
+| Matter | permission (this subset) | Relevance v1.0 |
+| --- | --- | --- |
+| QD-PM inspection item definition, severity level, OR-L determination | Single source of truth | Only reference, no rewrite |
+| QD-PM → AS-* mapping | Not done | Single source of truth (A.5) |
+| AS-* / QD-PM → OWASP LLM/ASI number | Not done, not annotated item-by-item | Single source of truth (F.3) |
+| Post-remediation re-inspection items SC-11~13 | Not defined | Single source of truth (D.1) |
+| Conflict handling | — | Mapping-related matters are subject to Relevance; inspection item definitions are subject to this document |
+
+### F.5 Phased Landing Path and Validation Exit
+
+1. **Static extraction and determination**: Produce permission list + proportionality conclusion + BaselineAdvice;
+2. **Declaration–grant deviation detection**: A vs T comparison; BaselineAdvice → compile gateway PEP rules;
+3. **Runtime monitoring and aggregate governance**: Gateway execution + log backfill; Ratchet / Ledger for drift detection; anomaly detection goes to observability layer / Risk.
+
+**Validation Exit (deciding whether to elevate separation "into normative")**: In ≥3 real cases where multiple Agents reuse the same Tool, conduct walkthroughs using the two-layer perspective of F.3; if it can stably produce fewer duplicate Findings than the current single-layer perspective, then the separation recommendation is elevated to a normative refactoring (e.g. v2.0); otherwise this appendix remains non-normative indefinitely.
+
 ---
 
 ## References
@@ -1827,6 +2923,6 @@ Extraction layer §2.6 sensitivity classification table serves as evidence gener
 
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.1  ·  September 2026
+v1.0  ·  September 2026
 
 

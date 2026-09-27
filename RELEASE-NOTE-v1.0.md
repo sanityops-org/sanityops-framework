@@ -13,10 +13,11 @@
 - Unified terminology and evidence standards
 - Gate-based release workflow
 
-### Specification Documents (10)
+### Specification Documents (11)
+
 | Module | Documents |
 |--------|-----------|
-| Inspect | Prompt, Skill, Tool, Cross-Artifact defect inspection |
+| Inspect | Prompt, Skill, Tool, Cross-Artifact, Permission defect inspection |
 | Risk | Explicit risk audit, Implicit attack validation |
 | Quality | Tool-Agent reliability, RAG-Agent assessment |
 | Relevance | Defect-to-risk/quality diagnostic mapping |

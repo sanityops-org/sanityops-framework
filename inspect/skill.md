@@ -6,7 +6,7 @@
 
 **Version**: v1.0
 
-**Release Date**: July 2026
+**Release Date**: September 2026
 
 **Maintainer**: SanityOps Inspect Working Group
 
@@ -106,7 +106,8 @@ SanityOps Six-Subset Framework
 │   ├─ Inspect Tool ← Tool Schema defect inspection
 │   ├─ Inspect Prompt ← System Prompt defect inspection
 │   ├─ Inspect Skill ← Skill defect inspection ← You are here
-│   └─ Inspect Cross ← Cross-Artifact defect inspection
+│   ├─ Inspect Cross ← Cross-Artifact defect inspection
+│   └─ Inspect Permission ← Permission-responsibility proportionality inspection (QD-PM)
 │
 ├─ Risk (Risk Scanning)
 │   ├─ Risk Explicit ← Explicit Logic Artifact risk detection
@@ -212,18 +213,16 @@ QD-S-x.y
 
 #### 0.3.1 Current Version
 
-- **Version**: v2.4
-- **Release Status**: Internal industry specification version
-- **Last Updated**: July 2026
+- **Version**: v1.0
+- **Release Status**: Initial release
+- **Last Updated**: September 2026
 - **Maintainer**: SanityOps Working Group
 
 #### 0.3.2 Version History
 
 | Version | Release Date | Major Changes |
 | --- | --- | --- |
-| v2.4 | 2026-07 | Added standardized foreword, L1/L2/L3 definitions, full inspection item expansion, tiered inspection checklist, quantitative scoring mechanism |
-| v2.0 | 2026-05 | Restructured into five defect categories; introduced Review Schema and Inferential Verification mechanism |
-| v1.0 | 2026-03 | Established the Quality Defect concept |
+| v1.0 | 2026-09 | Initial release |
 
 ---
 
@@ -232,7 +231,7 @@ QD-S-x.y
 <a id="11-five-defect-classification-framework"></a>
 ### 1.1 Five Defect Classification Framework
 
-Inspect Skill v2.4 classifies defects by **risk principle** rather than structural field, comprising five defect categories:
+Inspect Skill v1.0 classifies defects by **risk principle** rather than structural field, comprising five defect categories:
 
 | Category | ID | Risk Principle | Typical Manifestation |
 | --- | --- | --- | --- |
@@ -1790,7 +1789,7 @@ This chapter's full coordination relationships with Inspect Prompt and Inspect T
 - Collaborative workflows in actual Agent applications
 - Priority management (when different sub-specifications give contradictory recommendations)
 
-**Tentative: The content of this section is a key expansion area for the v2.4 version and will be supplemented after sufficient discussion.**
+**Tentative: The content of this section is a key expansion area for future versions and will be supplemented after sufficient discussion.**
 
 ---
 

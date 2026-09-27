@@ -229,7 +229,8 @@ SanityOps Framework
 │  ├─ Inspect Tool
 │  ├─ Inspect Prompt
 │  ├─ Inspect Skill
-│  └─ Inspect CROSS
+│  ├─ Inspect CROSS
+│  └─ Inspect Permission ← Permission-responsibility proportionality inspection
 │
 ├─ Risk: Risk Scanning
 │  ├─ Risk EX
@@ -242,7 +243,7 @@ SanityOps Framework
 
 Within this framework:
 
-- **Inspect** focuses on inspectable defects and inconsistencies in Prompt, Tool Schema, Skill, and cross-artifact logic;
+- **Inspect** focuses on inspectable defects and inconsistencies in Prompt, Tool Schema, Skill, cross-artifact logic, and permission-responsibility proportionality;
 - **Risk** focuses on explicit or implicit risk exposure;
 - **Quality** focuses on the service quality that Agent presents when actually facing users.
 

@@ -22,7 +22,9 @@ Understand the governance closed loop, the Ratchet Mechanism, release gates, and
 
 ### 3. Inspect
 
-Learn how to statically scan System Prompts, Skills, and Tool Schemas for definition defects and boundary issues.
+Learn how to statically scan System Prompts, Skills, and Tool Schemas for definition defects and boundary issues, then check whether granted permissions are proportionate to assigned responsibilities.
+
+> **Note**: Run Inspect Permission last, after the other Inspect sub-specifications, and subject to the Gate-0 precondition.
 
 → [Inspect Introduction](/inspect/)
 

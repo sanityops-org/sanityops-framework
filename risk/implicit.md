@@ -399,7 +399,8 @@ SanityOps Three-Dimension Six-Subset Framework
 │   ├─ Inspect Tool     ← Tool Schema Defects
 │   ├─ Inspect Prompt   ← System Prompt Defects
 │   ├─ Inspect Skill    ← Skill Logic Defects
-│   └─ Inspect CROSS    ← Cross-logic Artifact Defects
+│   ├─ Inspect CROSS    ← Cross-logic Artifact Defects
+│   └─ Inspect Permission ← Permission-responsibility proportionality defects (QD-PM)
 │
 ├─ Risk (Risk Scanning) — Dynamic Validation, Assess Risk
 │   ├─ Risk Explicit ← Explicit Risk Scanning
@@ -411,7 +412,7 @@ SanityOps Three-Dimension Six-Subset Framework
 
 **Risk Implicit's Position in the Framework**:
 
-- **Input**: Defect list from all four Inspect subsets, plus Explicit scan results
+- **Input**: Defect list from all five Inspect subsets, plus Explicit scan results
 - **Process**: Generate and execute targeted attacks in a shadow environment
 - **Output**: Attack execution results, security signals, risk assessment report
 
@@ -522,7 +523,7 @@ Seamless CI/CD integration, making security validation a standard development st
 <a id="311-inspect-completed"></a>
 #### 3.1.1 Inspect Completed
 
-- All four Inspect subsets (Tool, Prompt, Skill, CROSS) have output defect lists
+- All five Inspect subsets (Tool, Prompt, Skill, CROSS, Permission) have output defect lists
 - Defect lists contain necessary structured information (defect ID, type, component, description, severity)
 
 **Rationale**: Implicit's attack test cases are generated based on discovered defects. Without a defect list, attacks will lack targeting.
@@ -1280,8 +1281,8 @@ OWASP (Open Web Application Security Project) is an authoritative standard in th
 | OWASP ASI | Risk Principle | Related LLM | Key SanityOps Defect Chain | Defense Depth |
 |-----------|---------------|-------------|---------------------------|--------------|
 | **ASI01** Agent Goal Hijack | Goal/plan altered by injection | LLM01, LLM06 | QD-P-1.x (Logic contradiction)<br>QD-S-3.4 (Task scope undefined)<br>QD-P-2.5.2 (Security boundary missing) | 3 layers |
-| **ASI02** Tool Misuse | Tools improperly chained | LLM06 | QD-S-5.x (Permission overreach)<br>QD-T-3.x (High-risk operations)<br>QD-PT-2.4 (Permission granularity) | 3 layers |
-| **ASI03** Identity & Privilege Abuse | Identity impersonation/privilege escalation | LLM01, LLM06, LLM02 | QD-S-5.x (Permission boundary)<br>QD-P-2.5.3 (Permission control boundary)<br>QD-PS-1.3 (Permission consistency) | 3 layers |
+| **ASI02** Tool Misuse | Tools improperly chained | LLM06 | QD-S-5.x (Permission overreach)<br>QD-T-3.x (High-risk operations)<br>QD-PT-2.4 (Permission granularity)<br>QD-PM-* (see Relevance A.5); SC-11~13 (see Relevance D.1) | 3 layers |
+| **ASI03** Identity & Privilege Abuse | Identity impersonation/privilege escalation | LLM01, LLM06, LLM02 | QD-S-5.x (Permission boundary)<br>QD-P-2.5.3 (Permission control boundary)<br>QD-PS-1.3 (Permission consistency)<br>QD-PM-* (see Relevance A.5); SC-11~13 (see Relevance D.1) | 3 layers |
 | **ASI04** Supply Chain | Third-party tool poisoning | LLM03 | QD-P-2.4.2 (Tool undeclared)<br>QD-T-1.x (Structural defects)<br>QD-PT-2.1 (Tool existence) | 2 layers |
 | **ASI05** RCE | Arbitrary code execution | LLM01, LLM05 | QD-T-3.2 (Raw input passthrough)<br>QD-P-2.3.4 (Privacy filter missing)<br>QD-T-3.4 (Internal parameter exposure) | 3 layers |
 | **ASI06** Memory Poisoning | Persistent memory corrupted | LLM01, LLM04, LLM08 | QD-P-2.5.2 (Security boundary)<br>QD-S-1.1 (Input boundary)<br>QD-ST-3.2 (Data constraint) | 3 layers |

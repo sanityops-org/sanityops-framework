@@ -4,7 +4,7 @@
 
 **Version**: v1.0
 
-**Release Date**: July 2026
+**Release Date**: September 2026
 
 **Maintained by**: SanityOps Working Group
 
@@ -188,6 +188,7 @@ This specification establishes mapping relationships based on the following Sani
 | Inspect Skill | v1.0 | Uses `QD-S` numbering, Review Schema, and risk classification rules |
 | Inspect Tool | v1.0 | Uses `QD-T` numbering, Schema constraints, and high-risk operation definitions |
 | Inspect Cross | v1.0 | Uses `QD-PS`, `QD-PT`, `QD-ST` numbering and consistency relationships |
+| Inspect Permission | v1.0 | Uses QD-PM numbering and permission baseline domain determinations (QD-PM-1~6) |
 | Risk Explicit | v1.0 | Uses `EX`, D1/D2/D3, S0–S3 risk model |
 | Risk Implicit | v1.0 | Uses shadow environment, dynamic attack, and continuous validation principles |
 | Quality Tool-Agent | v1.0 | Uses task success/failure, reliability, and risk-driven testing principles |
@@ -488,6 +489,13 @@ The following table contains document-level high-priority mappings. The complete
 | `QD-PT-2.4` Permission Granularity Consistency | AS-04, AS-05, AS-09 | D2, D3 | Prompt→Tool high-risk actions, confirmation, and permission testing |
 | `QD-ST-3.6` Permission Scope Match | AS-04, AS-05, AS-09 | D2, D3 | Skill→Tool actual side effects, least privilege, and confirmation testing |
 | `QD-PT-2.5` / `QD-ST-3.7` Error Handling Gap | AS-07, AS-09 | D1, D2, D3, Availability | End-to-end testing for permission errors, rate limiting, timeouts, format errors, and dependency exceptions |
+| `QD-PM-3.4` High-Risk and Irreversible Operations Not Separated from Routine Operations | AS-04, AS-05 | D2, D3 | Irreversible operations executed with same authority as routine, no direct confirmation, missing rollback testing |
+| `QD-PM-4.2` Downstream Declared Authority Exceeds Upstream Authorization | AS-04 | D2, D3 | Downstream Skill/Tool effective permission vs upstream authorization, call chain permission inheritance testing |
+| `QD-PM-4.4` Delegation Chain Contains Privilege Escalation | AS-04, AS-07 | D1, D2, D3 | Sub-Agent exceeding primary Agent permissions, delegation chain upper bound, privilege escalation channel testing |
+| `QD-PM-5.4` Isolation Substitutes for Permission Control | AS-04, AS-05 | D2, D3 | Unauthorized access within isolated environment, permission constraints after isolation bypass testing |
+| `QD-PM-6.3` High-Risk Operation Lacks Human Confirmation or Pre-Approval | AS-05, AS-09 | D2, D3, Auditability | High-risk operation without direct confirmation, same role for initiation and approval, irreversible operation simulation testing |
+
+> The complete `QD-PM` mapping is in Appendix A.5.
 
 <a id="26-external-risk-classification-reference-principles"></a>
 ### 2.6 External Risk Classification Reference Principles
@@ -1192,6 +1200,22 @@ For defect chains that have been dynamically validated as exploitable, closure m
 | `QD-ST-3.6` Permission Scope Matching | AS-04, AS-05 | D2, D3 | Skill→Tool actual side effects, read/write/delete, and confirmation testing |
 | `QD-ST-3.7` Error Handling Coverage | AS-07, AS-09 | D1, D2, Availability | Tool error classification, degradation, stop, retry, and human takeover testing |
 
+## A.5 Permission Defect Mapping
+
+> `QD-PM-*` are produced by the Inspect Permission Governance subset (permission v1.0). This table only defines mapping directions,
+> and does not automatically determine permission defects as EX risks or actual events; `EX` classification is still independently determined by Risk Explicit.
+> The Permission subset executes after other subsets and is subject to Gate-0 preconditions; when Gate-0 is not met,
+> no QD-PM defects are produced, and this table does not apply.
+
+| QD Category | Primary Attack Surface | Potential Impact | Recommended Validation |
+| --- | --- | --- | --- |
+| `QD-PM-1.x` Permission Alignment (including 1.1 unexplainable permissions, 1.3 insufficient permissions) | AS-04 | D2, D3, Availability | Out-of-role resource access, aggregated unauthorized access, task failure or workaround due to insufficient permissions testing |
+| `QD-PM-2.x` Permission Scope (resource / data / environment / condition four axes, including 2.4 environment boundary not declared) | AS-04, AS-03 | D1, D2, D3 | Out-of-scope resource access, cross-tenant data reading, test/production environment confusion, out-of-condition triggering testing |
+| `QD-PM-3.x` Permission Granularity (including 3.3 role substitution, 3.4 high-risk not separated) | AS-04, AS-05 | D2, D3 | Single role completing "initiation + approval", high-risk and routine operations executed with same authority, role impersonation testing |
+| `QD-PM-4.x` Permission Propagation (including 4.2 downstream exceeds upstream, 4.4 delegation escalation, 4.8 external permissions, INHERITED status) | AS-04, AS-07, AS-08 | D1, D2, D3 | Call chain permission inheritance, downstream Skill/Tool effective permissions vs upstream, delegation chain escalation, external/third-party permission source testing |
+| `QD-PM-5.x` Permission Boundary (including 5.4 isolation substitutes for permission, 5.7 exemption uncontrolled) | AS-04, AS-05 | D2, D3 | Exemption trigger conditions, exemption expiration, bypass after network/environment isolation substitutes for permission constraints testing |
+| `QD-PM-6.x` Permission Auditability (including 6.3 no human confirmation, 6.5 inventory not enumerable) | AS-05, AS-09 | D2, D3, Auditability | High-risk operation without direct confirmation, permission inventory not enumerable / not auditable, audit log missing testing |
+
 ---
 
 ## Appendix B: Tool-Agent Failure Mode and Supplementary Test Mapping
@@ -1291,6 +1315,11 @@ For defect chains that have been dynamically validated as exploitable, closure m
 | `SC-08` | `QD-P-1.1.3` Example Contradicts Rules + `QD-P-2.5.4` Constraint Priority Not Defined + `QD-T-4.3` Multi-Tool Semantic Competition | Examples inducing model to bypass rules and select the wrong Tool | Example-driven, multi-rule conflict, similar Tool selection testing |
 | `SC-09` | `QD-T-1.4` `additionalProperties` Not Controlled + `QD-T-3.4` Internal Parameter Exposure + `QD-PT-2.4` Permission Granularity Consistency Defect | Forging tenant, role, or internal control fields to achieve privilege escalation | Additional fields, reserved fields, tenant ID, admin flag tampering testing |
 | `SC-10` | `QD-P-2.2.1` Input Source Not Declared + `QD-S-3.4` Task Scope Not Defined + `QD-T-3.5` Cross-Tool Data Flow Risk | Untrusted content changing task goals and guiding data exfiltration | Indirect injection, goal hijacking, and data exfiltration Tool chain testing |
+| `SC-11` | `QD-PM-4.2` Downstream Exceeds Upstream + `QD-S-5.4` Chained Call Permissions Not Declared + `QD-ST-3.6` Permission Scope Matching Defect | Low-permission entry Skill indirectly obtains downstream high-permission Tool effective authority through call chain (ASI03 direction: un-scoped privilege inheritance) | Per-hop effective permission comparison in call chain, downstream Tool executing with upstream identity, INHERITED permission reclamation testing |
+| `SC-12` | `QD-PM-4.4` Delegation Escalation + `QD-S-3.4` Task Scope Not Defined + `QD-P-2.5.2` Security Boundary Constraint Missing | Goal hijacking obtains permissions beyond the initiator through delegation/sub-Agent and expands laterally (ASI01 → ASI03 direction) | Indirect injection triggering delegation, delegation chain permission upper bound, sub-task permission vs parent task comparison testing |
+| `SC-13` | `QD-PM-3.4` High-Risk Not Separated + `QD-PM-6.3` No Human Confirmation + `QD-T-4.2` Side Effect Not Declared | High-risk write/delete/exfiltration operations executed directly by the same permission principal without confirmation (ASI02 Tool Misuse and Exploitation direction) | High-risk operation path without direct confirmation, same role for initiation and approval, irreversible operation simulation testing |
+
+> Relationship with existing `SC-02`, `SC-05`, `SC-09`: `SC-11` is a permission-side deepening of `SC-05` (`SC-05` focuses on environment boundaries, `SC-11` focuses on effective permission amplification along the call chain); do not merge, retain independent numbering.
 
 <a id="d2-tool-agent-quality-defect-chains"></a>
 ### D.2 Tool-Agent Quality Defect Chains
@@ -1546,13 +1575,15 @@ This specification can reference OWASP risk language, but does not use OWASP num
 |-------------------------|--------------------------------|---------------------------|
 | AS-01 | Prompt Injection, System Prompt Leakage | `QD-P-2.5.2`, `QD-P-2.2.1`, `QD-S-3.4` |
 | AS-02 | Improper Input Handling, Injection | `QD-T-1.4`, `QD-T-2.x`, `QD-T-3.2` |
-| AS-03 | Sensitive Information Disclosure, Improper Output Handling | `QD-P-2.3.4`, `QD-T-3.5` |
-| AS-04 | Excessive Agency, Excessive Permissions | `QD-P-2.5.3`, `QD-S-5.x`, `QD-ST-3.6` |
-| AS-05 | Tool Misuse, Unsafe Action Execution | `QD-T-3.1`, `QD-T-4.2`, `QD-T-4.3` |
+| AS-03 | Sensitive Information Disclosure, Improper Output Handling | `QD-P-2.3.4`, `QD-T-3.5`, `QD-PM-2.x` |
+| AS-04 | Excessive Agency, Excessive Permissions | `QD-P-2.5.3`, `QD-S-5.x`, `QD-ST-3.6`, `QD-PM-1.x`, `QD-PM-2.x`, `QD-PM-3.x`, `QD-PM-4.x`, `QD-PM-5.x` |
+| AS-05 | Tool Misuse, Unsafe Action Execution | `QD-T-3.1`, `QD-T-4.2`, `QD-T-4.3`, `QD-PM-3.4`, `QD-PM-5.x`, `QD-PM-6.3` |
 | AS-06 | Unbounded Consumption, Denial of Service | `QD-P-2.5.1`, `QD-S-2.x`, `QD-T-3.3` |
-| AS-07 | Insecure Error Handling, Failure Escalation | `QD-P-2.6.x`, `QD-S-4.x`, `QD-ST-3.7` |
-| AS-08 | Supply Chain, Tool / Plugin Risk | `QD-T-4.3`, `QD-T-5.x` |
-| AS-09 | Agentic System Misconfiguration | `QD-PS`, `QD-PT`, `QD-ST` |
+| AS-07 | Insecure Error Handling, Failure Escalation | `QD-P-2.6.x`, `QD-S-4.x`, `QD-ST-3.7`, `QD-PM-4.x` |
+| AS-08 | Supply Chain, Tool / Plugin Risk | `QD-T-4.3`, `QD-T-5.x`, `QD-PM-4.8` |
+| AS-09 | Agentic System Misconfiguration | `QD-PS`, `QD-PT`, `QD-ST`, `QD-PM-6.x` |
+
+**On the relationship between ASI03 and QD-PM**: OWASP 2026 treats ASI03 as the evolution of LLM06 Excessive Agency in agentic scenarios, one of its typical forms being "un-scoped privilege inheritance." This highly overlaps with `QD-PM-4.x` (permission propagation, downstream exceeds upstream, delegation escalation, INHERITED) in problem space, but the granularity differs: ASI03 is a risk result category, while `QD-PM-4.x` are statically locatable artifact defects. Relevance only states that "`QD-PM-4.x` is a common starting point toward ASI03," and does not claim that detecting `QD-PM-4.x` constitutes an ASI03 risk.
 
 #### Usage Limitations
 
@@ -1563,10 +1594,18 @@ This specification can reference OWASP risk language, but does not use OWASP num
 
 ---
 
+## Version History
+
+| Version | Date | Changes |
+|---------|------|---------|
+| v1.0 | 2026-09 | Initial release (including Inspect Permission QD-PM mappings) |
+
+---
+
 **The SanityOps Inspect Defect Impact and Linkage Mapping Specification v1.0 main text and appendices are now complete.**
 
 ---
 
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  July 2026
+v1.0  ·  September 2026

@@ -125,7 +125,8 @@ SanityOps Six-Subset Framework
 │   ├─ Inspect Tool ← Tool Schema defect inspection
 │   ├─ Inspect Prompt ← System Prompt defect inspection
 │   ├─ Inspect Skill ← Skill defect inspection (v2.4 completed)
-│   └─ Inspect CROSS ← Cross-logic artifact defect inspection
+│   ├─ Inspect CROSS ← Cross-logic artifact defect inspection
+│   └─ Inspect Permission ← Permission-responsibility proportionality inspection (QD-PM)
 │
 ├─ Risk (Risk Scanning)
 │   ├─ Risk Explicit ← Explicit Risk Audit ← Here
@@ -1817,7 +1818,8 @@ SanityOps Complete Audit Workflow
 │   ├─ Inspect Skill → Check Skill definitions
 │   ├─ Inspect Tool → Check Tool Schema
 │   ├─ Inspect Prompt → Check System Prompt
-│   └─ Inspect CROSS → Check cross-logic artifact consistency
+│   ├─ Inspect CROSS → Check cross-logic artifact consistency
+│   └─ Inspect Permission → Check permission-responsibility proportionality (QD-PM)
 │
 ├─ Phase 2: Risk Scanning
 │   ├─ Risk Explicit → Check explicit risks ← This specification
