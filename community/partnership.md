@@ -91,4 +91,4 @@ or audit—and believe AI agents need to become more governable—we would like 
 hear from you.
 
 - **Explore a partnership:** partnership@sanityops.org
-- **Evaluate SanityOps:** [sanityops.org/demo](https://www.sanityops.org/demo)
+- **Evaluate SanityOps:** [demo.sanityops.org](https://demo.sanityops.org/)
