@@ -120,7 +120,9 @@ Reads the latest inspection report and produces repaired artifacts. Use `--repor
 | Mode | What you need | What happens |
 | --- | --- | --- |
 | **Local only** | An LLM API key in `model.api_key` | Inspection runs entirely on your machine. No account and no upload required. |
-| **Connected to the Platform** | Additionally a Platform API key in `server.api_key` | Inspection still runs locally; the scanned artifacts are then pushed to a Platform project as a new version. |
+| **Connected to the Platform** | An LLM API key in `model.api_key` + a Platform API key in `server.api_key` | Inspection still runs locally; the scanned artifacts are then pushed to a Platform project as a new version. |
+
+Both modes require your own LLM API key — connecting to the Platform only adds artifact upload; the model is never run by the Platform.
 
 To connect the CLI to the Platform, take an API key from **Personal → API Keys** and store it:
 
@@ -167,10 +169,9 @@ Within the SanityOps Platform, however, we integrate all three into a unified sy
 
 - **Correlated Root-Cause Analysis**: Defects surfaced by Inspect are mapped against Risk's attack-surface findings and Quality's failure-mode patterns, enabling rapid root-cause localization behind output anomalies or risk incidents;
 - **Logical Artifact Version Management**: Every artifact iteration (e.g., `Agent_RAG_v3.2.1 → v3.2.2`) has its defect inspection, risk audit, and quality evaluation results consolidated into a traceable, auditable evidence chain;
-- **Analytics Dashboards & Reporting**: Searchable, exportable dashboards and compliance reports support cross-version trend comparisons of governance posture;
-- **Multi-User Collaboration**: Team-based user and permission management, integrated with existing CI/CD pipelines, code repositories, and knowledge bases.
+- **Analytics Dashboards & Reporting**: Searchable, exportable dashboards and compliance reports support cross-version trend comparisons of governance posture.
 
-> In short: **the open-source tools give you point-in-time detection capability; the Platform gives you correlated root-cause analysis, version traceability, and team collaboration in a continuous governance loop.** Each subset works independently — the Platform's value lies in organizing them into a persistent, collaborative, and auditable governance system, rather than simply bundling features together.
+> In short: **the open-source tools give you point-in-time detection capability; the Platform gives you correlated root-cause analysis, version traceability, and a continuous governance loop.** Each subset works independently — the Platform's value lies in organizing them into a persistent and auditable governance system, rather than simply bundling features together.
 
 ---
 

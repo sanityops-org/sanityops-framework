@@ -606,10 +606,8 @@ ls framework/
 
 **Framework includes**:
 
-- 10 complete Markdown specification documents
-- Reference implementations (Python / Go)
-- Defect mapping libraries and diagnostic engines
-- Practical cases and best practices
+- 11 complete Markdown specification documents — Core, Relevance, and the five Inspect, two Risk, and two Quality specifications
+- A CLI walkthrough ([Try the Tools](try-the-tools.md)) and a guided reading path ([Read the Framework](read-the-framework.md))
 
 ---
 
@@ -698,7 +696,7 @@ jobs:
           LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
 ```
 
-The CLI doubles as the release gate through its exit code: `0` when the artifacts are clean, `1` when defects are found, `2` on error. A non-zero status fails the pipeline step, so no extra `fail-on` configuration is needed. To archive results to the Platform, add `SANITYOPS_API_KEY` and `SANITYOPS_BASE_URL` to the step's environment — the scanned artifacts are then pushed to a project version on each run.
+To archive results to the Platform, add `SANITYOPS_API_KEY` and `SANITYOPS_BASE_URL` to the step's environment — the scanned artifacts are then pushed to a project version on each run.
 
 ---
 
