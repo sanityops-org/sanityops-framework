@@ -30,7 +30,7 @@ Learn how to statically scan System Prompts, Skills, and Tool Schemas for defini
 
 ### 4. Risk
 
-Audit explicit risks in logic artifacts, then validate implicit vulnerabilities through dynamic attack simulation in shadow environments.
+Audit explicit risks in logic artifacts, then validate implicit vulnerabilities through dynamic attack simulation in shadow sandboxes.
 
 → [Risk Introduction](/risk/)
 

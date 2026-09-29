@@ -116,7 +116,7 @@
 | Document Name | SanityOps Inspect Defect Impact and Linkage Mapping Specification |
 | Version | v1.0 |
 | Status | Released |
-| Date | July 2026 |
+| Date | September 2026 |
 | Applicable Framework | SanityOps Inspect, Risk, Quality Subsets |
 | Maintained by | SanityOps Specification Working Group |
 
@@ -170,7 +170,7 @@ This specification does not:
 
 - Add, delete, or modify existing Inspect rules or their `QD` numbers;
 - Directly determine static defects as already exploited vulnerabilities;
-- Replace Risk Implicit shadow environment attack validation;
+- Replace Risk Implicit shadow sandbox attack validation;
 - Replace Quality's final determination of actual output, task success, or release quality;
 - Replace IAM, network isolation, backend parameter validation, approval systems, runtime monitoring, or compliance controls;
 - Perform complete root cause attribution for retrieval, re-ranking, Embedding, model weights, databases, networks, or infrastructure.
@@ -190,7 +190,7 @@ This specification establishes mapping relationships based on the following Sani
 | Inspect Cross | v1.0 | Uses `QD-PS`, `QD-PT`, `QD-ST` numbering and consistency relationships |
 | Inspect Permission | v1.0 | Uses QD-PM numbering and permission baseline domain determinations (QD-PM-1~6) |
 | Risk Explicit | v1.0 | Uses `EX`, D1/D2/D3, S0–S3 risk model |
-| Risk Implicit | v1.0 | Uses shadow environment, dynamic attack, and continuous validation principles |
+| Risk Implicit | v1.0 | Uses shadow sandbox, dynamic attack, and continuous validation principles |
 | Quality Tool-Agent | v1.0 | Uses task success/failure, reliability, and risk-driven testing principles |
 | Quality RAG-Agent | v1.0 | Uses four-dimensional 12 metrics, critical test cases, and regression Gate principles |
 
@@ -241,7 +241,7 @@ The mapping strength, attack surfaces, candidate failure modes, validation recom
 | **Candidate Root Cause** | A prioritized investigation direction derived from quality failures or dynamic validation results; not a final root cause conclusion. |
 | **Compensating Control** | Controls external to the artifact, such as backend validation, IAM, gateways, approval, audit, or isolation mechanisms. |
 | **Static Evidence** | Artifact originals, Schemas, version hashes, rule hit locations, etc. |
-| **Dynamic Evidence** | Shadow environment attack results, call trajectories, parameter records, logs, and runtime outputs. |
+| **Dynamic Evidence** | Shadow sandbox attack results, call trajectories, parameter records, logs, and runtime outputs. |
 | **Quality Evidence** | Baseline test cases, Agent outputs, rule validations, Judge conclusions, metrics, and Gate results. |
 
 ### Abbreviations
@@ -290,7 +290,7 @@ A standard mapping relationship should have at least the following structure:
 | Defect Layer | Discovered `QD` defect | `QD-T-3.2 Raw Input Passthrough` |
 | Impact Layer | Attack surface or candidate failure mode | Parameter injection, parameter errors, downstream call failures |
 | Validation Layer | Risk or Quality recommended activities | Injection testing, boundary parameter testing, abnormal input regression |
-| Evidence Layer | Evidence supporting or refuting associations | Schema, call trajectories, shadow environment results, quality test case results |
+| Evidence Layer | Evidence supporting or refuting associations | Schema, call trajectories, shadow sandbox results, quality test case results |
 
 <a id="13-mapping-strength"></a>
 ### 1.3 Mapping Strength
@@ -442,7 +442,7 @@ Risk Implicit should use impact mapping as the test design input for dynamic val
 |---------------|---------------------|
 | Attack surface | Select attack strategies and input variants |
 | Potential impact | Define criteria for attack success, interception, or failure |
-| Applicability conditions | Configure shadow environment, Mock data, identity, permissions, and external dependencies |
+| Applicability conditions | Configure shadow sandbox, Mock data, identity, permissions, and external dependencies |
 | Defect chain | Design end-to-end attack paths across Prompt, Skill, and Tool |
 | Remediation recommendations | Form regression attack set after remediation |
 
@@ -454,7 +454,7 @@ Risk Implicit should use impact mapping as the test design input for dynamic val
 | **Attack successful** | Mapping gains dynamic empirical evidence; associated defect chain should be escalated in handling priority. |
 | **Intercepted by external control** | Artifact-layer defects may still exist; mark as "depends on compensating controls." |
 | **Model rejected or not triggered** | Not reproduced under current conditions; must not close static defect based on this. |
-| **Insufficient conditions** | Cannot determine; should supplement shadow environment, permissions, data, or call chain conditions. |
+| **Insufficient conditions** | Cannot determine; should supplement shadow sandbox, permissions, data, or call chain conditions. |
 
 <a id="25-high-priority-security-mapping-rules"></a>
 ### 2.5 High-Priority Security Mapping Rules
@@ -785,7 +785,7 @@ Mapping library rules and specific finding records must be separated:
 |---|---|---|
 | Artifact original text, Schema, version hash | Prove static defects and mapping prerequisites | High |
 | Prompt, Skill, Tool call trajectories | Prove actual execution behavior and chain relationships | High |
-| Shadow environment attack results | Prove exploitability, interception, or insufficient conditions | High |
+| Shadow sandbox attack results | Prove exploitability, interception, or insufficient conditions | High |
 | Quality baseline test cases, outputs, scores, and Gate | Prove actual quality performance | High |
 | Backend validation, IAM, approval, or gateway configuration | Prove compensating controls | High |
 | LLM inspection notes | Auxiliary explanation, generate candidate associations | Medium |
@@ -850,7 +850,7 @@ When influencing mapping output of Risk test recommendations, at least the follo
 | `success_criteria` | What behavior determines attack success |
 | `termination_status` | A/B/C/D |
 | `evidence_to_capture` | Call trajectories, parameters, logs, status changes, and output |
-| `safety_constraints` | Shadow environment isolation, anonymization, Mock, side-effect restrictions |
+| `safety_constraints` | Shadow sandbox isolation, anonymization, Mock, side-effect restrictions |
 | `regression_scope` | Templates and variants to re-run after remediation |
 
 <a id="45-quality-supplementary-test-and-diagnostic-fields"></a>
@@ -1039,7 +1039,7 @@ Customer-facing reports must clearly separate "confirmed facts" from "candidate 
 **Recommended Validation**
 - Risk Explicit: Review parameter description, default values, and examples for explicit dangerous expressions.
 - Risk Implicit: Parameter injection, encoding variants, boundary parameters, and downstream passthrough testing.
-- Required Conditions: Shadow environment, controlled test data, call traces, and Mock downstream services.
+- Required Conditions: Shadow sandbox, controlled test data, call traces, and Mock downstream services.
 
 **Potential Quality Associations**
 - Tool-Agent: FM-04 Parameter Generation Error, FM-05 Call Contract Mismatch, FM-08 Exception Recovery Failure.
@@ -1418,7 +1418,7 @@ evidence_requirements:
   dynamic:
     - Call parameter traces
     - Tool return records
-    - Shadow environment test results
+    - Shadow sandbox test results
   quality:
     - Baseline test case version
     - Agent output

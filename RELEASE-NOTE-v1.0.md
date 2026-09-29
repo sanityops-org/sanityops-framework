@@ -27,17 +27,15 @@
 
 ---
 
-## Downloads
+## Distribution
 
-| Asset | Description | Link |
-|-------|-------------|------|
-| `sanityops-cli-v1.0-linux-x64.tar.gz` | Linux x64 CLI | [Download](#) |
-| `sanityops-cli-v1.0-macos-x64.tar.gz` | macOS x64 CLI | [Download](#) |
-| `sanityops-cli-v1.0-macos-arm64.tar.gz` | macOS ARM64 CLI | [Download](#) |
-| `sanityops-cli-v1.0-windows-x64.zip` | Windows x64 CLI | [Download](#) |
-| `sanityops-framework-v1.0.zip` | Source code (zip) | [Download](#) |
-| `sanityops-framework-v1.0.tar.gz` | Source code (tar.gz) | [Download](#) |
-| `checksums-sha256.txt` | SHA256 checksums | [Download](#) |
+The Framework and the CLI are versioned independently — only the Framework carries the v1.0 label.
+
+| What | Where |
+|------|-------|
+| Framework specification | [GitHub repository](https://github.com/sanityops-org/sanityops-framework) — CC BY-SA 4.0 |
+| Defect Inspector CLI | `pip install sanityops-cli`, or the [install scripts](https://github.com/sanityops-org/sanityops-cli#installation) for macOS, Linux, and Windows |
+| CLI source and releases | [sanityops-org/sanityops-cli](https://github.com/sanityops-org/sanityops-cli) — Apache 2.0 |
 
 ---
 
@@ -45,13 +43,16 @@
 
 ```bash
 # Install via PyPI
-pip install sanityops-defect-inspector
+pip install sanityops-cli
 
-# Or download binary from releases above
+# Create .sanityops/inspect_config.yaml and list your artifacts
+sanityops-cli init
 
-# Run inspection
-sanityops inspect --prompt ./system-prompt.md
+# Run inspection — requires an LLM API key of your own
+sanityops-cli inspect
 ```
+
+See [Try the Tools](/framework/try-the-tools) for install options, configuration, and check levels.
 
 ---
 

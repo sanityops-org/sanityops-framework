@@ -134,7 +134,7 @@ RAGAS provides a library of scoring functions. The typical usage pattern is: Pre
 
 ### Tool-Agent workflow
 
-The Tool-Agent track follows a **seven-step process** with risk-tiered parameters: Risk Classification (L1/L2/L3) → Parameter Configuration → Mock Data Preparation (normal/boundary/abnormal scenarios generated from Logic Artifacts) → N Independent Test Executions in Shadow Environment → Reliability Calculation (with statistical confidence interval estimation) → Gate Decision (with Ratchet Mechanism) → Result Output.
+The Tool-Agent track follows a **seven-step process** with risk-tiered parameters: Risk Classification (L1/L2/L3) → Parameter Configuration → Mock Data Preparation (normal/boundary/abnormal scenarios generated from Logic Artifacts) → N Independent Test Executions in Shadow Sandbox → Reliability Calculation (with statistical confidence interval estimation) → Gate Decision (with Ratchet Mechanism) → Result Output.
 
 RAGAS has no corresponding mechanism; it does not support risk-tiered differentiation of test rigor.
 
@@ -167,7 +167,7 @@ RAGAS does not include built-in version baseline comparison or regression govern
 | Dimension                   | SanityOps Quality                                                                                       | RAGAS                                                                         |
 | --------------------------- | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | Standard Workflow           | Six-step closed loop with gate adjudication and evidence formation.                                     | Scoring function library; typical usage is "prepare → score → obtain result." |
-| Tool-Agent Workflow         | Seven-step process with risk-tiered parameters, Shadow Environment execution, and confidence intervals. | No corresponding mechanism.                                                   |
+| Tool-Agent Workflow         | Seven-step process with risk-tiered parameters, Shadow Sandbox execution, and confidence intervals. | No corresponding mechanism.                                                   |
 | Risk-Tiered Differentiation | Test sample size and pass thresholds vary by Business Impact Level (L1/L2/L3).                          | No risk-tiering concept; uniform scoring logic for all samples.               |
 | Evidence Retention          | Mandatory: version, test case, source, and conclusion evidence retained per evaluation.                 | Single-run output; no mandated governance evidence retention.                 |
 | Result Utilization          | Three-layer: Release (Gate), Optimization, Governance.                                                  | Model/pipeline comparison and iteration.                                      |

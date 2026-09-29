@@ -4,7 +4,7 @@
 
 **Version**: v1.0
 
-**Release Date**: July 2026
+**Release Date**: September 2026
 
 **Maintainer**: SanityOps Working Group
 
@@ -1380,6 +1380,8 @@ All external materials, product interfaces, or evaluation reports SHALL accurate
 | Exception | An approved, traceable, time-limited Risk Acceptance or rule exception. |
 | Compensating Control | An alternative or supplementary control for reducing residual risk when the root cause cannot be immediately eliminated. |
 | Candidate Root Cause | A possible root cause with associated evidence, but not yet sufficiently confirmed. |
+| Shadow Sandbox | A fully isolated, high-fidelity sandbox in which an Agent's behavior is observed under controlled conditions — attack execution in Risk Implicit, quality evaluation in Quality — without affecting real data or business. |
+| Ratchet Mechanism | A cross-round constraint mechanism ensuring fixed defects cannot silently recur and narrowed permissions cannot silently expand, so quality and security posture can only rise or hold; any relaxation must be explicit and approved. |
 
 ---
 

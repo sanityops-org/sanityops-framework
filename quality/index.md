@@ -70,7 +70,7 @@ Quality fills this gap with two complementary assessment methodologies tailored 
 | **L2** | Medium — customer-facing, business operations | 50 | 95% |
 | **L3** | High — financial, compliance, security-critical | 100 | 100% |
 
-**Assessment workflow**: Risk Classification → Parameter Configuration → Mock Data Generation → Shadow Environment Execution → Reliability Calculation → Gate Determination → Result Output
+**Assessment workflow**: Risk Classification → Parameter Configuration → Mock Data Generation → Shadow Sandbox Execution → Reliability Calculation → Gate Determination → Result Output
 
 ---
 

@@ -4,7 +4,7 @@
 
 **Version**:v1.0
 
-**Release Date**:July 2026 
+**Release Date**: September 2026 
 
 **Maintained by**:SanityOps Quality Working Group
 
@@ -1532,4 +1532,4 @@ Exception explanation and risk acceptance record:
 ---
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  July 2026
+v1.0  ·  September 2026

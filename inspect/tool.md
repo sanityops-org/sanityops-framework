@@ -1904,4 +1904,4 @@ For defects that cannot be remediated, a Risk Acceptance statement must be signe
 
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  July 2026
+v1.0  ·  September 2026

@@ -1,6 +1,6 @@
 ﻿# Risk — Agent Security Risk Detection
 
-**Proactive security validation for AI Agents. Audits explicit risks embedded in Logic Artifacts and dynamically validates implicit vulnerabilities through attack execution in shadow environments.**
+**Proactive security validation for AI Agents. Audits explicit risks embedded in Logic Artifacts and dynamically validates implicit vulnerabilities through attack execution in shadow sandboxes.**
 
 ---
 
@@ -33,7 +33,7 @@ Traditional runtime Guardrails face an **impossible triangle** of real-time dete
 
     Dynamic validation of implicit runtime vulnerabilities.
 
-    Generates artifact-driven, targeted attack test cases from Inspect defect data, executes them against the Agent in a **Shadow Environment**, and classifies outcomes into four termination statuses: **A** (Attack Successful), **B** (Blocked by Third Party), **C** (LLM Refused), and **D** (Test Conditions Not Met). Produces a **Signal Score** and Gate decision for release admission.
+    Generates artifact-driven, targeted attack test cases from Inspect defect data, executes them against the Agent in a **Shadow Sandbox**, and classifies outcomes into four termination statuses: **A** (Attack Successful), **B** (Blocked by Third Party), **C** (LLM Refused), and **D** (Test Conditions Not Met). Produces a **Signal Score** and Gate decision for release admission.
 
     **Four core design principles**: Relevance, Safety, Measurability, Integrability
 
@@ -72,7 +72,7 @@ Attack Strategy Derivation ── artifact-driven, not blind
 Test Case Generation ── parameterized, targeted
     │
     ▼
-Shadow Environment Execution ── safe isolation
+Shadow Sandbox Execution ── safe isolation
     │
     ▼
 Termination Status Classification ── A / B / C / D
@@ -119,5 +119,5 @@ Relevance (Relevance Assessment)
 
 1. Complete [Inspect](/inspect/) first — Risk Explicit and Implicit both depend on defect data from Inspect
 2. Run [Risk Explicit](./explicit.md) to audit artifacts for dangerous expressions, scripts, and dangerous authorizations
-3. Run [Risk Implicit](./implicit.md) in a Shadow Environment to validate whether identified defects form real attack surfaces
+3. Run [Risk Implicit](./implicit.md) in a Shadow Sandbox to validate whether identified defects form real attack surfaces
 4. Feed results to [Relevance](/framework/relevance) for defect → risk diagnostic mapping

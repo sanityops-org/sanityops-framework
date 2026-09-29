@@ -6,7 +6,7 @@
 
 **Version**: v1.0
 
-**Release Date**: July 2026
+**Release Date**: September 2026
 
 **Maintained by**: SanityOps Risk Working Group
 
@@ -410,7 +410,7 @@ Harm Assessment:
 | Version | Release Date | Major Changes |
 |---------|--------------|---------------|
 | v1.1 | 2026-07 | Added standardized preface, reading guide, explicit risk definition, Appendix A/B/C |
-| v1.0 | 2026-07 | Integrated four core documents, formed complete scoring scheme |
+| v1.0 | 2026-09 | Integrated four core documents, formed complete scoring scheme |
 | v0.603 | 2026-06 | Added NL-A-9, NL-B-10 scope constraints, NR-O-4 joint marker |
 | v0.602 | 2026-06 | Base framework release, defined NL/NR dichotomy |
 
@@ -1835,4 +1835,4 @@ SanityOps Complete Audit Workflow
 
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  July 2026
+v1.0  ·  September 2026

@@ -2552,4 +2552,4 @@ Step 3: Compliance Determination
 
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  July 2026
+v1.0  ·  September 2026

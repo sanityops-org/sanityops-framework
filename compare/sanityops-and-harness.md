@@ -26,7 +26,7 @@ An Agent system can be understood as two parts: **Logic Design (Blueprint)** and
 | **Security Mechanism** | Logic vulnerability scanning (discovering design defects)                 | Runtime guardrails (rate limiting, timeout circuit breakers, permission validation)           |
 | **Explicit Boundary**  | Does not handle building, orchestrating, or running Agents                | Does not judge whether rule designs themselves are reasonable                                 |
 
-**Key Distinction**: SanityOps Risk validates whether Tool Schema defects can be actually exploited by **constructing attack test cases and dynamically validating in shadow environments**. Harness safety guardrails are **runtime protection** (call frequency, timeouts, permissions, etc.). The two are complementary, not substitutes.
+**Key Distinction**: SanityOps Risk validates whether Tool Schema defects can be actually exploited by **constructing attack test cases and dynamically validating in shadow sandboxes**. Harness safety guardrails are **runtime protection** (call frequency, timeouts, permissions, etc.). The two are complementary, not substitutes.
 
 ---
 

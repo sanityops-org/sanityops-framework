@@ -18,7 +18,7 @@ SanityOps operates around four core activities, each answering a key question:
 | Domain | Core Question | What You Can Do | What You Get |
 | --- | --- | --- | --- |
 | **Inspect** | Do Logic Artifact definitions or cross-artifact relationships contain static defects? | Static analysis of System Prompts, Skills, Tool Schemas, and cross-artifact consistency | Defect ID (QD), static evidence, severity level, remediation recommendations |
-| **Risk** | Do Logic Artifacts contain explicit risks, or can security risk behaviors be triggered in controlled environments? | Static audit of explicit risks (Explicit), dynamic validation of implicit risks in shadow environments (Implicit) | Risk classification (EX), damage level (D1/D2/D3), signal level (S/A/B/C/D), validation evidence |
+| **Risk** | Do Logic Artifacts contain explicit risks, or can security risk behaviors be triggered in controlled environments? | Static audit of explicit risks (Explicit), dynamic validation of implicit risks in shadow sandboxes (Implicit) | Risk classification (EX), damage level (D1/D2/D3), signal level (S/A/B/C/D), validation evidence |
 | **Quality** | Does the Agent's actual task or user-visible service meet defined quality requirements? | Controlled blind testing of RAG-Agents and Tool-Agents, with test rigor configured by business risk tier | Reliability metrics, test case results, quality Gate decisions, regression conclusions |
 | **Relevance** | Which attack surfaces, validation strategies, failure modes, and regression requirements may static defects be associated with? | Map defects discovered by Inspect to candidate attack surfaces, failure modes, and test recommendations | Attack Surface (AS), Failure Mode (FM), defect chains, mapping recommendations, candidate root causes |
 
@@ -101,7 +101,7 @@ The following three detailed comparison documents respectively depart from three
 
 | Document | Comparison Object | SanityOps Subset | Core Comparison Dimensions |
 | --- | --- | --- | --- |
-| [vs. Promptfoo](/compare/compare-with-promptfoo.html) | Promptfoo | Risk Implicit | Root-cause localization, artifact-driven attack generation, shadow environment isolation |
+| [vs. Promptfoo](/compare/compare-with-promptfoo.html) | Promptfoo | Risk Implicit | Root-cause localization, artifact-driven attack generation, shadow sandbox isolation |
 | [vs. RAGAS](/compare/compare-with-ragas.html) | RAGAS | Quality | Governance framework vs. evaluation library, critical-item independent gating, test case assetization |
 | [vs. NVIDIA SkillSpector](/compare/compare-with-skillspector.html) | SkillSpector | Inspect + Risk | Governance closed loop vs. security scanning, cross-artifact consistency |
 

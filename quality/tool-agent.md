@@ -6,7 +6,7 @@
 
 **Version**: v1.0
 
-**Release Date**: July 2026
+**Release Date**: September 2026
 
 **Maintained by**: SanityOps Quality Working Group
 
@@ -437,13 +437,13 @@ Agent service quality assessment:
 <a id="41-core-elements"></a>
 ### 4.1 Core Elements
 
-<a id="411-shadow-environment"></a>
-#### 4.1.1 Shadow Environment
+<a id="411-shadow-sandbox"></a>
+#### 4.1.1 Shadow Sandbox
 
-Shadow environment is an isolated assessment environment equivalent to production, for observing Agent behavior under controlled conditions.
+Shadow sandbox is an isolated assessment environment equivalent to production, for observing Agent behavior under controlled conditions.
 
 ```
-Shadow environment composition:
+Shadow sandbox composition:
 ├─ Logic artifact replicas
 │   ├─ Agent code (processing logic)
 │   ├─ System Prompt
@@ -466,7 +466,7 @@ Shadow environment composition:
     └─ Fully isolated from production systems
 ```
 
-**Shadow environment value:**
+**Shadow sandbox value:**
 
 ```
 ├─ Repeatability: Same input can execute multiple times, supporting statistical analysis
@@ -543,7 +543,7 @@ Scenario: Student ID query Agent
     └─ Task process executed correctly → Determined as success
 ```
 
-**Conclusion:** In shadow environments, assessment focuses on **whether LLM correctly executed the task process**, not **whether data is authentic and correct**. Mock data, as long as it conforms to Schema, can effectively drive LLM to complete the reasoning process, thereby achieving effective assessment of Agent reliability.
+**Conclusion:** In shadow sandboxes, assessment focuses on **whether LLM correctly executed the task process**, not **whether data is authentic and correct**. Mock data, as long as it conforms to Schema, can effectively drive LLM to complete the reasoning process, thereby achieving effective assessment of Agent reliability.
 
 <a id="413-binary-determination"></a>
 #### 4.1.3 Binary Determination
@@ -667,7 +667,7 @@ Step 3: Mock data preparation
 └─ Cover normal, boundary, and abnormal scenarios
 
 Step 4: Execution and determination
-├─ Execute N independent tests in shadow environment
+├─ Execute N independent tests in shadow sandbox
 ├─ Binary determination after each execution (focus on final result)
 └─ Record execution trajectory and determination results
 
@@ -813,11 +813,11 @@ Generation principles:
 <a id="521-determination-principle"></a>
 #### 5.2.1 Determination Principle
 
-In shadow environments, output determination core is **process correctness**, not data authenticity.
+In shadow sandboxes, output determination core is **process correctness**, not data authenticity.
 
 ```
 Determination logic:
-├─ Shadow environment data produced by Mock Data Agent (possibly "fabricated")
+├─ Shadow sandbox data produced by Mock Data Agent (possibly "fabricated")
 ├─ Assessment focuses on: Did LLM correctly execute the task process
 │   ├─ Correctly understood input intent
 │   ├─ Correctly selected tool
@@ -962,7 +962,7 @@ Recommended workflow:
 
 ```
 When assessment reliability doesn't meet standards:
-├─ Step 1: Export shadow environment recorded failure transaction logs
+├─ Step 1: Export shadow sandbox recorded failure transaction logs
 ├─ Step 2: Submit to SanityOps Inspect for defect localization
 ├─ Step 3: Inspect analyzes logs, localizes logic artifact defects causing failures
 ├─ Step 4: Fix defects based on localization results
@@ -1074,7 +1074,7 @@ Ratchet mechanism application:
 - LLM-as-judge itself has extremely low probability of determination bias
 - Response: Manual sampling for edge cases, clear determination standards
 
-**Limitation 3: Shadow Environment vs Production Environment Differences**
+**Limitation 3: Shadow Sandbox vs Production Environment Differences**
 
 - Mock external dependency behaviors may differ from real systems
 - Response: Regular comparison validation, critical dependencies use real services (read-only mode)
@@ -1109,7 +1109,7 @@ Ratchet mechanism application:
 | Term | Definition |
 |------|------------|
 | Reliability | Probability of Agent successfully completing tasks in multiple executions |
-| Shadow Environment | Isolated assessment environment equivalent to production |
+| Shadow Sandbox | Isolated assessment environment equivalent to production |
 | Mock Data | Simulated data generated based on logic artifacts, for driving assessment and determination |
 | Mock Data Agent | Component that parses logic artifacts and generates simulated data conforming to structural constraints |
 | Binary Determination | Each execution determined as success or failure, no intermediate states |
@@ -1142,4 +1142,4 @@ $$
 
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  July 2026
+v1.0  ·  September 2026

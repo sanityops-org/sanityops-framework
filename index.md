@@ -24,7 +24,7 @@ features:
     link: /inspect/
   - icon: 🛡️
     title: Risk
-    details: Audit explicit risks and validate implicit risks in a shadow environment, extending into Risk audit & validation for AI Agents.
+    details: Audit explicit risks and validate implicit risks in a shadow sandbox, extending into Risk audit & validation for AI Agents.
     link: /risk/
   - icon: ✅
     title: Quality
