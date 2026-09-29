@@ -9,47 +9,80 @@
 
 ---
 
-[![Version](https://img.shields.io/badge/version-v1.0-blue)](https://github.com/sanityops) [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/) [![AI Agent Governance](https://img.shields.io/badge/AI%20Agent-Governance-6f42c1)](https://github.com/sanityops)
+[![Version](https://img.shields.io/badge/version-v1.0-blue)](https://github.com/sanityops-org/sanityops-framework) [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/) [![AI Agent Governance](https://img.shields.io/badge/AI%20Agent-Governance-6f42c1)](https://github.com/sanityops-org/sanityops-framework)
 
 ---
 
-> **A full-lifecycle governance system for enterprise-grade AI Agent reliability and security** — built for teams that design, deploy, and continuously adjust Agent logic, including Forward Deployed Engineers (FDEs).
+> A vendor-neutral, enterprise-grade quality and safety governance framework covering the full lifecycle of AI Agents.
 
-> ⚠️ **Common Misconception**: "Logic artifacts written by LLMs have no defects." This is a fundamental misunderstanding — LLMs optimize for "generating useful content," not "exhaustively verifying constraints." This trade-off will not disappear as models evolve. Logic artifacts always require systematic inspection independent of the generation process. This is the fundamental reason SanityOps exists.
+<details>
+<summary>Table of Contents</summary>
 
----
+- [Background](#background)
+- [Introduction](#introduction)
+- [Key Features](#key-features)
+- [Architecture](#architecture)
+- [Value](#value)
+- [Get Started](#get-started)
+- [Use Cases & Capabilities](#use-cases--capabilities)
+- [Relationship with Harness](#relationship-with-harness)
+- [Ecosystem](#ecosystem)
+- [Terminology](#terminology)
+- [Road Map](#road-map)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact Us](#contact-us)
 
-## ✨ What is SanityOps
-
-SanityOps is a continuous governance framework built on defect inspection of Agent Logic Artifacts — System Prompts, Skills, and Tool Schemas — that closes a bidirectional loop spanning Agent quality assessment and risk detection.
-
-SanityOps does not promise that Agent governance will always be correct or absolutely secure. Its objective is to bring the controllable, versionable, and verifiable defects of Agent Logic Artifacts into a governance closed loop that continuously inspects, validates, regresses, and documents evidence — mapping those defects against risk and quality — and thereby systematically reducing the uncertainty of Agent behavior and the business and security risks that uncertainty creates.
-
----
-
-## 🎯 Why SanityOps
-
-Why does SanityOps start with Logic Artifacts? Many factors influence Agent quality and risk: model capability, knowledge content, retrieval strategy, context, tooling, runtime environment, and user input can all cause failures.
-
-But one root cause stands above the rest: **defects in Logic Artifacts are the closest to business design, the most directly controllable by the team, the most suited to version management, and the most amenable to systematic remediation.**
-
-The role definitions, examples, knowledge-invocation rules, and inter-artifact coordination relationships contained in System Prompts, Skills, and Tool Schemas constitute, in essence, the Agent's "executable logic." When that logic suffers from missing definitions, fuzzy boundaries, conflicting constraints, mismatched permissions, incomplete information, or Cross-Artifact inconsistency, the defects ride through the LLM API into model reasoning and tool invocation. They can then manifest as:
-
-- Output that is inaccurate, incomplete, inconsistent, or untraceable;
-- Bypassed instructions, privilege escalation, sensitive-information disclosure, or dangerous operations;
-- And, because these production issues are difficult to reproduce and localize, they become even harder to optimize and to prove remediated.
-
-Traditional software engineering has compilers, tests, release gates, and traceable change management. The core Logic Artifacts of an Agent typically lack engineering governance of comparable maturity.
-
-SanityOps therefore starts from Logic Artifacts: it converts the writing and optimization of Logic Artifacts — which has traditionally depended on individual skill and experience — into a governance process that is **inspectable, evidencable, mappable, remediable, and regression-verifiable.**
-
-> SanityOps does not claim that static inspection explains everything. It treats Logic Artifact governance as the actionable starting point, and continuously reduces Agent uncertainty through runtime risk detection and quality assessment.
+</details>
 
 ---
 
-## 🏗️ Architecture
+## Background
 
-### Division of Labor Across the Professional Systems
+Runtime evaluation of an Agent's output quality and detection of sophisticated logical attacks fall into an "impossible triangle" — business real-time requirements, judgment complexity, and long context — which is a fundamental constraint that cannot be solved through engineering alone. As a result, the industry consensus is to shift checks left into CI/CD. But once shifted left, what exactly should be checked, what criteria should be checked against, and what standard should be used to grant release? The high-frequency, hot-iteration nature unique to Agents causes the same class of problems to recur every time a Prompt, Skill, or Tool Schema is modified. SanityOps is designed precisely to answer these three questions.
+
+---
+
+## Introduction
+
+The output quality and logical vulnerabilities of an Agent are closely tied to the rigor of each logical artifact (Prompt, Skill, Tool Schema, Permission), manifesting as a wide variety of defects as well as permission requests disproportionate to the assigned responsibilities.
+
+In our evaluation of both publicly available and internal enterprise Agent logical artifacts, over 90% of samples contained at least one defect as defined by the Inspect rules; this phenomenon is widespread not only in human-written logical artifacts but also in LLM-generated ones.
+
+Therefore, we start from the inspection and remediation of defects and permissions in logical artifacts, and extend to evaluating Agent output quality and detecting logical risks.
+
+Through near-real-time synchronization with Git and shadow sandbox that mirror production, SanityOps weaves defect inspection, permission checks, explicit/implicit risk audits, and quality evaluation into a continuous governance loop that runs in lockstep with rapid iteration.
+
+---
+
+### Framework and Platform
+
+SanityOps has two parts:
+
+1. **Framework (the specification)** — the complete methodology across Inspect, Risk, Quality, Relevance, and Core, published as open specification documents (CC BY-SA 4.0).
+
+2. **Platform (the tooling)** — the set of tools that implement the specifications above:
+   
+   - 🟢 **Open source** — the standalone Defect Inspector CLI (Apache 2.0, supporting L1/L2/L3).
+   
+   - 🔵 **Commercial** — the full feature suite (Defect Inspector, Risk Scanner, Quality Evaluator), offered as hosted, SaaS, or self-deployed services.
+
+---
+
+## Key Features
+
+- Like a "compiler" for AI logic, it establishes a complete inspection framework targeting defects in logical artifacts (→ Inspect);
+- Establishes mapping relationships among defects, permissions, quality, and risk, aiding problem localization and remediation (→ Relevance / Inspect Permission);
+- Establishes methods for generating test cases and mock data based on logical artifacts, making Red Team exercises more targeted and effective (→ Risk Implicit / Quality);
+- Establishes dedicated quality evaluation dimensions and metric systems tailored to the distinct service forms of RAG-Agents and Tool-Agents respectively (→ Quality RAG-Agent / Quality Tool-Agent);
+- Performs dynamic verification in a shadow environment equivalent to production, more closely reflecting real operating conditions than traditional sandboxes (→ Risk Implicit);
+- A ratchet mechanism synchronized with logical artifact versions provides a simple yet effective production-line admission method for hot iterations (→ Quality / Core: Baseline & Gate).
+
+---
+
+## Architecture
+
+### Division of Labor Among Subsets
 
 ```
 SanityOps Framework
@@ -75,105 +108,113 @@ SanityOps Framework
 
 ### Framework Workflow
 
-<img src="/assets/sanityops.svg" alt="SanityOps Architecture" width="650" />
+Inspect performs static defect, permission and explicit risk checks on logical artifacts; Relevance maps discovered defects to Risk attack surfaces and Quality failure modes; Risk (implicit) and Quality complete dynamic verification and evaluation in the shadow sandbox; finally, Gate makes the release decision based on the baseline and ratchet mechanism. This closed loop automatically reruns with every logical artifact version change.
+
+![](assets/sanityops-workflow.svg)
 
 ---
 
-## 👽 Who is this for
+## Value
 
-| Role | In one sentence |
-| --- | --- |
-| **CTO/CIO** | Design standardized quality and security scaffolding for enterprise AI practice |
-| **Agent Development & Test** | Use the guidance framework and automated tooling to raise the quality and efficiency of Logic Artifact development and testing |
-| **Agent Quality Assurance** | Assess Agent runtime quality in lockstep with versioning, ensuring the Agent always performs at a high standard |
-| **Agent Security Audit** | Detect Agent Explicit and Implicit Risks in lockstep with versioning, maintaining a high security posture |
-| **Platform Engineers** | Integrate governance into CI/CD, forming an automated loop of hot iteration, quality, and security |
-| **FDEs** | Provide FDE teams with dependable, high-quality enterprise Agent practice guidance |
-
----
-
-## 🤖 Forward Deployed Engineers (FDE)
-
-FDEs build and adjust AI agents in real customer environments, connecting business workflows, data, tools, policies, and human review.
-
-SanityOps helps FDE teams turn fast, customer-specific iterations into repeatable delivery disciplines:
-
-- **Inspect** prompts, skills, tool patterns, and cross-artifact logic before release
-
-- **Validate** explicit risks and adversarial failure paths for high-impact workflows
-
-- **Assess** task quality against customer-specific baselines and release gates
-
-- **Retain** findings and evidence across iterations, handoffs, and audits
-
-SanityOps does not replace FDE judgment, implementation work, observability, IAM, or production operations. It wraps the Agent logic that FDE teams constantly design and change with a governance loop.
+| Role                                | One-line description                                                                                                                                 |
+| ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **CTO/CIO**                         | Design a standardized quality and safety scaffold for enterprise AI projects, backed by quantified scores                                            |
+| **Agent Developer/Tester**          | Improve the quality and efficiency of logical artifact development and testing with guiding frameworks and automated tools                           |
+| **Agent Quality Assurance**         | Provide quantifiable evaluation and admission decisions for Agent quality in sync with versioning, continuously controlling regression risk          |
+| **Agent Security Audit**            | Detect explicit and implicit Agent risks in sync with versioning, establish a quantifiable security baseline, and re-verify on every artifact change |
+| **Platform Engineer**               | Integrate the governance process into CI/CD to form an automated closed loop of hot iteration, quality, and safety                                   |
+| **FDE (Forward Deployed Engineer)** | Provide reliable, high-quality practice guidance for enterprise Agents                                                                               |
 
 ---
 
-## 🧩 Use Cases & Capabilities
+## Get Started
 
-| Scenario | Typical Example | Reference Document | Tool |
-| --- | --- | --- | --- |
-| **Prompt quality self-check** | Before a developer submits a new System Prompt, check for contradictions, unclear boundaries, missing permissions, and other defects | [Inspect Prompt](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/prompt.md) | 🟢 Defect Inspector |
-| **Skill definition audit** | Inspect whether a Skill's trigger conditions, permission declarations, and failure strategies contain logic loopholes | [Inspect Skill](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/skill.md) | 🟢 Defect Inspector |
-| **Tool Schema compliance check** | Verify whether a Tool Schema's parameter constraints and side-effect declarations comply with the specification | [Inspect Tool](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/tool.md) | 🟢 Defect Inspector |
-| **Cross-Artifact Consistency verification** | Verify that authorization, parameters, and contracts are consistent across Prompt–Skill–Tool | [Inspect Cross](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/cross.md) | 🟢 Defect Inspector |
-| **Permission-responsibility proportionality check** | Verify that the authority granted to an Agent is proportionate to its responsibilities | [Inspect Permission](https://github.com/sanityops-org/sanityops-framework/blob/main/inspect/permission.md) | 🟢 Defect Inspector |
-| **Explicit Risk Audit** | Audit and quantitatively rate dangerous expressions, scripts, and dangerous authorizations in Logic Artifacts | [Risk Explicit](https://github.com/sanityops-org/sanityops-framework/blob/main/risk/explicit.md) | 🔵 Risk Scanner |
-| **Implicit Risk attack validation** | Simulate complex logic attacks in a Shadow Environment to detect runtime vulnerabilities | [Risk Implicit](https://github.com/sanityops-org/sanityops-framework/blob/main/risk/implicit.md) | 🔵 Risk Scanner |
-| **Tool-Agent reliability assessment** | Evaluate the task success rate of tool-based Agents; establish risk-driven test rigor | [Quality Tool-Agent](https://github.com/sanityops-org/sanityops-framework/blob/main/quality/tool-agent.md) | 🔵 Quality Evaluator |
-| **RAG-Agent quality assessment** | Assess knowledge-based Agents across four dimensions and 12 metrics — accuracy, completeness, relevance, traceability, timeliness | [Quality RAG-Agent](https://github.com/sanityops-org/sanityops-framework/blob/main/quality/rag-agent.md) | 🔵 Quality Evaluator |
-| **Enterprise Agent release admission** | Before a financial enterprise's financial-analysis Agent ships, pass the Inspect + Risk + Quality three-Gate check and generate a release report | [Core](https://github.com/sanityops-org/sanityops-framework/blob/main/framework/core.md), [Relevance](https://github.com/sanityops-org/sanityops-framework/blob/main/framework/relevance.md) | 🔵 Full tool suite |
-| **Defect → risk/quality diagnosis** | Correlate Inspect-discovered defects with Risk Attack Surfaces and Quality Failure Modes to localize root causes | [Relevance](https://github.com/sanityops-org/sanityops-framework/blob/main/framework/relevance.md) | 🔵 Full tool suite |
-| **Quality degradation regression** | After Logic Artifact changes, detect quality degradation through regression testing, producing the basis for release decisions | [Quality RAG-Agent](https://github.com/sanityops-org/sanityops-framework/blob/main/quality/rag-agent.md) | 🔵 Quality Evaluator |
-| **Compliance audit evidence generation** | Provide audit departments with traceable version records, assessment reports, and Gate decision evidence | [Core](https://github.com/sanityops-org/sanityops-framework/blob/main/framework/core.md) | 🔵 Full tool suite |
+The framework specification is fully open; the Inspect CLI is open source (Apache 2.0); Risk and Quality are offered as a SaaS demo and self-hosted deployment.
 
-> 🟢 Open-source tooling (Defect Inspector) | 🔵 Commercial tooling (Risk Scanner, Quality Evaluator)
->
-> The open specification documents are sufficient to guide a team in building its own inspection/assessment tooling. If you would rather not start from scratch, we provide ready-made tools.
+- **Read the framework** — a guided reading path: [Read the Framework](framework/read-the-framework.md)
+- **Try the Inspect CLI** — install and run static defect checks locally or in CI/CD: [Try the Tools](framework/try-the-tools.md) · `pip install sanityops-cli`
+- **Try the live demo** — the full Inspect + Risk + Quality loop: [demo.sanityops.org](https://demo.sanityops.org/)
 
 ---
 
-## 📌 Current Status
+## Use Cases & Capabilities
 
-**v1.0 · July 2026**
-
-- ✅ Framework core specification published
-- ✅ A complete methodology system across Inspect, Risk, Quality, and Relevance
-- ✅ Defect Inspector fully open sourced, with a free CLI
-- ✅ Risk Scanner and Quality Evaluator available as commercial SaaS / self-hosted offerings
-
----
-
-## 🤝 Contributing
-
-We welcome improvements via Issues, Pull Requests, or Discussions:
-
-- Submit new Logic Artifact defect patterns
-- Share risk audit and attack validation case studies
-- Contribute quality assessment baselines and test sets
-- Discuss the evolution of terminology, rules, tiering, and Gates
+| Scenario                                    | Typical Example                                                                                                                          | Reference Document                                             | Tool                 |
+| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- | -------------------- |
+| **Prompt quality self-check**               | Before submitting a new System Prompt, check for contradictions, unclear boundaries, missing permissions, and other defects              | [Inspect Prompt](inspect/prompt.md)                            | 🟢 Defect Inspector  |
+| **Skill definition audit**                  | Check whether the Skill's trigger conditions, permission declarations, and failure strategy contain logical flaws                        | [Inspect Skill](inspect/skill.md)                              | 🟢 Defect Inspector  |
+| **Tool Schema compliance check**            | Verify whether Tool Schema parameter constraints and side-effect declarations comply with specifications                                 | [Inspect Tool](inspect/tool.md)                                | 🟢 Defect Inspector  |
+| **Cross-artifact consistency verification** | Verify whether authorization, parameters, and contracts among Prompt–Skill–Tool are consistent                                           | [Inspect Cross](inspect/cross.md)                              | 🟢 Defect Inspector  |
+| **Permission proportionality check**        | Check whether permissions granted to an Agent exceed its responsibility boundaries, evaluating permission-responsibility proportionality | [Inspect Permission](inspect/permission.md)                    | 🟢 Defect Inspector  |
+| **Explicit risk audit**                     | Audit and quantitatively grade dangerous expressions, scripts, and dangerous authorizations in logical artifacts                         | [Risk Explicit](risk/explicit.md)                              | 🔵 Risk Scanner      |
+| **Implicit risk attack verification**       | Simulate sophisticated logical attacks in the shadow environment to detect runtime vulnerabilities                                       | [Risk Implicit](risk/implicit.md)                              | 🔵 Risk Scanner      |
+| **Tool-Agent reliability evaluation**       | Evaluate the task success rate of tool-based Agents, establishing risk-driven testing rigor                                              | [Quality Tool-Agent](quality/tool-agent.md)                    | 🔵 Quality Evaluator |
+| **RAG-Agent quality evaluation**            | Evaluate knowledge-based Agents' accuracy, completeness, relevance, traceability, and timeliness through four dimensions and 12 metrics  | [Quality RAG-Agent](quality/rag-agent.md)                      | 🔵 Quality Evaluator |
+| **Enterprise Agent go-live admission**      | Before an enterprise's Agent goes live, pass three Gates — Inspect + Risk + Quality — and generate a release report                      | [Core](framework/core.md), [Relevance](framework/relevance.md) | 🔵 Full tool suite   |
+| **Defect→Risk/Quality diagnosis**           | Link defects found by Inspect to Risk attack surfaces and Quality failure modes to locate root causes                                    | [Relevance](framework/relevance.md)                            | 🔵 Full tool suite   |
+| **Quality regression**                      | After a logical artifact is modified, regression testing reveals quality degradation, forming the basis for release decisions            | [Quality RAG-Agent](quality/rag-agent.md)                      | 🔵 Quality Evaluator |
+| **Compliance audit evidence generation**    | Provide auditors with traceable version records, evaluation reports, and Gate decision evidence                                          | [Core](framework/core.md)                                      | 🔵 Full tool suite   |
 
 ---
 
-## 🌐 Ecosystem
+## Relationship with Harness
+
+Harness faithfully executes rules but cannot judge whether the rules themselves are right or wrong — if the blueprint is flawed, it will simply faithfully execute a wrong rule. What SanityOps adds is exactly this layer: at the logic-design stage, it discovers and fixes defects in Prompts, Skills, Tool Schemas, and permission configurations, ensuring that the constraints Harness relies on at runtime have already been validated, after which Gate decides the timing of release. Harness makes sure rules are executed correctly; SanityOps makes sure the rules are worth executing.
+
+---
+
+## Ecosystem
 
 See how SanityOps relates to other tools and frameworks:
 
-- [SanityOps Positioning](/compare/sanityops-positioning.html) — Framework positioning and ecosystem relationships
-- [SanityOps and FDE](/compare/sanityops-and-fde.html) — Relationship with Frontier Deployment Engineers
-- [SanityOps and Harness](/compare/sanityops-and-harness.html) — Relationship with Harness runtime layer
-- [SanityOps vs Promptfoo](/compare/compare-with-promptfoo.html) — Red teaming and adversarial testing
-- [SanityOps vs RAGAS](/compare/compare-with-ragas.html) — RAG evaluation and quality metrics
-- [SanityOps vs NVIDIA SkillSpector](/compare/compare-with-skillspector.html) — Skill security scanning
-
-## 📄 License
-
-This project is licensed under the [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) license.
+- [SanityOps Positioning](/compare/sanityops-positioning.md) — Framework positioning and ecosystem relationships
+- [SanityOps and FDE](/compare/sanityops-and-fde.md) — Relationship with Forward Deployed Engineers
+- [SanityOps and Harness](/compare/sanityops-and-harness.md) — Relationship with Harness runtime layer
+- [SanityOps vs Promptfoo](/compare/compare-with-promptfoo.md) — Red teaming and adversarial testing
+- [SanityOps vs RAGAS](/compare/compare-with-ragas.md) — RAG evaluation and quality metrics
+- [SanityOps vs NVIDIA SkillSpector](/compare/compare-with-skillspector.md) — Skill security scanning
 
 ---
 
-## 📬 Contact
+## Terminology
+
+Terms appearing in this document such as logical artifact, Prompt / Skill / Tool Schema / Permission, ratchet mechanism, shadow sandbox, explicit/implicit risk, Gate, Baseline, and Harness are all standardized against the Core Appendix A terminology glossary as the baseline.
+
+---
+
+## Road Map
+
+**v1.0 · September 2026**
+
+- ✅ Framework 1.0 core specification released
+- ✅ A complete methodology system for Inspect, Risk, Quality, and Relevance has been formed
+- ✅ Defect Inspector tool fully open-sourced, with a free CLI provided
+- ✅ Full feature suite offer commercial SaaS / Self-hosted services / Report
+
+**v2.0 · November 2026**
+
+- 🔜 DMC 1.0 derivative model capability evaluation and optimization method
+
+---
+
+## Contributing
+
+You are welcome to participate in improvements via Issues, Pull Requests, or Discussions:
+
+- Submit new logical artifact defect patterns
+- Share risk audit and attack verification cases
+- Contribute quality evaluation benchmarks and test sets
+- Discuss the evolution of terminology, rules, grading, and Gate
+
+---
+
+## License
+
+The Framework specification of this project is licensed under CC BY-SA 4.0; the open-source Inspect CLI is separately licensed under Apache 2.0.
+
+---
+
+## Contact Us
 
 - Website: `https://www.sanityops.org`
 - GitHub: `https://github.com/sanityops-org/sanityops-framework`
