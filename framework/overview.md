@@ -252,7 +252,7 @@ SanityOps consists of three **independent, complete, and flexibly combinable** p
 
 **Specifically includes**:
 
-Includes five sub-tools for defect inspection of System Prompts, Skills, Tool Schemas, Cross cross-artifacts, and Permission-responsibility proportionality.
+Includes five sub-specifications for defect inspection of System Prompts, Skills, Tool Schemas, Cross cross-artifacts, and Permission-responsibility proportionality.
 
 - **Non-standard**: Structure and style do not conform to accepted norms
 - **Incomplete**: Critical information missing, constraint conditions incomplete
@@ -408,7 +408,7 @@ To avoid confusion, the following explains the relationship between SanityOps an
 <a id="61-inspect-static-defect-inspection-of-logic-artifacts"></a>
 ### 6.1 **Inspect (Static Defect Inspection of Logic Artifacts)**
 
-Inspect focuses on logical defects in Prompts, Skills, Tool Schemas themselves and their cross-artifact consistency — contradictions, ambiguities, resource runaway, permission overflow, etc. This is closer to static inspection of "code" itself, rather than the process of building Agents.
+Inspect focuses on logical defects in Prompts, Skills, Tool Schemas themselves, cross-artifact consistency, and Permission-responsibility proportionality — contradictions, ambiguities, resource runaway, permission overflow, etc. This is closer to static inspection of "code" itself, rather than the process of building Agents.
 
 Currently, the industry lacks equivalent solutions specifically for systematic static defect inspection of Agent logic artifacts, which is the gap Inspect attempts to fill.
 
