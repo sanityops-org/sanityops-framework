@@ -1,4 +1,21 @@
+---
+title: Positioning
+description: "What SanityOps does, how it compares to existing security and testing tools, and where detailed comparisons begin."
+---
+
 # SanityOps: What It Does, Who It Compares To, and What It Compares
+
+---
+
+## Table of Contents
+
+- [1. Why This Document Exists](#1-why-this-document-exists)
+- [2. What SanityOps Can Do](#2-what-sanityops-can-do)
+- [3. Who It Compares To, and What It Compares](#3-who-it-compares-to-and-what-it-compares)
+- [4. Detailed Comparison Entry Points](#4-detailed-comparison-entry-points)
+- [5. Join the Community](#5-join-the-community)
+
+---
 
 ## 1. Why This Document Exists
 
@@ -18,7 +35,7 @@ SanityOps operates around four core activities, each answering a key question:
 | Domain | Core Question | What You Can Do | What You Get |
 | --- | --- | --- | --- |
 | **Inspect** | Do Logic Artifact definitions or cross-artifact relationships contain static defects? | Static analysis of System Prompts, Skills, Tool Schemas, and cross-artifact consistency | Defect ID (QD), static evidence, severity level, remediation recommendations |
-| **Risk** | Do Logic Artifacts contain explicit risks, or can security risk behaviors be triggered in controlled environments? | Static audit of explicit risks (Explicit), dynamic validation of implicit risks in shadow sandboxes (Implicit) | Risk classification (EX), damage level (D1/D2/D3), signal level (S/A/B/C/D), validation evidence |
+| **Risk** | Do Logic Artifacts contain explicit risks, or can security risk behaviors be triggered in controlled environments? | Static audit of explicit risks (Explicit), dynamic validation of implicit risks in shadow sandboxes (Implicit) | Risk classification (EX), harm dimension (D1/D2/D3), severity level (S0~S3), termination status (A/B/C/D), validation evidence |
 | **Quality** | Does the Agent's actual task or user-visible service meet defined quality requirements? | Controlled blind testing of RAG-Agents and Tool-Agents, with test rigor configured by business risk tier | Reliability metrics, test case results, quality Gate decisions, regression conclusions |
 | **Relevance** | Which attack surfaces, validation strategies, failure modes, and regression requirements may static defects be associated with? | Map defects discovered by Inspect to candidate attack surfaces, failure modes, and test recommendations | Attack Surface (AS), Failure Mode (FM), defect chains, mapping recommendations, candidate root causes |
 
@@ -52,8 +69,10 @@ SanityOps v1.0 has primarily defined: Inspect (including Tool / Prompt / Skill /
 
 SanityOps provides two complementary delivery forms:
 
-- **Framework (Open Source Specification)**: Complete methodology documentation released under CC BY-SA 4.0 license, enabling enterprises to build their own toolchain
-- **Platform (Commercial Tool)**: Ready-to-use tool platform based on the Framework, supporting SaaS and on-premises deployment
+- **Framework (Open Source Specification)**: Complete methodology documentation across Inspect, Risk, Quality, Relevance, and Core, released under CC BY-SA 4.0, enabling enterprises to build their own toolchain
+- **Platform (Tooling)**: The set of tools that implement the specification:
+  - 🟢 **Open source** — the standalone Inspector CLI (Apache 2.0, supporting L1/L2/L3)
+  - 🔵 **Commercial** — the full feature suite (Defect Inspector, Risk Scanner, Quality Evaluator), offered as SaaS / self-hosted
 
 Both forms share the same governance language and evaluation standards; enterprises can choose their adoption path based on their circumstances.
 
@@ -101,9 +120,9 @@ The following three detailed comparison documents respectively depart from three
 
 | Document | Comparison Object | SanityOps Subset | Core Comparison Dimensions |
 | --- | --- | --- | --- |
-| [vs. Promptfoo](/compare/compare-with-promptfoo.html) | Promptfoo | Risk Implicit | Root-cause localization, artifact-driven attack generation, shadow sandbox isolation |
-| [vs. RAGAS](/compare/compare-with-ragas.html) | RAGAS | Quality | Governance framework vs. evaluation library, critical-item independent gating, test case assetization |
-| [vs. NVIDIA SkillSpector](/compare/compare-with-skillspector.html) | SkillSpector | Inspect + Risk | Governance closed loop vs. security scanning, cross-artifact consistency |
+| [vs. Promptfoo](/compare/compare-with-promptfoo) | Promptfoo | Risk Implicit | Root-cause localization, artifact-driven attack generation, shadow sandbox isolation |
+| [vs. RAGAS](/compare/compare-with-ragas) | RAGAS | Quality | Governance framework vs. evaluation library, critical-item independent gating, test case assetization |
+| [vs. NVIDIA SkillSpector](/compare/compare-with-skillspector) | SkillSpector | Inspect + Risk | Governance closed loop vs. security scanning, cross-artifact consistency |
 
 ---
 

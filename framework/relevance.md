@@ -1,3 +1,8 @@
+---
+title: Relevance
+description: "How SanityOps maps discovered defects to their business and quality impact across the governance closed loop."
+---
+
 # SanityOps Framework Relevance
 
 ---
@@ -6,7 +11,7 @@
 
 **Release Date**: September 2026
 
-**Maintained by**: SanityOps Working Group
+**Maintained by**: Sanity AI Labs
 
 **License**: CC BY-SA 4.0
 
@@ -118,7 +123,7 @@
 | Status | Released |
 | Date | September 2026 |
 | Applicable Framework | SanityOps Inspect, Risk, Quality Subsets |
-| Maintained by | SanityOps Specification Working Group |
+| Maintained by | Sanity AI Labs |
 
 ---
 
@@ -1591,14 +1596,6 @@ This specification can reference OWASP risk language, but does not use OWASP num
 2. **Not alternative compliance**: Referencing OWASP risk language does not substitute for any formal compliance or certification process.
 3. **Not for external declarations**: The terms and mappings in this specification are used for internal communication and threat modeling and shall not be used in customer-facing compliance or audit reports without explicit review.
 4. **Independent evidence standards**: Compliance audits, penetration testing, and runtime monitoring must still adopt their respective independent evidence standards.
-
----
-
-## Version History
-
-| Version | Date | Changes |
-|---------|------|---------|
-| v1.0 | 2026-09 | Initial release (including Inspect Permission QD-PM mappings) |
 
 ---
 

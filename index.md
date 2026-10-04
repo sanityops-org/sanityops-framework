@@ -8,7 +8,7 @@ hero:
   actions:
     - theme: brand
       text: Read the Framework
-      link: /framework/read-the-framework
+      link: /framework/overview
     - theme: alt
       text: Try the Tools
       link: /framework/try-the-tools

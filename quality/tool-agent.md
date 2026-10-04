@@ -1,3 +1,8 @@
+---
+title: Quality Tool-Agent
+description: "Quality Tool-Agent white paper: binary-nature success evaluation, risk-tiered reliability testing, and ratchet gates for tool-calling Agents."
+---
+
 # SanityOps Framework
 
 # Quality Tool-Agent White Paper
@@ -8,7 +13,7 @@
 
 **Release Date**: September 2026
 
-**Maintained by**: SanityOps Quality Working Group
+**Maintained by**: Sanity AI Labs
 
 **License**: CC BY-SA 4.0
 
@@ -401,12 +406,12 @@ Tool Agent assessment differs fundamentally from traditional software testing: *
 
 ```
 Traditional software testing:
-├─ Hard-coded program iteration frequency is low (monthly, quarterly)
-├─ Testing before release is sufficient
-└─ No need for continuous assessment
+├─ Has a compiler: syntax/type/interface checks are enforced at compile time
+├─ Defects are intercepted before runtime; testing has a deterministic static safety net
+└─ Quality/safety defects do not directly enter runtime reasoning
 
 Agent service quality assessment:
-├─ Logic artifact iteration frequency is high (weekly, or even daily)
+├─ Logic artifacts have no compiler, no enforced static checks
 │   ├─ System Prompt adjustments
 │   ├─ Tool Schema optimization
 │   ├─ Skill definition updates
@@ -417,7 +422,7 @@ Agent service quality assessment:
 │   ├─ Whether parameter generation is accurate
 │   └─ Whether output assembly is complete
 │
-└─ Therefore: Assessment must be continuous, synchronized with iteration frequency
+└─ Therefore: Assessment must be continuous, synchronized with artifact changes
 ```
 
 **Core value of continuous assessment:**

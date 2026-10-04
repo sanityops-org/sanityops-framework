@@ -1,3 +1,8 @@
+---
+title: Inspect
+description: "Inspect documentation index: static defect inspection of System Prompts, Skills, Tool Schemas, cross-artifact consistency, and permission governance."
+---
+
 # Inspect — Logic Artifact Inspection
 
 **The entry point for AI Agent defect discovery. Systematically scans System Prompts, Skills, and Tool Schemas for quality defects and consistency breaks before deployment.**

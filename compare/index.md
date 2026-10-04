@@ -1,3 +1,8 @@
+---
+title: Ecosystem
+description: "Ecosystem index: how SanityOps positions relative to FDE, Harness, Promptfoo, RAGAS, and NVIDIA SkillSpector."
+---
+
 # Ecosystem
 
 Understand how SanityOps relates to adjacent tools, standards, and evaluation frameworks in the broader AI governance ecosystem.
@@ -5,7 +10,7 @@ Understand how SanityOps relates to adjacent tools, standards, and evaluation fr
 ## Positioning & Relationships
 
 - [SanityOps Positioning](/compare/sanityops-positioning) — Framework capabilities, boundaries, and ecosystem relationships
-- [SanityOps and FDE](/compare/sanityops-and-fde) — Relationship with Frontier Deployment Engineers
+- [SanityOps and FDE](/compare/sanityops-and-fde) — Relationship with Forward Deployed Engineers
 - [SanityOps and Harness](/compare/sanityops-and-harness) — Relationship with Harness runtime layer
 
 ## Technical Comparisons

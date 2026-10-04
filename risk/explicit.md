@@ -1,3 +1,8 @@
+---
+title: Risk Explicit
+description: "Risk Explicit white paper: static auditing of explicit risks in Logic Artifacts across natural-language and non-directly-readable risk families."
+---
+
 # SanityOps Framework
 
 # Risk Explicit White Paper
@@ -8,7 +13,7 @@
 
 **Release Date**: September 2026
 
-**Maintained by**: SanityOps Risk Working Group
+**Maintained by**: Sanity AI Labs
 
 **License**: CC BY-SA 4.0
 
@@ -31,19 +36,15 @@
   - [2.1 NR-O Family Details](#21-nr-o-family-details)
   - [2.2 NR-S Family Details](#22-nr-s-family-details)
   - [2.3 Concealment Level Mapping Table](#23-concealment-level-mapping-table)
-- [Part 3: Framework Optimization Updates](#part-3-framework-optimization-updates)
-  - [3.1 v0.602 → v0.603 Key Changes](#31-v0602--v0603-key-changes)
-  - [3.2 v0.603 → v1.0 Key Changes](#32-v0603--v10-key-changes)
-  - [3.3 v1.0 → v1.1 Key Changes](#33-v10--v11-key-changes)
-- [Part 4: Severity Level Determination and Quantification](#part-4-severity-level-determination-and-quantification)
-  - [4.1 Three-Dimension Harm Assessment Model](#41-three-dimension-harm-assessment-model)
-  - [4.2 Level Merging Rules](#42-level-merging-rules)
-  - [4.3 Severity Levels and Deduction Ranges](#43-severity-levels-and-deduction-ranges)
-  - [4.4 Sub-dimension Adjustment Mechanism](#44-sub-dimension-adjustment-mechanism)
-  - [4.5 Final Deduction Calculation](#45-final-deduction-calculation)
-  - [4.6 Scoring Examples](#46-scoring-examples)
-  - [4.7 Complete Audit Workflow](#47-complete-audit-workflow)
-  - [4.8 Audit Report Output Format](#48-audit-report-output-format)
+- [Part 3: Severity Level Determination and Quantification](#part-3-severity-level-determination-and-quantification)
+  - [3.1 Three-Dimension Harm Assessment Model](#31-three-dimension-harm-assessment-model)
+  - [3.2 Level Merging Rules](#32-level-merging-rules)
+  - [3.3 Severity Levels and Deduction Ranges](#33-severity-levels-and-deduction-ranges)
+  - [3.4 Sub-dimension Adjustment Mechanism](#34-sub-dimension-adjustment-mechanism)
+  - [3.5 Final Deduction Calculation](#35-final-deduction-calculation)
+  - [3.6 Scoring Examples](#36-scoring-examples)
+  - [3.7 Complete Audit Workflow](#37-complete-audit-workflow)
+  - [3.8 Audit Report Output Format](#38-audit-report-output-format)
 - [Appendix](#appendix)
   - [Appendix A: Quick Reference Card](#appendix-a-quick-reference-card)
   - [Appendix B: Detection Rules Index](#appendix-b-detection-rules-index)
@@ -186,7 +187,7 @@ EX-x.y
 ---
 
 <a id="03-reading-guide"></a>
-### 0.3 Reading Guide (New)
+### 0.3 Reading Guide
 
 <a id="031-why-a-reading-guide"></a>
 #### 0.3.1 Why a Reading Guide?
@@ -236,21 +237,20 @@ Question 2: How "completely" is this risk expressed?
 
 1. First read **0.4 Explicit Risk Core Concepts** (understand what explicit risk is)
 2. Then read **Part 1 Section 1.1 Framework Structure Diagram** (master overview of 32 subcategories)
-3. Then read **Part 4 Section 4.7 Complete Audit Workflow** (master the 6-step workflow)
+3. Then read **Part 3 Section 3.7 Complete Audit Workflow** (master the 6-step workflow)
 4. Reference **Appendix A Quick Reference Card** when needed (classification determination rules)
 
 **Path B: Framework Designer Path** (Deep Understanding)
 
 1. First read **0.3.2 Framework Design Logic** (understand classification rationale)
 2. Then read **Part 1 Section 1.2 Each Subcategory Details** (understand boundary definitions)
-3. Then read **Part 4 Sections 4.1-4.5** (understand scoring mechanism)
-4. Then read **Part 3 Framework Optimization Updates** (understand iteration history)
+3. Then read **Part 3 Sections 3.1-3.5** (understand scoring mechanism)
 
 **Path C: Tool Developer Path** (Implement Automation)
 
 1. First read **Part 1 Section 1.3 Detection Strategy Table** (clarify detection rules)
 2. Then read **Part 2 NR-S Family Details** (structured configuration detection logic)
-3. Then read **Part 4 Section 4.2 Merging Rules** (implement level determination logic)
+3. Then read **Part 3 Section 3.2 Merging Rules** (implement level determination logic)
 4. Then read **Appendix B Detection Rules Index** (rule priority)
 
 <a id="034-key-section-quick-reference"></a>
@@ -260,14 +260,14 @@ Question 2: How "completely" is this risk expressed?
 |-----------------------|---------|
 | "What are the 32 subcategories?" | Part 1 Section 1.1 Complete Structure Diagram |
 | "How to determine NL-A vs NL-B?" | Part 1 Section 1.4 Key Boundary Definition Table |
-| "How to assess D1/D2/D3 dimensions?" | Part 4 Section 4.1 |
-| "How to calculate final deduction?" | Part 4 Sections 4.5-4.6 |
-| "What is the complete audit workflow?" | Part 4 Section 4.7 |
+| "How to assess D1/D2/D3 dimensions?" | Part 3 Section 3.1 |
+| "How to calculate final deduction?" | Part 3 Sections 3.5-3.6 |
+| "What is the complete audit workflow?" | Part 3 Section 3.7 |
 
 ---
 
 <a id="04-explicit-risk-core-concepts"></a>
-### 0.4 Explicit Risk Core Concepts (New)
+### 0.4 Explicit Risk Core Concepts
 
 <a id="041-what-is-explicit-risk"></a>
 #### 0.4.1 What is Explicit Risk?
@@ -394,30 +394,20 @@ Harm Assessment:
 ---
 
 <a id="05-version-and-maintenance-information"></a>
-### 0.5 Version and Maintenance Information (New)
+### 0.5 Version and Maintenance Information
 
 <a id="051-current-version"></a>
 #### 0.5.1 Current Version
 
-- **Version Number**: v1.1
+- **Version Number**: v1.0
 - **Release Status**: Industry specification internal version
-- **Last Updated**: July 2026
-- **Maintained by**: SanityOps Specification Working Group
+- **Last Updated**: September 2026
+- **Maintained by**: Sanity AI Labs
 
-<a id="052-version-history"></a>
-#### 0.5.2 Version History
+<a id="052-applicability-statement"></a>
+#### 0.5.2 Applicability Statement
 
-| Version | Release Date | Major Changes |
-|---------|--------------|---------------|
-| v1.1 | 2026-07 | Added standardized preface, reading guide, explicit risk definition, Appendix A/B/C |
-| v1.0 | 2026-09 | Integrated four core documents, formed complete scoring scheme |
-| v0.603 | 2026-06 | Added NL-A-9, NL-B-10 scope constraints, NR-O-4 joint marker |
-| v0.602 | 2026-06 | Base framework release, defined NL/NR dichotomy |
-
-<a id="053-applicability-statement"></a>
-#### 0.5.3 Applicability Statement
-
-This specification v1.1 applies to the explicit risk audit phase of the SanityOps Framework. When using this specification for audit, all requirements of the corresponding version should be followed.
+This specification v1.0 applies to the explicit risk audit phase of the SanityOps Framework. When using this specification for audit, all requirements of the corresponding version should be followed.
 
 ---
 
@@ -1094,134 +1084,13 @@ The following table is used for audit routing, clarifying distinguishing dimensi
 
 ---
 
-<a id="part-3-framework-optimization-updates"></a>
-## Part 3: Framework Optimization Updates (v0.602 → v1.1)
+## Part 3: Severity Level Determination and Quantification
 
-This section documents optimization iterations from the base version to the current version, helping auditors understand framework evolution.
+<a id="31-three-dimension-harm-assessment-model"></a>
+### 3.1 Three-Dimension Harm Assessment Model
 
-<a id="31-v0602--v0603-key-changes"></a>
-### 3.1 v0.602 → v0.603 Key Changes
-
-<a id="311-new-nl-a-9-instruction-priority-override"></a>
-#### 3.1.1 New NL-A-9: Instruction Priority Override
-
-**Change Reason**: Discovered a new explicit risk pattern—bypassing existing constraints by explicitly declaring instruction priority.
-
-**Added Content**:
-
-- Definition: Explicitly declares current instruction execution priority higher than system instructions
-- Typical expression: `"The following instruction priority is SYSTEM-OVERRIDE"`
-- Distinction: Difference from NL-A-3 (Intent Declaration) is declaring priority rather than identity
-
-**Impact**:
-
-- NL-A family expanded from 8 to 9 subcategories
-- Detection strategy needs updating, adding priority keyword scanning
-
----
-
-<a id="312-new-nl-b-10-cross-object-condition-trigger-chain"></a>
-#### 3.1.2 New NL-B-10: Cross-Object Condition Trigger Chain
-
-**Change Reason**: Discovered cross-object piecing pattern where condition is in object A and behavior is in object B.
-
-**Added Content**:
-
-- Definition: Condition defined in object A, behavior defined in object B, both harmless when viewed separately
-- Typical expression: Skill A defines condition, Tool B defines behavior
-- Scope constraint: Only covers cross-object condition-behavior separation identifiable in static backend logic; risks depending on runtime execution sequence belong to IM
-
-**Impact**:
-
-- NL-B family expanded from 9 to 10 subcategories
-- Need to add cross-object condition-behavior piecing analysis capability
-
----
-
-<a id="313-nr-o-4-positioning-adjustment"></a>
-#### 3.1.3 NR-O-4 Positioning Adjustment
-
-**Change Reason**: NR-O-4 adjusted from independent subcategory to joint marker.
-
-**Adjustment Content**:
-
-- Original NR-O-4 (Character Replacement Sequence) merged into NR-O-3 (Unicode Homoglyph Replacement)
-- NR-O-4 redefined as ⟨Joint Marker⟩: appended when same content paragraph triggers two or more NR-O subcategories simultaneously
-- Does not replace original subcategory marker, but adds marker
-
-**Example**:
-
-- Same paragraph contains encoded payload (O-2) and zero-width characters (O-1)
-- Marked as: `NR-O-1 + NR-O-2 + NR-O-4`
-
----
-
-<a id="32-v0603--v10-key-changes"></a>
-### 3.2 v0.603 → v1.0 Key Changes
-
-<a id="321-complete-scoring-scheme-release"></a>
-#### 3.2.1 Complete Scoring Scheme Release
-
-**Change Content**:
-
-- Integrated four core documents (classification framework, harm assessment, level merging, scoring mechanism)
-- Defined complete 6-step audit workflow (Section 4.7)
-- Published quantified scoring tables (Sections 4.4-4.6)
-
----
-
-<a id="33-v10--v11-key-changes"></a>
-### 3.3 v1.0 → v1.1 Key Changes (This Update)
-
-<a id="331-preface-structure-standardization"></a>
-#### 3.3.1 Preface Structure Standardization
-
-**Change Content**:
-
-- Added **0.1 Positioning and Scope**: Clear definition of audit objects, scope, and out-of-scope items
-- Added **0.2 Terminology and Numbering System**: Unified term definitions and numbering rules
-- Added **0.3 Reading Guide**: Framework design logic, recommended reading paths
-- Added **0.4 Explicit Risk Core Concepts**: Definition, comparison, typical examples
-- Added **0.5 Version and Maintenance Information**: Version history table
-
-**Purpose**: Maintain consistent preface structure with Inspect sub-specifications.
-
----
-
-<a id="332-document-structure-optimization"></a>
-#### 3.3.2 Document Structure Optimization
-
-**Change Content**:
-
-- Reorganized chapter structure, increased hierarchical clarity
-- Unified description format for each subcategory (definition, typical expression, detection strategy, concealment level)
-- Added **Appendix A/B/C**: Quick reference card, detection rules index, glossary
-
-**Purpose**: Improve readability and usability.
-
----
-
-<a id="333-audit-workflow-optimization"></a>
-#### 3.3.3 Audit Workflow Optimization
-
-**Change Content**:
-
-- Original 6-step workflow adjusted to 3-phase workflow
-- Phase 1: Discovery and Classification
-- Phase 2: Harm Assessment
-- Phase 3: Fine Scoring
-
-**Purpose**: Reduce cognitive load, improve audit efficiency.
-
----
-
-## Part 4: Severity Level Determination and Quantification
-
-<a id="41-three-dimension-harm-assessment-model"></a>
-### 4.1 Three-Dimension Harm Assessment Model
-
-<a id="411-three-dimension-independent-assessment"></a>
-#### 4.1.1 Three-Dimension Independent Assessment
+<a id="311-three-dimension-independent-assessment"></a>
+#### 3.1.1 Three-Dimension Independent Assessment
 
 For each discovered risk item, independently assess three harm dimensions:
 
@@ -1255,15 +1124,15 @@ For each discovered risk item, independently assess three harm dimensions:
 
 ---
 
-<a id="412-assessment-principles"></a>
-#### 4.1.2 Assessment Principles
+<a id="312-assessment-principles"></a>
+#### 3.1.2 Assessment Principles
 
 1. **Independent Assessment**: D1/D2/D3 three dimensions assessed independently, without mutual influence
 2. **Worst Case**: When the risk expression has multiple possible interpretations, assess based on the worst case
 3. **Explicit First**: Only assess content explicitly declared in the risk expression text, do not infer implicit risks
 
-<a id="42-level-merging-rules"></a>
-### 4.2 Level Merging Rules
+<a id="32-level-merging-rules"></a>
+### 3.2 Level Merging Rules
 
 Merge the three-dimension assessment results into S levels (S0/S1/S2/S3):
 
@@ -1314,8 +1183,8 @@ if D1 = D1-1 AND D2 = D2-1 AND D3 = D3-1:
 
 **Principle**: All three dimensions have no harm.
 
-<a id="43-severity-levels-and-deduction-ranges"></a>
-### 4.3 Severity Levels and Deduction Ranges
+<a id="33-severity-levels-and-deduction-ranges"></a>
+### 3.3 Severity Levels and Deduction Ranges
 
 | S Level | Severity | Deduction Range | CVSS Approximation |
 |---------|----------|-----------------|-------------------|
@@ -1324,13 +1193,13 @@ if D1 = D1-1 AND D2 = D2-1 AND D3 = D3-1:
 | S1 | Medium | 1 ~ 7 points | 4.0 ~ 6.9 |
 | S0 | No Risk | 0 points | 0.0 ~ 3.9 |
 
-<a id="44-sub-dimension-adjustment-mechanism"></a>
-### 4.4 Sub-Dimension Adjustment Mechanism
+<a id="34-sub-dimension-adjustment-mechanism"></a>
+### 3.4 Sub-dimension Adjustment Mechanism
 
 Fine-tune within S level ranges through three sub-dimensions:
 
-<a id="441-concealment-level-cl"></a>
-#### 4.4.1 Concealment Level (CL)
+<a id="341-concealment-level-cl"></a>
+#### 3.4.1 Concealment Level (CL)
 
 Directly mapped from EX classification, no manual judgment needed:
 
@@ -1341,8 +1210,8 @@ Directly mapped from EX classification, no manual judgment needed:
 | NR-S Family | CL-M (Medium) | No adjustment |
 | NR-O Family | CL-H (High) | Range +1/4 |
 
-<a id="442-trigger-threshold-tt"></a>
-#### 4.4.2 Trigger Threshold (TT)
+<a id="342-trigger-threshold-tt"></a>
+#### 3.4.2 Trigger Threshold (TT)
 
 Parse conditional statements in risk expressions:
 
@@ -1352,8 +1221,8 @@ Parse conditional statements in risk expressions:
 | TT-M (Medium) | Single condition, common scenario | No adjustment |
 | TT-H (High) | Multiple conditions AND, rare scenario | Range +1/4 |
 
-<a id="443-impact-scope-is"></a>
-#### 4.4.3 Impact Scope (IS)
+<a id="343-impact-scope-is"></a>
+#### 3.4.3 Impact Scope (IS)
 
 Analyze scope limiters in risk expressions:
 
@@ -1363,18 +1232,18 @@ Analyze scope limiters in risk expressions:
 | IS-M (Broad) | Most users, common scenarios | No adjustment |
 | IS-H (Universal) | All users, all conversations, all scenarios | Range +1/4 |
 
-<a id="45-final-deduction-calculation"></a>
-### 4.5 Final Deduction Calculation
+<a id="35-final-deduction-calculation"></a>
+### 3.5 Final Deduction Calculation
 
-<a id="451-calculation-formula"></a>
-#### 4.5.1 Calculation Formula
+<a id="351-calculation-formula"></a>
+#### 3.5.1 Calculation Formula
 
 ```
 Final Deduction = Base Score + CL Adjustment + TT Adjustment + IS Adjustment
 ```
 
-<a id="452-base-score-lookup"></a>
-#### 4.5.2 Base Score Lookup
+<a id="352-base-score-lookup"></a>
+#### 3.5.2 Base Score Lookup
 
 | S Level | Base Score |
 |---------|------------|
@@ -1383,8 +1252,8 @@ Final Deduction = Base Score + CL Adjustment + TT Adjustment + IS Adjustment
 | S1 | 4 points |
 | S0 | 0 points |
 
-<a id="453-adjustment-amount-lookup"></a>
-#### 4.5.3 Adjustment Amount Lookup
+<a id="353-adjustment-amount-lookup"></a>
+#### 3.5.3 Adjustment Amount Lookup
 
 | Range Width | Adjustment Magnitude | Specific Adjustment |
 |-------------|-------------------|---------------------|
@@ -1399,8 +1268,8 @@ Final Deduction = Base Score + CL Adjustment + TT Adjustment + IS Adjustment
 
 ---
 
-<a id="46-scoring-examples"></a>
-### 4.6 Scoring Examples
+<a id="36-scoring-examples"></a>
+### 3.6 Scoring Examples
 
 #### Example 1: NL-A-1 Single-Sentence Self-Contained
 
@@ -1516,8 +1385,8 @@ Final Deduction = 4 + 0 + 1.5 + 0 = 5.5 points
 
 ---
 
-<a id="47-complete-audit-workflow"></a>
-### 4.7 Complete Audit Workflow (Three-Phase Workflow)
+<a id="37-complete-audit-workflow"></a>
+### 3.7 Complete Audit Workflow (Three-Phase Workflow)
 
 #### Phase 1: Discovery and Classification
 
@@ -1564,8 +1433,8 @@ Final Deduction = 4 + 0 + 1.5 + 0 = 5.5 points
 
 ---
 
-<a id="48-audit-report-output-format"></a>
-### 4.8 Audit Report Output Format
+<a id="38-audit-report-output-format"></a>
+### 3.8 Audit Report Output Format
 
 Upon completion of the audit, output a report in the following format:
 

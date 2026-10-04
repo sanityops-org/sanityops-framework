@@ -1,23 +1,28 @@
-# Appendix: Technical Comparison Inspect & Risk vs. NVIDIA SkillSpector
+---
+title: SanityOps vs. SkillSpector
+description: "Technical comparison of SanityOps Inspect and Risk with NVIDIA SkillSpector across paradigm, lifecycle, methodology, and outputs."
+---
+
+# Technical Comparison: Inspect & Risk vs. NVIDIA SkillSpector
 
 ---
 
 ## Table of Contents
 
-- [0. Scope of Comparison](#0-scope-of-comparison)
-- [1. Bottom Line First (TL;DR)](#1-bottom-line-first-tldr)
-- [2. Paradigm Layer: Scanning Action vs. Governance Closed Loop](#2-paradigm-layer-scanning-action-vs-governance-closed-loop)
-- [3. Structure Layer: Governance Objects](#3-structure-layer-governance-objects)
-- [4. Lifecycle Layer: Coverage by Phase](#4-lifecycle-layer-coverage-by-phase)
-- [5. Methodology Layer: Where the Determination Comes From](#5-methodology-layer-where-the-determination-comes-from)
-- [6. Output Layer: Conclusion Form and Actionability](#6-output-layer-conclusion-form-and-actionability)
-- [7. Capability Matrix (Quick Reference)](#7-capability-matrix-quick-reference)
-- [8. Coordination Recommendations](#8-coordination-recommendations)
+- [1. Scope of Comparison](#1-scope-of-comparison)
+- [2. Bottom Line First (TL;DR)](#2-bottom-line-first-tldr)
+- [3. Paradigm Layer: Scanning Action vs. Governance Closed Loop](#3-paradigm-layer-scanning-action-vs-governance-closed-loop)
+- [4. Structure Layer: Governance Objects](#4-structure-layer-governance-objects)
+- [5. Lifecycle Layer: Coverage by Phase](#5-lifecycle-layer-coverage-by-phase)
+- [6. Methodology Layer: Where the Determination Comes From](#6-methodology-layer-where-the-determination-comes-from)
+- [7. Output Layer: Conclusion Form and Actionability](#7-output-layer-conclusion-form-and-actionability)
+- [8. Capability Matrix (Quick Reference)](#8-capability-matrix-quick-reference)
+- [9. Coordination Recommendations](#9-coordination-recommendations)
 
 ---
 
-<a id="0-scope-of-comparison"></a>
-## 0. Scope of Comparison
+<a id="1-scope-of-comparison"></a>
+## 1. Scope of Comparison
 
 ---
 
@@ -27,9 +32,9 @@ Both are production-grade tooling: SkillSpector ships as a CLI / Docker image. O
 
 ---
 
-<a id="1-bottom-line-first-tldr"></a>
+<a id="2-bottom-line-first-tldr"></a>
 
-## 1. Bottom Line First (TL;DR)
+## 2. Bottom Line First (TL;DR)
 
 |                        | NVIDIA SkillSpector                                                                                                                                                                                                                                                                 | SanityOps Inspect + Risk                                                                                                                         |
 | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -37,13 +42,13 @@ Both are production-grade tooling: SkillSpector ships as a CLI / Docker image. O
 | Essential nature       | A security scanner (one scan, install recommendation)                                                                                                                                                                                                                               | A Governance Closed Loop (inspection triggered on every Logic Artifact iteration)                                                                |
 | Strongest capabilities | Malicious code patterns, dependency CVEs / supply chain                                                                                                                                                                                                                             | Logic design defects, Cross-Artifact Consistency, runtime dynamic attack validation                                                              |
 | Blind spots            | No logic-design perspective, no cross-artifact perspective, does not execute the target                                                                                                                                                                                             | Does not perform dependency CVE / supply chain detection                                                                                         |
-| Verdict                | **Complementary, not substitutable.** Use SkillSpector to gate externally sourced Skills at the door; use SanityOps for end-to-end governance of internally developed Logic Artifacts. SanityOps explicitly does not replace existing security frameworks it coordinates with them. |                                                                                                                                                  |
+| Verdict                | **Complementary, not substitutable.** Use SkillSpector to gate externally sourced Skills at the door; use SanityOps for end-to-end governance of internally developed Logic Artifacts. SanityOps explicitly does not replace existing security frameworks; it coordinates with them. |                                                                                                                                                  |
 
 ---
 
-<a id="2-paradigm-layer-scanning-action-vs-governance-closed-loop"></a>
+<a id="3-paradigm-layer-scanning-action-vs-governance-closed-loop"></a>
 
-## 2. Paradigm Layer: Scanning Action vs. Governance Closed Loop
+## 3. Paradigm Layer: Scanning Action vs. Governance Closed Loop
 
 | Dimension         | SkillSpector                 | Inspect + Risk                                                |
 | ----------------- | ---------------------------- | ------------------------------------------------------------- |
@@ -54,11 +59,11 @@ Both are production-grade tooling: SkillSpector ships as a CLI / Docker image. O
 
 ---
 
-<a id="3-structure-layer-governance-objects"></a>
+<a id="4-structure-layer-governance-objects"></a>
 
-## 3. Structure Layer: Governance Objects
+## 4. Structure Layer: Governance Objects
 
-**SkillSpector**: Inspects the Skill package everything inside it, including SKILL.md, scripts, and the dependency manifest. Accepts Git repositories, URLs, zips, directories, and single files.
+**SkillSpector**: Inspects the Skill package and everything inside it, including SKILL.md, scripts, and the dependency manifest. Accepts Git repositories, URLs, zips, directories, and single files.
 
 **SanityOps Inspect + Risk**: Inspects three types of Logic Artifacts plus their cross-artifact relationships:
 
@@ -73,13 +78,13 @@ Risk (Risk Scanning)
 └─ Risk Implicit    → Implicit runtime vulnerabilities
 ```
 
-**Key structural difference**: SkillSpector is bounded by the *package*. It cannot answer questions such as "Does the System Prompt actually authorize this Skill's declared capability?" or "Does the Skill's declared permission scope match its Tool Schemas?" these Cross-Artifact Consistency questions are the exclusive province of Inspect Cross.
+**Key structural difference**: SkillSpector is bounded by the *package*. It cannot answer questions such as "Does the System Prompt actually authorize this Skill's declared capability?" or "Does the Skill's declared permission scope match its Tool Schemas?" These Cross-Artifact Consistency questions are the exclusive province of Inspect Cross.
 
 ---
 
-<a id="4-lifecycle-layer-coverage-by-phase"></a>
+<a id="5-lifecycle-layer-coverage-by-phase"></a>
 
-## 4. Lifecycle Layer: Coverage by Phase
+## 5. Lifecycle Layer: Coverage by Phase
 
 | Phase                                                    | SkillSpector                                                       | Inspect + Risk                                                                                                           |
 | -------------------------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
@@ -91,9 +96,9 @@ Risk (Risk Scanning)
 
 ---
 
-<a id="5-methodology-layer-where-the-determination-comes-from"></a>
+<a id="6-methodology-layer-where-the-determination-comes-from"></a>
 
-## 5. Methodology Layer: Where the Determination Comes From
+## 6. Methodology Layer: Where the Determination Comes From
 
 | Dimension               | SkillSpector                                                | Inspect                                                           | Risk Explicit                                                 | Risk Implicit                                                                     |
 | ----------------------- | ----------------------------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------------------------------- |
@@ -103,13 +108,13 @@ Risk (Risk Scanning)
 | Executes the target?    | No                                                          | No                                                                | No                                                            | Yes (Shadow Sandbox)                                                          |
 | Human involvement       | Essentially none                                            | Explicitly divided into automated / semi-automated / human review | Semi-automated + human rating                                 | Semi-automated                                                                    |
 
-**Structural difference**: SkillSpector's recall ceiling is set by its pattern library anything outside the library is invisible to it. SanityOps' recall ceiling is set by the depth of its rule system and artifact understanding, and the tiering mechanism balances cost against inspection intensity.
+**Structural difference**: SkillSpector's recall ceiling is set by its pattern library; anything outside the library is invisible to it. SanityOps' recall ceiling is set by the depth of its rule system and artifact understanding, and the tiering mechanism balances cost against inspection intensity.
 
 ---
 
-<a id="6-output-layer-conclusion-form-and-actionability"></a>
+<a id="7-output-layer-conclusion-form-and-actionability"></a>
 
-## 6. Output Layer: Conclusion Form and Actionability
+## 7. Output Layer: Conclusion Form and Actionability
 
 | Dimension                | SkillSpector                                                                             | Inspect                                        | Risk Explicit                                                          |
 | ------------------------ | ---------------------------------------------------------------------------------------- | ---------------------------------------------- | ---------------------------------------------------------------------- |
@@ -121,9 +126,9 @@ Risk (Risk Scanning)
 
 ---
 
-<a id="7-capability-matrix-quick-reference"></a>
+<a id="8-capability-matrix-quick-reference"></a>
 
-## 7. Capability Matrix (Quick Reference)
+## 8. Capability Matrix (Quick Reference)
 
 | Capability                                            | SkillSpector | Inspect      | Risk Explicit                     | Risk Implicit |
 | ----------------------------------------------------- | ------------ | ------------ | --------------------------------- | ------------- |
@@ -138,9 +143,9 @@ Risk (Risk Scanning)
 
 ---
 
-<a id="8-coordination-recommendations"></a>
+<a id="9-coordination-recommendations"></a>
 
-## 8. Coordination Recommendations
+## 9. Coordination Recommendations
 
 1. **Externally sourced Skills** → gate with SkillSpector first. Dependency CVEs, supply chain, and malicious code are its core strengths, and SanityOps does not cover them.
 2. **Internally developed Logic Artifacts** → run the SanityOps pipeline: Inspect → Risk Explicit → operate the Agent to collect runtime data → Risk Implicit.

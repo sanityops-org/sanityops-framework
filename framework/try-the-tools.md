@@ -1,3 +1,8 @@
+---
+title: Try the Tools
+description: "Hands-on guide to the SanityOps tools, Defect Inspector and Risk Scanner, with CLI install and quick-start instructions."
+---
+
 # Try the Tools
 
 ---
@@ -89,7 +94,7 @@ skills:
   - file: skills/code_review.md                 # file only, not directories
 ```
 
-Artifact entries accept any plaintext format (`.md`, `.json`, `.py`, `.ts`, …). To configure credentials through the environment instead of the file, drop the `model:` section and set `LLM_PROVIDER`, `LLM_API_KEY`, `LLM_MODEL_ID`, and `LLM_BASE_URL`.
+Artifact entries accept any plaintext format (`.md`, `.json`, `.py`, `.ts`, ...). To configure credentials through the environment instead of the file, drop the `model:` section and set `LLM_PROVIDER`, `LLM_API_KEY`, `LLM_MODEL_ID`, and `LLM_BASE_URL`.
 
 **3. Run the inspection**
 
@@ -157,7 +162,7 @@ Risk Scanner and Quality Evaluator are delivered as SaaS and self-hosted deploym
   - Full-stack self-hosted deployment (detection engine, database, dashboards) within your enterprise VPC;
   - **Decoupled model layer**: bring your own LLM, including locally hosted models, with no dependency on external APIs;
   - **Code-reviewable access (under NDA)**: contracted enterprise customers may obtain source-code review access under NDA to independently verify how governance logic is implemented — consistent with the transparency principle behind open-sourcing our Framework: **governance tooling should be transparent, not a black box.**
-- **Contact Sales**: `hello@sanityops.org` 
+- **Contact Sales**: `hello@sanityops.org`
 
 ---
 

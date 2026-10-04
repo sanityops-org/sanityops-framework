@@ -1,15 +1,27 @@
+---
+title: SanityOps and FDE
+description: "How the SanityOps governance framework serves as quality infrastructure for Forward Deployed Engineers."
+---
+
 # The Relationship Between SanityOps and FDE
 
-**Version**: v1.0  
-**Release Date**: September 2026  
-**Maintained by**: SanityOps Working Group  
-**License**: CC BY-SA 4.0
+---
+
+## Table of Contents
+
+- [1. Foundational Positioning](#1-foundational-positioning)
+- [2. Where SanityOps Fits in the FDE Workflow](#2-where-sanityops-fits-in-the-fde-workflow)
+- [3. Mapping SanityOps Subsets to FDE Capabilities](#3-mapping-sanityops-subsets-to-fde-capabilities)
+- [4. Key Collaborative Relationships](#4-key-collaborative-relationships)
+- [5. Typical Workflow Example](#5-typical-workflow-example)
+- [6. Summary](#6-summary)
+- [7. Appendix: Reference Documents](#7-appendix-reference-documents)
 
 ---
 
 ## 1. Foundational Positioning
 
-| Dimension | FDE (Frontier Deployment Engineer) | SanityOps |
+| Dimension | FDE (Forward Deployed Engineer) | SanityOps |
 |-----------|-----------------------------------|----------------------|
 | **Essential Nature** | Hybrid engineering role (person) | AI system governance framework (methodology + tooling) |
 | **Core Objective** | Transform AI capabilities into business outcomes | Ensure AI system logic is correct, risks are controllable, and quality is assessable |
@@ -117,7 +129,7 @@ Phase 1: Logic Artifact Design
 ├── FDE writes System Prompt: Defines refund rules (7-day limit, perishable exceptions, etc.)
 ├── FDE writes Skill: Defines refund decision workflow
 ├── FDE writes Tool Schema: Defines request_refund parameter constraints
-└── Inspect check: Discovers amount_requested lacks upper bound constraint (defect TS-03)
+└── Inspect check: Discovers amount_requested lacks upper bound constraint (defect QD-T-2.3)
 
 Phase 2: Defect Remediation
 ├── FDE fix: Adds amount ≤ order actual payment amount constraint
@@ -140,17 +152,13 @@ Phase 4: Continuous Operations
 | Question | Answer |
 |---------|--------|
 | **What is SanityOps?** | An AI system governance framework providing Inspect, Risk, and Quality quality assurance systems |
-| **What is FDE?** | Frontier Deployment Engineer — a hybrid engineering role responsible for transforming AI capabilities into business outcomes |
+| **What is FDE?** | Forward Deployed Engineer — a hybrid engineering role responsible for transforming AI capabilities into business outcomes |
 | **Relationship?** | SanityOps is FDE's **quality infrastructure** — FDE uses SanityOps to ensure delivered systems are "worth deploying" and "risks are controllable" |
 | **Core Value?** | FDE engineering delivery capability × SanityOps quality governance capability = **Reliable deployment of enterprise-grade AI systems** |
 
 ---
 
-## Appendix: Reference Documents
+## 7. Appendix: Reference Documents
 
-- [SanityOps Framework Core](../framework/core.html) — Framework core terminology and decision baselines
-- [SanityOps and Harness](./sanityops-and-harness.html) — The relationship between SanityOps and Harness
-
----
-
-*This document is based on SanityOps Framework v1.0*
+- [SanityOps Framework Core](/framework/core) — Framework core terminology and decision baselines
+- [SanityOps and Harness](/compare/sanityops-and-harness) — The relationship between SanityOps and Harness

@@ -1,3 +1,8 @@
+---
+title: Inspect Tool
+description: "Inspect Tool specification: defect rules for reviewing Tool Schemas and their parameter constraints."
+---
+
 # SanityOps Framework
 
 # Inspect Tool Specification
@@ -8,7 +13,7 @@
 
 **Release Date**: September 2026
 
-**Maintainer**: SanityOps Inspect Working Group
+**Maintained by**: Sanity AI Labs
 
 **License**: CC BY-SA 4.0
 
@@ -231,17 +236,10 @@ QD-T-x.y
 - **Version**: v1.0
 - **Release Status**: Initial release
 - **Last Updated**: September 2026
-- **Maintainer**: SanityOps Working Group
+- **Maintained by**: Sanity AI Labs
 
-<a id="032-version-history"></a>
-#### 0.3.2 Version History
-
-| Version | Release Date | Major Changes |
-| --- | --- | --- |
-| v1.0 | 2026-09 | Initial release |
-
-<a id="033-applicability-statement"></a>
-#### 0.3.3 Applicability Statement
+<a id="032-applicability-statement"></a>
+#### 0.3.2 Applicability Statement
 
 This specification v1.0 applies to the Tool Schema quality inspection phase of the SanityOps Framework. When using this specification for Tool quality inspection, all requirements of the corresponding version SHALL be followed.
 
@@ -1874,7 +1872,7 @@ All inspection items in this specification can be automated through the official
 <a id="c2-quick-start"></a>
 ### C.2 Quick Start
 
-Visit the [SanityOps Tools Website](https://www.sanityops.org/framework/try-the-tools.html) for detailed information.
+Visit the [SanityOps Tools Website](https://www.sanityops.org/framework/try-the-tools) for detailed information.
 
 ---
 

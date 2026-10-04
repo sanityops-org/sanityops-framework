@@ -1,3 +1,8 @@
+---
+title: Inspect Prompt
+description: "Inspect Prompt specification: defect rules for reviewing System Prompts as Logic Artifacts."
+---
+
 # SanityOps Framework
 
 # Inspect Prompt Specification
@@ -8,7 +13,7 @@
 
 **Release Date**: September 2026
 
-**Maintainer**: SanityOps Inspect Working Group
+**Maintained by**: Sanity AI Labs
 
 **License**: CC BY-SA 4.0
 
@@ -653,8 +658,6 @@ The purpose of this part is not to "teach the LLM how to inspect," but rather:
 | **Defective** | "Workflow: (1) Query user order data; (2) Analyze order trends; (3) Generate report. Resources: None." |
 | **Diagnosis** | Step (1) requires an order database, but no resource is defined |
 | **Fixed** | "Workflow: (1) Query user order data (using the order database); (2) Analyze order trends; (3) Generate report. Resources: Order database (read-only permission)." |
-
-> **Note**: This section has no 1.3. The original "Defect Severity Classification" summary table from v1.2 has been removed; severity information is now incorporated into each defect entry's "Severity" field. Number 1.3 is reserved to keep subsequent section numbers (1.4–1.8) unchanged.
 
 <a id="14-detection-methods-and-recommendations"></a>
 ### 1.4 Detection Methods and Recommendations

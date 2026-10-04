@@ -1,3 +1,8 @@
+---
+title: Inspect Skill
+description: "Inspect Skill specification: defect rules for reviewing Skill definitions and their constraints."
+---
+
 # SanityOps Framework
 
 # Inspect Skill Specification
@@ -8,7 +13,7 @@
 
 **Release Date**: September 2026
 
-**Maintainer**: SanityOps Inspect Working Group
+**Maintained by**: Sanity AI Labs
 
 **License**: CC BY-SA 4.0
 
@@ -220,13 +225,7 @@ QD-S-x.y
 - **Version**: v1.0
 - **Release Status**: Initial release
 - **Last Updated**: September 2026
-- **Maintainer**: SanityOps Working Group
-
-#### 0.3.2 Version History
-
-| Version | Release Date | Major Changes |
-| --- | --- | --- |
-| v1.0 | 2026-09 | Initial release |
+- **Maintained by**: Sanity AI Labs
 
 ---
 

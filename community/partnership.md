@@ -1,3 +1,8 @@
+---
+title: Partnership
+description: "Partnership opportunities with SanityOps: ecosystem collaboration, Forward Deployed Engineering teams, and contribution paths."
+---
+
 # Partnership
 
 ---
@@ -11,19 +16,19 @@ SanityOps is a management-facing, platform-level governance framework for
 enterprise AI agents. It is not merely another prompt tool, quality evaluation
 tool, or security scanner. It provides a structured way to inspect logical
 artifacts, validate risk, assess service quality, and retain evidence across
-the agent lifecycle.[^6a6c710237ee18b094b414a4_16]
+the agent lifecycle.
 
 The goal is not to promise that an agent will always be correct or completely
 secure. It is to reduce uncertainty and business risk through continuous,
-version-aware checks, validation, regression, and evidence governance.[^6a6a0bda577038d7bd5d2359_13]
+version-aware checks, validation, regression, and evidence governance.
 
 ## A Governance Layer for Enterprise AI Delivery
 
 SanityOps does not build, orchestrate, or operate agents. It provides
 systematic inspection, audit, and quality measurement for the logical artifacts
-and results of agents that have already been built.[^6a6c710237ee18b094b414a4_28]
+and results of agents that have already been built.
 
-For Forward-Deployed Engineering teams, this creates a practical governance
+For Forward Deployed Engineering teams, this creates a practical governance
 layer for delivering high-quality enterprise AI services.
 
 FDE teams are responsible for making AI work within real customer workflows,
@@ -82,7 +87,7 @@ industries, or implementation details.
 SanityOps does not replace IAM, infrastructure security, data governance,
 production monitoring, or model fine-tuning. It works alongside these systems
 by strengthening governance over the agent logic that organizations can
-directly control: prompts, skills, tool schemas, and their relationships.[^6a6c710237ee18b094b414a4_32]
+directly control: prompts, skills, tool schemas, and their relationships.
 
 ## Start a Conversation
 

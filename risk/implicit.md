@@ -1,3 +1,8 @@
+---
+title: Risk Implicit
+description: "Risk Implicit white paper: dynamic runtime validation using artifact-derived attack test cases and gated adjudication."
+---
+
 # SanityOps Framework
 
 # Risk Implicit White Paper
@@ -8,7 +13,7 @@
 
 **Release Date**: September 2026
 
-**Maintained by**: SanityOps Risk Working Group
+**Maintained by**: Sanity AI Labs
 
 **License**: CC BY-SA 4.0
 
@@ -18,7 +23,7 @@
 
 In the enterprise Agentic AI security field, logic attacks have evolved from rare advanced threats to mainstream risks that enterprises of any scale must face. Traditional security protection methods, runtime detection Guardrails, and existing Red Teaming tools have all exposed fundamental limitations.
 
-SanityOps Risk Implicit (Implicit Risk Validation) is a core component of the Validate subset under the SanityOps Framework, focusing on validating whether enterprise Agents have vulnerabilities exploitable by logic attacks through **dynamic attack execution in shadow sandboxes**.
+SanityOps Risk Implicit (Implicit Risk Validation) is a core component of the Risk subset under the SanityOps Framework, focusing on validating whether enterprise Agents have vulnerabilities exploitable by logic attacks through **dynamic attack execution in shadow sandboxes**.
 
 This white paper elaborates Implicit's design principles, workflow, termination status definitions, quantified assessment mechanisms, tool comparisons, and OWASP coverage analysis, providing enterprises with scalable, low-risk, and high-efficiency Agent security testing solutions.
 
@@ -53,7 +58,7 @@ This white paper elaborates Implicit's design principles, workflow, termination 
      - [1.5.2 Extreme Iteration Speed](#152-extreme-iteration-speed)
      - [1.5.3 Nature of Implicit Vulnerabilities](#153-nature-of-implicit-vulnerabilities)
    
-   - [1.6 Validate Design Baseline](#16-validate-design-baseline)
+   - [1.6 Validation Design Baseline](#16-validate-design-baseline)
      
      - [1.6.1 Artifact-Driven, Not Blind Testing](#161-artifact-driven-not-blind-testing)
      - [1.6.2 Shadow Sandbox, Safe Isolation](#162-shadow-sandbox-safe-isolation)
@@ -358,7 +363,7 @@ For example:
 Such vulnerabilities **hide in interactions between artifacts and runtime environments**, which static analysis tools cannot reach at all.
 
 <a id="16-validate-design-baseline"></a>
-### 1.6 Validate Design Baseline
+### 1.6 Validation Design Baseline
 
 Facing the above dilemmas, **SanityOps Risk** is born based on the following core insights:
 
@@ -385,12 +390,12 @@ Each validation produces **quantified security signals**, supporting version com
 <a id="165-cicd-integration-same-frequency-as-development"></a>
 #### 1.6.5 CI/CD Integration, Same Frequency as Development
 
-Benefiting from artifact-driven high efficiency, Validate can be **seamlessly integrated into CI/CD workflows**, making security validation a standard step for every code commit, not an exceptional overhead.
+Benefiting from artifact-driven high efficiency, Risk Implicit can be **seamlessly integrated into CI/CD workflows**, making security validation a standard step for every code commit, not an exceptional overhead.
 
 <a id="17-sanityops-framework-positioning"></a>
 ### 1.7 SanityOps Framework Positioning
 
-Validate is a subset within the SanityOps framework, which adopts a three-dimension architecture:
+Risk is a subset within the SanityOps framework, which adopts a three-dimension architecture:
 
 ```
 SanityOps Framework

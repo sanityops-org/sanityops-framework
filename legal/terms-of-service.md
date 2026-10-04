@@ -36,7 +36,7 @@ Use of the website, open-source tools, closed-source tools, or demo requires reg
 
 ## 5. User Responsibility for Uploaded Content
 
-You represent and warrant that you have the necessary rights, ownership, and authorization to upload, submit, or process any logical artifact or content through the Services. **We are unable to verify the ownership or legality of content you upload. You are solely responsible for the legality and appropriateness of any content you submit, including any content belonging to third parties or your own clients.** We disclaim all liability arising from your submission of content that you do not have the right to submit.
+You represent and warrant that you have the necessary rights, ownership, and authorization to upload, submit, or process any logical artifact or content through the Services. **We are unable to verify the ownership or legality of content you upload. You are solely responsible for the legality and appropriateness of any content you submit, including any content belonging to third parties or your own clients.** We disclaim all liability arising from your submission of content that you do not have the right to submit.
 
 ## 6. Acceptable Use Policy (AUP)
 
@@ -44,14 +44,14 @@ You agree that you will NOT:
 
 1. **Upload malicious artifacts**, including but not limited to artifacts designed to intentionally inject adversarial prompts, trigger system vulnerabilities, or otherwise attack or abuse the Services or their underlying infrastructure;
 2. **Abuse free-tier usage limits**, including using free-tier access for bulk commercial use, automated scraping, or circumventing usage restrictions through multiple accounts or other means;
-3. **Reverse engineer** the open-source code or closed-source components for the purpose of developing a competing product or service.
+3. **Reverse engineer** the open-source code or closed-source components for the purpose of developing a competing product or service.
 
 Violation of this AUP may result in immediate suspension or termination of your access to the Services, at our sole discretion, without notice.
 
 ## 7. Intellectual Property
 
-- The SanityOps source code is licensed under **Apache License 2.0**, as specified in the applicable repository.
-- The SanityOps framework documentation (white papers) is licensed under **Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)**. Any use, modification, or redistribution of the framework documentation must (a) provide appropriate attribution to Sanity AI Labs, and (b) if you create derivative works, distribute those derivative works under the same CC BY-SA 4.0 license.
+- The SanityOps source code is licensed under **Apache License 2.0**, as specified in the applicable repository.
+- The SanityOps framework documentation (white papers) is licensed under **Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)**. Any use, modification, or redistribution of the framework documentation must (a) provide appropriate attribution to Sanity AI Labs, and (b) if you create derivative works, distribute those derivative works under the same CC BY-SA 4.0 license.
 - All trademarks, service marks, and the "SanityOps" name and logo are the property of Sanity AI Labs, except as otherwise licensed.
 
 ## 8. Limitation of Liability
@@ -85,5 +85,5 @@ We may update these Terms from time to time. Continued use of the Services after
 ## 13. Contact Us
 
 **Sanity AI Labs**  
-General inquiries: [hello@sanityops.org](mailto:hello@sanityops.org)  
-Security and legal inquiries: **[security@sanityops.org](mailto:security@sanityops.org)**
+General inquiries: [hello@sanityops.org](mailto:hello@sanityops.org)  
+Security and legal inquiries: **[security@sanityops.org](mailto:security@sanityops.org)**

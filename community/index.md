@@ -1,3 +1,8 @@
+---
+title: Community
+description: "SanityOps community entry point: about the project, partnership opportunities, and ways to get involved."
+---
+
 # Community
 
 Join the SanityOps community. Learn about the project, explore partnership opportunities, and connect with other practitioners.
@@ -13,4 +18,4 @@ Join the SanityOps community. Learn about the project, explore partnership oppor
 
 ---
 
-**SanityOps is open by design**: core specifications and governance logic are open source under CC BY-SA 4.0.
+**SanityOps is open by design**: the framework specification is open under CC BY-SA 4.0, and the Inspector CLI is open source under Apache 2.0; the broader Platform is offered commercially as SaaS or self-hosted.

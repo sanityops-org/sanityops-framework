@@ -1,16 +1,29 @@
 {
   "name": "sanityops-framework",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "SanityOps - an open, vendor-neutral framework for AI Agent continuous governance.",
   "scripts": {
     "dev": "vitepress dev",
     "build": "vitepress build",
     "preview": "vitepress preview"
   },
-  "keywords": [],
-  "author": "",
-  "license": "CC BY-SA 4.0",
-  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanityops-org/sanityops-framework.git"
+  },
+  "keywords": [
+    "ai-agent",
+    "agent-governance",
+    "risk-management",
+    "quality-assurance",
+    "vitepress"
+  ],
+  "author": "Sanity AI Labs",
+  "license": "CC-BY-SA-4.0",
+  "bugs": {
+    "url": "https://github.com/sanityops-org/sanityops-framework/issues"
+  },
+  "homepage": "https://www.sanityops.org",
   "devDependencies": {
     "vitepress": "^1.6.4"
   }

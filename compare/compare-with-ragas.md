@@ -1,31 +1,36 @@
-# Appendix: Framework-Level Comparison — SanityOps Quality vs. RAGAS
+---
+title: SanityOps vs. RAGAS
+description: "Framework-level comparison of SanityOps Quality and RAGAS across scope, test sourcing, metrics, governance, and release gating."
+---
+
+# Framework-Level Comparison: SanityOps Quality vs. RAGAS
 
 ---
 
 ## Table of Contents
 
-- [X.1 Context and Scope](#x1-context-and-scope)
-- [X.2 Positioning and Objectives](#x2-positioning-and-objectives)
-- [X.3 Evaluation Scope](#x3-evaluation-scope)
-- [X.4 Test Case Sourcing and Generation](#x4-test-case-sourcing-and-generation)
-- [X.5 Metric System Design](#x5-metric-system-design)
-- [X.6 Evaluation Workflow and Governance Mechanisms](#x6-evaluation-workflow-and-governance-mechanisms)
-- [X.7 Cross-Module Integration](#x7-cross-module-integration)
-- [X.8 Boundary Clarification](#x8-boundary-clarification)
-- [X.9 Conclusion](#x9-conclusion)
+- [1. Context and Scope](#1-context-and-scope)
+- [2. Positioning and Objectives](#2-positioning-and-objectives)
+- [3. Evaluation Scope](#3-evaluation-scope)
+- [4. Test Case Sourcing and Generation](#4-test-case-sourcing-and-generation)
+- [5. Metric System Design](#5-metric-system-design)
+- [6. Evaluation Workflow and Governance Mechanisms](#6-evaluation-workflow-and-governance-mechanisms)
+- [7. Cross-Module Integration](#7-cross-module-integration)
+- [8. Boundary Clarification](#8-boundary-clarification)
+- [9. Conclusion](#9-conclusion)
 
 ---
 
-<a id="x1-context-and-scope"></a>
-## X.1 Context and Scope
+<a id="1-context-and-scope"></a>
+## 1. Context and Scope
 
-This appendix provides an objective, structured comparison between the **Quality subset of the SanityOps Framework** — encompassing both Quality RAG-Agent and Quality Tool-Agent — and **RAGAS** (Retrieval-Augmented Generation Assessment), an open-source evaluation library. The two are frequently conflated in practice, particularly during enterprise tool selection for "RAG evaluation," where RAGAS is sometimes treated as a drop-in equivalent to SanityOps Quality. This appendix clarifies that the two systems address problems at fundamentally different layers of the stack and are neither mutually exclusive nor interchangeable.
+This comparison provides an objective, structured comparison between the **Quality subset of the SanityOps Framework** — encompassing both Quality RAG-Agent and Quality Tool-Agent — and **RAGAS** (Retrieval-Augmented Generation Assessment), an open-source evaluation library. The two are frequently conflated in practice, particularly during enterprise tool selection for "RAG evaluation," where RAGAS is sometimes treated as a drop-in equivalent to SanityOps Quality. This comparison clarifies that the two systems address problems at fundamentally different layers of the stack and are neither mutually exclusive nor interchangeable.
 
 ---
 
-<a id="x2-positioning-and-objectives"></a>
+<a id="2-positioning-and-objectives"></a>
 
-## X.2 Positioning and Objectives
+## 2. Positioning and Objectives
 
 The distinction begins with the question each system is designed to answer.
 
@@ -38,9 +43,9 @@ The distinction begins with the question each system is designed to answer.
 
 ---
 
-<a id="x3-evaluation-scope"></a>
+<a id="3-evaluation-scope"></a>
 
-## X.3 Evaluation Scope
+## 3. Evaluation Scope
 
 Beyond the RAG vs. task-execution distinction, the two systems differ in their fundamental assumptions about what an Agent output looks like.
 
@@ -54,9 +59,9 @@ In enterprise environments, task-execution Agents — those that call APIs, upda
 
 ---
 
-<a id="x4-test-case-sourcing-and-generation"></a>
+<a id="4-test-case-sourcing-and-generation"></a>
 
-## X.4 Test Case Sourcing and Generation
+## 4. Test Case Sourcing and Generation
 
 This is where the two systems diverge most sharply — and it is the dimension that determines whether evaluation results are actually representative of the business reality they claim to measure.
 
@@ -102,9 +107,9 @@ RAGAS has no built-in coverage governance. The representativeness of the score d
 
 ---
 
-<a id="x5-metric-system-design"></a>
+<a id="5-metric-system-design"></a>
 
-## X.5 Metric System Design
+## 5. Metric System Design
 
 The metric systems reflect each tool's relationship to business risk.
 
@@ -118,9 +123,9 @@ The critical-item handling distinction is particularly consequential in regulate
 
 ---
 
-<a id="x6-evaluation-workflow-and-governance-mechanisms"></a>
+<a id="6-evaluation-workflow-and-governance-mechanisms"></a>
 
-## X.6 Evaluation Workflow and Governance Mechanisms
+## 6. Evaluation Workflow and Governance Mechanisms
 
 <a id="standard-workflow"></a>
 
@@ -175,9 +180,9 @@ RAGAS does not include built-in version baseline comparison or regression govern
 
 ---
 
-<a id="x7-cross-module-integration"></a>
+<a id="7-cross-module-integration"></a>
 
-## X.7 Cross-Module Integration
+## 7. Cross-Module Integration
 
 SanityOps Quality is not an island. Its integration with the broader framework creates capabilities that a standalone evaluation tool cannot replicate.
 
@@ -190,9 +195,9 @@ SanityOps Quality is not an island. Its integration with the broader framework c
 
 ---
 
-<a id="x8-boundary-clarification"></a>
+<a id="8-boundary-clarification"></a>
 
-## X.8 Boundary Clarification
+## 8. Boundary Clarification
 
 This comparison does not diminish RAGAS's technical value within its designed scope. As an automated scoring tool for RAG generation quality, RAGAS offers meaningful quantitative methods for faithfulness, relevance, and related dimensions. It can serve as a **candidate technical component** within the SanityOps Quality evaluator layer — alongside Rule Verification, LLM-as-Judge, and Embedding Assistance.
 
@@ -205,10 +210,10 @@ An organization that adopts only RAGAS-class tooling gains a quantitative score 
 
 ---
 
-<a id="x9-conclusion"></a>
+<a id="9-conclusion"></a>
 
-## X.9 Conclusion
+## 9. Conclusion
 
 SanityOps Quality and RAGAS are not competing products. They occupy different governance layers: the former is a quality subset embedded within an enterprise Agent Full-Lifecycle Governance Framework; the latter is an optional technical component focused on generation-quality quantification.
 
-When evaluating tools or benchmarking frameworks, practitioners should resist the temptation to equate the two. The question is not which tool scores better — it is whether the organization needs a **demonstration-grade scoring tool** or a **production-grade quality governance mechanism**. The dimensions laid out in this appendix provide the criteria for making that determination.
+When evaluating tools or benchmarking frameworks, practitioners should resist the temptation to equate the two. The question is not which tool scores better — it is whether the organization needs a **demonstration-grade scoring tool** or a **production-grade quality governance mechanism**. The dimensions laid out in this comparison provide the criteria for making that determination.

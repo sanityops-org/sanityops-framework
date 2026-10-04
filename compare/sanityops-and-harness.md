@@ -1,4 +1,18 @@
+---
+title: SanityOps and Harness
+description: "Brief overview of how SanityOps governance at the logic-design layer complements Harness runtime engineering."
+---
+
 # The Relationship Between SanityOps and Harness: A Brief Overview
+
+---
+
+## Table of Contents
+
+- [1. Principles](#1-principles)
+- [2. Functional Comparison](#2-functional-comparison)
+- [3. Example: Path Traversal Risk from Missing Parameter Validation](#3-example-path-traversal-risk-from-missing-parameter-validation)
+- [4. Summary in One Sentence](#4-summary-in-one-sentence)
 
 ---
 

@@ -1,4 +1,9 @@
-﻿# Quality — Agent Service Quality Assessment
+---
+title: Quality
+description: "Quality documentation index: service quality assessment for RAG-Agents and tool-calling Agents, with metrics and release gates."
+---
+
+# Quality — Agent Service Quality Assessment
 
 **Quantitative assessment of AI Agent output quality and task completion reliability. Establishes measurable quality thresholds, release gates, and continuous improvement loops for enterprise deployment decisions.**
 

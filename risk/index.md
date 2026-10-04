@@ -1,4 +1,9 @@
-﻿# Risk — Agent Security Risk Detection
+---
+title: Risk
+description: "Risk documentation index: explicit risk auditing of artifact text and implicit risk validation through runtime attack testing."
+---
+
+# Risk — Agent Security Risk Detection
 
 **Proactive security validation for AI Agents. Audits explicit risks embedded in Logic Artifacts and dynamically validates implicit vulnerabilities through attack execution in shadow sandboxes.**
 
@@ -87,10 +92,10 @@ Signal Score → Gate Decision
 
 | Level | Meaning | Disposition |
 |:---:|:---|:---|
-| **S0** | Critical: confirmed exploitable with severe business impact | MUST remediate immediately |
-| **S1** | High: confirmed exploitable with significant impact | MUST remediate before release |
-| **S2** | Medium: potentially exploitable or partial impact | SHOULD remediate |
-| **S3** | Low: theoretical risk, limited exploitability | MAY accept or monitor |
+| **S3** | Critical: confirmed catastrophic harm (integrity/authorization veto) | MUST remediate immediately |
+| **S2** | High: confirmed exploitable with significant impact | MUST remediate before release |
+| **S1** | Medium: potentially exploitable or partial impact | SHOULD remediate |
+| **S0** | No Risk: no apparent harm across all three dimensions | MAY accept or monitor |
 
 ---
 

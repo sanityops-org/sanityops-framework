@@ -1,14 +1,19 @@
+---
+title: Quality RAG-Agent
+description: "Quality RAG-Agent white paper: governed test cases, multi-dimensional metrics, critical-item gating, and quality gates for retrieval-augmented Agents."
+---
+
 # SanityOps Framework
 
 # Quality RAG-Agent White Paper
+---
+**Version**: v1.0
 
-**Version**:v1.0
+**Release Date**: September 2026
 
-**Release Date**: September 2026 
+**Maintained by**: Sanity AI Labs
 
-**Maintained by**:SanityOps Quality Working Group
-
-**License**:CC BY-SA 4.0
+**License**: CC BY-SA 4.0
 
 ---
 

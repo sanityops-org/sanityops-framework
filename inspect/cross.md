@@ -1,3 +1,8 @@
+---
+title: Inspect Cross
+description: "Inspect Cross specification: cross-artifact consistency checks across System Prompts, Skills, and Tool Schemas."
+---
+
 # SanityOps Framework
 
 # Inspect Cross Specification
@@ -8,7 +13,7 @@
 
 **Release Date**: September 2026
 
-**Maintainer**: SanityOps Inspect Working Group
+**Maintained by**: Sanity AI Labs
 
 **License**: CC BY-SA 4.0
 
@@ -252,14 +257,7 @@ QD-XY-n.m
 - **Version**: v1.0
 - **Release Status**: Initial release
 - **Last Updated**: September 2026
-- **Maintainer**: SanityOps Working Group
-
-<a id="032-version-history"></a>
-#### 0.3.2 Version History
-
-| Version | Release Date | Major Changes |
-| --- | --- | --- |
-| v1.0 | 2026-09 | Initial release |
+- **Maintained by**: Sanity AI Labs
 
 ---
 
@@ -831,7 +829,7 @@ The QD-PT relationship inspects five categories of content passed from Prompt to
 - If Tool does not exist: remove the Tool declaration from the Prompt, or supplement the Tool Schema
 - If Tool names are inconsistent: unify the names
 
-**Note**: Static inspection only verifies "declaration existence." Runtime verification of "actual availability" occurs in the Validate phase.
+**Note**: Static inspection only verifies "declaration existence." Runtime verification of "actual availability" occurs during Risk Implicit validation.
 
 #### QD-PT-2.2 Invocation Specification Consistency
 
@@ -1111,7 +1109,7 @@ The QD-ST relationship inspects the bidirectional transfer between Skill and Too
 - If Tool does not exist: remove the Tool declaration from the Skill, or supplement the Tool Schema
 - If Tool names are inconsistent: unify the names
 
-**Note**: Static inspection only verifies "declaration existence." Runtime verification of "actual availability" occurs in the Validate phase.
+**Note**: Static inspection only verifies "declaration existence." Runtime verification of "actual availability" occurs during Risk Implicit validation.
 
 #### QD-ST-3.2 Input Constraint Consistency
 
@@ -1815,7 +1813,7 @@ Tier 3: Field level
 
 **Timing**: Full validation before release
 
-**Inspection Scope**: Cross-Artifact Inspection + runtime simulation (Validate phase)
+**Inspection Scope**: Cross-Artifact Inspection + runtime simulation (Risk Implicit)
 
 **Execution Condition**: Cross-Artifact Inspection passed; no P0 defects
 

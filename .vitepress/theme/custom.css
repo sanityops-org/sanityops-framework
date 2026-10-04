@@ -39,4 +39,45 @@ html.dark .VPHero .text {
   margin-top: 32px;
 }
 
+/* Section landing — MkDocs-style grid cards (used on section index pages) */
+.vp-doc .grid.cards {
+  margin: 24px 0;
+}
+
+.vp-doc .grid.cards > ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.vp-doc .grid.cards li {
+  padding: 18px 20px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+  background-color: var(--vp-c-bg-soft);
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.vp-doc .grid.cards li:hover {
+  border-color: var(--vp-c-brand-1);
+  box-shadow: var(--vp-shadow-2);
+}
+
+.vp-doc .grid.cards li h3 {
+  margin: 0 0 8px;
+  border: 0;
+  font-size: 18px;
+}
+
+.vp-doc .grid.cards li p {
+  margin: 6px 0;
+}
+
+.vp-doc .grid.cards li p:last-child {
+  margin-bottom: 0;
+}
+
 

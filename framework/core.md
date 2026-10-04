@@ -1,3 +1,8 @@
+---
+title: Core
+description: "Core terminology, governance objects, phases, and decision baselines of the SanityOps framework."
+---
+
 # SanityOps Framework Core
 
 ---
@@ -6,7 +11,7 @@
 
 **Release Date**: September 2026
 
-**Maintainer**: SanityOps Working Group
+**Maintained by**: Sanity AI Labs
 
 **License**: CC BY-SA 4.0
 
@@ -122,7 +127,7 @@
 | Status | Published |
 | Date | September 2026 |
 | Scope | All current and future SanityOps sub-specifications, rule assets, tool implementations, reports, CI/CD pipelines, and governance processes |
-| Maintainer | SanityOps Working Group |
+| Maintained by | Sanity AI Labs |
 | Document Nature | Framework-level normative baseline |
 
 ---
@@ -215,7 +220,7 @@ With the publication of Core:
 
 SanityOps is a **vendor-neutral quality, security, and governance framework for the full lifecycle of enterprise-grade AI Agents**.
 
-Its core objective is not to guarantee that Agents are always correct or absolutely secure. Rather, it is:
+Its core objective is not to guarantee that Agents governed by SanityOps are always correct or absolutely secure. Rather, it is:
 
 > To bring the controllable, versionable, and verifiable Logic Artifacts, behavioral risks, and quality outcomes of enterprise Agents into a continuous cycle of inspection, validation, regression, and evidence governance — systematically reducing the uncertainty of Agent behavior and the business and security risks that uncertainty creates.
 
@@ -579,7 +584,7 @@ These may be correlated, but they MUST be recorded separately.
 <a id="47-risk-explicit-severity-level-s0s3"></a>
 ## 4.7 Risk Explicit Severity Level: `S0–S3`
 
-`S0–S3` is the Exclusive Risk severity expression specific to Risk Explicit. Its definition, adjudication evidence, and Gate impact are governed by Risk Explicit.
+`S0–S3` is the Explicit Risk severity expression specific to Risk Explicit. Its definition, adjudication evidence, and Gate impact are governed by Risk Explicit.
 
 Core stipulates:
 

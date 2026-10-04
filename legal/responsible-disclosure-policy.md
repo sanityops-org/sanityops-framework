@@ -4,13 +4,13 @@ description: How to report security vulnerabilities in SanityOps responsibly.
 outline: false
 ---
 
-## Responsible Disclosure Policy
+# Responsible Disclosure Policy
 
-**Effective Date:** 2026-08-10
+**Effective Date:** 2026-08-10
 
 Sanity AI Labs values the contributions of independent security researchers in helping us maintain the security of the SanityOps open-source CLI, website, and hosted Services. This Responsible Disclosure Policy explains how to report a suspected vulnerability and what you can expect from us.
 
-### 1. Scope
+## 1. Scope
 
 This policy applies to:
 
@@ -20,9 +20,9 @@ This policy applies to:
 
 Self-hosted/private deployments are out of scope, as we do not operate or have visibility into such environments.
 
-### 2. How to Report
+## 2. How to Report
 
-Please submit a report to **[security@sanityops.org](mailto:security@sanityops.org)**, including:
+Please submit a report to **[security@sanityops.org](mailto:security@sanityops.org)**, including:
 
 - A description of the vulnerability and its potential impact;
 - Step-by-step reproduction instructions or proof-of-concept;
@@ -31,7 +31,7 @@ Please submit a report to **[security@sanityops.org](mailto:security@sanityops.
 
 We encourage encrypting sensitive report details where possible and will respond with a secure channel if needed.
 
-### 3. Our Commitment
+## 3. Our Commitment
 
 Upon receiving a valid report, we will:
 
@@ -40,7 +40,7 @@ Upon receiving a valid report, we will:
 - Keep you informed of remediation progress where appropriate;
 - Credit researchers who responsibly disclose valid findings, upon request (we do not currently operate a paid bug bounty program).
 
-### 4. Guidelines for Researchers
+## 4. Guidelines for Researchers
 
 To qualify for safe-harbor treatment under this policy, please:
 
@@ -52,7 +52,7 @@ To qualify for safe-harbor treatment under this policy, please:
 
 Reports and testing conducted in good faith and in accordance with these guidelines will not result in legal action initiated by Sanity AI Labs.
 
-### 5. Out of Scope
+## 5. Out of Scope
 
 The following are generally considered out of scope:
 
@@ -61,6 +61,6 @@ The following are generally considered out of scope:
 - Social engineering, physical security, or denial-of-service attacks;
 - Reports without a credible, demonstrable security impact.
 
-### 6. Contact
+## 6. Contact
 
-For all security-related reports and inquiries: **[security@sanityops.org](mailto:security@sanityops.org)**
+For all security-related reports and inquiries: **[security@sanityops.org](mailto:security@sanityops.org)**

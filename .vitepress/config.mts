@@ -20,8 +20,11 @@ export default defineConfig({
   lang: 'en-US',
   lastUpdated: true,
 
-  // Internal reminder file, not part of the website
-  srcExclude: ['PENDING-UPDATES.md'],
+  // Default to dark appearance (the toggle stays available)
+  appearance: 'dark',
+
+  // GitHub-facing and internal files, not part of the website
+  srcExclude: ['README.md', 'RELEASE-NOTE-v1.0.md'],
 
   sitemap: {
     hostname: 'https://www.sanityops.org',
@@ -105,8 +108,9 @@ export default defineConfig({
           { text: 'Overview', link: '/framework/overview' },
           { text: 'Core', link: '/framework/core' },
           { text: 'Relevance', link: '/framework/relevance' },
-          { text: 'Read the Framework', link: '/framework/read-the-framework' },
           { text: 'Try the Tools', link: '/framework/try-the-tools' },
+          { text: 'FAQ', link: '/framework/FAQ' },
+          { text: 'Samples', link: '/samples/' },
         ],
       },
       {
@@ -164,8 +168,9 @@ export default defineConfig({
             { text: 'Overview', link: '/framework/overview' },
             { text: 'Core', link: '/framework/core' },
             { text: 'Relevance', link: '/framework/relevance' },
-            { text: 'Read the Framework', link: '/framework/read-the-framework' },
             { text: 'Try the Tools', link: '/framework/try-the-tools' },
+            { text: 'FAQ', link: '/framework/FAQ' },
+            { text: 'Samples', link: '/samples/' },
           ],
         },
       ],
@@ -217,6 +222,16 @@ export default defineConfig({
         },
       ],
       '/community/': communitySidebar,
+      '/samples/': [
+        {
+          text: 'Samples',
+          link: '/samples/',
+          items: [
+            { text: 'Logical Artifacts', link: '/samples/artifacts/' },
+            { text: 'Report', link: '/samples/report/' },
+          ],
+        },
+      ],
     },
 
     search: {
@@ -228,13 +243,8 @@ export default defineConfig({
     ],
 
     footer: {
-      message: '<a href="/legal/privacy-policy">Privacy Policy</a> · <a href="/legal/terms-of-service">Terms of Service</a> · <a href="/legal/cookie-policy">Cookie Policy</a> · <a href="/legal/security-statement">Security</a> · <span id="cc-footer-preferences">Cookie Preferences</span> · <a href="mailto:hello@sanityops.org">Contact: hello@sanityops.org</a>',
+      message: '<a href="/legal/privacy-policy">Privacy Policy</a> · <a href="/legal/terms-of-service">Terms of Service</a> · <a href="/legal/cookie-policy">Cookie Policy</a> · <a href="/legal/responsible-disclosure-policy">Responsible Disclosure</a> · <a href="/legal/security-statement">Security</a> · <span id="cc-footer-preferences">Cookie Preferences</span> · <a href="mailto:hello@sanityops.org">Contact: hello@sanityops.org</a>',
       copyright: 'Copyright © 2026 Sanity AI Labs · v1.0 · Licensed under CC BY-SA 4.0',
-    },
-
-    editLink: {
-      pattern: '',
-      text: '',
     },
 
     outline: {

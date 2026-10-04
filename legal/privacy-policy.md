@@ -17,7 +17,7 @@ This Privacy Policy is designed to be consistent with the EU General Data Protec
 
 ### 1.1 CLI Tool (Anonymous Use)
 
-The SanityOps CLI tool may be used completely anonymously and does not require registration. We do **not** store any content of the logical artifacts (e.g., System Prompts, Skill definitions, Tool Schemas) you process through the CLI. All processing is one-time and no artifact content is retained after your session ends.
+The SanityOps CLI tool may be used completely anonymously and does not require registration. We do **not** store any content of the logical artifacts (e.g., System Prompts, Skill definitions, Tool Schemas) you process through the CLI. All processing is one-time and no artifact content is retained after your session ends.
 
 ### 1.2 Website, Open-Source Tools, Closed-Source Tools, and Demo (Registered Use)
 
@@ -30,7 +30,7 @@ When you register and use these Services, we may collect:
 - **IP address**: collected specifically for free-tier accounts to enforce usage limits (rate limiting). We do not collect IP addresses for purposes beyond this.
 - **Cookies and similar technologies**: used in accordance with standard industry practice for functionality and analytics purposes. See Section 6 below.
 
-We do **not** collect any other behavioral or tracking data beyond what is described above.
+We do **not** collect any other behavioral or tracking data beyond what is described above.
 
 ## 2. How We Use Your Information
 
@@ -41,7 +41,7 @@ We use the information described above to:
 - Respond to your requests and support inquiries;
 - Maintain the security and integrity of the Services.
 
-**We do not use uploaded artifact content to train or fine-tune our own models or any third-party models.** Your uploaded content is used solely to provide the inspection, risk audit, or quality assessment results you request.
+**We do not use uploaded artifact content to train or fine-tune our own models or any third-party models.** Your uploaded content is used solely to provide the inspection, risk audit, or quality assessment results you request.
 
 ## 3. Data Retention
 
@@ -53,7 +53,7 @@ We use the information described above to:
 
 Because our Services are directed at users in the United States, the European Union, and globally, we have made a deliberate decision regarding the AI infrastructure we rely on:
 
-**We exclusively use AI model service providers located within the United States** (for example, Google Gemini, or model services provided via together.ai). **We do not, and will not, use AI service providers located in China or any jurisdiction outside the United States** for processing any data related to the Services.
+**We exclusively use AI model service providers located within the United States** (for example, Google Gemini, or model services provided via together.ai). **We do not, and will not, use AI service providers located in China or any jurisdiction outside the United States** for processing any data related to the Services.
 
 Where your uploaded artifact content is processed by these third-party AI service providers to generate inspection, risk, or quality results, such processing is limited to this purpose. We do not share your data with these providers for any other purpose, including training their models, except to the extent such providers' own terms govern their processing of API requests (please refer to the respective provider's own privacy terms for their handling of API-submitted data).
 
@@ -61,7 +61,7 @@ We may also use standard third-party infrastructure providers (e.g., cloud hosti
 
 ## 5. Self-Hosted (Private Deployment)
 
-If you deploy SanityOps in a self-hosted / private deployment environment, **no data is transmitted back to Sanity AI Labs**, including during software updates. Updates must be downloaded and applied by you independently; we do not have any automated update mechanism that accesses or transmits your environment's data.
+If you deploy SanityOps in a self-hosted / private deployment environment, **no data is transmitted back to Sanity AI Labs**, including during software updates. Updates must be downloaded and applied by you independently; we do not have any automated update mechanism that accesses or transmits your environment's data.
 
 ## 6. Cookies
 
@@ -71,7 +71,7 @@ We use cookies and similar technologies in accordance with standard industry pra
 
 Depending on your jurisdiction, you may have rights including the right to access, correct, delete, or receive a copy of your personal information, and the right to object to or restrict certain processing.
 
-To exercise any of these rights, please contact us at **[security@sanityops.org](mailto:security@sanityops.org)**.
+To exercise any of these rights, please contact us at **[security@sanityops.org](mailto:security@sanityops.org)**.
 
 We will respond to verified requests within the timeframe required by applicable law (e.g., GDPR, CCPA).
 
@@ -81,7 +81,7 @@ We implement reasonable technical and organizational measures to protect the inf
 
 ## 9. Children's Privacy
 
-The Services are not directed at children, but we do not impose a specific age restriction. If you believe a child has provided us with personal information, please contact us at [security@sanityops.org](mailto:security@sanityops.org).
+The Services are not directed at children, but we do not impose a specific age restriction. If you believe a child has provided us with personal information, please contact us at [security@sanityops.org](mailto:security@sanityops.org).
 
 ## 10. Changes to This Policy
 
@@ -90,5 +90,5 @@ We may update this Privacy Policy from time to time. Material changes will be re
 ## 11. Contact Us
 
 **Sanity AI Labs**  
-General inquiries: [hello@sanityops.org](mailto:hello@sanityops.org)  
-Privacy and security inquiries: **[security@sanityops.org](mailto:security@sanityops.org)**
+General inquiries: [hello@sanityops.org](mailto:hello@sanityops.org)  
+Privacy and security inquiries: **[security@sanityops.org](mailto:security@sanityops.org)**
