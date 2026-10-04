@@ -1,6 +1,6 @@
 # SanityOps Framework v1.0
 
-**Release Date**: September 2026  
+**Release Date**: October 2026  
 **Release Tag**: `v1.0.0`  
 **License**: CC BY-SA 4.0 (Framework specification) · Apache 2.0 (Inspect CLI)
 
@@ -138,4 +138,4 @@ None (initial release).
 
 ---
 
-*SanityOps Framework v1.0 — September 2026*
+*SanityOps Framework v1.0 — October 2026*

@@ -1,11 +1,16 @@
 ---
 title: Samples
-description: "Sample index: example Logic Artifacts and defect inspection reports produced by the SanityOps tools."
+description: "Sample logical artifacts and formal audit reports demonstrating SanityOps Inspect, Risk, and Quality governance in practice."
 ---
 
 # Samples
 
-Worked examples of the SanityOps framework applied to real agent logic artifacts.
+End-to-end examples of SanityOps governance, from raw logical artifacts to formal audit reports.
 
-- [Logical Artifacts](./artifacts/) — System Prompts, Skills, and Tool Schemas for three example agents, with their defect inspection reports.
-- [Report](./report/) — formal PDF reports for the "Voyager" sample agent, spanning Inspect, Risk, and Quality.
+## [Sample Logical Artifacts](./artifacts/index.md)
+
+System Prompts, Skills, and Tool Schemas for three example agents — Energy Management, Freight Logistics, and Medication Information — each with its defect inspection and remediation record.
+
+## [Sample Audit Reports](./report/index.md)
+
+Formal PDF reports for the "Voyager" sample agent, spanning Inspect, Risk (Explicit & Implicit), and Quality — each with a full audit report and an executive summary.

@@ -131,7 +131,7 @@ The framework specification is fully open; the Inspect CLI is open source (Apach
 - **Try the Inspect CLI** — install and run static defect checks locally or in CI/CD: [Try the Tools](framework/try-the-tools.md) · `pip install sanityops-cli`
 - **Try the live demo** — the full Inspect + Risk + Quality loop: [demo.sanityops.org](https://demo.sanityops.org/). Sign-up is invite-only (LLM inference costs) — click **Get Code** on the registration form.
 - **Browse sample logical artifacts** — System Prompts, Skills, and Tool Schemas for three example agents (energy, freight logistics, medication): [samples/artifacts/](samples/artifacts/)
-- **Review sample audit reports** — formal PDF reports for a "Voyager" sample agent, spanning Inspect, Risk (Explicit & Implicit), and Quality, each with a full audit and an executive summary: [samples/report/](samples/report/)
+- **Review sample audit reports** — formal PDF reports for a "Voyager" sample agent, spanning Inspect, Risk (Explicit & Implicit), and Quality, each with a full audit and an executive summary: [public/samples/report/](public/samples/report/)
 
 ---
 
