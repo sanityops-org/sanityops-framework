@@ -30,3 +30,6 @@ desktop.ini
 # Temporary downloads
 *.crdownload
 *.tmp
+
+# Lite inspector — non-published fetch workspace (third-party source, incl. proprietary)
+inspect-skill/_process/
