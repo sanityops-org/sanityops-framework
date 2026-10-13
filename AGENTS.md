@@ -81,8 +81,8 @@ These explain, navigate, or exemplify. They **must never define or redefine rule
 - All `index.md` files — navigation hubs only.
 - `compare/*` — ecosystem positioning; `sanityops-positioning.md` is the overview, the other four files (FDE, Harness, Promptfoo, RAGAS, SkillSpector) are topic branches.
 - `samples/artifacts/*.md` (3 agents) and `samples/report/*.pdf` (8 reports) — **instance outputs** (analogous to `F-*` Finding instances in core.md §3.3), not rule definitions.
-- `samples/inspect-skill-artifacts-samples/*` — instance outputs of the lite inspector: combined source-logic-artifact + inspection-report records for external agents; non-normative.
-- `inspect-skill/*` — the `sanityops-inspect-lite` inspector deliverable (SKILL.md, a non-normative `README.md` auxiliary guide, and condensed `references/` checklists). It is a **condensed extraction** of the nine L1 sub-specifications and `relevance.md`, defines no new rules, and never overrides its sources; `inspect-skill/_process/**` is a non-published workspace.
+- `samples/inspect-skill-artifacts-samples/*` — instance outputs of the lite inspector: combined source-logic-artifact + inspection-report records for external agents; non-normative. A copy also ships in the standalone `sanityops-inspect-lite` repository.
+- `inspect-skill/*` — a **redirect only**. The `sanityops-inspect-lite` inspector deliverable (SKILL.md, a non-normative `README.md` auxiliary guide, condensed `references/` checklists, and worked samples) now lives in its own repository (`sanityops-org/sanityops-inspect-lite`), which is a **condensed extraction** of the nine L1 sub-specifications and `relevance.md`, defines no new rules, and never overrides its sources. Only the non-published `inspect-skill/_process/**` workspace remains in this repo.
 - `community/*`, `legal/*` — independent of the specification system; never cite them as normative basis.
 
 ---

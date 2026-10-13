@@ -128,6 +128,7 @@ Inspect performs static defect and permission checks on logical artifacts; Risk 
 The framework specification is fully open; the Inspect CLI is open source (Apache 2.0); Risk and Quality are offered as **SaaS / self-hosted**.
 
 - **Read the framework** — a guided reading path: [Framework Home](framework/index.md)
+- **Try it with zero install** — a no-install, report-only skill that runs condensed Inspect checks in your host model: [sanityops-inspect-lite](https://github.com/sanityops-org/sanityops-inspect-lite). A quick way to understand Inspect before installing the CLI.
 - **Try the Inspect CLI** — install and run static defect checks locally or in CI/CD: [Try the Tools](framework/try-the-tools.md) · `pip install sanityops-cli`
 - **Try the live demo** — the full Inspect + Risk + Quality loop: [demo.sanityops.org](https://demo.sanityops.org/). Sign-up is invite-only (LLM inference costs) — click **Get Code** on the registration form.
 - **Browse sample logical artifacts** — System Prompts, Skills, and Tool Schemas for three example agents (energy, freight logistics, medication): [samples/artifacts/](samples/artifacts/)

@@ -24,7 +24,11 @@ export default defineConfig({
   appearance: 'dark',
 
   // GitHub-facing and internal files, not part of the website
-  srcExclude: ['README.md', 'RELEASE-NOTE-v1.0.md'],
+  srcExclude: [
+    'README.md',
+    'RELEASE-NOTE-v1.0.md',
+    'inspect-skill/_process/**', // fetch workspace + drafting logs, not website content
+  ],
 
   sitemap: {
     hostname: 'https://www.sanityops.org',

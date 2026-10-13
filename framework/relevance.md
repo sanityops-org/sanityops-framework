@@ -192,7 +192,7 @@ This specification establishes mapping relationships based on the following Sani
 | Inspect Prompt | v1.0 | Uses `QD-P` numbering, definitions, and P0/P1/P2 rules |
 | Inspect Skill | v1.0 | Uses `QD-S` numbering, Review Schema, and risk classification rules |
 | Inspect Tool | v1.0 | Uses `QD-T` numbering, Schema constraints, and high-risk operation definitions |
-| Inspect Cross | v1.0 | Uses `QD-PS`, `QD-PT`, `QD-ST` numbering and consistency relationships |
+| Inspect Cross | v1.0 | Uses `QD-PS`, `QD-PT`, `QD-ST`, `QD-CYC` numbering and consistency relationships |
 | Inspect Permission | v1.0 | Uses QD-PM numbering and permission baseline domain determinations (QD-PM-1~6) |
 | Risk Explicit | v1.0 | Uses `EX`, D1/D2/D3, S0–S3 risk model |
 | Risk Implicit | v1.0 | Uses shadow sandbox, dynamic attack, and continuous validation principles |
@@ -1204,6 +1204,7 @@ For defect chains that have been dynamically validated as exploitable, closure m
 | `QD-ST-3.5` Output Structure Matching | AS-03, AS-09 | D1, Integrity, Auditability | Tool return structure, downstream parsing, citation, or format testing |
 | `QD-ST-3.6` Permission Scope Matching | AS-04, AS-05 | D2, D3 | Skill→Tool actual side effects, read/write/delete, and confirmation testing |
 | `QD-ST-3.7` Error Handling Coverage | AS-07, AS-09 | D1, D2, Availability | Tool error classification, degradation, stop, retry, and human takeover testing |
+| `QD-CYC-1.1–1.2` Circular Invocation | AS-06 | Availability | Loop termination, cross-artifact and multi-agent circular call, and resource exhaustion testing |
 
 ## A.5 Permission Defect Mapping
 
@@ -1583,7 +1584,7 @@ This specification can reference OWASP risk language, but does not use OWASP num
 | AS-03 | Sensitive Information Disclosure, Improper Output Handling | `QD-P-2.3.4`, `QD-T-3.5`, `QD-PM-2.x` |
 | AS-04 | Excessive Agency, Excessive Permissions | `QD-P-2.5.3`, `QD-S-5.x`, `QD-ST-3.6`, `QD-PM-1.x`, `QD-PM-2.x`, `QD-PM-3.x`, `QD-PM-4.x`, `QD-PM-5.x` |
 | AS-05 | Tool Misuse, Unsafe Action Execution | `QD-T-3.1`, `QD-T-4.2`, `QD-T-4.3`, `QD-PM-3.4`, `QD-PM-5.x`, `QD-PM-6.3` |
-| AS-06 | Unbounded Consumption, Denial of Service | `QD-P-2.5.1`, `QD-S-2.x`, `QD-T-3.3` |
+| AS-06 | Unbounded Consumption, Denial of Service | `QD-P-2.5.1`, `QD-S-2.x`, `QD-T-3.3`, `QD-CYC-1.1`, `QD-CYC-1.2` |
 | AS-07 | Insecure Error Handling, Failure Escalation | `QD-P-2.6.x`, `QD-S-4.x`, `QD-ST-3.7`, `QD-PM-4.x` |
 | AS-08 | Supply Chain, Tool / Plugin Risk | `QD-T-4.3`, `QD-T-5.x`, `QD-PM-4.8` |
 | AS-09 | Agentic System Misconfiguration | `QD-PS`, `QD-PT`, `QD-ST`, `QD-PM-6.x` |

@@ -31,6 +31,8 @@ Defect Inspector is fully open source, allowing the community to freely use, aud
 
 - **Note**: The open-source CLI provides the full Inspect capability (inspection, suggestions, and remediation). On the Platform, Inspect results are cross-linked with Risk and Quality findings and archived into the version-level evidence chain.
 
+> **No-install quick try**: [sanityops-inspect-lite](https://github.com/sanityops-org/sanityops-inspect-lite) is a detect-only, report-only skill that applies the condensed Inspect checklists in your host model — no CLI, no scripts. It covers the Inspect subset only (not Risk / Quality) and is not the full engine; for the complete ruleset, use the CLI below.
+
 ### Install
 
 **Requirements**: Python ≥ 3.11, and an LLM API key of your own (see Step 2 below — the inspection model runs on your credentials).

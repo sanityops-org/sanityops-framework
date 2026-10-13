@@ -50,8 +50,8 @@ description: "Core terminology, governance objects, phases, and decision baselin
 - [4.3 Operation Risk Level: `OR-L`](#43-operation-risk-level-or-l)
 - [4.4 Business Impact Level: `BI-L`](#44-business-impact-level-bi-l)
 - [4.5 Change Level: `CH-L`](#45-change-level-ch-l)
-- [4.6 Inspect Defect Disposition Priority: `P0/P1/P2`](#46-inspect-defect-disposition-priority-p0p1p2)
-- [4.7 Risk Explicit Severity Level: `S0–S3`](#47-risk-explicit-severity-level-s0s3)
+- [4.6 Static Audit Disposition Level: `P0/P1/P2`](#46-static-audit-disposition-level-p0p1p2)
+- [4.7 Risk Explicit Grading: `Explicit·P0/P1/P2` + Trigger Condition Label](#47-risk-explicit-grading)
 - [4.8 Risk Implicit Termination Status: `A/B/C/D`](#48-risk-implicit-termination-status-abcd)
 - [4.9 Composite Risk Profile Expression](#49-composite-risk-profile-expression)
 - [Chapter 5: Unified Finding, Evidence, and Traceability Model](#chapter-5-unified-finding-evidence-and-traceability-model)
@@ -439,7 +439,7 @@ Aliases in historical documents do not automatically constitute errors, but subs
 | Prompt Defect | `QD-P-*` | Inspect Prompt | Prompt Static Defects |
 | Skill Defect | `QD-S-*` | Inspect Skill | Skill Static Defects |
 | Tool Defect | `QD-T-*` | Inspect Tool | Tool / Schema Static Defects |
-| Cross Defect | `QD-PS-*`, `QD-PT-*`, `QD-ST-*` | Inspect Cross | Cross-Artifact relationship defects |
+| Cross Defect | `QD-PS-*`, `QD-PT-*`, `QD-ST-*`, `QD-CYC-*` | Inspect Cross | Cross-Artifact relationship and circular invocation defects |
 | Permission Defect | `QD-PM-*` | Inspect Permission | Permission-responsibility proportionality defects |
 | Explicit Risk | `NL-A-*`, `NL-B-*`, `NR-O-*`, `NR-S-*` | Risk Explicit | Explicit Risk classification |
 | Attack Surface | `AS-*` | Relevance | Security impact mapping |
@@ -495,11 +495,10 @@ SanityOps employs multiple grading models for distinct purposes. They answer dif
 | `OR-L` | Operation Risk Level | How high is the risk of the operations a Skill or Tool can perform? | Inspect Skill, Inspect Tool, Inspect Permission |
 | `BI-L` | Business Impact Level | How severe are the business consequences of task failure or incorrect results? | Quality Tool-Agent |
 | `CH-L` | Change Level | What is the scale, impact scope, and regression intensity of the change? | Quality RAG-Agent and subsequent change governance |
-| `P0/P1/P2` | Inspect Defect Disposition Priority | At what priority should discovered Static Defects be addressed? | All Inspect sub-specifications |
-| `S0–S3` | Risk Explicit Severity Level | How severe is the Explicit Risk? | Risk Explicit |
+| `P0/P1/P2` | Static Audit Disposition Level | At what disposition priority should discovered Static Defects and Explicit Risks be addressed? | Inspect sub-specifications and Risk Explicit |
 | `A/B/C/D` | Risk Implicit Termination Status | What is the result of a dynamic attack attempt, and where does the responsibility boundary lie? | Risk Implicit |
 
-Subsequent documents, reports, APIs, and tool interfaces MUST NOT use isolated expressions such as "L2," "high risk," or "severity level 3." The governing model MUST be included, e.g., `OR-L2`, `BI-L3`, `S3`.
+Subsequent documents, reports, APIs, and tool interfaces MUST NOT use isolated expressions such as "L2," "high risk," or "severity level 3." The governing model MUST be included, e.g., `OR-L2`, `BI-L3`, `Explicit·P0`.
 
 <a id="42-agent-complexity-level-ac-l"></a>
 ## 4.2 Agent Complexity Level: `AC-L`
@@ -561,37 +560,33 @@ Subsequent documents, reports, APIs, and tool interfaces MUST NOT use isolated e
 
 `CH-L` is Core's unified change semantic. Which specific `CH-L` levels require re-execution of which sub-specifications is governed by Chapter 8 and the regression requirements of each domain-specific specification.
 
-<a id="46-inspect-defect-disposition-priority-p0p1p2"></a>
-## 4.6 Inspect Defect Disposition Priority: `P0/P1/P2`
+<a id="46-static-audit-disposition-level-p0p1p2"></a>
+## 4.6 Static Audit Disposition Level: `P0/P1/P2`
 
-`P0/P1/P2` denotes only the **disposition priority of an Inspect Finding**. The specific defect levels and blocking rules remain governed by the corresponding Inspect sub-specification.
+`P0/P1/P2` is the **unified disposition level of static auditing**, covering both the Inspect and Risk Explicit domains. Specific defect levels, risk grades, and blocking rules remain governed by the corresponding sub-specification.
+
+Reports MUST carry the domain prefix, written as `Inspect·P0` or `Explicit·P0`; evidence and adjudication rationale MUST be recorded separately by domain.
 
 | Level | Meaning | Minimum Disposition Principle |
 | --- | --- | --- |
-| `P0` | Blocking Defect or unacceptable Static Risk | MUST be fixed. May only proceed under an Exception with explicit, time-limited, and compensating-control-backed approval, and only when the corresponding Inspect sub-specification and organizational risk policy explicitly permit exceptions. Undisposed P0 items SHALL NOT pass the corresponding Inspect Gate. |
+| `P0` | Blocking Defect or unacceptable Static Risk | MUST be fixed. May only proceed under an Exception with explicit, time-limited, and compensating-control-backed approval, and only when the corresponding sub-specification and organizational risk policy explicitly permit exceptions. Undisposed P0 items SHALL NOT pass the corresponding Gate. |
 | `P1` | Major Defect or medium-to-high risk issue | SHOULD be fixed before release. Where a reasonable exception exists, residual risk, disposition plan, approval, and expiration date MUST be documented. |
 | `P2` | Improvement Item, low-priority issue, or limited-applicability issue | SHOULD be incorporated into an improvement plan or risk register. Whether it blocks release is determined by the domain-specific specification and business policy. |
 
+Core unifies only "`P0` = block release." The disposition of `P1`/`P2` is governed by each domain specification; the P1/P2 "Minimum Disposition Principle" above is retained as a general floor and MUST NOT be made stricter or looser.
+
 `P0` is not equivalent to:
 
-- Risk Explicit `S3`;
 - Risk Implicit attack success status `A`;
 - `OR-L3` or `BI-L3`;
 - Highest business impact or highest legal risk.
 
 These may be correlated, but they MUST be recorded separately.
 
-<a id="47-risk-explicit-severity-level-s0s3"></a>
-## 4.7 Risk Explicit Severity Level: `S0–S3`
+<a id="47-risk-explicit-grading"></a>
+## 4.7 Risk Explicit Grading: `Explicit·P0/P1/P2` + Trigger Condition Label
 
-`S0–S3` is the Explicit Risk severity expression specific to Risk Explicit. Its definition, adjudication evidence, and Gate impact are governed by Risk Explicit.
-
-Core stipulates:
-
-1. `S0–S3` MUST NOT be used to re-grade `QD` items;
-2. `S0–S3` MUST NOT substitute for Quality scores, success rates, or Business Impact Levels;
-3. A single object may simultaneously have a `P0` Finding and an `S3` Explicit Risk, but both MUST retain independent evidence and independent adjudication rationales;
-4. "Highest risk" in reports MUST specify its risk domain, e.g., "Highest Risk Explicit risk is `S3`."
+Risk Explicit grades each discovered risk item by its **worst possible consequence** into three fixed tiers, expressed with the domain prefix as `Explicit·P0` / `Explicit·P1` / `Explicit·P2`. When multiple grades match, the highest applies. A static audit MUST NOT downgrade a grade on the grounds that the risk "might not trigger"; in such cases the grade is unchanged and a "to-be-verified" tag is appended, handing reachability to Risk Implicit. A binary trigger condition label (`conditional` / `unconditional`) is used only to order risk items within the same grade. The full criteria table and determination rules are governed by Risk Explicit (see its "Severity Determination" part) and MUST NOT be restated here.
 
 <a id="48-risk-implicit-termination-status-abcd"></a>
 ## 4.8 Risk Implicit Termination Status: `A/B/C/D`
@@ -618,8 +613,8 @@ risk_profile:
   operation_risk: OR-L3
   business_impact: BI-L2
   change_level: CH-L3
-  highest_inspect_priority: P0
-  highest_explicit_risk: S2
+  highest_inspect_priority: "Inspect·P0"
+  highest_explicit_risk: "Explicit·P1"
   implicit_validation_status: B
 ```
 
@@ -868,7 +863,7 @@ A release summary MUST, at minimum, be able to answer:
 - No legal, regulatory, contractual, or organizationally non-waivable security requirements are violated;
 - Dynamic attack success, major quality failures, or incomplete mandatory validations have not been simply converted into Exceptions to bypass disposition.
 
-Whether P0, S3, or dynamic attack success can be accepted as an Exception SHALL be separately governed by the organization's risk policy and the corresponding sub-specification. Core does not confer automatic exemption eligibility.
+Whether P0 or dynamic attack success can be accepted as an Exception SHALL be separately governed by the organization's risk policy and the corresponding sub-specification. Core does not confer automatic exemption eligibility.
 
 <a id="65-conflicts-and-insufficient-evidence"></a>
 ## 6.5 Conflicts and Insufficient Evidence
@@ -1183,7 +1178,7 @@ Organizations MAY merge roles according to their scale, but MUST NOT eliminate s
 | Exception Approver | Approves, rejects, renews, or revokes Risk Acceptances within authorized scope. |
 | Specification / Platform Owner | Maintains rules, mappings, tool versions, audit records, and compatibility information. |
 
-A single person MAY hold multiple roles. However, for high-risk changes, P0, S3, dynamic attack success, or high-business-impact scenarios, the Artifact Owner and Exception Approver SHALL NOT be the same person.
+A single person MAY hold multiple roles. However, for high-risk changes, P0, dynamic attack success, or high-business-impact scenarios, the Artifact Owner and Exception Approver SHALL NOT be the same person.
 
 <a id="92-remediation-responsibility-and-closed-loop"></a>
 ## 9.2 Remediation Responsibility and Closed Loop
@@ -1299,8 +1294,8 @@ Risk Acceptance does not alter the factual Finding, nor does it reduce its origi
 P0 Finding + Approved Exception
 ≠ P0 disappears
 
-S3 Explicit Risk + Approved Exception
-≠ S3 is automatically downgraded
+Explicit·P0 + Approved Exception
+≠ Explicit·P0 is automatically downgraded; the grade remains P0 and the exemption is recorded
 
 Dynamic attack success + Temporary Compensating Control
 ≠ The attack path has been permanently eliminated
@@ -1407,8 +1402,7 @@ All external materials, product interfaces, or evaluation reports SHALL accurate
 
 | Status / Level | Domain | Meaning |
 | --- | --- | --- |
-| `P0/P1/P2` | Inspect | Static Finding disposition priority |
-| `S0–S3` | Risk Explicit | Explicit Risk severity level |
+| `P0/P1/P2` | Inspect, Risk Explicit | Static audit disposition level |
 | `A/B/C/D` | Risk Implicit | Dynamic attack test Termination Status |
 | `PASS` | Release Summary | All applicable mandatory Gates passed |
 | `PASS_WITH_EXCEPTION` | Release Summary | Valid, approved Exception exists |
@@ -1575,7 +1569,7 @@ closure:
 | Inspect Tool | Objects, Findings, `OR-L`, versioning and evidence | Outputs `QD-T-*` to Relevance; strong association with Risk / Quality |
 | Inspect Cross | Object relationships, `AC-L`, versioning and evidence | Handles Prompt–Skill–Tool contract and boundary issues |
 | Inspect Permission | Objects, Findings, `OR-L`, `AC-L`, versioning and evidence | Outputs `QD-PM-*` to Relevance; subject to Gate-0 preconditions |
-| Risk Explicit | `S0–S3`, Findings, evidence boundaries | May reference Inspect / Relevance risk signals |
+| Risk Explicit | `Explicit·P0/P1/P2`, Findings, evidence boundaries | May reference Inspect / Relevance risk signals |
 | Risk Implicit | `A/B/C/D`, dynamic evidence, control boundaries | Consumes Inspect / Relevance validation recommendations; outputs dynamic validation evidence |
 | Quality Tool-Agent | `BI-L`, Baselines, quality evidence | May associate with `FM-*` and Candidate Root Causes |
 | Quality RAG-Agent | `CH-L`, Baselines, quality evidence | Depends on knowledge snapshots, evaluation assets, and change traceability |
@@ -1604,7 +1598,7 @@ This appendix guides patch-version revisions of existing documents. Except where
 | `MIG-12` | Knowledge, Memory, Workflow, and other objects may have descriptions but no dedicated rules | All documents | Mark as extension objects; MUST NOT be represented as fully covered | Coverage boundary |
 | `MIG-13` | Historical framework quantity or tier expressions such as "Six Subsets" may be outdated | Framework descriptions, overview materials | Unify to current specification register; express by capability domain rather than simple count | Framework narrative |
 | `MIG-14` | Evidence levels for Defect Chains, Attack Chains, and Quality Chains may not be unified | Relevance | Adopt association types and candidate causal boundaries; do not automatically upgrade mappings to facts | Evidence unification |
-| `MIG-15` | `P0/P1/P2` and `S0–S3` may be misread as the same risk scale | Inspect, Risk, Relevance, report templates | Add level applicability domain descriptions; identify full prefix in reports | Risk semantics |
+| `MIG-15` | `P0/P1/P2` shared across Inspect and Risk Explicit may be misread as the same risk scale | Inspect, Risk, Relevance, report templates | Add domain prefix `Inspect·`/`Explicit·`; identify full prefix in reports | Risk semantics |
 | `MIG-16` | `N/A` rationale and review conditions not unified | All documents and tool implementations | Adopt Core Section 5.7 minimum requirements | Applicability governance |
 
 ---
@@ -1656,7 +1650,7 @@ sanityops_release_report:
       open_p1: 1
     risk_explicit:
       status: PASS
-      highest_risk: S1
+      highest_risk: "Explicit·P1"
     risk_implicit:
       status: PASS
       results:

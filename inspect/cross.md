@@ -46,6 +46,11 @@ description: "Inspect Cross specification: cross-artifact consistency checks acr
   - [4.2 Seven Inspection Items in Detail](#42-seven-inspection-items-in-detail)
   - [4.3 Localization and Remediation](#43-localization-and-remediation)
   - [4.4 Part Summary](#44-part-summary)
+- [Part 4.5: Circular Invocation Inspection (Cross-Cutting)](#part-45-circular-invocation-inspection-cross-cutting)
+  - [4.5.1 Circular Invocation Overview](#45-circular-invocation-overview)
+  - [4.5.2 Two Inspection Items in Detail](#453-two-inspection-items-in-detail)
+  - [4.5.3 Localization and Remediation](#454-localization-and-remediation)
+  - [4.5.4 Part Summary](#455-part-summary)
 - [Part 5: Inspection Process and Severity Mechanisms](#part-5-inspection-process-and-severity-mechanisms)
   - [5.1 Inspection Process Overview](#51-inspection-process-overview)
   - [5.2 Prerequisites and Artifact Relationship Identification](#52-prerequisites-and-artifact-relationship-identification)
@@ -57,6 +62,13 @@ description: "Inspect Cross specification: cross-artifact consistency checks acr
   - [6.2 Impact Assessment Model](#62-impact-assessment-model)
   - [6.3 Remediation Priority Rules](#63-remediation-priority-rules)
   - [6.4 Remediation Example Set](#64-remediation-example-set)
+    - [6.4.1 Permission Inconsistency Remediation Example](#641-permission-inconsistency-remediation-example)
+    - [6.4.2 Trigger Condition Conflict Remediation Example](#642-trigger-condition-conflict-remediation-example)
+    - [6.4.3 Parameter Constraint Inconsistency Remediation Example](#643-parameter-constraint-inconsistency-remediation-example)
+    - [6.4.4 Failure Handling Conflict Remediation Example](#644-failure-handling-conflict-remediation-example)
+    - [6.4.5 Linked Defect Remediation Example](#645-linked-defect-remediation-example)
+    - [6.4.6 Circular Invocation Remediation Example](#646-circular-invocation-remediation-example)
+    - [6.4.7 Multi-Agent Circular Invocation Remediation Example](#647-multi-agent-circular-invocation-remediation-example)
   - [6.5 Part Summary](#65-part-summary)
 - [Part 7: Inspection Timing and the Ratchet Mechanism](#part-7-inspection-timing-and-the-ratchet-mechanism)
   - [7.1 Lifecycle Inspection Timing](#71-lifecycle-inspection-timing)
@@ -169,7 +181,8 @@ SanityOps Framework
 ```
 ├─ QD-PS: Prompt → Skill (capability authorization and boundary delegation)
 ├─ QD-PT: Prompt → Tool (tool invocation contract)
-└─ QD-ST: Skill ↔ Tool (capability implementation and parameter contract)
+├─ QD-ST: Skill ↔ Tool (capability implementation and parameter contract)
+└─ QD-CYC: Circular Invocation (cross-cutting, see Part 4.5)
 ```
 
 ---
@@ -219,6 +232,11 @@ QD-XY-n.m
 - `QD-PT-2.4`: Prompt → Tool relationship, inspection item #4 (Permission Granularity Consistency)
 - `QD-ST-3.6`: Skill ↔ Tool relationship, inspection item #6 (Permission Scope Match)
 
+**Cross-cutting Exception**:
+
+- `QD-CYC-1.1` / `QD-CYC-1.2`: Span multiple artifact types or agent roles; `CYC` denotes circular invocation and does not follow the two-letter artifact pairing pattern. For `QD-CYC`, the relationship number `n` is fixed to `1` (the Circular Invocation category) rather than a Prompt/Skill/Tool relationship index, and `m` distinguishes the two sub-items.
+- These items are positioned in **Part 4.5: Circular Invocation Inspection (Cross-Cutting)**.
+
 <a id="023-defect-level-definitions-p0p1p2"></a>
 #### 0.2.3 Defect Level Definitions (P0/P1/P2)
 
@@ -241,6 +259,7 @@ QD-XY-n.m
 | **QD-PS** | Quality Defect - Prompt/Skill | This specification |
 | **QD-PT** | Quality Defect - Prompt/Tool | This specification |
 | **QD-ST** | Quality Defect - Skill/Tool | This specification |
+| **QD-CYC** | Quality Defect - Circular Invocation | This specification |
 | **L1/L2/L3** | Agent Level | Inspect Prompt v1.0 |
 | **P0/P1/P2** | Defect Level | Inspect Skill v1.0 |
 | **RS-1/RS-2/RS-3** | Tool Risk Level | Inspect Tool v1.0 |
@@ -435,6 +454,8 @@ Inspect Prompt, Inspect Tool, and Inspect Skill each independently inspect one a
 - The Tool's required parameters have no source declaration in the Skill
 - The Skill's permission boundaries do not cover the Tool's side effects
 
+**Note**: Additionally, two cross-cutting inspection items (QD-CYC-1.1 and QD-CYC-1.2) inspect circular invocation patterns across artifacts and Agent roles. See **Part 4.5: Circular Invocation Inspection (Cross-Cutting)**.
+
 ---
 
 <a id="14-the-review-schema-value-and-positioning"></a>
@@ -496,7 +517,7 @@ Inspect Prompt, Inspect Tool, and Inspect Skill each independently inspect one a
 | --- | --- |
 | **Cross-Artifact Inspection positioning** | Discovers Hidden Defects Under Reasonable Expression — each artifact is individually valid but semantic conflicts arise when combined |
 | **Three artifact roles** | Prompt = workflow orchestrator, Skill = capability boundary declarer, Tool = execution contract guarantor |
-| **Three inspection relationships** | QD-PS (authorization coverage), QD-PT (invocation contract), QD-ST (capability match) |
+| **Inspection relationships** | QD-PS (authorization coverage), QD-PT (invocation contract), QD-ST (capability match), QD-CYC (circular invocation) |
 | **Review Schema value** | An organizational framework for systematic omission prevention; does not constrain LLM reasoning flexibility |
 
 ---
@@ -1327,6 +1348,370 @@ Field level → Skill's Review Schema dimension location + Tool's Schema field l
 
 ---
 
+<a id="part-45-circular-invocation-inspection-cross-cutting"></a>
+## Part 4.5: Circular Invocation Inspection (Cross-Cutting)
+
+**Positioning Note**: QD-CYC is a cross-cutting inspection group, independent of the QD-ST (Skill ↔ Tool) relationship defined in Part 4. It is numbered `Part 4.5` for document continuity only — to avoid renumbering Parts 5 through 10 — and does not imply that circular invocation inspection is a sub-topic of QD-ST.
+
+<a id="45-circular-invocation-overview"></a>
+### 4.5.1 Circular Invocation Overview
+
+<a id="451-why-circular-invocation-inspection"></a>
+#### 4.5.1.1 Why Circular Invocation Inspection
+
+**Problem**: Circular invocation patterns can cause Agents to enter infinite loops, leading to resource exhaustion and non-termination.
+
+**Two Types of Circular Invocation**:
+
+| Type | Description | Example |
+| --- | --- | --- |
+| **Cross-Artifact Circular Invocation** | Feedback loops across Prompt, Skill, and Tool artifacts | Skill output re-enters Prompt workflow; Tool callback re-triggers Prompt |
+| **Multi-Agent Circular Invocation** | Peer-to-peer invocation loops between Agent roles | Reviewer ↔ Revisor calling each other in a loop |
+
+<a id="452-boundary-between-two-types"></a>
+#### 4.5.1.2 Boundary Between Two Types
+
+| Dimension | Cross-Artifact (QD-CYC-1.1) | Multi-Agent (QD-CYC-1.2) |
+| --- | --- | --- |
+| **Scope** | Heterogeneous (across artifact types) | Homogeneous (within same level) |
+| **Pattern** | Prompt ↔ Skill ↔ Tool feedback | Agent A ↔ Agent B peer invocation |
+| **Detection** | Semantic analysis of invocation chains | Semantic analysis of orchestration roles |
+
+---
+
+<a id="453-two-inspection-items-in-detail"></a>
+### 4.5.2 Two Inspection Items in Detail
+
+#### QD-CYC-1.1 Cross-Artifact Circular Invocation
+
+**Defect Description**: Whether circular invocation patterns exist across Prompt, Skill, and Tool artifacts (e.g., Skill output/trigger re-enters Prompt workflow, Tool callback/notification re-triggers Prompt, Tool side effects/notification re-trigger the invoking Skill).
+
+**Inspection Content**:
+
+- Prompt workflow/orchestration step definitions
+- Skill TRIGGER / OUTPUT / EXECUTION dimensions (trigger conditions, output feedback, tool invocation chains)
+- Tool description side effects/notification semantics
+- Whether invocation relationship chains form closed loops (LLM semantic analysis)
+
+**Severity Determination Rules**:
+
+| Situation | Severity | Description |
+| --- | --- | --- |
+| Definitive circular loop (explicit bidirectional/cyclic invocation) | P0 | Agent cannot terminate |
+| Potential circular pattern (feedback semantics without explicit termination) | P1 | May cause non-termination |
+
+**Localization Mechanism**:
+
+- Prompt side: workflow/orchestration step definitions
+- Skill side: TRIGGER / OUTPUT / EXECUTION dimensions
+- Tool side: description → side effect/notification semantics
+
+**Remediation Guidance**:
+
+- Add explicit termination conditions or maximum iteration counts; or split circular flow into linear workflow; or constrain Tool callback capabilities
+
+**Examples**:
+
+*Example 1: Skill Output Re-enters Prompt (P0)*
+
+```yaml
+# PROBLEMATIC: Skill output triggers Prompt re-invocation
+# Prompt workflow:
+workflow:
+  steps:
+    - call_skill: data_processor
+      on_output: |
+        If the output contains "incomplete", re-invoke the Prompt 
+        to request more input from the user.
+      # ^ This creates a loop: Skill output → Prompt re-invoke
+
+# Skill definition:
+trigger:
+  condition: "user provides data"
+output:
+  format: "processed_data or incomplete_marker"
+```
+
+*Remediation*:
+
+```yaml
+# FIXED: Add explicit termination condition
+workflow:
+  steps:
+    - call_skill: data_processor
+      on_output: |
+        Process the output. If "incomplete", request more input.
+        MAX_RETRIES: 3  # Explicit termination after 3 attempts
+      retry_count: 0
+```
+
+*Example 2: Tool Callback Re-triggers Prompt (P1)*
+
+```yaml
+# PROBLEMATIC: Tool callback notification re-triggers workflow
+# Tool Schema:
+tools:
+  - name: long_running_task
+    description: |
+      Starts a background task. When complete, sends a notification
+      that triggers the Agent to process results and potentially
+      start another task.
+    # ^ Callback creates potential loop if not bounded
+
+# Prompt:
+workflow:
+  on_tool_notification: |
+    When receiving notification from long_running_task,
+    analyze results and invoke the same tool again if needed.
+```
+
+*Remediation*:
+
+```yaml
+# FIXED: Add iteration counter and termination
+workflow:
+  max_iterations: 5
+  iteration_count: 0
+  on_tool_notification: |
+    Increment iteration_count.
+    If iteration_count >= max_iterations, terminate with summary.
+    Otherwise, process results and conditionally re-invoke.
+```
+
+*Example 3: Tool Side Effect Re-triggers Skill (P1)*
+
+```yaml
+# PROBLEMATIC: Tool writes data that triggers Skill again
+# Tool:
+- name: update_database
+  description: "Updates database and emits change event"
+  
+# Skill:
+trigger:
+  condition: "database change event detected"
+execution:
+  tools:
+    - update_database  # Skill calls Tool that triggers Skill
+```
+
+*Remediation*:
+
+```yaml
+# FIXED: Add trigger source filtering
+trigger:
+  condition: "database change event detected"
+  exclude_source: "self_triggered"  # Ignore events from own writes
+execution:
+  tools:
+    - update_database
+```
+
+---
+
+#### QD-CYC-1.2 Multi-Agent Circular Invocation
+
+**Defect Description**: Whether circular invocation patterns exist between multiple Agent roles defined in the Prompt orchestration (e.g., Reviewer and Revisor calling each other in an infinite loop).
+
+**Inspection Content**:
+
+- Agent roles and their invocation relationships defined in the Prompt (orchestration logic)
+- Whether invocation relationship chains between Agent roles form closed loops (LLM semantic analysis)
+
+**Severity Determination Rules**:
+
+| Situation | Severity | Description |
+| --- | --- | --- |
+| Definitive circular loop (Agent A and Agent B explicitly call each other) | P0 | Cannot terminate |
+| Potential circular pattern (iteration/review/feedback semantics without explicit termination) | P1 | May cause non-termination |
+
+**Localization Mechanism**:
+
+- Prompt side: workflow/orchestration step definitions (Agent role declarations and invocation relationships)
+
+**Remediation Guidance**:
+
+- Explicitly set maximum iteration counts; or split circular flow into linear workflow; or introduce termination conditions
+
+**Examples**:
+
+*Example 1: Reviewer ↔ Revisor Circular Delegation (P0)*
+
+```yaml
+# PROBLEMATIC: Two agents call each other indefinitely
+# Prompt defines two roles:
+agents:
+  reviewer:
+    role: "Review code for issues"
+    workflow: |
+      1. Analyze the code
+      2. If issues found, delegate to revisor for fixes
+      3. After revisor completes, review again
+      # ^ No termination: reviewer → revisor → reviewer loop
+      
+  revisor:
+    role: "Fix code based on review feedback"
+    workflow: |
+      1. Receive feedback from reviewer
+      2. Apply fixes
+      3. Submit back to reviewer for verification
+      # ^ Creates the loop back to reviewer
+```
+
+*Remediation*:
+
+```yaml
+# FIXED: Add iteration limit and termination condition
+agents:
+  reviewer:
+    role: "Review code for issues"
+    max_review_rounds: 3
+    workflow: |
+      1. Analyze the code
+      2. If issues found AND review_round < max_review_rounds:
+         - delegate to revisor for fixes
+      3. Else: approve or reject with final notes
+      4. After revisor completes, increment review_round
+      5. If review_round >= max_review_rounds, finalize
+      
+  revisor:
+    role: "Fix code based on review feedback"
+    workflow: |
+      1. Receive feedback from reviewer
+      2. Apply fixes
+      3. Return to reviewer (reviewer controls termination)
+```
+
+*Example 2: Iterative Refinement Without Termination (P1)*
+
+```yaml
+# PROBLEMATIC: Continuous refinement loop
+agents:
+  optimizer:
+    role: "Optimize content"
+    workflow: |
+      Analyze content and suggest improvements.
+      If improvements possible, invoke critic for evaluation.
+      
+  critic:
+    role: "Evaluate optimizations"
+    workflow: |
+      Evaluate the optimized content.
+      If not optimal, invoke optimizer again.
+      # ^ Loop: optimizer → critic → optimizer
+```
+
+*Remediation*:
+
+```yaml
+# FIXED: Linear workflow with explicit iterations
+workflow:
+  max_iterations: 5
+  steps:
+    - iteration: 1
+      agent: optimizer
+      output: optimized_v1
+    - agent: critic
+      input: optimized_v1
+      output: feedback_v1
+    - condition: "feedback_v1.score < threshold AND iteration < max_iterations"
+      then:
+        - agent: optimizer
+          input: feedback_v1
+          output: optimized_v2
+      else: finalize
+```
+
+*Example 3: Multi-Agent Debate Without Resolution (P1)*
+
+```yaml
+# PROBLEMATIC: Agents debate indefinitely
+agents:
+  proposer:
+    role: "Propose solutions"
+    workflow: |
+      Propose a solution.
+      Wait for challenger critique.
+      If challenged, revise and re-propose.
+      
+  challenger:
+    role: "Challenge proposals"
+    workflow: |
+      Critique the proposal.
+      If proposal has issues, return to proposer.
+      # ^ No path to resolution
+```
+
+*Remediation*:
+
+```yaml
+# FIXED: Add resolution mechanism
+agents:
+  proposer:
+    role: "Propose solutions"
+    max_revisions: 3
+    workflow: |
+      Propose a solution.
+      Wait for challenger critique.
+      If challenged AND revision_count < max_revisions:
+        - revise and re-propose
+        - increment revision_count
+      Else:
+        - escalate to arbiter for final decision
+        
+  challenger:
+    role: "Challenge proposals"
+    workflow: |
+      Critique the proposal.
+      Return critique to proposer.
+      
+  arbiter:
+    role: "Make final decision"
+    workflow: |
+      Review all proposals and critiques.
+      Select final solution and terminate.
+```
+
+---
+
+<a id="454-localization-and-remediation"></a>
+### 4.5.3 Localization and Remediation
+
+<a id="4541-localization-mechanism-cross-cutting"></a>
+#### 4.5.3.1 Localization Mechanism (Cross-Cutting)
+
+**Three-Tier Localization**:
+
+```
+Relationship level → QD-CYC (Circular Invocation)
+Artifact level → Prompt side (+ Skill side / Tool side for QD-CYC-1.1)
+Field level → Prompt's workflow/orchestration definitions
+```
+
+<a id="4542-remediation-ownership-rules"></a>
+#### 4.5.3.2 Remediation Ownership Rules
+
+**Remediation Priority**:
+
+| Defect Type | Remediation Priority | Rationale |
+| --- | --- | --- |
+| **Cross-Artifact circular invocation** | Prompt side first | Prompt is the workflow orchestrator; termination logic belongs in orchestration |
+| **Multi-Agent circular invocation** | Prompt side first | Prompt defines Agent roles and their relationships |
+
+---
+
+<a id="455-part-summary"></a>
+### 4.5.4 Part Summary
+
+| Point | Description |
+| --- | --- |
+| **Inspection relationship positioning** | Cross-cutting, inspecting circular invocation patterns across artifacts and Agent roles |
+| **Inspection item count** | 2 items (QD-CYC-1.1, QD-CYC-1.2) |
+| **Core inspection focus** | Whether invocation relationships contain closed loops that prevent termination |
+| **Detection method** | LLM semantic analysis of invocation chains and orchestration logic |
+| **Remediation principle** | Add termination conditions; Prompt side owns orchestration logic |
+
+---
+
 ## Part 5: Inspection Process and Severity Mechanisms
 
 <a id="51-inspection-process-overview"></a>
@@ -1491,8 +1876,26 @@ Field level → Skill's Review Schema dimension location + Tool's Schema field l
 3. Inspect item-by-item against QD-PT-2.1 through 2.6
 4. Record inconsistencies, mapped to specific locations in the Prompt and Tool
 
-<a id="534-inspection-exception-handling"></a>
-#### 5.3.4 Inspection Exception Handling
+<a id="534-qd-cyc-inspection-execution-cross-cutting"></a>
+#### 5.3.4 QD-CYC Inspection Execution (Cross-Cutting)
+
+**Execution Method**: Automated (LLM Agent)
+
+**Inspection Steps**:
+
+1. Read Prompt workflow/orchestration definitions
+2. Read Skill declarations (TRIGGER / OUTPUT / EXECUTION dimensions) and Tool declarations
+3. Perform semantic analysis of invocation chains to detect closed loops
+4. Inspect against QD-CYC-1.1 (Cross-Artifact Circular Invocation) and QD-CYC-1.2 (Multi-Agent Circular Invocation)
+5. Record circular invocation patterns, mapped to specific locations in the Prompt (and Skill/Tool where applicable)
+
+**Detection Method**:
+
+- **QD-CYC-1.1**: Analyze whether Skill output/trigger re-enters Prompt workflow, Tool callback re-triggers Prompt, or Tool side effects re-trigger Skill
+- **QD-CYC-1.2**: Analyze whether Agent roles defined in Prompt orchestration have circular invocation relationships (e.g., Agent A calls Agent B, Agent B calls Agent A)
+
+<a id="535-inspection-exception-handling"></a>
+#### 5.3.5 Inspection Exception Handling
 
 **Exception Types**:
 
@@ -1538,13 +1941,13 @@ Field level → Skill's Review Schema dimension location + Tool's Schema field l
 | --- | --- | --- |
 | **L1** | Basic inspection | Only core inspection items (Tool existence, permission boundaries) |
 | **L2** | Standard inspection | Most inspection items |
-| **L3** | Full inspection | All 19 items |
+| **L3** | Full inspection | All 21 items |
 
 **Minimum Rule Sets** (see Appendix B for details):
 
 - L1: 8 core inspection items
-- L2: 12 standard inspection items
-- L3: 19 full inspection items
+- L2: 14 standard inspection items
+- L3: 21 full inspection items
 
 <a id="544-severity-upgrade-rules"></a>
 #### 5.4.4 Severity Upgrade Rules
@@ -1558,7 +1961,7 @@ The default severity of Cross-Artifact Defects may be upgraded based on Tool Ris
 
 | Point | Description |
 | --- | --- |
-| **Inspection process** | 7-step process: prerequisite verification → relationship identification → three inspection groups → impact assessment → report output |
+| **Inspection process** | 7-step process: prerequisite verification → relationship identification → four inspection groups → impact assessment → report output |
 | **Automated execution** | All inspection items are executable via automation (LLM Agent) |
 | **Severity levels** | P0/P1/P2 (as defined in Inspect Skill v1.0) |
 | **Agent levels** | L1/L2/L3 (as defined in Inspect Prompt v1.0) |
@@ -1770,6 +2173,124 @@ Tier 3: Field level
 1. **Tool side**: Retain write operation marker (Tool is the Hard Constraint)
 2. **Skill side**: Change allowed_operations to "query"
 3. **Prompt side**: Supplement "Permission: query only (SELECT); update and delete prohibited"
+
+<a id="646-circular-invocation-remediation-example"></a>
+#### 6.4.6 Circular Invocation Remediation Example
+
+**Defect**: QD-CYC-1.1 Cross-Artifact Circular Invocation
+
+**Original**:
+
+```yaml
+# Prompt workflow
+workflow:
+  steps:
+    - call_skill: data_enricher
+      on_output: |
+        If output.status == "needs_more_data":
+          # Re-invoke the same workflow to get more input
+          restart_workflow()
+        else:
+          return output
+```
+
+**Problem**: The Skill's output can trigger the Prompt to restart, creating a potential infinite loop.
+
+**Remediation** (add explicit termination):
+
+```yaml
+# Fixed Prompt workflow
+workflow:
+  max_enrichment_rounds: 3
+  enrichment_count: 0
+  steps:
+    - call_skill: data_enricher
+      on_output: |
+        enrichment_count += 1
+        If output.status == "needs_more_data" AND enrichment_count < max_enrichment_rounds:
+          request_additional_input()
+          continue_to_next_iteration()
+        else:
+          return output
+```
+
+**Key Changes**:
+
+1. Added `max_enrichment_rounds: 3` — explicit upper bound
+2. Added `enrichment_count` counter — tracks iterations
+3. Modified condition to check both status AND count
+4. Provides graceful termination path when limit reached
+
+---
+
+<a id="647-multi-agent-circular-invocation-remediation-example"></a>
+#### 6.4.7 Multi-Agent Circular Invocation Remediation Example
+
+**Defect**: QD-CYC-1.2 Multi-Agent Circular Invocation
+
+**Original**:
+
+```yaml
+# Prompt defines two agents
+agents:
+  code_generator:
+    role: "Generate code based on requirements"
+    workflow: |
+      1. Generate code
+      2. Send to code_reviewer for review
+      3. If review_feedback received, revise and send back to reviewer
+      
+  code_reviewer:
+    role: "Review generated code"
+    workflow: |
+      1. Review code from code_generator
+      2. If issues found, send feedback to code_generator
+      3. If no issues, approve
+      # ^ Loop: generator → reviewer → generator
+```
+
+**Problem**: The two agents can indefinitely bounce work back and forth.
+
+**Remediation** (add iteration limit and linearize):
+
+```yaml
+# Fixed Prompt with bounded iterations
+workflow:
+  max_review_rounds: 3
+  current_round: 0
+  
+  steps:
+    - agent: code_generator
+      output: generated_code
+      
+    - while: current_round < max_review_rounds
+      steps:
+        - agent: code_reviewer
+          input: generated_code
+          output: review_result
+          
+        - condition: review_result.status == "approved"
+          then:
+            - finalize_and_return generated_code
+            - break
+          else:
+            - agent: code_generator
+              input: review_result.feedback
+              output: generated_code
+            - current_round += 1
+            
+    - if: current_round >= max_review_rounds
+      then:
+        - return generated_code with note: "Max iterations reached"
+```
+
+**Key Changes**:
+
+1. Moved iteration control to top-level workflow (not agent logic)
+2. Added explicit `max_review_rounds` limit
+3. Used `while` loop with counter instead of agent-to-agent delegation
+4. Added termination condition on approval or max rounds
+5. Agents no longer directly invoke each other
 
 ---
 
@@ -2035,8 +2556,8 @@ Based on the inspection item definitions in Part 5 and the Minimum Rule Sets (Ap
 | Agent Level | Total Items | P0 Count | P1 Count | P2 Count | Total Weight $W_{total}$ | Base Score $base$ |
 | --- | --- | --- | --- | --- | --- | --- |
 | **L1** | 8 | 4 | 3 | 1 | $5\times4+3\times3+1\times1=30$ | $100/30=3.333...$ |
-| **L2** | 12 | 6 | 5 | 1 | $5\times6+3\times5+1\times1=46$ | $100/46=2.174...$ |
-| **L3** | 19 | 11 | 6 | 2 | $5\times11+3\times6+1\times2=75$ | $100/75=1.333...$ |
+| **L2** | 14 | 6 | 7 | 1 | $5\times6+3\times7+1\times1=52$ | $100/52=1.923...$ |
+| **L3** | 21 | 9 | 9 | 3 | $5\times9+3\times9+1\times3=75$ | $100/75=1.333...$ |
 
 **Note**:
 
@@ -2055,13 +2576,13 @@ Based on the inspection item definitions in Part 5 and the Minimum Rule Sets (Ap
 | P1 | $3.333...\times3$ | $10.000$ |
 | P2 | $3.333...\times1$ | $3.333$ |
 
-**L2 Level**: $base = 2.174...$
+**L2 Level**: $base = 1.923...$
 
 | Defect Level | Deduction Calculation | Deduction Value |
 | --- | --- | --- |
-| P0 | $2.174...\times5$ | $10.870$ |
-| P1 | $2.174...\times3$ | $6.522$ |
-| P2 | $2.174...\times1$ | $2.174$ |
+| P0 | $1.923...\times5$ | $9.615$ |
+| P1 | $1.923...\times3$ | $5.769$ |
+| P2 | $1.923...\times1$ | $1.923$ |
 
 **L3 Level**: $base = 1.333...$
 
@@ -2321,6 +2842,15 @@ QD-PS-1.3 (Permission Boundary Inconsistency) and QD-ST-3.6 (Permission Scope Mi
 | QD-ST-3.6 | Permission Scope Match | P0 | ✓ | ✓ | ✓ | Tool side effects exceed Skill permission declarations |
 | QD-ST-3.7 | Error Handling Coverage | P1 | — | — | ✓ | Does not cover all possible Tool errors |
 
+#### A.4 QD-CYC Inspection Items (Cross-Cutting)
+
+| ID | Inspection Item Name | Severity (Default) | L1 | L2 | L3 | Description |
+| --- | --- | --- | --- | --- | --- | --- |
+| QD-CYC-1.1 | Cross-Artifact Circular Invocation | P1 | — | ✓ | ✓ | Closed loop across Prompt/Skill/Tool invocation relationships detected by LLM semantic analysis |
+| QD-CYC-1.2 | Multi-Agent Circular Invocation | P1 | — | ✓ | ✓ | Closed loop across multiple agent roles in the Prompt orchestration detected by LLM semantic analysis |
+
+**Note**: QD-CYC items carry a default severity of P1. A definitive closed loop (explicit bidirectional/cyclic invocation) is determined directly as P0 per the in-item Severity Determination Rules in Part 4.5.2; this P0 is not an Appendix C upgrade and is independent of the RS-3/SS-3, L3, and linked-defect triggers in Appendix C.2.
+
 ---
 
 ### Appendix B: Minimum Rule Sets
@@ -2400,6 +2930,8 @@ QD-PS-1.3 (Permission Boundary Inconsistency) and QD-ST-3.6 (Permission Scope Mi
 | QD-PT-2.5 | P1 | P1 | P0 | P1 |
 | QD-ST-3.5 | P1 | P0 | P0 | P1 |
 | QD-ST-3.7 | P1 | P0 | P0 | P1 |
+| QD-CYC-1.1 | P1 | P0 | P0 | P0 |
+| QD-CYC-1.2 | P1 | P0 | P0 | P0 |
 
 #### C.3 Upgrade Determination Process
 
@@ -2444,6 +2976,8 @@ Step 6: Output final severity level
 | QD-ST-3.5 | Output Structure Mismatch | Both sides, coordinated |
 | QD-ST-3.6 | Permission Scope Not Covered | Tool side first (tighten Tool side effects) |
 | QD-ST-3.7 | Incomplete Error Handling | Skill side first |
+| QD-CYC-1.1 | Cross-Artifact Circular Invocation | Prompt side first (add termination / max iteration); Skill side constrain downstream invocation; Tool side constrain callback |
+| QD-CYC-1.2 | Multi-Agent Circular Invocation | Prompt side first (add termination / max iteration; split loop into linear flow) |
 
 #### D.2 Principle of Least Risk Application
 
@@ -2657,7 +3191,7 @@ on_failure:
 
 ##### F.2.2 Inspection Execution and Linked Defect Discovery
 
-**Inspection Scope**: L3 full inspection (19 items)
+**Inspection Scope**: L3 full inspection (21 items)
 
 **Inspection Results**:
 
@@ -2682,6 +3216,8 @@ on_failure:
 | QD-ST-3.5 | ⚠️ P1 | report-generator output format does not match report-template-engine |
 | QD-ST-3.6 | 🔴 P0 | market-data-fetcher permissions do not cover stock-api write operations |
 | QD-ST-3.7 | ⚠️ P1 | risk-analyzer does not handle possible errors from risk-model-api |
+| QD-CYC-1.1 | ✅ PASS | — |
+| QD-CYC-1.2 | ✅ PASS | — |
 
 **Linked Defect Identification**:
 
@@ -2794,8 +3330,8 @@ INPUT:
 | --- | --- |
 | **Inspection Objects** | Cross-Artifact Consistency across Prompt, Skill, and Tool |
 | **Inspection Focus** | Hidden Defects Under Reasonable Expression — each artifact individually valid but semantic conflicts arise when combined |
-| **Three Inspection Relationships** | QD-PS (authorization coverage), QD-PT (invocation contract), QD-ST (capability match) |
-| **Inspection Item Count** | 19 total (QD-PS: 6, QD-PT: 6, QD-ST: 7) |
+| **Inspection Relationships** | QD-PS (authorization coverage), QD-PT (invocation contract), QD-ST (capability match), plus QD-CYC (circular invocation, cross-cutting) |
+| **Inspection Item Count** | 21 total (QD-PS: 6, QD-PT: 6, QD-ST: 7, QD-CYC: 2) |
 | **Severity Levels** | P0/P1/P2 (as defined in Inspect Skill v1.0) |
 | **Agent Levels** | L1/L2/L3 (as defined in Inspect Prompt v1.0) |
 | **Quantitative Scoring** | Total score of 100; deduction-based; P0:P1:P2 = 5:3:1; rounded to nearest integer |
