@@ -31,7 +31,7 @@ L3  Everything else              Derived / explanatory / non-normative
 The single framework-level normative baseline. It defines the **common semantic layer** that every other document depends on:
 
 - Terminology (Appendix A glossary), object model, formal names and aliases
-- Grading models: `AC-L`, `OR-L`, `BI-L`, `CH-L`, `P0/P1/P2`, `S0–S3`, `A/B/C/D`
+- Grading models: `AC-L`, `OR-L`, `BI-L`, `CH-L`, `P0/P1/P2`, `A/B/C/D`
 - Numbering namespaces, Finding/Evidence model, Gate independence and release summary rules
 - Versioning, Baseline, exceptions, and cross-subset conflict resolution
 
@@ -50,9 +50,9 @@ Each owns a unique numbering namespace and is the **sole definition site** for i
 | `inspect/prompt.md` | `QD-P-*` | Is the System Prompt free of static defects? |
 | `inspect/skill.md` | `QD-S-*` | Is the Skill definition free of static defects? |
 | `inspect/tool.md` | `QD-T-*` | Is the Tool Schema free of static defects? |
-| `inspect/cross.md` | `QD-PS-*`, `QD-PT-*`, `QD-ST-*` | Are Prompt–Skill–Tool contracts mutually consistent? |
+| `inspect/cross.md` | `QD-PS-*`, `QD-PT-*`, `QD-ST-*`, `QD-CYC-*` | Are Prompt–Skill–Tool contracts and invocation loops mutually consistent? |
 | `inspect/permission.md` | `QD-PM-*` | Are declared authorities proportionate to assigned responsibilities? |
-| `risk/explicit.md` | `EX-*` (`NL-A/B`, `NR-O/S`), `D1–D3`, `S0–S3` | Does artifact text explicitly express dangerous content/configuration? |
+| `risk/explicit.md` | `EX-*` (`NL-A/B`, `NR-O/S`), `D1–D3`, `Explicit·P0/P1/P2` | Does artifact text explicitly express dangerous content/configuration? |
 | `risk/implicit.md` | `A/B/C/D` termination statuses | Can defects be exploited at runtime (shadow sandbox validation)? |
 | `quality/rag-agent.md` | 4 dimensions / 12 metrics, three-layer Gates | Does RAG-Agent output meet the quality bar? |
 | `quality/tool-agent.md` | Reliability metric, Ratchet Mechanism | Does the Tool-Agent complete tasks reliably? |

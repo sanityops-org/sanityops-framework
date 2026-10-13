@@ -2612,16 +2612,16 @@ Based on the inspection item definitions in Part 5 and the Minimum Rule Sets (Ap
 
 L2 Level:
 
-- $W_{total} = 46$
-- $base = 100/46 = 2.174...$
-- P1 deduction = $2.174...\times3 = 6.522$
-- P2 deduction = $2.174...\times1 = 2.174$
+- $W_{total} = 52$
+- $base = 100/52 = 1.923...$
+- P1 deduction = $1.923...\times3 = 5.769$
+- P2 deduction = $1.923...\times1 = 1.923$
 
 **Total Deduction**:
-$$\text{Total Deduction} = 2 \times 6.522 + 1 \times 2.174 = 13.044 + 2.174 = 15.218$$
+$$\text{Total Deduction} = 2 \times 5.769 + 1 \times 1.923 = 11.538 + 1.923 = 13.461$$
 
 **Score (rounded)**:
-$$Score = \text{round}(100 - 15.218) = \text{round}(84.782) = 85$$
+$$Score = \text{round}(100 - 13.461) = \text{round}(86.539) = 87$$
 
 **Gate Determination**: No P0 defects → result = PASS
 
@@ -2633,7 +2633,7 @@ $$Score = \text{round}(100 - 15.218) = \text{round}(84.782) = 85$$
   "framework": "SanityOps/Inspect Cross",
   "agent_level": "L2",
   "result": "PASS",
-  "score": 85,
+  "score": 87,
   "defects": [
     {"check_id": "QD-PS-1.2", "level": "P1", "found_count": 1},
     {"check_id": "QD-PT-2.6", "level": "P1", "found_count": 1},
@@ -2889,7 +2889,7 @@ QD-PS-1.3 (Permission Boundary Inconsistency) and QD-ST-3.6 (Permission Scope Mi
 
 **L2 Compliance Determination**: MUST pass the above 6 P0 inspection items (includes L1's 4 items).
 
-#### B.4 L3 Minimum Rule Set (11 P0 Items)
+#### B.4 L3 Minimum Rule Set (9 P0 Items)
 
 | ID | Inspection Item Name | Relationship |
 | --- | --- | --- |
@@ -2903,7 +2903,7 @@ QD-PS-1.3 (Permission Boundary Inconsistency) and QD-ST-3.6 (Permission Scope Mi
 | QD-ST-3.3 | Required Parameter Preparation | QD-ST |
 | QD-ST-3.6 | Permission Scope Match | QD-ST |
 
-**L3 Compliance Determination**: MUST pass the above 11 P0 inspection items (includes L2's 6 items).
+**L3 Compliance Determination**: MUST pass the above 9 P0 inspection items (includes L2's 6 items).
 
 ---
 
@@ -3025,7 +3025,7 @@ Step 6: Output final severity level
   },
 
   "result": "PASS/FAIL",
-  "score": 85,
+  "score": 87,
   "gate_condition": "No P0 defects / P0 defects MUST be remediated",
 
   "defect_summary": {

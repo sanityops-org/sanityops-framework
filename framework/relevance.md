@@ -139,7 +139,7 @@ Core questions differ for the three activity types:
 | Subset | Core Question | Typical Output |
 |--------|---------------|----------------|
 | Inspect | Do artifact definitions or relationships have defects? | `QD` defects, severity levels, static evidence, remediation recommendations |
-| Risk Explicit | Do artifacts contain explicit dangerous instructions or configurations? | `EX` classification, D1/D2/D3, S levels, deductions |
+| Risk Explicit | Do artifacts contain explicit dangerous instructions or configurations? | `EX` classification, D1/D2/D3, `Explicit·P0/P1/P2` grades |
 | Risk Implicit | Can risk behaviors be triggered through attack paths in controlled environments? | Dynamic attack results, exploitation evidence, handling recommendations |
 | Quality Tool-Agent | Does Tool Agent stably complete target tasks? | Success/failure, reliability, quality Gate |
 | Quality RAG-Agent | Are RAG Agent content outputs and boundary responses qualified? | 12 quality metrics, critical test case Gate, regression conclusions |
@@ -194,7 +194,7 @@ This specification establishes mapping relationships based on the following Sani
 | Inspect Tool | v1.0 | Uses `QD-T` numbering, Schema constraints, and high-risk operation definitions |
 | Inspect Cross | v1.0 | Uses `QD-PS`, `QD-PT`, `QD-ST`, `QD-CYC` numbering and consistency relationships |
 | Inspect Permission | v1.0 | Uses QD-PM numbering and permission baseline domain determinations (QD-PM-1~6) |
-| Risk Explicit | v1.0 | Uses `EX`, D1/D2/D3, S0–S3 risk model |
+| Risk Explicit | v1.0 | Uses `EX`, D1/D2/D3, `Explicit·P0/P1/P2` risk model |
 | Risk Implicit | v1.0 | Uses shadow sandbox, dynamic attack, and continuous validation principles |
 | Quality Tool-Agent | v1.0 | Uses task success/failure, reliability, and risk-driven testing principles |
 | Quality RAG-Agent | v1.0 | Uses four-dimensional 12 metrics, critical test cases, and regression Gate principles |
@@ -255,10 +255,10 @@ The mapping strength, attack surfaces, candidate failure modes, validation recom
 |--------------|-----------|
 | `QD` | Quality Defect |
 | `EX` | Explicit Risk |
-| `D1` | Confidentiality Harm Dimension |
-| `D2` | Integrity Harm Dimension |
-| `D3` | Authorization Harm Dimension |
-| `S0–S3` | Risk Explicit Severity Levels |
+| `D1` | Confidentiality Impact Type Label |
+| `D2` | Integrity Impact Type Label |
+| `D3` | Authorization Impact Type Label |
+| `Explicit·P0/P1/P2` | Risk Explicit Severity Grades |
 | `FM` | Failure Mode |
 | `AS` | Attack Surface |
 | `Gate` | Release or Handling Gate |
@@ -300,7 +300,7 @@ A standard mapping relationship should have at least the following structure:
 <a id="13-mapping-strength"></a>
 ### 1.3 Mapping Strength
 
-Mapping strength reflects "whether validation or supplementary testing should be prioritized", not vulnerability severity, nor does it replace P0/P1/P2.
+Mapping strength reflects "whether validation or supplementary testing should be prioritized", not vulnerability severity, nor does it replace `Inspect·P0/P1/P2` or `Explicit·P0/P1/P2`.
 
 | Strength | Meaning | Platform Behavior |
 |----------|---------|-------------------|
@@ -378,7 +378,7 @@ Conclusions from different subsets cannot substitute for each other. When surfac
 <a id="21-security-impact-dimensions"></a>
 ### 2.1 Security Impact Dimensions
 
-This specification adopts five types of potential security consequences. Among them, D1, D2, D3 correspond to Risk Explicit harm dimensions, but specific level determinations still follow Risk Explicit v1.0 independently.
+This specification adopts five types of potential security consequences. Among them, D1, D2, D3 correspond to Risk Explicit impact type labels, but specific grading still follows Risk Explicit v1.0 independently. Grading is determined by `Explicit·P0/P1/P2`.
 
 | Security Consequence | Corresponding Dimension | Typical Consequences |
 |----------------------|------------------------|----------------------|
@@ -388,7 +388,7 @@ This specification adopts five types of potential security consequences. Among t
 | **Availability Risk** | Extended dimension | Infinite retries, call storms, resource exhaustion, timeouts and service degradation |
 | **Audit and Traceability Risk** | Extended dimension | Unknown call sources, unclear data flows, inability to correlate evidence or responsible parties |
 
-> D1/D2/D3 are the formal harm dimensions of Risk Explicit; this specification only records their potential association directions and does not automatically produce D-level determinations.
+> D1/D2/D3 are the impact type labels of Risk Explicit; this specification only records their potential association directions and does not automatically produce D labels. Grading is determined by `Explicit·P0/P1/P2`.
 
 <a id="22-attack-surface-classification"></a>
 ### 2.2 Attack Surface Classification
@@ -823,7 +823,7 @@ Artifact version
 Confidence does not equal:
 
 - Inspect severity level;
-- Risk Explicit S level;
+- Risk Explicit explicit-risk grade;
 - Risk Implicit Signal;
 - Quality score or Gate.
 
@@ -1020,7 +1020,7 @@ Risk acceptance is only applicable to scenarios where the source specification p
 - Expiration date and review conditions;
 - Required monitoring, alerting, and subsequent regression.
 
-Attack success A, critical quality gate failure, or P0/S3 situations where the source specification explicitly prohibits exceptions must NOT be downgraded or exempted through this specification's "mapping conclusions."
+Attack success A, critical quality gate failure, or `Inspect·P0` / `Explicit·P0` situations where the source specification explicitly prohibits exceptions must NOT be downgraded or exempted through this specification's "mapping conclusions."
 
 <a id="55-impact-card-format-in-customer-reports"></a>
 ### 5.5 Impact Card Format in Customer Reports
