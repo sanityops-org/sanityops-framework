@@ -2294,7 +2294,7 @@ Gate   = FAIL (3 P0 defects exist)
 ```json
 {
   "subset": "QD-PM",
-  "version": "1.1",
+  "version": "1.0",
   "ac_level": "AC-L2",
   "or_level": "OR-L3",
   "gate0": "PASSED",
@@ -2499,7 +2499,7 @@ Extraction layer §2.6 sensitivity classification table serves as evidence gener
 | 1.7 | Permission–Duty mapping table is incomplete | ✓ | ✓ | ✓ | ✓ | | Process completeness item |
 | **QD-PM-2 Permission Scope (8)** | | | | | | | |
 | 2.1 | Resource access scope is not restricted | ✓ | ✓ | ✓ | ✓ | | Resource axis |
-| 2.2 | Ownership or attribution constraint is missing | ✓ | ✓ | ✓ | ✓ | | Resource axis; horizontal privilege escalation |
+| 2.2 | Ownership or affiliation constraint is missing | ✓ | ✓ | ✓ | ✓ | | Resource axis; horizontal privilege escalation |
 | 2.3 | Field-level scope is not restricted | ✓ | ✓ | ✓ | ✓ | | Data axis |
 | 2.4 | Environment boundary is not declared | ✓ | ✓ | ✓ | ✓ | | Environment axis |
 | 2.5 | No operation volume upper limit | △ | ✓ | ✓ | ✓ | | Condition axis; requires batch form |
@@ -2569,6 +2569,7 @@ Extraction layer §2.6 sensitivity classification table serves as evidence gener
 | **Four Axes of Scope** | Resource axis, Data axis, Environment axis, and Condition axis, describing the scope of a permission |
 | **Constraint Failure** | A scope limit is declared in the artifact, but the Tool parameter design cannot express or reliably carry that limit (2.8) |
 | **Aggregate Overreach** | Each individual permission is explainable, but their combination achieves an effect not authorized by the duty (1.6) |
+| **Breadth violation** | A permission is explainable by the responsibility baseline but grants operation/resource/data scope exceeding the duty (1.2, 2.1, 2.2, 2.3, 2.8). Contrast with prerequisite violations (currently 3.3, 4.8, 6.5), which prevent proportionality from being determined or render it incomplete. |
 | **Combination Bypass** | Granularity is split too finely, forcing the Agent to combine equivalent coarse permissions at runtime (3.6) |
 | **Proxy Confusion** | The Agent executes operations on behalf of an external request using its own higher permissions, without verifying the requester's qualification (4.7) |
 | **Chain A / Chain B** | The former is vertical propagation Prompt→Skill→Tool, the latter is horizontal propagation between Agents via delegation |
@@ -2734,15 +2735,34 @@ Applicability trimming (per 9.3.3): 4.3~4.6 are level `N/A` under `AC-L3`; furth
 
 > Purpose: In addition to the full 43 items, provide phased execution sets. `AC-L` determines **whether applicable**, `OR-L` determines **severity level** (see 9.3.3, 9.4). Three tiers from weak to strong: **Quick Mode → Must-Inspect Set → Full set (43 items)**.
 
-### D.1 Quick Mode (Inventory, 12 items)
+### D.1 Quick Mode (Inventory, 17 items)
 
-Only run items that "can block release / are structurally irreversible", for the first-round screening of large-scale existing Agents:
+Quick Mode runs a hand-picked set for the first-round screening of large-scale existing Agents. An item is eligible when it meets any of the following:
+
+1. Prerequisite — blocking (3.3, 4.8): when hit, proportionality cannot be determined; completeness fallback (6.5): when hit, determination proceeds but conclusions are marked incomplete;
+2. Fixed P0 — unconditionally P0, not mediated by OR-L (3.4, 5.4, 6.3, 6.5);
+3. Structural escalation P0 — P0 under rule R4 even at OR-L2 (4.4);
+4. Statically decidable, P0-reachable items — determination is purely static, applicability is decided by artifact facts, and severity can reach P0 via OR-L: alignment (1.1, 1.3) · breadth (1.2, 2.1, 2.2, 2.3, 2.8) · environment scope (2.4) · propagation (4.2) · boundary (5.7).
+
+Quick Mode runs all eligible items except those deferred below (these can also reach P0 but are excluded from the first pass):
+
+- 4.1, 4.7 — propagation group; require cross-layer or runtime-identity reasoning, not single-point static determination;
+- 5.1, 5.6 — boundary group; their determination depends on the results of groups 1–4 (see §9.5);
+- 1.6 — requires combination reasoning (R3);
+- 3.1, 3.2 — granularity group; hitting them voids and re-runs groups 1–2 (see §5.3.2).
+
+They are covered by the fuller sets: D.2 (4.1, 5.1, 5.6, 3.1, 3.2 from AC-L1; 1.6, 4.7 from AC-L2) and D.3 (1.6 at AC-L1).
 
 ```
-1.1 Unexplainable permission · 1.3 Insufficient permission · 2.4 Environment boundary not declared · 3.3 Role substitution ·
-3.4 High-risk not separated · 4.2 Downstream exceeds upstream · 4.4 Delegation escalation · 4.8 External permission ·
+1.1 Unexplainable permission · 1.2 Excessive-but-explainable permission · 1.3 Insufficient permission ·
+2.1 Resource scope not restricted · 2.2 Missing ownership constraint (lateral overreach) · 2.3 Field-level scope not restricted ·
+2.4 Environment boundary not declared · 2.8 Declared scope inconsistent with reachable scope ·
+3.3 Role substitution · 3.4 High-risk not separated ·
+4.2 Downstream exceeds upstream · 4.4 Delegation escalation · 4.8 External permission ·
 5.4 Isolation substitution · 5.7 Exemption uncontrolled · 6.3 No human confirmation · 6.5 List not enumerable
 ```
+
+Execution order: within Quick Mode, group 2 items (2.x) execute only on permissions determined "suited" by group 1 (1.1/1.2), per §9.5. If 3.3 (Role substitution) hits, the affected 1.x/2.x conclusions are void and must be re-run after granularity repair; if 4.8 (External permission) hits, all subset conclusions are marked incomplete and must be re-run after the permission set is completed. Overlap adjudication per §9.6 applies (e.g., 2.1/2.2/2.8 hitting the same permission fact are counted once). Because Quick Mode does not run the granularity items (3.1/3.2/3.5), a 2.x conclusion is a first-pass screening result, not granularity-validated.
 
 ### D.2 Must-Inspect Set (Must)
 
@@ -2765,7 +2785,7 @@ Only run items that "can block release / are structurally irreversible", for the
 
 ### D.4 Usage Recommendations
 
-- **Inventory** (thousands of Agents initial screening): Quick Mode (D.1);
+- **Inventory** (thousands of Agents initial screening — covers prerequisite, fixed P0, structural escalation P0, and statically decidable P0-reachable items): Quick Mode (D.1);
 - **New / changed Agent**: Must-Inspect Set (D.2) + Conditional Set triggered by artifact (D.3);
 - **High-risk (`OR-L3`) or `AC-L4` Agent**: Full set of 43 items.
 
