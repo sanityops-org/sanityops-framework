@@ -189,7 +189,7 @@ Terms appearing in this document such as logical artifact, Prompt / Skill / Tool
 
 ## Road Map
 
-**v1.0 · September 2026**
+**v1.0 · October 2026**
 
 - ✅ Framework 1.0 core specification released
 - ✅ A complete methodology system for Inspect, Risk, Quality, and Relevance has been formed

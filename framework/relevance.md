@@ -9,11 +9,13 @@ description: "How SanityOps maps discovered defects to their business and qualit
 
 **Version**: v1.0
 
-**Release Date**: September 2026
+**Release Date**: October 2026
 
 **Maintained by**: Sanity AI Labs
 
 **License**: CC BY-SA 4.0
+
+**Depends on Specification**: Core v1.0 (unified numbering, association types, causal boundaries)
 
 ---
 
@@ -77,7 +79,7 @@ description: "How SanityOps maps discovered defects to their business and qualit
 - [Chapter 5: Platform Execution, Reporting, and Governance Closed Loop](#chapter-5-platform-execution-reporting-and-governance-closed-loop)
 - [5.1 Platform Execution Workflow](#51-platform-execution-workflow)
 - [5.2 Automatic Recommendation Rules](#52-automatic-recommendation-rules)
-- [5.3 Unified Status Model](#53-unified-status-model)
+- [5.3 Mapping Progress Status](#53-unified-status-model)
 - [5.4 Comprehensive Gate and Release Decision Boundaries](#54-comprehensive-gate-and-release-decision-boundaries)
   - [5.4.1 Result Merging Principles](#541-result-merging-principles)
   - [5.4.2 Risk Acceptance Limitations](#542-risk-acceptance-limitations)
@@ -121,7 +123,7 @@ description: "How SanityOps maps discovered defects to their business and qualit
 | Document Name | SanityOps Inspect Defect Impact and Linkage Mapping Specification |
 | Version | v1.0 |
 | Status | Released |
-| Date | September 2026 |
+| Date | October 2026 |
 | Applicable Framework | SanityOps Inspect, Risk, Quality Subsets |
 | Maintained by | Sanity AI Labs |
 
@@ -189,10 +191,10 @@ This specification establishes mapping relationships based on the following Sani
 
 | Source Sub-specification | Adopted Version | Usage in This Specification |
 |--------------------------|-----------------|----------------------------|
-| Inspect Prompt | v1.0 | Uses `QD-P` numbering, definitions, and P0/P1/P2 rules |
+| Inspect Prompt | v1.0 | Uses `QD-P` numbering, definitions, and `Inspect·P0/P1/P2` rules |
 | Inspect Skill | v1.0 | Uses `QD-S` numbering, Review Schema, and risk classification rules |
 | Inspect Tool | v1.0 | Uses `QD-T` numbering, Schema constraints, and high-risk operation definitions |
-| Inspect Cross | v1.0 | Uses `QD-PS`, `QD-PT`, `QD-ST`, `QD-CYC` numbering and consistency relationships |
+| Inspect Cross | v1.0 | Uses `QD-PS`, `QD-PT`, `QD-ST`, `QD-SS`, `QD-TT`, `QD-CYC` numbering and consistency relationships |
 | Inspect Permission | v1.0 | Uses QD-PM numbering and permission baseline domain determinations (QD-PM-1~6) |
 | Risk Explicit | v1.0 | Uses `EX`, D1/D2/D3, `Explicit·P0/P1/P2` risk model |
 | Risk Implicit | v1.0 | Uses shadow sandbox, dynamic attack, and continuous validation principles |
@@ -253,7 +255,7 @@ The mapping strength, attack surfaces, candidate failure modes, validation recom
 
 | Abbreviation | Full Form |
 |--------------|-----------|
-| `QD` | Quality Defect |
+| `QD` | Static logic artifact defect (a static defect defined by Inspect rules; not equivalent to a quality failure) |
 | `EX` | Explicit Risk |
 | `D1` | Confidentiality Impact Type Label |
 | `D2` | Integrity Impact Type Label |
@@ -292,7 +294,7 @@ A standard mapping relationship should have at least the following structure:
 
 | Level | Content | Example |
 |-------|---------|---------|
-| Defect Layer | Discovered `QD` defect | `QD-T-3.2 Raw Input Passthrough` |
+| Defect Layer | Discovered `QD` defect | `QD-T-3.2 Untrusted Input Entering an Executable Context` |
 | Impact Layer | Attack surface or candidate failure mode | Parameter injection, parameter errors, downstream call failures |
 | Validation Layer | Risk or Quality recommended activities | Injection testing, boundary parameter testing, abnormal input regression |
 | Evidence Layer | Evidence supporting or refuting associations | Schema, call trajectories, shadow sandbox results, quality test case results |
@@ -318,7 +320,7 @@ Single defect mapping is used to identify the risk a single defect may pose unde
 |----------------|------------------|-------------------|
 | `QD-P-2.5.2 Missing Security Boundary Constraints` | Instruction boundary confusion, unauthorized response, sensitive information output | Injection, system prompt extraction, unauthorized request validation |
 | `QD-S-4.1 Failure Behavior Undefined` | Expanded search after failure, lowered restrictions, uncontrolled error recovery | Tool failure, permission denial, insufficient data testing |
-| `QD-T-4.3 Multi-Tool Semantic Competition` | Wrong Tool selection, incorrect side effects, duplicate calls | Similar Tool, fuzzy intent, near-synonym expression testing |
+| `QD-TT-5.2 Multi-Tool Semantic Competition` | Wrong Tool selection, incorrect side effects, duplicate calls | Similar Tool, fuzzy intent, near-synonym expression testing |
 | `QD-PT-2.3 Parameter Constraint Consistency` | Mismatch between Prompt parameter requirements and Tool Schema | End-to-end parameter construction, Schema validation, version regression |
 
 Single defect mapping should not ignore controls external to the artifact. For example, insufficient parameter constraints in a Tool Schema do not imply the backend lacks additional validation; whether it is exploitable should still be determined through dynamic validation.
@@ -344,8 +346,8 @@ Boundary deficiency
 ```text
 QD-P-2.5.2 Missing Security Boundary Constraints
 + QD-S-5.1 Read/Write/Delete Permissions Not Distinguished
-+ QD-T-3.2 Raw Input Passthrough
-+ QD-T-3.5 Cross-Tool Data Flow Risk
++ QD-T-3.2 Untrusted Input Entering an Executable Context
++ QD-TT-5.1 Cross-Tool Data Flow
 = Injection → Unauthorized invocation → Sensitive data exfiltration candidate chain
 ```
 
@@ -365,9 +367,9 @@ Conclusions from different subsets cannot substitute for each other. When surfac
 | Situation | Correct Interpretation |
 |-----------|----------------------|
 | Inspect passes, but Risk Implicit attack succeeds | Static check did not find the corresponding defect, or the attack depends on runtime conditions; the security validation result is valid and should be prioritized. |
-| Inspect hits P0, but Risk cannot reproduce the attack | The defect still needs to be handled per Inspect rules; failure to reproduce does not mean the defect does not exist. |
+| Inspect hits `Inspect·P0`, but Risk cannot reproduce the attack | The defect still needs to be handled per Inspect rules; failure to reproduce does not mean the defect does not exist. |
 | Risk Explicit finds no EX risk, but Inspect hits boundary deficiency | Absence of dangerous expression does not mean boundaries are intact; retain the QD defect and recommend dynamic validation. |
-| Quality passes, but Inspect has P0 | Quality testing cannot waive static P0; handle per the source specification's Inspect Gate. |
+| Quality passes, but Inspect has `Inspect·P0` | Quality testing cannot waive static `Inspect·P0`; handle per the source specification's Inspect Gate. |
 | Inspect passes, but Quality fails | The quality failure is valid; diagnose from knowledge, model, configuration, runtime environment, and artifact defects. |
 | Quality fails, but no QD is found | Must not forcibly attribute to artifact defects; record as "unconfirmed root cause". |
 
@@ -464,43 +466,16 @@ Risk Implicit should use impact mapping as the test design input for dynamic val
 <a id="25-high-priority-security-mapping-rules"></a>
 ### 2.5 High-Priority Security Mapping Rules
 
-The following table contains document-level high-priority mappings. The complete rule set is provided in the appendix.
+The complete security mapping uses **Appendix A as the sole authoritative source** (listing, rule by rule, the attack surface, impact, mapping strength, and validation recommendation for each QD rule). This section only explains how to derive the "high-priority" validation subset from Appendix A and does not maintain a second mapping table.
 
-| QD Defect | Primary Attack Surface | Potential Impact | Recommended Validation |
-|-----------|----------------------|------------------|----------------------|
-| `QD-P-2.2.1` Input Source Not Declared | AS-01, AS-03 | D1, D2, D3 | Source confusion testing with user input, history records, external documents, and Tool returns |
-| `QD-P-2.3.4` Security and Privacy Filter Missing | AS-03 | D1 | Sensitive information requests, Prompt extraction, sensitive field output, and exfiltration inducement |
-| `QD-P-2.4.3` Tool Call Specification Missing | AS-05, AS-09 | D2, D3, Availability | Illegal call order, missing parameters, abnormal Tool returns, and alternative calls |
-| `QD-P-2.5.1` Termination Constraint Missing | AS-06 | Availability | Loops, recursion, retries, timeouts, and budget exhaustion |
-| `QD-P-2.5.2` Security Boundary Constraint Missing | AS-01, AS-03, AS-04 | D1, D2, D3 | Single/multi-round injection, indirect injection, unauthorized requests, system prompt extraction |
-| `QD-P-2.5.3` Permission Control Boundary Missing | AS-04, AS-05 | D2, D3 | Role escalation, cross-user, cross-tenant, read/write/delete, and confirmation workflow |
-| `QD-P-2.6.3` Retry Mechanism Unreasonable | AS-06, AS-07 | D2, Availability | Idempotency, duplicate submission, partial success, maximum retries, and backoff |
-| `QD-S-1.5` Data Source Boundary Missing | AS-03, AS-04 | D1, D3 | Historical session pollution, cross-user data, unauthorized external source access |
-| `QD-S-3.2` Non-Activation Condition Missing | AS-01, AS-04 | D1, D2, D3 | Adjacent intents, sensitive requests, system data, production environment requests |
-| `QD-S-3.4` Task Scope Not Clearly Defined | AS-01, AS-05 | D2, D3 | Task expansion, goal hijacking, implied operations, and injection-style delegation |
-| `QD-S-4.1` Failure Behavior Not Defined | AS-07 | D1, D2, D3, Availability | Tool failure, permission denial, insufficient data, abnormal degradation, and error recovery |
-| `QD-S-5.1` Read/Write/Delete Permissions Not Differentiated | AS-04, AS-05 | D2, D3 | Read request inducing write/delete, least privilege, and side-effect testing |
-| `QD-S-5.2` High-Risk Operation Confirmation Mechanism Missing | AS-05 | D2, D3 | Delete, payment, exfiltration, overwrite operation confirmation bypass and undo |
-| `QD-S-5.3` Environment Boundary Not Declared | AS-04, AS-05 | D2, D3 | Test/production environment confusion, production resource access, and read-only restrictions |
-| `QD-S-5.4` Chained Call Permission Not Declared | AS-04, AS-05, AS-07 | D1, D2, D3 | Downstream Skill whitelist, permission inheritance, call depth, and high-privilege reach |
-| `QD-T-1.4` additionalProperties Not Controlled | AS-02, AS-04 | D1, D2, D3 | Additional fields, reserved fields, permission fields, and tenant field injection |
-| `QD-T-3.1` Write Operation Not Identified | AS-05 | D2 | Tool misselection, write operation confirmation, duplicate submission, and rollback |
-| `QD-T-3.2` Raw Input Passthrough | AS-02 | D1, D2, D3 | Parameter injection, encoding bypass, boundary parameters, downstream passthrough |
-| `QD-T-3.3` Batch Operation Unrestricted | AS-05, AS-06 | D2, Availability | Maximum batch, batch bypass, duplicate submission, and interruption recovery |
-| `QD-T-3.4` Internal Parameter Exposure | AS-04 | D1, D2, D3 | `tenantId`, role, token, admin flag tampering |
-| `QD-T-3.5` Cross-Tool Data Flow Risk | AS-03, AS-05 | D1, D2, D3 | Sensitive data source to exfiltration Tool, taint propagation, recipient manipulation |
-| `QD-T-4.2` Side Effect Not Declared | AS-05 | D2, D3 | State change, email sending, external calls, write consequence observation |
-| `QD-PS-1.3` Permission Boundary Consistency | AS-04, AS-09 | D2, D3 | Prompt→Skill authorization chain and permission convergence testing |
-| `QD-PT-2.4` Permission Granularity Consistency | AS-04, AS-05, AS-09 | D2, D3 | Prompt→Tool high-risk actions, confirmation, and permission testing |
-| `QD-ST-3.6` Permission Scope Match | AS-04, AS-05, AS-09 | D2, D3 | Skill→Tool actual side effects, least privilege, and confirmation testing |
-| `QD-PT-2.5` / `QD-ST-3.7` Error Handling Gap | AS-07, AS-09 | D1, D2, D3, Availability | End-to-end testing for permission errors, rate limiting, timeouts, format errors, and dependency exceptions |
-| `QD-PM-3.4` High-Risk and Irreversible Operations Not Separated from Routine Operations | AS-04, AS-05 | D2, D3 | Irreversible operations executed with same authority as routine, no direct confirmation, missing rollback testing |
-| `QD-PM-4.2` Downstream Declared Authority Exceeds Upstream Authorization | AS-04 | D2, D3 | Downstream Skill/Tool effective permission vs upstream authorization, call chain permission inheritance testing |
-| `QD-PM-4.4` Delegation Chain Contains Privilege Escalation | AS-04, AS-07 | D1, D2, D3 | Sub-Agent exceeding primary Agent permissions, delegation chain upper bound, privilege escalation channel testing |
-| `QD-PM-5.4` Isolation Substitutes for Permission Control | AS-04, AS-05 | D2, D3 | Unauthorized access within isolated environment, permission constraints after isolation bypass testing |
-| `QD-PM-6.3` High-Risk Operation Lacks Human Confirmation or Pre-Approval | AS-05, AS-09 | D2, D3, Auditability | High-risk operation without direct confirmation, same role for initiation and approval, irreversible operation simulation testing |
+High priority is determined by the following rules:
 
-> The complete `QD-PM` mapping is in Appendix A.5.
+1. **Rules with mapping strength `strong`**: enter the Risk validation queue first.
+2. **`Inspect·P0` rules**: regardless of mapping strength, must enter Risk Explicit review or Risk Implicit validation.
+3. **Cross-artifact rules** (`QD-PS`/`QD-PT`/`QD-ST`/`QD-SS`/`QD-TT`/`QD-CYC`/`QD-PM`): prioritize end-to-end validation per the defect chains in Appendix D.
+4. **`Explicit·P0` explicit risks**: determined independently by Risk Explicit; outside the derivation scope of this appendix.
+
+The platform must not maintain a second mapping table outside Appendix A. Among the derivation rules in this section, rule 1 acts on the "Mapping Strength" column of Appendix A; rule 2 relies on the severity level of the source sub-specification (Appendix A has no severity column); rule 3 depends on the defect chain definitions in Appendix D. None of the three duplicates the mapping content of Appendix A.
 
 <a id="26-external-risk-classification-reference-principles"></a>
 ### 2.6 External Risk Classification Reference Principles
@@ -677,7 +652,7 @@ The following factors may cause RAG quality failures but are not within the curr
 When impact mapping generates Quality supplementary tests, the following rules shall be followed:
 
 1. **Select test cases by risk**  
-   P0 defects, exploited defect chains, critical business scenarios, or high-risk boundary scenarios should be prioritized for inclusion in the release regression set.
+   `Inspect·P0`, exploited defect chains, critical business scenarios, or high-risk boundary scenarios should be prioritized for inclusion in the release regression set.
 
 2. **Select perturbation methods by defect type**
 
@@ -702,9 +677,11 @@ When impact mapping generates Quality supplementary tests, the following rules s
 
 After a Quality failure, the platform should output "failure fact + candidate Inspect investigation direction + other possible causes."
 
+> Family wildcard notations in the table below and in Appendices B/C/D (such as `QD-P-1.x`, `QD-T-4.x`) refer only to the currently effective members of that family, excluding numbers that have been deleted, deprecated, merged, or transferred; see Appendix A for the complete list.
+
 | Observed Failure | Priority Inspect Investigation | Other Possible Causes |
 |-----------------|-------------------------------|-----------------------|
-| Tool selection error | `QD-T-4.1`, `QD-T-4.3`, `QD-S-3.1`, `QD-P-2.4.3` | Model reasoning, routing, context construction |
+| Tool selection error | `QD-T-4.1`, `QD-TT-5.2`, `QD-S-3.1`, `QD-P-2.4.3` | Model reasoning, routing, context construction |
 | Missing parameter, type or format error | `QD-T-1.2`, `QD-T-2.x`, `QD-P-2.2.x`, `QD-ST-3.3` | Tool implementation, transformation layer, Mock data |
 | Call order or data dependency error | `QD-P-2.4.3`, `QD-PT-2.2`, `QD-ST-3.2` | Planner, state machine, runtime orchestration |
 | Output not consumable by downstream | `QD-P-2.3.1/2.3.2`, `QD-PS-1.6`, `QD-ST-3.5` | Downstream parser, interface version, implementation compatibility |
@@ -722,8 +699,8 @@ After remediating an Inspect defect, passing the static re-inspection alone shou
 
 | Change Type | Minimum Regression Requirements |
 |-------------|--------------------------------|
-| P0 defect remediation | Re-run corresponding Inspect; re-run associated Risk; re-run directly affected Quality test cases and complete defect chain test cases |
-| P1 defect remediation | Re-run corresponding Inspect; execute affected topic Quality regression; decide whether to execute Risk per mapping recommendation |
+| `Inspect·P0` defect remediation | Re-run corresponding Inspect; re-run associated Risk; re-run directly affected Quality test cases and complete defect chain test cases |
+| `Inspect·P1` defect remediation | Re-run corresponding Inspect; execute affected topic Quality regression; decide whether to execute Risk per mapping recommendation |
 | Prompt, Skill, Tool, or Cross contract change | In addition to directly affected test cases, execute end-to-end call chain regression |
 | RAG boundary, permission, citation, or safety response change | Re-run high-risk boundary, key fact, citation, and format compliance test cases |
 | Tool write operation, batch operation, or data flow change | Re-run confirmation, idempotency, rollback, maximum batch, and cross-Tool data flow test cases |
@@ -762,7 +739,8 @@ source:
   source_standard_version: ""
 
 applicability:
-  agent_levels: []
+  ac_levels: []
+  or_levels: []
   required_conditions: []
   exclusions: []
 
@@ -837,7 +815,8 @@ Confidence does not equal:
 | `validated` | Supported by dynamic or quality evidence |
 | `rejected` | Manually determined mapping not applicable to this instance |
 | `needs_more_evidence` | Needs supplementary environment, logs, permissions, or test assets |
-| `closed` | Remediation, re-inspection, and necessary regression all completed |
+
+> Review status is consistent with Core §5.6.2 and does not include `closed`; closure is a Finding lifecycle status (core §5.3), not a review status.
 
 <a id="44-risk-test-template-fields"></a>
 ### 4.4 Risk Test Template Fields
@@ -975,7 +954,9 @@ The platform must NOT automatically output the following conclusions:
 - "Not executing the mapping recommendation means the risk does not exist."
 
 <a id="53-unified-status-model"></a>
-### 5.3 Unified Status Model
+### 5.3 Mapping Progress Status
+
+The 11 statuses in this section are **Relevance mapping progress statuses**, describing "how far the impact mapping and validation of a given QD has progressed", and are **not** Finding lifecycle statuses. Finding status, review status, and closure conditions always follow `framework/core.md` §5.3 and §5.6.2; the statuses in this section must not be used to substitute for or close a Finding.
 
 | Status | Definition |
 |--------|------------|
@@ -991,8 +972,24 @@ The platform must NOT automatically output the following conclusions:
 | `CLOSED` | Required re-inspection and regression completed, confirmed closed |
 | `ACCEPTED_EXCEPTION` | Approved time-limited risk acceptance, must record validity period and compensating controls |
 
+**Cross-reference with Core Finding statuses** (for report interoperability only; does not change the semantics of either side):
+
+| Mapping Progress Status | Corresponding Core Finding Status (core §5.3) |
+|-------------------------|-----------------------------------------------|
+| `OPEN` / `MAPPED` / `VALIDATION_RECOMMENDED` | `open` |
+| `VALIDATED_EXPLOITABLE` / `VALIDATED_COMPENSATED` / `VALIDATED_REJECTED` | `confirmed` (all have dynamic validation results as support) |
+| `QUALITY_ASSOCIATED` | `open` (association clues do not yet constitute "confirmed through the prescribed process"; record `review_status` separately) |
+| `VALIDATION_INCONCLUSIVE` | `open` (record `review_status = needs_more_evidence` separately) |
+| `FIXED_PENDING_REGRESSION` | `mitigated` |
+| `CLOSED` | `closed` |
+| `ACCEPTED_EXCEPTION` | `accepted` |
+
+> Core's `invalid` (false positive or not applicable) has no corresponding progress status in this section; when a mapping does not hold, the Finding should be marked `invalid` and the exclusion rationale recorded.
+
 <a id="54-comprehensive-gate-and-release-decision-boundaries"></a>
 ### 5.4 Comprehensive Gate and Release Decision Boundaries
+
+This section only explains **how conclusions from multiple sources are merged and presented when they coexist**; it does not define a Relevance-side Gate: Relevance itself produces no Gate and must not substitute for any Gate of Inspect, Risk Explicit, Risk Implicit, or Quality (core §6.1).
 
 <a id="541-result-merging-principles"></a>
 #### 5.4.1 Result Merging Principles
@@ -1000,7 +997,7 @@ The platform must NOT automatically output the following conclusions:
 | Situation | Comprehensive Handling |
 |-----------|----------------------|
 | Risk Implicit results in A | Handle per Risk Implicit Gate; Quality pass does not exempt. |
-| Inspect has a blocking P0 | Handle per Inspect rules; dynamic non-reproduction does not automatically exempt. |
+| Inspect has a blocking `Inspect·P0` | Handle per Inspect rules; dynamic non-reproduction does not automatically exempt. |
 | Quality critical test case fails or Gate does not pass | Handle per corresponding Quality rules; Inspect serves only as diagnostic support. |
 | Risk Explicit discovers high-risk EX | Handle per Explicit rules; should associate related QD or defect chains, but does not replace their remediation. |
 | All dynamic validations result in D | Must not determine security pass; should mark validation as invalid and supplement conditions. |
@@ -1028,7 +1025,7 @@ Attack success A, critical quality gate failure, or `Inspect·P0` / `Explicit·P
 Customer-facing reports must clearly separate "confirmed facts" from "candidate associations."
 
 ```markdown
-### Impact Card: QD-T-3.2 | Raw Input Passthrough | P0 (Applies to L2/L3)
+### Impact Card: QD-T-3.2 | Untrusted Input Entering an Executable Context | Inspect·P0 (Applies to OR-L2 / OR-L3)
 
 **Static Discovery**
 - Artifact: `tool:search_customer`
@@ -1037,7 +1034,7 @@ Customer-facing reports must clearly separate "confirmed facts" from "candidate 
 
 **Potential Security Associations**
 - Attack Surface: AS-02 Input and Parameter Injection
-- Potential Impact: Confidentiality, Integrity, Authorization
+- Potential Impact: D1 (Confidentiality), D2 (Integrity), D3 (Authorization)
 - Mapping Strength: Strong
 - Note: This conclusion indicates priority for validation; it does not yet indicate that the backend is exploitable.
 
@@ -1127,84 +1124,209 @@ For defect chains that have been dynamically validated as exploitable, closure m
 <a id="a1-prompt-defect-mapping"></a>
 ### A.1 Prompt Defect Mapping
 
-| QD Category | Primary Attack Surface | Potential Impact | Recommended Validation |
-|-------------|----------------------|------------------|----------------------|
-| `QD-P-1.1.x` Contradiction | AS-01, AS-04, AS-05 | D1, D2, D3 | Conflicting instructions, rule priority, examples overriding body rules, multi-turn context testing |
-| `QD-P-1.2.x` Mismatch | AS-04, AS-09 | D2, D3, Availability | Out-of-role tasks, role and constraint conflicts, handoff and refusal testing |
-| `QD-P-1.3.x` Scope Definition | AS-01, AS-04 | D1, D2, D3 | Vague quantifiers, qualifiers, adjacent permission and boundary request testing |
-| `QD-P-1.4.x` Redundancy and Invalidity | AS-05, AS-09 | Availability, Auditability | Invalid Skills, unreachable branches, dead rules, and call path testing |
-| `QD-P-1.5.x` Implication | AS-05, AS-07, AS-09 | D2, D3, Availability | Goal completion, resource reachability, workflow dependency, and exception path testing |
-| `QD-P-1.6.1` Ambiguous Key Decision Terms | AS-01, AS-04 | D1, D2, D3 | Variants and conflict conditions testing for boundary words like "sensitive", "necessary", "reasonable" |
-| `QD-P-1.6.2` Rules Dependent on Model Internal State | AS-01, AS-07 | D1, D2, D3, Availability | Stability testing of rules related to uncertainty, malicious intent, and confidence levels |
-| `QD-P-1.6.3–1.6.7` Gray Zone Logic Defects | AS-01, AS-06, AS-07 | D1, D2, D3, Availability | Multi-turn conflict, recursive termination, knowledge update, implicit assumptions, and exception condition testing |
-| `QD-P-2.1.x` Structure and Specification Defects | AS-09 | Availability, Auditability | Format parsing, reference resolution, structure, and critical constraint reachability testing |
-| `QD-P-2.2.1` Input Source Not Declared | AS-01, AS-03 | D1, D2, D3 | Source confusion testing with user input, history, external documents, and Tool returns |
-| `QD-P-2.2.2–2.2.4` Input Format, Necessity, and Missing Handling Deficiencies | AS-02, AS-07 | D2, D3, Availability | Null values, malformed formats, missing fields, default value manipulation, and encoding variant testing |
-| `QD-P-2.3.1–2.3.3` Output Format, Schema, and Stability Deficiencies | AS-03, AS-09 | D1, Integrity, Auditability | Output parsing, required fields, format bypass, and repeated-run stability testing |
-| `QD-P-2.3.4` Security and Privacy Filter Missing | AS-03 | D1 | PII requests, Prompt extraction, sensitive context output, and exfiltration testing |
-| `QD-P-2.4.1–2.4.3` Workflow, Resource, and Call Specification Deficiencies | AS-05, AS-07, AS-09 | D2, D3, Availability | Tool selection, parameter construction, call order, and fallback call testing after failure |
-| `QD-P-2.5.1` Termination Constraint Missing | AS-06 | Availability | Loop, recursion, retry, timeout, and budget exhaustion testing |
-| `QD-P-2.5.2` Security Boundary Constraint Missing | AS-01, AS-03, AS-04 | D1, D2, D3 | Single-turn/multi-turn injection, indirect injection, goal hijacking, system prompt extraction testing |
-| `QD-P-2.5.3` Permission Control Boundary Missing | AS-04, AS-05 | D2, D3 | Role escalation, cross-user, cross-tenant, read/write/delete, and privilege escalation testing |
-| `QD-P-2.5.4` Constraint Priority Not Defined | AS-01, AS-07 | D1, D2, D3 | Security, efficiency, and task completion goal conflict testing |
-| `QD-P-2.5.5` Resource Call Frequency Limit Missing | AS-06 | Availability | High frequency, concurrency, 429, call budget, and retry storm testing |
-| `QD-P-2.6.x` Exception Handling Defects | AS-07 | D1, D2, D3, Availability | Timeout, permission denial, rate limiting, data format errors, and dependency failure testing |
-| `QD-P-2.7.x` Example Design Defects | AS-01, AS-05 | D1, D2, D3 | Adversarial regression testing for positive examples, negative examples, boundary, and dangerous requests |
+| QD Rule | Name | Applicability | Primary Attack Surface | Potential Impact | Mapping Strength | Recommended Validation |
+| --- | --- | --- | --- | --- | --- | --- |
+| `QD-P-1.1.1` | Direct Contradiction | AC-L1~L3 | AS-01, AS-05 | D2, D3 | Strong | Conflicting instructions, rule priority, examples overriding body rules, multi-turn context testing |
+| `QD-P-1.1.2` | Priority Conflict | AC-L1~L3 | AS-01, AS-05 | D2, D3 | Strong | Rule priority, security and task objective conflicts, multi-turn context testing |
+| `QD-P-1.1.3` | Example-Rule Contradiction | AC-L1~L3 | AS-01 | D2, D3 | Strong | Examples overriding body rules, multi-turn context testing |
+| `QD-P-1.2.1` | Role-Responsibility Mismatch | AC-L1~L3 | AS-04, AS-09 | D2, D3, Availability | Strong | Out-of-role tasks, responsibility and constraint conflicts, handoff and refusal testing |
+| `QD-P-1.2.2` | Role-Output Style Mismatch | AC-L1~L3 | AS-03 | Auditability | Medium | Output style consistency, tone and role matching testing |
+| `QD-P-1.2.3` | Constraint-Responsibility Mismatch | AC-L1~L3 | AS-04, AS-09 | D2, D3 | Strong | Responsibility and constraint conflicts, handoff and refusal testing |
+| `QD-P-1.2.4` | Identity and Anthropomorphization Boundaries | AC-L1~L3 | AS-01, AS-04 | D1, D3 | Medium | Identity declaration, anthropomorphic tone, over-trust and privilege-guidance testing |
+| `QD-P-1.3.1` | Quantifier Misuse | AC-L1~L3 | AS-01, AS-04 | D2, D3 | Medium | Vague quantifier variants, adjacent permission and boundary request testing |
+| `QD-P-1.3.2` | Vague Qualifiers | AC-L1~L3 | AS-01, AS-04 | D2, D3 | Medium | Qualifier boundaries, adjacent permission and boundary request testing |
+| `QD-P-1.3.3` | Undefined Boundaries | AC-L1~L3 | AS-01, AS-04 | D1, D2, D3 | Strong | Adjacent permission and boundary requests, out-of-bounds and scope expansion testing |
+| `QD-P-1.4.1` | Duplicate Constraints and Redundant Expressions (suggestion item) | AC-L1~L3 | AS-06 | Availability, Auditability | Conditional | Duplicate rule consistency, redundancy resolution, and token budget testing |
+| `QD-P-1.4.3` | Invalid Skill Definitions | AC-L2/L3 | AS-05, AS-09 | D2, D3, Availability | Strong | Invalid Skill references, unreachable branches, dead rules, and call path testing |
+| `QD-P-1.5.1` | Responsibilities Do Not Support the Objective | AC-L1~L3 | AS-05, AS-07, AS-09 | D2, D3, Availability | Strong | Objective completion, workflow dependency, and exception path testing |
+| `QD-P-1.5.2` | Resources Do Not Support Workflow | AC-L2/L3 | AS-05, AS-07, AS-09 | D2, D3, Availability | Strong | Resource reachability, workflow dependency, and exception path testing |
+| `QD-P-1.6.1` | Critical Decision Word Vagueness | AC-L1~L3 | AS-01, AS-04 | D1, D2, D3 | Strong | Boundary-word variants such as "sensitive", "necessary", "reasonable", and conflict condition testing |
+| `QD-P-1.6.2` | Rules Depending on Model Internal State | AC-L1~L3 | AS-01, AS-07 | D1, D2, D3, Availability | Conditional | Stability testing of rules related to uncertainty, malicious intent, and confidence levels |
+| `QD-P-1.6.3` | Soft Rule Interweaving Without Arbitration | AC-L1~L3 | AS-01, AS-07 | D1, D2, D3, Availability | Strong | Soft rule conflicts, absence of arbitration, multi-turn conflict condition testing |
+| `QD-P-1.6.4` | Reasoning Method Constraints | AC-L1~L3 | AS-01 | Availability | Conditional | Reasoning-constraint followability and cross-turn consistency testing |
+| `QD-P-1.6.5` | Self-Referential or Recursive Constraints | AC-L1~L3 | AS-06, AS-07 | Availability | Medium | Recursion termination, self-reference resolution, and resource exhaustion testing |
+| `QD-P-1.6.6` | Implicit Assumption Dependency | AC-L1~L3 | AS-01, AS-07 | D2, Availability | Conditional | Implicit premise, knowledge update, and abnormal condition testing |
+| `QD-P-1.6.7` | Non-Monotonic Reasoning Defects | AC-L1~L3 (N/A for single-turn) | AS-07 | D2, Availability | Conditional | Cross-turn state, committed conclusions, and new-information revision testing |
+| `QD-P-1.6.8` | Rule Followability | AC-L1~L3 | AS-01 | Availability | Conditional | Stability testing of unreliable-capability constraints such as counting, timing, and arithmetic |
+| `QD-P-2.1.2` | Reference Clarity | AC-L2/L3 | AS-09 | Availability, Auditability | Medium | Reference resolution, format parsing, critical constraint reachability testing |
+| `QD-P-2.1.3` | Structural Hierarchy Reasonableness (suggestion item) | AC-L1~L3 | AS-01 | Availability, Auditability | Conditional | Paragraph length, hierarchy depth, critical constraint reachability testing |
+| `QD-P-2.1.5` | Context Budget Encroachment (suggestion item) | AC-L1~L3 | AS-06 | Availability | Conditional | Context budget occupancy, critical constraints being encroached testing |
+| `QD-P-2.2.1` | Undeclared Input Source | AC-L1~L3 (N/A when the input source is self-evident) | AS-01, AS-03 | D1, D2, D3 | Strong | Source confusion testing across user input, history records, external documents, and Tool returns |
+| `QD-P-2.2.2` | Unconstrained Input Format | AC-L1~L3 | AS-02, AS-07 | D2, D3, Availability | Strong | Null values, malformed formats, missing fields, encoding variant testing |
+| `QD-P-2.2.3` | Required/Optional Not Distinguished | AC-L1~L3 (N/A for free-text input) | AS-02, AS-07 | D2, D3, Availability | Strong | Missing fields, default value manipulation, and encoding variant testing |
+| `QD-P-2.2.4` | Undefined Missing-Input Handling | AC-L1~L3 | AS-02, AS-07 | D2, D3, Availability | Strong | Null values, missing fields, default value manipulation, and encoding variant testing |
+| `QD-P-2.3.1` | Undefined Output Format | AC-L1~L3 (applies when output is machine-consumed) | AS-03, AS-09 | D1, D2, Auditability | Strong | Output parsing, required fields, format bypass testing |
+| `QD-P-2.3.2` | Incomplete Output Schema | AC-L1~L3 (N/A when structured output is not declared) | AS-03, AS-09 | D1, D2, Auditability | Strong | Structured output, Schema validation, and required field testing |
+| `QD-P-2.3.4` | Missing Security/Privacy Filtering | AC-L1~L3 (otherwise N/A) | AS-03 | D1 | Conditional | PII requests, Prompt extraction, sensitive context output and exfiltration testing |
+| `QD-P-2.3.5` | Factuality and Hallucination Control Declaration | AC-L2/L3 (N/A without retrieval/tools/external knowledge) | AS-03 | D2, Auditability | Conditional | Unsupported fabrication, hallucination, and factuality regression testing |
+| `QD-P-2.3.6` | Output Length and Truncation | AC-L1~L3 | AS-03 | D2, Availability | Medium | Oversized output, maximum length, and truncation completeness testing |
+| `QD-P-2.3.7` | Output Language/Localization and Conventions | AC-L1~L3 (N/A for single region) | AS-03 | D2, Auditability | Conditional | Language, time zone, currency, unit, and percentage convention testing |
+| `QD-P-2.4.1` | Incomplete Workflow Steps | AC-L2/L3 | AS-05, AS-07, AS-09 | D2, D3, Availability | Strong | Step order, prerequisites, missing steps, failure fallback testing |
+| `QD-P-2.4.2` | Undeclared Resources/Tools | AC-L2/L3 | AS-05, AS-09 | D2, D3, Availability | Strong | Undeclared tool/resource, call path reachability testing |
+| `QD-P-2.4.3` | Incorrect Tool Invocation Parameters or Order | AC-L2/L3 | AS-05, AS-09 | D2, D3, Availability | Medium | Parameter construction, call order, alternative call after failure testing |
+| `QD-P-2.4.4` | Multi-Turn Context, State, and Memory Boundaries | AC-L2/L3 (N/A for single-turn stateless) | AS-01, AS-07 | D1, D2, D3 | Medium | Multi-turn state pollution, memory boundaries, cross-turn context testing |
+| `QD-P-2.5.1` | Missing Termination Constraints | AC-L2/L3 | AS-06 | Availability | Strong | Loop, recursion, retry, timeout, and budget exhaustion testing |
+| `QD-P-2.5.2` | Missing Security Boundary Constraints | AC-L1~L3 | AS-01, AS-03, AS-04 | D1, D2, D3 | Strong | Single-turn/multi-turn injection, indirect injection, goal hijacking, system prompt extraction testing |
+| `QD-P-2.5.3` | Missing Permission Control Boundaries | AC-L2/L3 | AS-04, AS-05 | D2, D3 | Strong | Role escalation, cross-user, cross-tenant, read/write/delete, and privilege escalation testing |
+| `QD-P-2.5.4` | Undefined Constraint Priority | AC-L2/L3 | AS-01, AS-07 | D1, D2, D3 | Strong | Security, efficiency, and task completion objective conflict testing |
+| `QD-P-2.5.6` | Instruction-Data Trust Boundary | AC-L2/L3 | AS-01, AS-02 | D1, D2, D3 | Strong | Instruction/data confusion, injection, and goal hijacking testing |
+| `QD-P-2.5.7` | Human Confirmation for High-Risk/Irreversible Operations | AC-L2/L3 (N/A when no such operations exist) | AS-05 | D2, D3 | Conditional | High-risk operation confirmation, cancellation, rollback, and side effect testing |
+| `QD-P-2.5.8` | System Prompt Confidentiality and Leak Response | AC-L2/L3 | AS-01, AS-03 | D1 | Strong | System prompt extraction, leak response, and confidentiality declaration testing |
+| `QD-P-2.5.9` | Industry Compliance and Disclaimer Boundaries | AC-L1~L3 (otherwise N/A) | AS-05 | D2, Auditability | Conditional | Medical/financial/legal domain disclaimer and out-of-scope compliance testing |
+| `QD-P-2.6.1` | Runtime Exceptions Not Covered | AC-L2/L3 | AS-07 | D1, D2, D3, Availability | Strong | Timeout, permission denial, rate limiting, data format errors, and dependency failure testing |
+| `QD-P-2.6.2` | Missing Degradation and Recovery Strategy | AC-L3 | AS-07 | Availability | Medium | Degradation, recovery, partial completion, and exception path testing |
+| `QD-P-2.6.3` | Unreasonable Retry Mechanism | AC-L3 | AS-06, AS-07 | Availability | Medium | Retry count, backoff, duplicate execution, and idempotency testing |
+| `QD-P-2.6.4` | Out-of-Scope Request Refusal and Human Handoff | AC-L1~L3 | AS-01, AS-04 | D2, D3 | Strong | Refusal template, handoff target, escalation conditions, and out-of-scope request testing |
+| `QD-P-2.7.1` | Insufficient Positive Example Representativeness (suggestion item) | AC-L1~L3 | AS-01, AS-05 | D2 | Conditional | Positive example coverage and adversarial regression testing |
+| `QD-P-2.7.2` | Insufficient Counter-Example Coverage (suggestion item) | AC-L1~L3 | AS-01, AS-05 | D2 | Conditional | Counter-example coverage and dangerous request adversarial testing |
+| `QD-P-2.7.3` | Missing Boundary-Case Examples (suggestion item) | AC-L1~L3 | AS-01, AS-05 | D2 | Conditional | Boundary case and dangerous request adversarial regression testing |
+
+> **Notes**:
+> - Suggestion items (ungraded) carry optimization value only: no deduction, no blocking, no waiver, and their mapping strength is uniformly marked `conditional`.
+> - Deprecated/deleted/merged rules are no longer mapped: `QD-P-2.5.5` (deprecated), `QD-P-2.1.1` (deleted; its injection point merged into 2.5.6), `QD-P-1.4.2` (deleted), `QD-P-2.3.3` (deleted), `QD-P-2.1.4` (merged into 1.4.1).
 
 <a id="a2-skill-defect-mapping"></a>
 ### A.2 Skill Defect Mapping
 
-| QD Category | Primary Attack Surface | Potential Impact | Recommended Validation |
-|-------------|----------------------|------------------|----------------------|
-| `QD-S-0.x` Basic Compliance | AS-09 | Availability, Auditability | Parsing, field completeness, version, and metadata consistency testing |
-| `QD-S-1.1–1.3` Input, Output, and Execution Resource Boundary Missing | AS-06 | Availability | Large input, large output, call count, timeout, and budget exhaustion testing |
-| `QD-S-1.4` Permission Boundary Missing | AS-04, AS-05 | D2, D3 | Read/write/delete confusion, dangerous operations, and least privilege testing |
-| `QD-S-1.5` Data Source Boundary Missing | AS-01, AS-03, AS-04 | D1, D3 | Historical session pollution, cross-user, external resources, and data source testing |
-| `QD-S-2.1–2.3` Unbounded Quantity, Termination, and Open Enumeration | AS-06, AS-07 | Availability, Integrity | Full request, loop, partial completion, open output structure testing |
-| `QD-S-2.4` Overly Broad Capability Verbs | AS-04, AS-05 | D2, D3 | Semantic expansion testing for words like "manage", "process", "fix" |
-| `QD-S-3.1–3.3` Trigger, Non-Activation, and Ambiguity Strategy Deficiencies | AS-01, AS-04 | D1, D2, D3 | Adjacent intent, negative intent, mixed intent, and insufficient information testing |
-| `QD-S-3.4` Task Scope Not Defined | AS-01, AS-05 | D2, D3 | Goal hijacking, implicit tasks, scope expansion, and indirect delegation testing |
-| `QD-S-3.5–3.6` Default Behavior and Metadata Defects | AS-05, AS-09 | D2, Availability | Empty input, similar Skills, name confusion, and incorrect routing testing |
-| `QD-S-4.x` Failure Expansion | AS-07 | D1, D2, D3, Availability | Tool failure, partial completion, degradation, recovery, and prohibited behavior testing |
-| `QD-S-5.1` Read/Write/Delete Permissions Not Distinguished | AS-04, AS-05 | D2, D3 | Read requests inducing write/delete, permission convergence, and side effect testing |
-| `QD-S-5.2` High-Risk Confirmation Missing | AS-05 | D2, D3 | Vague confirmation, negative confirmation, repeated confirmation, and cancellation confirmation testing |
-| `QD-S-5.3` Environment Boundary Not Declared | AS-04, AS-05 | D2, D3 | Test/production environment confusion, production resource access testing |
-| `QD-S-5.4` Chained Call Permissions Not Declared | AS-04, AS-05, AS-07 | D1, D2, D3 | Downstream Skill whitelist, call depth, permission inheritance testing |
+| QD Rule | Name | Applicability | Primary Attack Surface | Potential Impact | Mapping Strength | Recommended Validation |
+| --- | --- | --- | --- | --- | --- | --- |
+| `QD-S-0.1~0.9` | Basic Compliance | OR-L1~L3 | AS-09 | Availability, Auditability | Medium | Parsing, field completeness, version and metadata consistency testing |
+| `QD-S-1.1` | Input Boundary Missing | OR-L1~L3 (N/A when platform budget evidence exists) | AS-06 | Availability | Strong | Large input, call count, timeout, and budget exhaustion testing |
+| `QD-S-1.2` | Output Size Missing | OR-L1~L3 | AS-06 | Availability | Strong | Large output, maximum length, and budget exhaustion testing |
+| `QD-S-1.3` | Execution Resource Boundary Missing | OR-L1~L3 (downgraded to SHOULD / N/A with traceable configuration evidence) | AS-06 | Availability | Strong | Timeout, maximum call count, budget exhaustion, and loop testing |
+| `QD-S-1.4` | Permission Boundary Missing | OR-L1~L3 | AS-04, AS-05 | D2, D3 | Strong | Read/write/delete confusion, dangerous operations, and least privilege testing |
+| `QD-S-1.5` | Data Source Boundary Missing | OR-L1~L3 | AS-01, AS-03, AS-04 | D1, D3 | Medium | Historical session pollution, cross-user, external resources, and data source testing |
+| `QD-S-2.1` | Unbounded Quantity Declaration | OR-L1~L3 | AS-06 | Availability | Conditional | Full-request, unbounded quantity, and budget exhaustion testing |
+| `QD-S-2.2` | Unterminated Execution Declaration | OR-L1~L3 | AS-06 | Availability | Conditional | Loop, until-success, timeout, and budget exhaustion testing |
+| `QD-S-2.3` | Open-Ended Enumeration in Structure Declaration | OR-L1~L3 | AS-06, AS-07 | Availability, D2 | Medium | Open output structure, enumeration explosion, and parsing testing |
+| `QD-S-2.4` | Broad Capability Verbs | OR-L1~L3 | AS-04, AS-05 | D2, D3 | Conditional | Semantic expansion testing for words like "manage", "process", "fix" |
+| `QD-S-3.1` | Vague Trigger Conditions | OR-L1~L3 | AS-01, AS-04 | D1, D2, D3 | Medium | Adjacent intent, mixed intent, and false trigger testing |
+| `QD-S-3.2` | Missing Deactivation Conditions | OR-L1~L3 (counter-example may be waived when positive triggers are sufficiently bounded) | AS-01, AS-04 | D2, D3 | Medium | Negative intent, non-trigger scenarios, and false trigger testing |
+| `QD-S-3.3` | Missing Ambiguous Input Handling Strategy | OR-L1~L3 | AS-01 | D2 | Medium | Insufficient information, format errors, ambiguous input, and fabricated content testing |
+| `QD-S-3.4` | Undefined Task Scope | OR-L1~L3 | AS-01, AS-05 | D2, D3 | Strong | Goal hijacking, implicit tasks, scope expansion, and indirect delegation testing |
+| `QD-S-3.5` | Undeclared Default Behavior | OR-L1~L3 | AS-05, AS-09 | D2, Availability | Medium | Empty input, default behavior, and error routing testing |
+| `QD-S-3.6` | Metadata Expression Defects | OR-L1~L3 | AS-08 | D2, Availability | Medium | Similar Skills, name confusion, and incorrect routing testing |
+| `QD-S-3.7` | Output Structure Contract Missing | OR-L1~L3 | AS-03, AS-09 | D2, Availability, Auditability | Medium | Output format, required fields, empty results, and downstream parsing consistency testing |
+| `QD-S-4.1` | Undefined Failure Behavior | OR-L1~L3 | AS-07 | Availability | Strong | Tool failure, exception paths, and failure behavior testing |
+| `QD-S-4.2` | Undeclared Partial Completion Legitimacy | OR-L1~L3 | AS-07 | D2, Availability | Medium | Partial completion, half-completed states, and consistency testing |
+| `QD-S-4.3` | Missing Post-Failure Prohibited Behaviors | OR-L1~L3 | AS-05, AS-07 | D2, D3 | Medium | Post-failure prohibited behavior, fallback, and side effect testing |
+| `QD-S-4.4` | Undefined Error Recovery Path | OR-L1~L3 (N/A for L1 without tool calls) | AS-07 | Availability | Medium | Error recovery, retry, degradation, and human takeover testing |
+| `QD-S-5.1` | Read/Write/Delete Permissions Not Distinguished | OR-L1~L3 | AS-04, AS-05 | D2, D3 | Strong | Read request inducing write/delete, permission convergence, and side effect testing |
+| `QD-S-5.2` | Missing High-Risk Operation Confirmation Mechanism | OR-L3 | AS-05 | D2, D3 | Strong | Vague confirmation, negative confirmation, repeated confirmation, and cancellation confirmation testing |
+| `QD-S-5.3` | Undeclared Environment Boundaries | OR-L1~L3 (condition: multiple environments reachable, otherwise N/A) | AS-04, AS-05 | D2, D3 | Medium | Test/production environment confusion and production resource access testing |
+| `QD-S-5.4` | Undeclared Chained Invocation Permissions | OR-L1~L3 (condition: `allow_skill_chaining=true`, otherwise N/A) | AS-04, AS-05, AS-07 | D1, D2, D3 | Medium | Downstream Skill whitelist, call depth, and permission inheritance testing |
+
+> **Notes**:
+> - QD-S-0.x are entry thresholds (basic compliance): no P grading, no deduction, no scoring, pass/not-pass only, uniformly mapped to AS-09.
+> - Same-root deduplication: QD-S-1.4 / QD-S-2.4 are counted into QD-S-5.1; QD-S-2.1 / QD-S-2.2 are the automatic trigger word lists for QD-S-1.1 / QD-S-1.3 respectively; QD-S-4.3 is counted into QD-S-4.1.
 
 <a id="a3-tool-defect-mapping"></a>
 ### A.3 Tool Defect Mapping
 
-| QD Category | Primary Attack Surface | Potential Impact | Recommended Validation |
-|-------------|----------------------|------------------|----------------------|
-| `QD-T-1.1–1.3` Structure Validity Defects | AS-05, AS-09 | D2, Availability | Tool selection, Schema parsing, required fields, enumeration, and version compatibility testing |
-| `QD-T-1.4` `additionalProperties` Not Controlled | AS-02, AS-04 | D1, D2, D3 | Additional fields, reserved fields, role, tenant, and token field injection testing |
-| `QD-T-2.1–2.4` Parameter Constraint Missing | AS-02, AS-06 | D2, D3, Availability | Length, format, numeric, array, combined parameter, and extreme value testing |
-| `QD-T-3.1` Write Operation Not Identified | AS-05 | D2 | Write operation misselection, confirmation, rollback, and idempotency testing |
-| `QD-T-3.2` Raw Input Passthrough | AS-02 | D1, D2, D3 | Parameter injection, encoding bypass, parameter pollution, and downstream passthrough testing |
-| `QD-T-3.3` Batch Operation Unrestricted | AS-05, AS-06 | D2, Availability | Maximum batch, batch bypass, cancellation, interruption recovery, and duplicate submission testing |
-| `QD-T-3.4` Internal Parameter Exposure | AS-04 | D1, D2, D3 | `tenantId`, `isAdmin`, role, token, and control flag tampering testing |
-| `QD-T-3.5` Cross-Tool Data Flow Risk | AS-03, AS-05 | D1, D2, D3 | Taint propagation, sensitive data exfiltration, recipient manipulation, and chained call testing |
-| `QD-T-4.1–4.3` Semantic Clarity Defects | AS-05, AS-08 | D2, D3, Availability | Similar Tools, near-synonym expressions, ambiguous tasks, and malicious Tool selection guidance testing |
-| `QD-T-5.1–5.2` Change and Impact Assessment Defects | AS-08, AS-09 | D2, D3, Availability | Old/new Schema replay, caller compatibility, migration, and rollback testing |
+| QD Rule | Name | Applicability | Primary Attack Surface | Potential Impact | Mapping Strength | Recommended Validation |
+| --- | --- | --- | --- | --- | --- | --- |
+| `QD-T-1.1` | Base Field Missing | OR-L1~L3 | AS-05, AS-09 | D2, Availability | Medium | Tool selection, Schema parsing, required fields, enumeration, and version compatibility testing |
+| `QD-T-1.2` | required References Undefined Field | OR-L1~L3 | AS-02, AS-09 | D2, Availability | Medium | `required` referencing an undefined field, required fields, Schema parsing, and version compatibility testing |
+| `QD-T-1.3` | enum–type Conflict / Duplicate Values | OR-L1~L3 | AS-02, AS-09 | D2, Availability | Medium | enum–type conflict, duplicate values, Schema validation, and version compatibility testing |
+| `QD-T-1.4` | Inappropriate additionalProperties Policy | OR-L1~L3 | AS-02, AS-04 | D1, D2, D3 | Strong | Additional fields, reserved fields, role, tenant, and token field injection testing |
+| `QD-T-1.5` | Name Validity and Uniqueness | OR-L1~L3 | AS-05, AS-08 | D2, Availability | Medium | Name validity, uniqueness, similar Tool name confusion, and incorrect routing testing |
+| `QD-T-1.6` | Constraint Self-Consistency and default | OR-L1~L3 | AS-02, AS-09 | D2, Availability | Medium | `default` and constraint self-consistency, Schema validation, and default value manipulation testing |
+| `QD-T-1.7` | Missing type / Overly Broad Type | OR-L1~L3 | AS-02, AS-09 | D2, Availability | Medium | Missing/overly broad `type`, type confusion, and Schema parsing testing |
+| `QD-T-2.1` | String Type Without Length Constraint | OR-L1~L3 | AS-02, AS-06 | D2, D3, Availability | Medium | Oversized strings, length boundaries, resource exhaustion, and extreme value testing |
+| `QD-T-2.2` | String Type Without Format Constraint | OR-L1~L3 | AS-02, AS-07 | D2, D3, Availability | Medium | Format, encoding variants, malformed input, and extreme value testing |
+| `QD-T-2.3` | Number/Integer Type Without Boundary Constraint | OR-L1~L3 | AS-02, AS-06 | D2, D3, Availability | Medium | Numeric boundaries, overflow, zero values, and extreme value testing |
+| `QD-T-2.4` | Array Type Without Length Constraint | OR-L1~L3 | AS-02, AS-06 | D2, D3, Availability | Medium | Array length, batch elements, and extreme value testing |
+| `QD-T-2.5` | Missing Unit/Precision/Time Zone/Currency Semantics | OR-L1~L3 | AS-02, AS-09 | D2, Availability | Medium | Unit, currency, precision, time zone semantics, and end-to-end consistency testing |
+| `QD-T-2.6` | Query Tool Without Pagination/Result-Set Cap | OR-L1~L3 | AS-06 | D2, Availability | Medium | Pagination, result-set cap, full return, and budget exhaustion testing |
+| `QD-T-2.7` | Unexpressed Inter-Parameter Dependencies/Exclusivity | OR-L1~L3 | AS-02, AS-07 | D2, Availability | Medium | Inter-parameter dependency, exclusivity, combined conditions, and conflicting field testing |
+| `QD-T-3.1` | State Change and Material Side Effect Declaration | OR-L2/L3 | AS-05 | D2, D3 | Strong | State change, write operation misselection, confirmation, rollback, and idempotency testing |
+| `QD-T-3.2` | Untrusted Input Entering an Executable Context | OR-L1~L3 | AS-02 | D1, D2, D3 | Strong | Parameter injection, encoding bypass, parameter pollution, and downstream passthrough testing |
+| `QD-T-3.3` | Batch/Range Write Operation Without Cap | OR-L2/L3 | AS-05, AS-06 | D2, Availability | Medium | Maximum batch, batch bypass, cancellation, interruption recovery, and duplicate submission testing |
+| `QD-T-3.4` | Authorization Context Parameter Exposure | OR-L1~L3 | AS-04 | D1, D2, D3 | Strong | `tenantId`, `isAdmin`, role, token, and control flag tampering testing |
+| `QD-T-3.6` | Dangerous Default Values and Operation Scope Preconditions | OR-L2/L3 | AS-05 | D2, D3 | Medium | Dangerous default values, operation scope preconditions, and default behavior trigger testing |
+| `QD-T-3.7` | Undeclared Operation Allowlist for Parameterized Tools | OR-L1~L3 | AS-02, AS-04, AS-05 | D1, D2, D3 | Strong | Out-of-allowlist operation injection, arbitrary SQL/command execution, unauthorized table access, and direct reach of dangerous actions testing |
+| `QD-T-4.1` | Insufficient description Quality | OR-L1~L3 | AS-05, AS-08 | D2, D3, Availability | Medium | Similar Tools, near-synonym expressions, ambiguous tasks, and malicious Tool selection guidance testing |
+| `QD-T-4.4` | Missing Parameter-Level description | OR-L1~L3 | AS-05, AS-08 | D2, Availability | Medium | Parameter semantics, similar parameter confusion, and parameter construction testing |
+| `QD-T-4.5` | description–Schema Inconsistency | OR-L1~L3 | AS-05, AS-08 | D2, Availability | Medium | description–Schema consistency, parameter construction, and Schema validation testing |
+| `QD-T-4.6` | Sensitive Input Handling Declaration | OR-L2/L3 | AS-03 | D1 | Conditional | Sensitive input, PII, credential handling, and exfiltration testing |
+| `QD-T-4.7` | Missing Output Contract (outputSchema) | OR-L2/L3 | AS-03, AS-09 | D1, D2, Availability | Medium | Output structure, required fields, and downstream parsing consistency testing |
+| `QD-T-5.1` | Breaking Change Determination | Change inspection | AS-08, AS-09 | D2, D3, Availability | Conditional | Old/new Schema replay, caller compatibility, migration, and rollback testing |
+| `QD-T-5.2` | Change Impact Assessment Omission or Error | Change inspection | AS-08, AS-09 | D2, D3, Availability | Conditional | Old/new Schema replay, caller compatibility, migration, and rollback testing |
+| `QD-T-5.3` | Semantic Change | Change inspection | AS-08, AS-09 | D2, D3, Availability | Conditional | Semantic change, old/new Schema replay, caller compatibility, and migration rollback testing |
+
+> **Notes**:
+> - Transferred rules (cross-Tool semantics moved to the Cross namespace): `QD-T-3.5` Cross-Tool Data Flow → `QD-TT-5.1`; `QD-T-4.3` Multi-Tool Semantic Competition → `QD-TT-5.2`.
+> - Merged rules: `QD-T-4.2` Undeclared Side Effects → merged into `QD-T-3.1` (State Change and Material Side Effect Declaration).
+> - `QD-T-5.x` are change inspection items, currently not connected to the checklist/scoring/Gate; mapping strength is uniformly marked `conditional`.
 
 <a id="a4-cross-defect-mapping"></a>
 ### A.4 Cross Defect Mapping
 
-| QD Category | Primary Attack Surface | Potential Impact | Recommended Validation |
-|-------------|----------------------|------------------|----------------------|
-| `QD-PS-1.1` Skill Authorization Consistency | AS-04, AS-09 | D2, D3 | Prompt→Skill unauthorized call, name confusion, and capability expansion testing |
-| `QD-PS-1.2` Trigger Condition Consistency | AS-01, AS-05 | D2, D3 | Trigger, non-trigger, adjacent intent, and mixed intent testing |
-| `QD-PS-1.3–1.4` Permission and Resource Consistency | AS-03, AS-04 | D1, D2, D3 | Prompt→Skill permissions, resource sources, cross-tenant, and least privilege testing |
-| `QD-PS-1.5–1.6` Failure and Output Constraint Consistency | AS-03, AS-07, AS-09 | D1, D2, Availability | End-to-end failure, recovery, output format, and data leakage testing |
-| `QD-PT-2.1–2.3` Tool Existence, Call, and Parameter Contract | AS-02, AS-05, AS-09 | D2, Availability | Prompt→Tool name, parameter, call order, and compatibility testing |
-| `QD-PT-2.4` Permission Granularity Consistency | AS-04, AS-05 | D2, D3 | High-risk Tool call, confirmation, permission, and side effect testing |
-| `QD-PT-2.5–2.6` Error Handling and Frequency Reasonableness | AS-06, AS-07 | Availability, D2 | Rate limiting, timeout, permission errors, call budget, and duplicate execution testing |
-| `QD-ST-3.1–3.3` Tool Existence, Input Constraint, Parameter Preparation | AS-02, AS-09 | D2, Availability | Skill→Tool parameter source, required fields, Schema validation testing |
-| `QD-ST-3.4` Call Frequency Matching | AS-06 | Availability | Maximum call count, batch, and budget testing |
-| `QD-ST-3.5` Output Structure Matching | AS-03, AS-09 | D1, Integrity, Auditability | Tool return structure, downstream parsing, citation, or format testing |
-| `QD-ST-3.6` Permission Scope Matching | AS-04, AS-05 | D2, D3 | Skill→Tool actual side effects, read/write/delete, and confirmation testing |
-| `QD-ST-3.7` Error Handling Coverage | AS-07, AS-09 | D1, D2, Availability | Tool error classification, degradation, stop, retry, and human takeover testing |
-| `QD-CYC-1.1–1.2` Circular Invocation | AS-06 | Availability | Loop termination, cross-artifact and multi-agent circular call, and resource exhaustion testing |
+| QD Rule | Name | Applicability | Primary Attack Surface | Potential Impact | Mapping Strength | Recommended Validation |
+| --- | --- | --- | --- | --- | --- | --- |
+
+**QD-PS · Prompt→Skill (7 items)**
+
+| QD Rule | Name | Applicability | Primary Attack Surface | Potential Impact | Mapping Strength | Recommended Validation |
+| --- | --- | --- | --- | --- | --- | --- |
+| `QD-PS-1.1` | Skill Authorization Consistency | AC-L1~L3 | AS-04, AS-09 | D2, D3 | Strong | Prompt→Skill unauthorized invocation, name confusion, and capability expansion testing |
+| `QD-PS-1.2` | Trigger Condition Consistency | AC-L2/L3 | AS-01, AS-05 | D2, D3 | Medium | Trigger, non-trigger, adjacent intent, and mixed intent testing |
+| `QD-PS-1.3` | Permission Boundary Consistency | AC-L1~L3 | AS-04, AS-09 | D2, D3 | Strong | Prompt→Skill permission boundaries, unauthorized access, and least privilege testing |
+| `QD-PS-1.4` | Resource Access Consistency | AC-L2/L3 | AS-03, AS-04 | D1, D2, D3 | Medium | Prompt→Skill resource sources, cross-tenant, and data leakage testing |
+| `QD-PS-1.5` | Failure Handling Consistency | AC-L3 | AS-07, AS-09 | D2, Availability | Medium | End-to-end failure, recovery, and exception path testing |
+| `QD-PS-1.6` | Output Constraint Consistency | AC-L3 | AS-03, AS-09 | D1, D2, Auditability | Medium | Output format, data leakage, and downstream parsing testing |
+| `QD-PS-1.7` | Orchestration Order and Prerequisite Consistency | AC-L2/L3 | AS-05, AS-09 | D2, Availability | Medium | Step order, prerequisites, missing steps, failure fallback testing |
+
+**QD-PT · Prompt→Tool (7 items)**
+
+| QD Rule | Name | Applicability | Primary Attack Surface | Potential Impact | Mapping Strength | Recommended Validation |
+| --- | --- | --- | --- | --- | --- | --- |
+| `QD-PT-2.1` | Tool Existence | AC-L1~L3 | AS-05, AS-09 | D2, Availability | Strong | Prompt→Tool name, existence, and call path reachability testing |
+| `QD-PT-2.2` | Invocation Specification Consistency | AC-L1~L3 | AS-02, AS-09 | D2, Availability | Strong | Prompt→Tool invocation specification, parameter, and call order consistency testing |
+| `QD-PT-2.3` | Parameter Constraint Consistency | AC-L2/L3 | AS-02, AS-09 | D2, Availability | Medium | Prompt→Tool parameter constraints, Schema validation, and compatibility testing |
+| `QD-PT-2.4` | Permission Granularity Consistency | AC-L1~L3 | AS-04, AS-05 | D2, D3 | Strong | High-risk Tool invocation, confirmation, permission, and side effect testing |
+| `QD-PT-2.5` | Key Error Handling Coverage | AC-L3 | AS-07 | D2, Availability | Medium | Rate limiting, timeout, permission errors, and error classification handling testing |
+| `QD-PT-2.6` | Business-Level Invocation Frequency / Batch Expectation Declaration | AC-L3 | AS-06 | Availability | Medium | Invocation frequency, batch, call budget, and duplicate execution testing |
+| `QD-PT-2.7` | Parameter Semantics and Unit Consistency | AC-L2/L3 | AS-02, AS-09 | D2, Availability | Medium | Unit, currency, precision, time zone, and semantic convention end-to-end testing |
+
+**QD-ST · Skill→Tool (7 items)**
+
+| QD Rule | Name | Applicability | Primary Attack Surface | Potential Impact | Mapping Strength | Recommended Validation |
+| --- | --- | --- | --- | --- | --- | --- |
+| `QD-ST-3.1` | Tool Existence | AC-L1~L3 | AS-05, AS-09 | D2, Availability | Strong | Skill→Tool name, existence, and call path reachability testing |
+| `QD-ST-3.2` | Input Constraint Consistency | AC-L2/L3 | AS-02, AS-09 | D2, Availability | Medium | Skill→Tool input constraints, Schema validation, and boundary testing |
+| `QD-ST-3.3` | Required Parameter Preparation | AC-L2/L3 | AS-02, AS-09 | D2, Availability | Medium | Skill→Tool parameter sources, required fields, and Schema validation testing |
+| `QD-ST-3.4` | Business-Level Invocation Frequency / Batch Expectation Declaration | AC-L3 | AS-06 | Availability | Medium | Maximum call count, batch, and budget testing |
+| `QD-ST-3.5` | Output Structure Match | AC-L3 | AS-03, AS-09 | D1, D2, Auditability | Medium | Tool return structure, downstream parsing, citation, or format testing |
+| `QD-ST-3.6` | Permission Scope Match | AC-L1~L3 | AS-04, AS-05 | D2, D3 | Strong | Skill→Tool actual side effects, read/write/delete, and confirmation testing |
+| `QD-ST-3.7` | Key Error Handling Coverage | AC-L3 | AS-07, AS-09 | D1, D2, Availability | Medium | Tool error classification, degradation, stop, retry, and human takeover testing |
+
+**QD-CYC · Circular Invocation (3 items)**
+
+| QD Rule | Name | Applicability | Primary Attack Surface | Potential Impact | Mapping Strength | Recommended Validation |
+| --- | --- | --- | --- | --- | --- | --- |
+| `QD-CYC-1.1` | Cross-Artifact Circular Invocation | AC-L2/L3 | AS-06 | Availability | Medium | Loop termination, cross-artifact circular invocation, and resource exhaustion testing |
+| `QD-CYC-1.2` | Multi-Agent Circular Invocation | AC-L3 | AS-06 | Availability | Medium | Multi-Agent circular invocation, loop termination, and resource exhaustion testing |
+| `QD-CYC-1.3` | Skill-to-Skill Handoff Loop | AC-L2/L3 | AS-06 | Availability | Medium | Handoff termination conditions, maximum rounds, and downstream allowlist closed-loop testing |
+
+**QD-SS · Skill↔Skill (2 items)**
+
+| QD Rule | Name | Applicability | Primary Attack Surface | Potential Impact | Mapping Strength | Recommended Validation |
+| --- | --- | --- | --- | --- | --- | --- |
+| `QD-SS-4.1` | Trigger Condition Conflict | AC-L2/L3 | AS-01, AS-05 | D2, D3 | Medium | Overlapping triggers, adjacent/negative intent, and Skill priority testing |
+| `QD-SS-4.2` | Name Uniqueness / Near-Duplicate Misleading | AC-L2/L3 | AS-05, AS-08 | D2, D3 | Medium | Misselection caused by identical names, spelling/singular-plural/synonym similarity testing |
+
+**QD-TT · Tool↔Tool (3 items)**
+
+| QD Rule | Name | Applicability | Primary Attack Surface | Potential Impact | Mapping Strength | Recommended Validation |
+| --- | --- | --- | --- | --- | --- | --- |
+| `QD-TT-5.1` | Cross-Tool Data Flow | AC-L2/L3 | AS-03, AS-05 | D1, D2, D3 | Strong | Cross-Tool data flow, data exfiltration, and end-to-end consistency testing |
+| `QD-TT-5.2` | Multi-Tool Semantic Competition | AC-L2/L3 | AS-05, AS-08 | D2, D3 | Strong | Misselection caused by similar Tools, near-synonym requests, and semantic competition testing |
+| `QD-TT-5.3` | Cross-Tool Data Structure Bridging | AC-L3 | AS-03, AS-09 | D2, Availability | Medium | Cross-Tool data structure bridging, downstream parsing, and Schema consistency testing |
+
+> **Notes**:
+> - QD-PS-1.6 and QD-ST-3.5 are same-root (output constraint/structure consistency); the deduplication primary is QD-ST-3.5.
+> - QD-TT-5.1 / QD-TT-5.2 carry over from the Tool subset's QD-T-3.5 (Cross-Tool Data Flow) / QD-T-4.3 (Multi-Tool Semantic Competition); the original namespace no longer maps them repeatedly.
 
 ## A.5 Permission Defect Mapping
 
@@ -1213,18 +1335,22 @@ For defect chains that have been dynamically validated as exploitable, closure m
 > The Permission subset executes after other subsets and is subject to Gate-0 preconditions; when Gate-0 is not met,
 > no QD-PM defects are produced, and this table does not apply.
 
-| QD Category | Primary Attack Surface | Potential Impact | Recommended Validation |
-| --- | --- | --- | --- |
-| `QD-PM-1.x` Permission Alignment (including 1.1 unexplainable permissions, 1.3 insufficient permissions) | AS-04 | D2, D3, Availability | Out-of-role resource access, aggregated unauthorized access, task failure or workaround due to insufficient permissions testing |
-| `QD-PM-2.x` Permission Scope (resource / data / environment / condition four axes, including 2.4 environment boundary not declared) | AS-04, AS-03 | D1, D2, D3 | Out-of-scope resource access, cross-tenant data reading, test/production environment confusion, out-of-condition triggering testing |
-| `QD-PM-3.x` Permission Granularity (including 3.3 role substitution, 3.4 high-risk not separated) | AS-04, AS-05 | D2, D3 | Single role completing "initiation + approval", high-risk and routine operations executed with same authority, role impersonation testing |
-| `QD-PM-4.x` Permission Propagation (including 4.2 downstream exceeds upstream, 4.4 delegation escalation, 4.8 external permissions, INHERITED status) | AS-04, AS-07, AS-08 | D1, D2, D3 | Call chain permission inheritance, downstream Skill/Tool effective permissions vs upstream, delegation chain escalation, external/third-party permission source testing |
-| `QD-PM-5.x` Permission Boundary (including 5.4 isolation substitutes for permission, 5.7 exemption uncontrolled) | AS-04, AS-05 | D2, D3 | Exemption trigger conditions, exemption expiration, bypass after network/environment isolation substitutes for permission constraints testing |
-| `QD-PM-6.x` Permission Auditability (including 6.3 no human confirmation, 6.5 inventory not enumerable) | AS-05, AS-09 | D2, D3, Auditability | High-risk operation without direct confirmation, permission inventory not enumerable / not auditable, audit log missing testing |
+| QD Rule | Name | Applicability | Primary Attack Surface | Potential Impact | Mapping Strength | Recommended Validation |
+| --- | --- | --- | --- | --- | --- | --- |
+| `QD-PM-1.1~1.7` | Permission Alignment (responsibility proportionality; 1.7 is fixed P2) | AC-L1~L4 (1.6 aggregated capability is a conditional item, requiring a multi-permission combination form) | AS-04 | D2, D3, Availability | Strong | Out-of-role resource access, aggregated unauthorized access, and task failure or workaround due to insufficient permissions testing |
+| `QD-PM-2.1~2.8` | Permission Scope (resource/data/environment/condition four axes) | AC-L1~L4 (2.5/2.6/2.7 are conditional items requiring the corresponding forms) | AS-04, AS-03 | D1, D2, D3 | Strong | Out-of-scope resource access, cross-tenant data reading, test/production environment confusion, and out-of-condition triggering testing |
+| `QD-PM-3.1~3.6` | Permission Granularity (including 3.3 role substitution and 3.4 high-risk not separated, fixed P0) | AC-L1~L4 (3.4/3.5/3.6 are conditional items) | AS-04, AS-05 | D2, D3 | Strong | A single role completing "initiation + approval", high-risk and routine operations executed with the same authority, and role impersonation testing |
+| `QD-PM-4.1~4.8` | Permission Propagation (including 4.2 downstream exceeds upstream, 4.4 delegation escalation, 4.8 external permissions; also the INHERITED overlap marker) | AC-L1~L4 (4.3/4.4/4.5/4.6 delegation chain items are AC-L4 only; 4.7 is AC-L2+; 4.8 is a conditional item) | AS-04, AS-07, AS-08 | D1, D2, D3 | Strong | Call chain permission inheritance, downstream vs upstream, delegation chain escalation, and external permission source testing |
+| `QD-PM-5.1~5.7` | Permission Boundary (including 5.4 isolation substituting for fixed P0, 5.7 exemption uncontrolled) | AC-L1~L4 (5.4 applies unconditionally; 5.5/5.7 are conditional items requiring the corresponding forms) | AS-04, AS-05 | D2, D3 | Strong | Exemption trigger conditions, exemption expiration, and bypass after isolation substitutes for permission constraints testing |
+| `QD-PM-6.1~6.7` | Permission Auditability (including 6.3 no human confirmation fixed P0, 6.5 inventory not enumerable fixed P0, 6.7 fixed P1) | AC-L1~L4 (6.6 requires AC-L2+; 6.1/6.2/6.3/6.4/6.7 are conditional items requiring OR-L2+/L3 or regulated data) | AS-05, AS-09 | D2, D3, Auditability | Medium (the group contains 6.3/6.5 fixed P0; group-level strength does not represent grading) | High-risk operation direct reach without confirmation, permission inventory not enumerable / not reviewable, and audit log missing testing |
+
+> **Note**: QD-PM totals 43 items and is mapped here in 6 groups. The attack surfaces and impact types of group members use the group-level mapping as a common direction, but the recommended validation column of each group already lists the differentiated directions within the group; the group-level "mapping strength" indicates how strongly the group as a whole should be prioritized for validation and does not represent the severity level of member rules (see §1.3).
 
 ---
 
 ## Appendix B: Tool-Agent Failure Mode and Supplementary Test Mapping
+
+> **Family wildcard convention**: Family wildcard notations in Appendices B/C/D such as `QD-P-1.x`, `QD-P-2.3.x`, `QD-T-2.x`, `QD-T-4.x`, and `QD-S-4.x` refer only to the **currently effective** members of that family, excluding numbers that have been deleted (`QD-P-2.1.1`, `QD-P-1.4.2`, `QD-P-2.3.3`), deprecated (`QD-P-2.5.5`), merged (`QD-T-4.2`), or transferred (`QD-T-3.5`→`QD-TT-5.1`, `QD-T-4.3`→`QD-TT-5.2`). The complete list of effective members is defined by Appendix A.
 
 <a id="b1-qd-category-to-failure-mode-mapping"></a>
 ### B.1 QD Category to Failure Mode Mapping
@@ -1247,20 +1373,24 @@ For defect chains that have been dynamically validated as exploitable, closure m
 | Tool semantic competition defects | FM-03, FM-05 | Similar Tools, near-synonym requests, ambiguous tasks |
 | Tool Schema change defects | FM-04, FM-05, FM-06 | Historical call replay, old/new version compatibility |
 | Cross contract defects | FM-04, FM-05, FM-06, FM-08 | Prompt→Skill→Tool end-to-end call chain testing |
+| Inter-Skill trigger conflict and name similarity (`QD-SS`) | FM-02, FM-03, FM-07 | Overlapping triggers, adjacent/negative intent, and misselection by identical or similar names testing |
+| Cross-Tool data structure incompatibility (`QD-TT-5.3`) | FM-05, FM-06 | Type incompatibility, missing serialization/conversion step, and downstream parsing failure testing |
+| Skill-to-Skill handoff loop (`QD-CYC-1.3`) | FM-08, FM-10 | Handoff termination conditions, maximum rounds, and downstream allowlist closed-loop testing |
+| Permission proportionality defects (`QD-PM`) | FM-05, FM-09, FM-10 | Out-of-role unauthorized invocation, high-risk operations without confirmation, and task failure or workaround due to insufficient permissions testing |
 
 <a id="b2-failure-fact-reverse-diagnostic-quick-reference"></a>
 ### B.2 Failure Fact Reverse Diagnostic Quick Reference
 
 | Observed Failure | Priority Investigation Direction |
 |-----------------|--------------------------------|
-| Wrong Skill or Tool selected | `QD-S-3.1`, `QD-S-3.6`, `QD-T-4.1`, `QD-T-4.3`, `QD-P-2.4.3` |
-| Parameter missing, incorrect, or malformed format | `QD-P-2.2.x`, `QD-T-1.2`, `QD-T-2.x`, `QD-PT-2.3`, `QD-ST-3.3` |
-| Call order, dependency, or state passing errors | `QD-P-2.4.1/2.4.3`, `QD-PT-2.2`, `QD-ST-3.1–3.3` |
-| Downstream cannot consume output | `QD-P-2.3.x`, `QD-PS-1.6`, `QD-ST-3.5` |
+| Wrong Skill or Tool selected | `QD-S-3.1`, `QD-S-3.6`, `QD-T-4.1`, `QD-TT-5.2`, `QD-SS-4.1`, `QD-SS-4.2`, `QD-P-2.4.3` |
+| Parameter missing, incorrect, or malformed format | `QD-P-2.2.x`, `QD-T-1.2`, `QD-T-2.x`, `QD-PT-2.3`, `QD-PT-2.7`, `QD-ST-3.3` |
+| Call order, dependency, or state passing errors | `QD-P-2.4.1/2.4.3`, `QD-PS-1.7`, `QD-PT-2.2`, `QD-ST-3.1–3.3` |
+| Downstream cannot consume output | `QD-P-2.3.x`, `QD-PS-1.6`, `QD-ST-3.5`, `QD-TT-5.3` |
 | Repeated calls or direct interruption after exception | `QD-P-2.6.x`, `QD-S-4.x`, `QD-PT-2.5`, `QD-ST-3.7` |
 | High-risk action missing confirmation | `QD-P-2.5.3`, `QD-S-5.2`, `QD-T-3.1`, `QD-PT-2.4`, `QD-ST-3.6` |
-| Inconsistent results for same input | `QD-P-1.1.x`, `QD-P-1.6.x`, `QD-P-2.3.3`, `QD-S-3.5` |
-| Call loops, abnormal cost, or timeout | `QD-P-2.5.1/2.5.5`, `QD-P-2.6.3`, `QD-S-1.3`, `QD-S-2.2`, `QD-ST-3.4` |
+| Inconsistent results for same input | `QD-P-1.1.x`, `QD-P-1.6.x`, `QD-P-2.3.1/2.3.2`, `QD-S-3.5` |
+| Call loops, abnormal cost, or timeout | `QD-P-2.5.1`, `QD-P-2.6.3`, `QD-S-1.3`, `QD-S-2.2`, `QD-CYC-1.3`, `QD-ST-3.4` |
 
 ---
 
@@ -1284,6 +1414,10 @@ For defect chains that have been dynamically validated as exploitable, closure m
 | Skill permission and environment boundary defects | Boundary Recognition, Safety Response, Traceability | Sensitive data, user identity, production data, external resources |
 | Tool parameter and semantic defects | Correctness, Relevance, Traceability, Format Compliance | Retrieval parameters, source return, citation parsing, similar Tools |
 | Cross contract defects | Correctness, Completeness, Consistency, Traceability, Safety Response | End-to-end retrieval, citation, error handling, permission, and output contracts |
+| Inter-Skill trigger conflict and name similarity (`QD-SS`) | Relevance, Correctness, Boundary Recognition | Overlapping triggers, misselection by similar names, and direct answering where clarification is due |
+| Cross-Tool data structure incompatibility (`QD-TT-5.3`) | Correctness, Traceability, Format Compliance | Retrieval result field type mismatch, missing serialization, and citation parsing failure |
+| Skill-to-Skill handoff loop (`QD-CYC-1.3`) | Timeliness, Coherence | Handoff without termination, repeated routing, and response timeout |
+| Permission proportionality defects (`QD-PM`) | Boundary Recognition, Safety Response, Traceability | Unauthorized retrieval, cross-tenant data access, and direct answering where refusal is due |
 
 <a id="c2-rag-failure-reverse-diagnostic-quick-reference"></a>
 ### C.2 RAG Failure Reverse Diagnostic Quick Reference
@@ -1295,7 +1429,7 @@ For defect chains that have been dynamically validated as exploitable, closure m
 | Off-topic response or missing multiple requests | `QD-P-1.2.x`, `QD-S-3.1/3.4`, `QD-T-4.x` | Intent recognition implementation, context construction, model capability |
 | No citation or citation does not support conclusion | `QD-P-2.3.x`, `QD-P-2.4.x`, `QD-ST-3.5` | Retrieval metadata, citation chain implementation, knowledge base structure |
 | Using outdated rules | `QD-P-1.6.7`, `QD-S-1.5`, `QD-T-5.x` | Knowledge snapshot, document lifecycle, index updates |
-| Should have refused, clarified, or handed off but answered directly | `QD-P-2.5.2/2.5.3`, `QD-S-3.2`, `QD-S-5.x`, `QD-PS-1.3` | IAM, runtime Guardrail, identity context |
+| Should have refused, clarified, or handed off but answered directly | `QD-P-2.5.2/2.5.3`, `QD-S-3.2`, `QD-S-5.x`, `QD-PS-1.3`, `QD-PM-5.x` | IAM, runtime Guardrail, identity context |
 | Safety response correct but missing explanation, path, or alternative | `QD-P-2.3.x`, `QD-P-2.7.x`, `QD-S-4.x` | Business rules, response templates, evaluation criteria |
 | Multi-turn self-contradiction | `QD-P-1.1.x`, `QD-P-1.6.x`, `QD-P-2.5.4`, `QD-S-3.5` | Session memory, context window, model or configuration changes |
 
@@ -1311,19 +1445,21 @@ For defect chains that have been dynamically validated as exploitable, closure m
 
 | ID | Defect Chain | Candidate Risk Result | Recommended Validation |
 |----|--------------|----------------------|------------------------|
-| `SC-01` | `QD-P-2.5.2` Security Boundary Constraint Missing + `QD-S-3.2` Non-Activation Condition Missing + `QD-T-3.2` Raw Input Passthrough | Indirect Prompt Injection inducing unauthorized Tool calls | Untrusted document/web content injection, encoding variants, end-to-end Tool call testing |
-| `SC-02` | `QD-P-2.5.3` Permission Control Boundary Missing + `QD-S-5.1` Read/Write/Delete Permissions Not Distinguished + `QD-T-3.1` Write Operation Not Identified | Users inducing write, delete, or change with low-risk requests | Read request to write/delete operations, implicit confirmation, rollback, and audit testing |
-| `SC-03` | `QD-S-5.2` High-Risk Confirmation Missing + `QD-T-3.3` Batch Operation Unrestricted + `QD-T-4.2` Side Effect Not Declared | Batch deletion, batch exfiltration, or batch updates | Maximum batch, duplicate submission, interruption recovery, confirmation bypass testing |
-| `SC-04` | `QD-S-1.5` Data Source Boundary Missing + `QD-T-3.5` Cross-Tool Data Flow Risk + `QD-P-2.3.4` Security and Privacy Filter Missing | Cross-source aggregation of sensitive data to external Tool exfiltration | Tainted data flow, cross-tenant, external recipients, and anonymization testing |
-| `SC-05` | `QD-S-5.3` Environment Boundary Not Declared + `QD-S-5.4` Chained Call Permissions Not Declared + `QD-ST-3.6` Permission Scope Matching Defect | Test or low-privilege Skill indirectly operating production resources | Environment isolation, call chain permission inheritance, production operation simulation testing |
-| `SC-06` | `QD-P-2.5.1` Termination Constraint Missing + `QD-P-2.5.5` Resource Call Frequency Limit Missing + `QD-S-2.2` No Termination Condition Execution | Infinite loop, call storm, cost or resource exhaustion | Maximum rounds, timeout, 429, budget exhaustion, and loop termination testing |
-| `SC-07` | `QD-P-2.6.3` Unreasonable Retry Mechanism + `QD-S-4.1` Failure Behavior Not Defined + `QD-T-4.2` Side Effect Not Declared | Failure retry leading to duplicate payment, creation, or exfiltration | Idempotency, network interruption, partial success, duplicate request testing |
-| `SC-08` | `QD-P-1.1.3` Example Contradicts Rules + `QD-P-2.5.4` Constraint Priority Not Defined + `QD-T-4.3` Multi-Tool Semantic Competition | Examples inducing model to bypass rules and select the wrong Tool | Example-driven, multi-rule conflict, similar Tool selection testing |
-| `SC-09` | `QD-T-1.4` `additionalProperties` Not Controlled + `QD-T-3.4` Internal Parameter Exposure + `QD-PT-2.4` Permission Granularity Consistency Defect | Forging tenant, role, or internal control fields to achieve privilege escalation | Additional fields, reserved fields, tenant ID, admin flag tampering testing |
-| `SC-10` | `QD-P-2.2.1` Input Source Not Declared + `QD-S-3.4` Task Scope Not Defined + `QD-T-3.5` Cross-Tool Data Flow Risk | Untrusted content changing task goals and guiding data exfiltration | Indirect injection, goal hijacking, and data exfiltration Tool chain testing |
-| `SC-11` | `QD-PM-4.2` Downstream Exceeds Upstream + `QD-S-5.4` Chained Call Permissions Not Declared + `QD-ST-3.6` Permission Scope Matching Defect | Low-permission entry Skill indirectly obtains downstream high-permission Tool effective authority through call chain (ASI03 direction: un-scoped privilege inheritance) | Per-hop effective permission comparison in call chain, downstream Tool executing with upstream identity, INHERITED permission reclamation testing |
-| `SC-12` | `QD-PM-4.4` Delegation Escalation + `QD-S-3.4` Task Scope Not Defined + `QD-P-2.5.2` Security Boundary Constraint Missing | Goal hijacking obtains permissions beyond the initiator through delegation/sub-Agent and expands laterally (ASI01 → ASI03 direction) | Indirect injection triggering delegation, delegation chain permission upper bound, sub-task permission vs parent task comparison testing |
-| `SC-13` | `QD-PM-3.4` High-Risk Not Separated + `QD-PM-6.3` No Human Confirmation + `QD-T-4.2` Side Effect Not Declared | High-risk write/delete/exfiltration operations executed directly by the same permission principal without confirmation (ASI02 Tool Misuse and Exploitation direction) | High-risk operation path without direct confirmation, same role for initiation and approval, irreversible operation simulation testing |
+| `SC-01` | `QD-P-2.5.2` Missing Security Boundary Constraints + `QD-S-3.2` Missing Deactivation Conditions + `QD-T-3.2` Untrusted Input Entering an Executable Context | Indirect Prompt Injection inducing unauthorized Tool calls | Untrusted document/web content injection, encoding variants, end-to-end Tool call testing |
+| `SC-02` | `QD-P-2.5.3` Missing Permission Control Boundaries + `QD-S-5.1` Read/Write/Delete Permissions Not Distinguished + `QD-T-3.1` State Change and Material Side Effect Declaration | Users inducing write, delete, or change with low-risk requests | Read request to write/delete operations, implicit confirmation, rollback, and audit testing |
+| `SC-03` | `QD-S-5.2` Missing High-Risk Operation Confirmation Mechanism + `QD-T-3.3` Batch/Range Write Operation Without Cap + `QD-T-3.1` State Change and Material Side Effect Declaration | Batch deletion, batch exfiltration, or batch updates | Maximum batch, duplicate submission, interruption recovery, confirmation bypass testing |
+| `SC-04` | `QD-S-1.5` Data Source Boundary Missing + `QD-TT-5.1` Cross-Tool Data Flow + `QD-P-2.3.4` Missing Security/Privacy Filtering | Cross-source aggregation of sensitive data to external Tool exfiltration | Tainted data flow, cross-tenant, external recipients, and anonymization testing |
+| `SC-05` | `QD-S-5.3` Undeclared Environment Boundaries + `QD-S-5.4` Undeclared Chained Invocation Permissions + `QD-ST-3.6` Permission Scope Matching Defect | Test or low-privilege Skill indirectly operating production resources | Environment isolation, call chain permission inheritance, production operation simulation testing |
+| `SC-06` | `QD-P-2.5.1` Missing Termination Constraints + `QD-S-1.3` Execution Resource Boundary Missing + `QD-S-2.2` Unterminated Execution Declaration | Infinite loop, call storm, cost or resource exhaustion | Maximum rounds, timeout, 429, budget exhaustion, and loop termination testing |
+| `SC-07` | `QD-P-2.6.3` Unreasonable Retry Mechanism + `QD-S-4.1` Undefined Failure Behavior + `QD-T-3.1` State Change and Material Side Effect Declaration | Failure retry leading to duplicate payment, creation, or exfiltration | Idempotency, network interruption, partial success, duplicate request testing |
+| `SC-08` | `QD-P-1.1.3` Example-Rule Contradiction + `QD-P-2.5.4` Undefined Constraint Priority + `QD-TT-5.2` Multi-Tool Semantic Competition | Examples inducing model to bypass rules and select the wrong Tool | Example-driven, multi-rule conflict, similar Tool selection testing |
+| `SC-09` | `QD-T-1.4` Inappropriate `additionalProperties` Policy + `QD-T-3.4` Authorization Context Parameter Exposure + `QD-PT-2.4` Permission Granularity Consistency Defect | Forging tenant, role, or internal control fields to achieve privilege escalation | Additional fields, reserved fields, tenant ID, admin flag tampering testing |
+| `SC-10` | `QD-P-2.2.1` Undeclared Input Source + `QD-S-3.4` Undefined Task Scope + `QD-TT-5.1` Cross-Tool Data Flow | Untrusted content changing task goals and guiding data exfiltration | Indirect injection, goal hijacking, and data exfiltration Tool chain testing |
+| `SC-11` | `QD-PM-4.2` Downstream Exceeds Upstream + `QD-S-5.4` Undeclared Chained Invocation Permissions + `QD-ST-3.6` Permission Scope Matching Defect | Low-permission entry Skill indirectly obtains downstream high-permission Tool effective authority through call chain (ASI03 direction: un-scoped privilege inheritance) | Per-hop effective permission comparison in call chain, downstream Tool executing with upstream identity, INHERITED permission reclamation testing |
+| `SC-12` | `QD-PM-4.4` Delegation Escalation + `QD-S-3.4` Undefined Task Scope + `QD-P-2.5.2` Missing Security Boundary Constraints | Goal hijacking obtains permissions beyond the initiator through delegation/sub-Agent and expands laterally (ASI01 → ASI03 direction) | Indirect injection triggering delegation, delegation chain permission upper bound, sub-task permission vs parent task comparison testing |
+| `SC-13` | `QD-PM-3.4` High-Risk Not Separated + `QD-PM-6.3` No Human Confirmation + `QD-T-3.1` State Change and Material Side Effect Declaration | High-risk write/delete/exfiltration operations executed directly by the same permission principal without confirmation (ASI02 Tool Misuse and Exploitation direction) | High-risk operation path without direct confirmation, same role for initiation and approval, irreversible operation simulation testing |
+| `SC-14` | `QD-SS-4.1` Trigger Condition Conflict + `QD-SS-4.2` Name Uniqueness / Near-Duplicate Misleading + `QD-S-5.2` Missing High-Risk Operation Confirmation Mechanism | A user request is routed to a high-risk Skill with a similar name or overlapping trigger, and the confirmation step is missing | End-to-end testing of overlapping triggers, similar names, and direct reach of high-risk operations where clarification is due |
+| `SC-15` | `QD-TT-5.3` Cross-Tool Data Structure Bridging + `QD-ST-3.5` Output Structure Match + `QD-T-1.3` enum–type Conflict | Upstream Tool output and downstream Tool input types are incompatible, causing silent truncation, field loss, or erroneous conversion | End-to-end type contract, serialization/conversion steps, abnormal returns, and data integrity testing |
 
 > Relationship with existing `SC-02`, `SC-05`, `SC-09`: `SC-11` is a permission-side deepening of `SC-05` (`SC-05` focuses on environment boundaries, `SC-11` focuses on effective permission amplification along the call chain); do not merge, retain independent numbering.
 
@@ -1332,10 +1468,10 @@ For defect chains that have been dynamically validated as exploitable, closure m
 
 | ID | Defect Chain | Candidate Quality Failure | Recommended Supplementary Tests |
 |----|--------------|---------------------------|--------------------------------|
-| `QC-TA-01` | `QD-S-3.1` Trigger Condition Ambiguous + `QD-T-4.1` Insufficient Description Quality + `QD-T-4.3` Multi-Tool Semantic Competition | Skill or Tool misselection, task failure | Adjacent intents, near-synonym tasks, negative intents, mixed intents |
+| `QC-TA-01` | `QD-S-3.1` Vague Trigger Conditions + `QD-T-4.1` Insufficient description Quality + `QD-TT-5.2` Multi-Tool Semantic Competition + `QD-SS-4.1/4.2` Trigger Conflict and Name Similarity | Skill or Tool misselection, task failure | Adjacent intents, near-synonym tasks, negative intents, mixed intents, similar names |
 | `QC-TA-02` | `QD-P-2.2.x` Input Definition Defects + `QD-T-1.2` `required` Inconsistency + `QD-T-2.x` Parameter Constraint Insufficient | Parameter missing, type error, or Schema validation failure | Empty input, missing fields, format variants, boundary values |
-| `QC-TA-03` | `QD-P-2.4.3` Tool Call Specification Missing + `QD-PT-2.2` Call Specification Consistency Defect + `QD-ST-3.2` Input Constraint Consistency Defect | Call order errors or missing dependency data | Multi-Tool order dependencies, failure rollback, and state passing |
-| `QC-TA-04` | `QD-P-2.3.1` Output Format Not Defined + `QD-PS-1.6` Output Constraint Consistency Defect + `QD-ST-3.5` Output Structure Matching Defect | Results not consumable by downstream systems | Structured output, parsing validation, and field completeness |
+| `QC-TA-03` | `QD-P-2.4.3` Incorrect Tool Invocation Parameters or Order + `QD-PT-2.2` Invocation Specification Consistency Defect + `QD-ST-3.2` Input Constraint Consistency Defect | Call order errors or missing dependency data | Multi-Tool order dependencies, failure rollback, and state passing |
+| `QC-TA-04` | `QD-P-2.3.1` Undefined Output Format + `QD-PS-1.6` Output Constraint Consistency Defect + `QD-ST-3.5` Output Structure Matching Defect + `QD-TT-5.3` Cross-Tool Data Structure Bridging | Results not consumable by downstream systems | Structured output, parsing validation and field completeness, cross-Tool type conversion |
 | `QC-TA-05` | `QD-P-2.6.x` Exception Handling Defects + `QD-S-4.x` Failure Expansion Defects + `QD-ST-3.7` Error Handling Coverage Defect | Infinite retry after exception, incorrect fallback calls, or task interruption | Timeout, 429, permission denial, and external dependency failure |
 | `QC-TA-06` | `QD-S-2.1` Unlimited Quantity + `QD-T-2.4` Array No Length Constraint + `QD-T-3.3` Batch Operation Unrestricted | Large batch tasks timing out, partially executing, or failing | Maximum batch, pagination, cancellation, and checkpoint recovery |
 | `QC-TA-07` | `QD-P-1.1.x` Logic Conflict + `QD-P-2.5.4` Constraint Priority Not Defined + `QD-S-3.5` Default Behavior Not Declared | Unstable execution path for same input | Repeated runs, multi-constraint conflicts, and missing information testing |
@@ -1362,18 +1498,18 @@ For defect chains that have been dynamically validated as exploitable, closure m
 
 ```yaml
 mapping_id: MAP-QD-T-3.2-v1
-mapping_version: v1.0
+mapping_version: v1.0   # mapping record template version, independent of this document's specification version
 status: active
 
 source:
   defect_id: QD-T-3.2
-  defect_name: Raw Input Passthrough
+  defect_name: Untrusted Input Entering an Executable Context
   artifact_type: Tool
   source_standard: Inspect Tool
   source_standard_version: v1.0
 
 applicability:
-  agent_levels: [L2, L3]
+  or_levels: [OR-L2, OR-L3]
   required_conditions:
     - User input, external documents, or other untrusted context can influence this parameter
     - Parameter will be interpreted, executed, or further forwarded by the backend
@@ -1383,8 +1519,8 @@ applicability:
 security_associations:
   - attack_surface_id: AS-02
     attack_surface_name: Input and Parameter Injection
-    potential_impacts: [confidentiality, integrity, authorization]
-    mapping_strength: strong
+    potential_impacts: [D1, D2, D3]
+    mapping_strength: strong   # values correspond to §1.3: strong / medium / conditional / not_applicable
     validation_recommendations:
       risk_explicit:
         - Check for explicit dangerous parameter descriptions, dangerous examples, or bypass expressions
@@ -1457,7 +1593,7 @@ status: open
 members:
   - defect_id: QD-S-1.5
     role: Data source boundary missing
-  - defect_id: QD-T-3.5
+  - defect_id: QD-TT-5.1
     role: Cross-Tool data flow risk
   - defect_id: QD-P-2.3.4
     role: Security and privacy filter missing
@@ -1499,18 +1635,18 @@ required_regression:
 {
   "finding_id": "F-20260719-00128",
   "defect": {
-    "id": "QD-S-5.2",
-    "name": "High-Risk Operation Confirmation Mechanism Missing",
-    "severity": "P0",
-    "artifact": "skill:customer-refund"
-    "agent_level": "L3"
+    "rule_id": "QD-S-5.2",
+    "name": "Missing High-Risk Operation Confirmation Mechanism",
+    "severity": "Inspect·P0",
+    "artifact": "skill:customer-refund",
+    "agent_level": "AC-L3"
   },
   "impact_mapping": {
     "status": "mapped",
     "security": [
       {
         "attack_surface": "AS-05",
-        "potential_impacts": ["integrity", "authorization"],
+        "potential_impacts": ["D2", "D3"],
         "strength": "strong",
         "statement": "May lead to high-risk operations such as refunds, deletions, or exfiltration executed without confirmation."
       }
@@ -1564,13 +1700,15 @@ required_regression:
 <a id="f2-relationship-with-cia--authorization-model"></a>
 ### F.2 Relationship with CIA / Authorization Model
 
-| SanityOps Security Consequence | Common Security Model Correspondence | Description |
-|-------------------------------|--------------------------------------|-------------|
-| Confidentiality | CIA: Confidentiality | Unauthorized reading, leakage, prompts, or sensitive data exfiltration |
-| Integrity | CIA: Integrity | Unauthorized writing, deletion, payment, configuration, or business data modification |
-| Authorization Risk | Authorization / Access Control | Privilege escalation, identity confusion, cross-tenant, erroneous delegation |
-| Availability | CIA: Availability | Loops, resource exhaustion, uncontrolled batch operations, service degradation |
-| Audit and Traceability | Accountability / Non-repudiation | Unable to associate sources, parameters, evidence, call chains, or responsible parties |
+| SanityOps Security Consequence | Code in This Specification | Common Security Model Correspondence | Description |
+|-------------------------------|---------------------------|--------------------------------------|-------------|
+| Confidentiality | D1 | CIA: Confidentiality | Unauthorized reading, leakage, prompts, or sensitive data exfiltration |
+| Integrity | D2 | CIA: Integrity | Unauthorized writing, deletion, payment, configuration, or business data modification |
+| Authorization Risk | D3 | Authorization / Access Control | Privilege escalation, identity confusion, cross-tenant, erroneous delegation |
+| Availability | — | CIA: Availability | Loops, resource exhaustion, uncontrolled batch operations, service degradation |
+| Audit and Traceability | — | Accountability / Non-repudiation | Unable to associate sources, parameters, evidence, call chains, or responsible parties |
+
+> Availability and auditability are extended impact dimensions of this specification and do not occupy D numbers; D1/D2/D3 are impact type labels defined by Risk Explicit, and this specification only references their classification without participating in grading.
 
 <a id="f3-relationship-with-owasp-llm--agentic-risks"></a>
 ### F.3 Relationship with OWASP LLM / Agentic Risks
@@ -1579,15 +1717,15 @@ This specification can reference OWASP risk language, but does not use OWASP num
 
 | SanityOps Attack Surface | Reference OWASP Risk Directions | Typical SanityOps Defects |
 |-------------------------|--------------------------------|---------------------------|
-| AS-01 | Prompt Injection, System Prompt Leakage | `QD-P-2.5.2`, `QD-P-2.2.1`, `QD-S-3.4` |
-| AS-02 | Improper Input Handling, Injection | `QD-T-1.4`, `QD-T-2.x`, `QD-T-3.2` |
-| AS-03 | Sensitive Information Disclosure, Improper Output Handling | `QD-P-2.3.4`, `QD-T-3.5`, `QD-PM-2.x` |
-| AS-04 | Excessive Agency, Excessive Permissions | `QD-P-2.5.3`, `QD-S-5.x`, `QD-ST-3.6`, `QD-PM-1.x`, `QD-PM-2.x`, `QD-PM-3.x`, `QD-PM-4.x`, `QD-PM-5.x` |
-| AS-05 | Tool Misuse, Unsafe Action Execution | `QD-T-3.1`, `QD-T-4.2`, `QD-T-4.3`, `QD-PM-3.4`, `QD-PM-5.x`, `QD-PM-6.3` |
-| AS-06 | Unbounded Consumption, Denial of Service | `QD-P-2.5.1`, `QD-S-2.x`, `QD-T-3.3`, `QD-CYC-1.1`, `QD-CYC-1.2` |
+| AS-01 | Prompt Injection, System Prompt Leakage | `QD-P-2.5.2`, `QD-P-2.5.6`, `QD-P-2.2.1`, `QD-S-3.4` |
+| AS-02 | Improper Input Handling, Injection | `QD-T-1.4`, `QD-T-2.x`, `QD-T-3.2`, `QD-T-3.7`, `QD-P-2.2.2` |
+| AS-03 | Sensitive Information Disclosure, Improper Output Handling | `QD-P-2.3.4`, `QD-TT-5.1`, `QD-PM-2.x` |
+| AS-04 | Excessive Agency, Excessive Permissions | `QD-P-2.5.3`, `QD-S-5.x`, `QD-ST-3.6`, `QD-T-3.7`, `QD-PM-1.x`, `QD-PM-2.x`, `QD-PM-3.x`, `QD-PM-4.x`, `QD-PM-5.x` |
+| AS-05 | Tool Misuse, Unsafe Action Execution | `QD-T-3.1`, `QD-T-3.7`, `QD-TT-5.2`, `QD-SS-4.1`, `QD-PM-3.4`, `QD-PM-5.x`, `QD-PM-6.3` |
+| AS-06 | Unbounded Consumption, Denial of Service | `QD-P-2.5.1`, `QD-S-2.x`, `QD-T-3.3`, `QD-CYC-1.1`, `QD-CYC-1.2`, `QD-CYC-1.3` |
 | AS-07 | Insecure Error Handling, Failure Escalation | `QD-P-2.6.x`, `QD-S-4.x`, `QD-ST-3.7`, `QD-PM-4.x` |
-| AS-08 | Supply Chain, Tool / Plugin Risk | `QD-T-4.3`, `QD-T-5.x`, `QD-PM-4.8` |
-| AS-09 | Agentic System Misconfiguration | `QD-PS`, `QD-PT`, `QD-ST`, `QD-PM-6.x` |
+| AS-08 | Supply Chain, Tool / Plugin Risk | `QD-TT-5.2`, `QD-TT-5.3`, `QD-SS-4.2`, `QD-T-5.x`, `QD-PM-4.8` |
+| AS-09 | Agentic System Misconfiguration | `QD-PS-1.x`, `QD-PT-2.x`, `QD-ST-3.x`, `QD-SS-4.x`, `QD-TT-5.x`, `QD-CYC-1.x`, `QD-PM-6.x` |
 
 **On the relationship between ASI03 and QD-PM**: OWASP 2026 treats ASI03 as the evolution of LLM06 Excessive Agency in agentic scenarios, one of its typical forms being "un-scoped privilege inheritance." This highly overlaps with `QD-PM-4.x` (permission propagation, downstream exceeds upstream, delegation escalation, INHERITED) in problem space, but the granularity differs: ASI03 is a risk result category, while `QD-PM-4.x` are statically locatable artifact defects. Relevance only states that "`QD-PM-4.x` is a common starting point toward ASI03," and does not claim that detecting `QD-PM-4.x` constitutes an ASI03 risk.
 
@@ -1600,10 +1738,18 @@ This specification can reference OWASP risk language, but does not use OWASP num
 
 ---
 
+## Version History
+
+| Version | Release Date | Key Changes |
+|---------|--------------|-------------|
+| v1.0 | 2026-10 | Initial release |
+
+---
+
 **The SanityOps Inspect Defect Impact and Linkage Mapping Specification v1.0 main text and appendices are now complete.**
 
 ---
 
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  September 2026
+v1.0  ·  October 2026

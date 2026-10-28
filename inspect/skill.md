@@ -11,20 +11,23 @@ description: "Inspect Skill specification: defect rules for reviewing Skill defi
 
 **Version**: v1.0
 
-**Release Date**: September 2026
+**Release Date**: October 2026
 
 **Maintained by**: Sanity AI Labs
 
 **License**: CC BY-SA 4.0
 
+**Depends on**: Core v1.0 (objects, Finding, `OR-L`, versioning and evidence)
+
 ---
 
 ## Table of Contents
 
-- [Foreword](#foreword)
+- [Foreword](#preface)
   - [0.1 Positioning and Scope](#01-positioning-and-scope)
   - [0.2 Terminology and Numbering System](#02-terminology-and-numbering-system)
   - [0.3 Version and Maintenance Information](#03-version-and-maintenance-information)
+  - [0.4 QD-S-0 Baseline Compliance Check](#04-qd-s-0-basic-compliance-gate)
 - [Part 1: Quality Defect Classification System Overview](#part-1-quality-defect-classification-system-overview)
   - [1.1 Five Defect Classification Framework](#11-five-defect-classification-framework)
 - [Part 2: QD-S-1 Resource Runaway (Boundary Absence)](#part-2-qd-s-1-resource-runaway-boundary-absence)
@@ -51,6 +54,8 @@ description: "Inspect Skill specification: defect rules for reviewing Skill defi
   - [7.1 Skill Risk Level Definitions](#71-skill-risk-level-definitions)
   - [7.2 Tiered Inspection Checklist](#72-tiered-inspection-checklist)
   - [7.3 Standard Inspection Process (6 Steps)](#73-standard-inspection-process-6-steps)
+  - [7.4 Inspection Item Judgment States (Five States)](#74-inspection-item-judgment-states)
+  - [7.5 Effective Constraints and Compensating Controls](#75-effective-constraints-and-compensating-controls)
 - [Part 8: Review Schema — Detailed Review Dimensions](#part-8-review-schema--detailed-review-dimensions)
   - [8.1 Six-Dimension Overview and Positioning](#81-six-dimension-overview-and-positioning)
   - [8.2 IDENTITY Dimension in Detail](#82-identity-dimension-in-detail)
@@ -61,9 +66,16 @@ description: "Inspect Skill specification: defect rules for reviewing Skill defi
   - [8.7 FAILURE Dimension in Detail](#87-failure-dimension-in-detail)
 - [Part 9: Usage Examples](#part-9-usage-examples)
   - [9.1 L1 Example: WeeklyReportWriter](#91-l1-example-weeklyreportwriter-personal-productivity-scenario)
-  - [9.2 L3 Example: DatabaseDiagnosticReporter](#92-l3-example-databasediagnosticreporter-enterprise-operations-scenario)
+  - [9.2 L2 Example: CustomerDataQuery](#92-l2-example-customerdataquery-enterprise-data-query-scenario)
+  - [9.3 L3 Example: DatabaseDiagnosticReporter](#93-l3-example-databasediagnosticreporter-enterprise-operations-scenario)
 - [Part 10: Relationship to Other Sub-Specifications](#part-10-relationship-to-other-sub-specifications)
-  - [10.1 Placeholder Note](#101-placeholder-note)
+  - [10.1 Relationship with Inspect Cross](#101-relationship-with-inspect-cross)
+  - [10.2 Relationship with Inspect Permission](#102-relationship-with-inspect-permission)
+  - [10.3 Relationship with Risk Explicit](#103-relationship-with-risk-explicit)
+  - [10.4 Relationship with Risk Implicit](#104-relationship-with-risk-implicit)
+  - [10.5 Relationship with Quality](#105-relationship-with-quality)
+  - [10.6 Relationship with Core and Relevance](#106-relationship-with-core-and-relevance)
+  - [10.7 Instruction Priority Declaration](#107-instruction-priority-declaration)
 - [Part 11: Quantitative Scoring Mechanism](#part-11-quantitative-scoring-mechanism)
   - [11.1 Scoring Principles](#111-scoring-principles)
   - [11.2 Calculation Steps](#112-calculation-steps)
@@ -71,13 +83,15 @@ description: "Inspect Skill specification: defect rules for reviewing Skill defi
   - [11.4 Defect Deduction Value Table](#114-defect-deduction-value-table)
   - [11.5 Scoring Examples](#115-scoring-examples)
   - [11.6 Multi-Defect Handling Rules](#116-multi-defect-handling-rules)
-- [Appendix A: QD-S Complete Numbering Index](#appendix-a-qd-s-complete-numbering-index)
-- [Appendix B: L1/L2/L3 Minimum Rule Sets](#appendix-b-l1l2l3-minimum-rule-sets)
+- [Part 12: New Check Items (Candidates)](#part-12-new-check-items-v1-1-candidates)
+- [Appendix A: QD-S Complete Numbering Index](#appendix-a-qd-s-index)
+- [Appendix B: OR-L1/OR-L2/OR-L3 Minimum Rule Sets](#appendix-b-l1l2l3-minimum-rule-sets)
 - [Appendix C: Glossary](#appendix-c-glossary)
-- [Part Summaries](#part-summaries)
+- [Part Summaries](#chapter-summaries)
 
 ---
 
+<a id="preface"></a>
 ## Foreword
 
 <a id="01-positioning-and-scope"></a>
@@ -92,6 +106,8 @@ This specification is designed to:
 - Identify quality defects unintentionally introduced by developers in Agent Skill definitions
 - Provide a unified inspection framework for Skill inspection, review, and governance
 - Provide explicit rule definitions for automated inspection tooling (the Inspect Skill inspection Agent)
+
+> Note: Defect determination is based on **observable artifact defects** (incomplete, ambiguous, unbounded, or inconsistent definitions). Whether the developer acted intentionally cannot be determined statically and is not a condition for finding a defect (see framework/core.md §5.1, Finding model).
 
 #### 0.1.2 What This Specification Is Not
 
@@ -118,9 +134,9 @@ SanityOps Framework
 │   ├─ Risk Explicit ← Explicit Logic Artifact risk detection
 │   └─ Risk Implicit ← Implicit Agent runtime vulnerability scanning
 │
-└─ Quality (Service Quality)
-    ├─ Quality RAG-Agent ← RAG-Agent service quality assessment
-    └─ Quality Tool-Agent ← Tool-Agent service quality assessment
+├─ Quality (Service Quality)
+│   ├─ Quality RAG-Agent ← RAG-Agent service quality assessment
+│   └─ Quality Tool-Agent ← Tool-Agent service quality assessment
 │
 └─ Relevance (Impact Mapping)
     └─ Relevance ← defect → risk/quality diagnostic mapping
@@ -174,7 +190,7 @@ This specification does **not** cover:
 | **Inferential Verification** | Static reasoning to demonstrate defect risk and remediation effectiveness |
 | **EX** | Explicit Risk — explicit attack risk |
 | **IM** | Implicit Risk — implicit logic risk |
-| **L1/L2/L3** | Skill Risk Levels (Low/Medium/High) |
+| **`OR-L1/OR-L2/OR-L3`** | Skill operational risk levels (Low/Medium/High) |
 | **P0/P1/P2** | Defect Levels (Blocking/Warning/Advisory) |
 
 #### 0.2.2 Numbering System
@@ -199,23 +215,25 @@ QD-S-x.y
 **Examples**:
 
 - `QD-S-1.1`: Resource Runaway → Input Boundary Missing
-- `QD-S-3.3`: Ambiguity-Induced Inference → Ambiguous Input Handling Strategy Missing
+- `QD-S-3.3`: Ambiguity-Induced Inference → Missing Ambiguous Input Handling Strategy
 
-#### 0.2.3 Skill Risk Levels (L)
+#### 0.2.3 Skill Operational Risk Levels (`OR-L`)
+
+> **【Global notation convention · Mandatory】** Throughout this document's body text, tables, examples, and appendices, `L1` / `L2` / `L3` are **always** shorthand for `OR-L1` / `OR-L2` / `OR-L3` (Skill operational risk levels) and are fully equivalent. Except in this definition section, the `OR-` prefix is not repeated at each occurrence. Any standalone `L1` / `L2` / `L3` **must not** be read as `AC-L` (Agent complexity level) or any other grading model. This convention applies with full force to every chapter, appendix, example, and report field in this document.
 
 | Risk Level | Designation | Definition | Typical Characteristics |
 | --- | --- | --- | --- |
-| **Low Risk** | L1 | Text-processing only; no tool invocations | Weekly report compilation, text polishing, translation |
-| **Medium Risk** | L2 | Resource access; may involve sensitive data | Data queries, knowledge retrieval, email reading |
-| **High Risk** | L3 | Operation execution; irreversible operations | Data deletion, payments, permission changes |
+| **Low Risk** | `OR-L1` | Text-processing only; no tool invocations | Weekly report compilation, text polishing, translation |
+| **Medium Risk** | `OR-L2` | Resource access; may involve sensitive data | Data queries, knowledge retrieval, email reading |
+| **High Risk** | `OR-L3` | Operation execution; irreversible operations | Data deletion, payments, permission changes |
 
 #### 0.2.4 Defect Levels (P)
 
 | Defect Level | Symbol | Definition | Release Recommendation |
 | --- | --- | --- | --- |
 | **P0** | 🔴 | Blocking: a directly realizable resource runaway or behavioral overflow path exists | MUST NOT release; MUST be fixed |
-| **P1** | 🟡 | Warning: defect impacts behavioral quality; predictable unintended behavior exists | Strongly recommended to fix |
-| **P2** | 🟢 | Advisory: minor specification compliance issue | Recommended to fix; MAY release |
+| **P1** | 🟡 | Warning: defect impacts behavioral quality; predictable unintended behavior exists | SHOULD be fixed before release |
+| **P2** | 🟢 | Advisory: minor specification compliance issue | SHOULD be included in the improvement plan or risk register |
 
 <a id="03-version-and-maintenance-information"></a>
 ### 0.3 Version and Maintenance Information
@@ -223,12 +241,48 @@ QD-S-x.y
 #### 0.3.1 Current Version
 
 - **Version**: v1.0
-- **Release Status**: Initial release
-- **Last Updated**: September 2026
+- **Release Status**: Released
+- **Last Updated**: October 2026
 - **Maintained by**: Sanity AI Labs
+
+#### 0.3.2 Version History
+
+| Version | Release Date | Major Changes |
+| --- | --- | --- |
+| v1.0 | 2026-10 | Initial release |
 
 ---
 
+<a id="04-qd-s-0-basic-compliance-gate"></a>
+### 0.4 QD-S-0 Baseline Compliance Check (Entry Gate)
+
+QD-S-0 is the **entry gate** for Skill inspection and runs before the semantic inspection of QD-S-1 through QD-S-5. It verifies whether the Skill definition satisfies the platform's minimum structural specification — that is, "can it be parsed and inspected" — and **does not assess semantic quality**. QD-S-0 results are only "pass / fail" and are **not counted in the Part 11 quantitative score** (see 11.3).
+
+| ID | Inspection Item | Definition | Inspection Method |
+| --- | --- | --- | --- |
+| **QD-S-0.1** | Required Field Presence | Whether platform-required fields such as `name` and `description` are present | Automated |
+| **QD-S-0.2** | Field Content Non-Empty | Whether required field content is non-empty and not whitespace-only | Automated |
+| **QD-S-0.3** | Syntax Parsability | Whether the definition format (YAML frontmatter, Markdown structure, etc.) is parsable | Automated |
+| **QD-S-0.4** | Field Type Validity | Whether field value types are valid (enum, boolean, numeric, list, etc.) | Automated |
+| **QD-S-0.5** | No Conflicting Declarations | Whether the Skill body, examples (few-shot), failure strategy, and permission declarations are mutually consistent and non-conflicting | Automated (candidate) → human review |
+| **QD-S-0.6** | Minimum Structural Completeness | Whether a locatable minimum structure exists (referenceable positions, inspectable units) | Automated |
+| **QD-S-0.7** | Dependency and Resource Presence | Whether referenced scripts, templates, and downstream Skills exist and are parsable (credentials/callback URLs/PII belong to Risk Explicit; see Note 1) | Automated |
+| **QD-S-0.8** | Metadata Completeness | Whether `version`, `owner`, and `changelog` are complete and traceable (configurable as a platform-level requirement) | Automated |
+| **QD-S-0.9** | Description Length Budget | Whether `description` exceeds the token budget ceiling (SHOULD; complementary to QD-S-3.6) | Automated |
+
+> Note 1: QD-S-0.7 checks **reference existence only**. Hardcoded credentials/keys, anomalous callback URLs, and hardcoded PII belong to Risk Explicit's NR-S-9 / NR-S-7 / NR-S-10 (see risk/explicit.md §2.2). This subset **does not build its own secret-scanning rules**; when such content is found, cross-reference the EX ID instead of recording it under QD-S-0.
+
+**Determination and Failure Handling** (relaxed from the original v1.0 rule "any failed item stops all inspection"):
+
+- Only when the Skill definition is **completely unparsable** (QD-S-0.3 fails) is QD-S-1 through QD-S-5 inspection stopped;
+- Other QD-S-0 defects (missing fields, empty content, local conflicts, etc.) do not block subsequent semantic inspection, but the report MUST mark "baseline compliance not passed" and list the defective items;
+- In that case the formal evaluation conclusion is **"evaluation incomplete (NEEDS_REVIEW)"** (see framework/core.md §6.2, release summary status); confirmed QD-S defects MUST still be reported item by item.
+
+> Note: QD-S-0.5 is the formal definition of the "Skill internal consistency" check. When the inspector finds a conflict between body and examples, or between failure strategy and permission declarations, it MUST report both sides of the conflict and **must not silently select the broader or stricter side**.
+
+---
+
+<a id="part-1-quality-defect-classification-system-overview"></a>
 ## Part 1: Quality Defect Classification System Overview
 
 <a id="11-five-defect-classification-framework"></a>
@@ -246,6 +300,7 @@ Inspect Skill v1.0 classifies defects by **risk principle** rather than structur
 
 ---
 
+<a id="part-2-qd-s-1-resource-runaway-boundary-absence"></a>
 ## Part 2: QD-S-1 Resource Runaway (Boundary Absence)
 
 <a id="21-classification-positioning"></a>
@@ -257,6 +312,8 @@ Inspect Skill v1.0 classifies defects by **risk principle** rather than structur
 
 <a id="22-inspection-items-in-detail"></a>
 ### 2.2 Inspection Items in Detail
+
+> Note: Numeric values in this section's examples (such as "50 items", "2,000 words", "60 seconds") are **illustrative values that must be calibrated to the business scenario**; they are not normative thresholds.
 
 #### QD-S-1.1 Input Boundary Missing
 
@@ -284,6 +341,8 @@ Organize work notes submitted by the user and generate a weekly report.
 - L2 (Medium Risk): 🔴 P0
 - L3 (High Risk): 🔴 P0
 
+> Determination criterion: LLMs cannot reliably count, and the context window and max_tokens are already hard limits. P0 is retained only for "cost-amplifying scenarios" (loop processing, batching, per-item tool calls); otherwise downgrade to P1, and N/A where platform budget evidence exists.
+
 #### QD-S-1.2 Output Size Missing
 
 **Defect Description**: The Skill does not declare an upper limit on output size, potentially causing output bloat or Context Window overflow.
@@ -309,7 +368,9 @@ Generate summaries of user documents.
 
 - L1 (Low Risk): 🟡 P1
 - L2 (Medium Risk): 🟡 P1
-- L3 (High Risk): 🔴 P0
+- L3 (High Risk): 🟡 P1
+
+> Determination criterion: output size is likewise bounded by the context window and max_tokens hard limits. P0 is retained only for "cost-amplifying" scenarios (looped output, batch generation); otherwise P1.
 
 #### QD-S-1.3 Execution Resource Boundary Missing
 
@@ -335,9 +396,11 @@ Diagnose database issues.
 
 **Severity**:
 
-- L1 (Low Risk): 🟢 P2
+- L1 (Low Risk): 🟡 P1
 - L2 (Medium Risk): 🔴 P0
 - L3 (High Risk): 🔴 P0
+
+> Determination criterion: timeouts and call caps are the Harness's responsibility; LLMs have no clock perception, so prose is only a soft constraint. Revised to "declaring it in either the Skill text or a traceable in-artifact configuration suffices"; with no source at all, L2/L3 retain P0; with configuration evidence, downgrade to SHOULD/N/A (see the effective-constraint clause in 7.5).
 
 #### QD-S-1.4 Permission Boundary Missing
 
@@ -367,6 +430,8 @@ Irreversible operations MUST be confirmed by a human before execution.
 - L2 (Medium Risk): 🟡 P1
 - L3 (High Risk): 🔴 P0
 
+> Determination criterion: same root as QD-S-2.4 and QD-S-5.1 ("operational permission boundary undeclared"); deduplicated into 5.1 and not scored independently (see 11.6).
+
 #### QD-S-1.5 Data Source Boundary Missing
 
 **Defect Description**: The Skill does not declare permitted or prohibited data sources; the LLM may collect data from conversation history or external systems on its own.
@@ -392,7 +457,9 @@ Query user information.
 
 - L1 (Low Risk): 🟢 P2
 - L2 (Medium Risk): 🟡 P1
-- L3 (High Risk): 🟡 P1
+- L3 (High Risk): 🔴 P0
+
+> Determination criterion: revised to "declare the authorized data sources and purposes", distinguishing authorized from unauthorized history and not treating use of conversation history itself as a defect. When inferred or completed data enters write operations, external calls, or decision output, L3 rises to P0; display-only remains P1.
 
 <a id="23-qd-s-1-inspection-checklist"></a>
 ### 2.3 QD-S-1 Inspection Checklist
@@ -400,19 +467,22 @@ Query user information.
 | ID | Inspection Item | Trigger Keywords | L1 | L2 | L3 | Inspection Method |
 | --- | --- | --- | --- | --- | --- | --- |
 | **QD-S-1.1** | Input Boundary Missing | accept, process, organize | P1 | P0 | P0 | Automated |
-| **QD-S-1.2** | Output Size Missing | generate, output, report | P1 | P1 | P0 | Automated |
-| **QD-S-1.3** | Execution Resource Boundary Missing | keep trying, until success, ensure complete | P2 | P0 | P0 | Automated |
+| **QD-S-1.2** | Output Size Missing | generate, output, report | P1 | P1 | P1 | Automated |
+| **QD-S-1.3** | Execution Resource Boundary Missing | keep trying, until success, ensure complete | P1 | P0 | P0 | Automated |
 | **QD-S-1.4** | Permission Boundary Missing | manage, handle, assist | P2 | P1 | P0 | Human |
-| **QD-S-1.5** | Data Source Boundary Missing | collect, infer, supplement | P2 | P1 | P1 | Semi-automated |
+| **QD-S-1.5** | Data Source Boundary Missing | collect, infer, supplement | P2 | P1 | P0 | Semi-automated |
 
 ---
 
+<a id="part-3-qd-s-2-unbounded-directive"></a>
 ## Part 3: QD-S-2 Unbounded Directive
 
 <a id="31-classification-positioning"></a>
 ### 3.1 Classification Positioning
 
 **Risk Principle**: The Skill actively includes directives or enumerations that are semantically unbounded, directly driving the LLM toward unbounded execution or unbounded expansion. These defects are not about "what is missing" — they are about "what was written that shouldn't have been."
+
+> Note: QD-S-2.1/2.2/2.4 are automated trigger-word lists for the corresponding missing-constraint defects (QD-S-1.1/1.3/5.1); they produce candidate findings only, are deduplicated into the primary items, and are not scored independently. QD-S-2.3 is an independent defect item.
 
 **Typical Harms**: Infinite retries, infinite output expansion, automatic expansion of execution scope.
 
@@ -444,6 +514,8 @@ Process work notes provided by the user (up to 50) and generate a weekly report.
 - L2 (Medium Risk): 🔴 P0
 - L3 (High Risk): 🔴 P0
 
+> Determination criterion: "list all fields in the table" is a finite set, not unbounded. Judge a defect only when "the scope is expanded by the LLM itself and there is no external budget"; keywords are downgraded to candidate findings. This item serves as the automated trigger-word list for QD-S-1.1 "Input Boundary Missing"; same root as 1.1, deduplicated into 1.1, and not scored independently (see 11.6).
+
 #### QD-S-2.2 Unterminated Execution Declaration
 
 **Defect Description**: Uses words such as `keep trying / until success / ensure complete / persist until` without defining a termination condition.
@@ -469,6 +541,8 @@ Diagnose database issues and recommend remediation plans (not auto-executed).
 - L1 (Low Risk): 🟡 P1
 - L2 (Medium Risk): 🔴 P0
 - L3 (High Risk): 🔴 P0
+
+> Determination criterion: this item serves as the automated trigger-word list (until success, etc.) for QD-S-1.3 "Execution Resource Boundary Missing"; same root as 1.3, deduplicated into 1.3, and not scored independently (see 11.6).
 
 #### QD-S-2.3 Open-Ended Enumeration in Structure Declaration
 
@@ -498,7 +572,9 @@ Do not add additional sections unless explicitly requested by the user.
 
 - L1 (Low Risk): 🟡 P1
 - L2 (Medium Risk): 🟡 P1
-- L3 (High Risk): 🔴 P0
+- L3 (High Risk): 🟡 P1
+
+> Determination criterion: judge a defect only when the enumerated object is a **closed contract** (machine-parsed output structure, resource/operation whitelist); do not judge defects for analytical processes or illustrative examples. The severity ceiling is P1; keywords only produce candidate findings.
 
 #### QD-S-2.4 Broad Capability Verbs
 
@@ -528,6 +604,8 @@ All recommendations require human confirmation before execution.
 - L2 (Medium Risk): 🟡 P1
 - L3 (High Risk): 🔴 P0
 
+> Same root as QD-S-1.4 and QD-S-5.1; broad verbs serve only as a trigger cue for "operational permission boundary undeclared". See 11.6 for deduplication.
+
 <a id="33-qd-s-2-inspection-checklist"></a>
 ### 3.3 QD-S-2 Inspection Checklist
 
@@ -535,11 +613,12 @@ All recommendations require human confirmation before execution.
 | --- | --- | --- | --- | --- | --- | --- |
 | **QD-S-2.1** | Unbounded Quantity Declaration | all, every, entire, complete | P1 | P0 | P0 | Automated |
 | **QD-S-2.2** | Unterminated Execution | keep trying, until success, ensure | P1 | P0 | P0 | Automated |
-| **QD-S-2.3** | Open-Ended Enumeration | etc., and others, such as | P1 | P1 | P0 | Automated |
+| **QD-S-2.3** | Open-Ended Enumeration | etc., and others, such as | P1 | P1 | P1 | Automated |
 | **QD-S-2.4** | Broad Capability Verbs | manage, handle, coordinate | P2 | P1 | P0 | Human |
 
 ---
 
+<a id="part-4-qd-s-3-ambiguity-induced-inference"></a>
 ## Part 4: QD-S-3 Ambiguity-Induced Inference
 
 <a id="41-classification-positioning"></a>
@@ -608,6 +687,8 @@ Handle user data requests.
 - L2 (Medium Risk): 🟡 P1
 - L3 (High Risk): 🔴 P0
 
+> When the positive trigger conditions are already sufficiently bounded, a counter-example list is not mandatory; this item may be merged with QD-S-3.4 as a "boundary declaration", or applied only to Skills with automatic model routing. See 11.6 for deduplication.
+
 #### QD-S-3.3 Missing Ambiguous Input Handling Strategy
 
 **Defect Description**: Does not declare how to handle incomplete or malformed input; the LLM tends to auto-complete or infer.
@@ -661,9 +742,11 @@ Help users improve their weekly reports.
 
 **Severity**:
 
-- L1 (Low Risk): 🔴 P0
-- L2 (Medium Risk): 🔴 P0
-- L3 (High Risk): 🔴 P0
+- L1 (Low Risk): 🟢 P2
+- L2 (Medium Risk): 🟡 P1
+- L3 (High Risk): 🟡 P1
+
+> Escalation condition: only when the positive purpose is insufficient to bound the scope and the Skill has side-effect capability does L3 rise to P0. "Purpose sufficiently closed" counts as passing; a negative list (non_goals) is not mandatory.
 
 #### QD-S-3.5 Undeclared Default Behavior
 
@@ -716,7 +799,38 @@ description: "Use this Skill for read-only database diagnosis"
 
 - L1 (Low Risk): 🟡 P1
 - L2 (Medium Risk): 🟡 P1
-- L3 (High Risk): 🔴 P0
+- L3 (High Risk): 🟡 P1
+
+> Determination criterion: only when the name implies higher privileges and the body contains no prohibitive statement does L3 rise to P0; if the name is broad but does not contradict the body and no write authority exists, keep P1.
+
+#### QD-S-3.7 Output Structure Contract Missing
+
+**Defect Description**: Does not declare the output format, required fields, or how empty results are represented; the LLM decides the output structure on its own.
+
+**Defect Example**:
+
+| Dimension | Content |
+| --- | --- |
+| **Incorrect** | `description: "Generate an analysis report."` (does not declare format or fields) |
+| **Problem** | The LLM chooses the format, omits key fields, and fills in examples when results are empty |
+| **Default Behavior** | The output structure is inconsistent with the downstream parsing/consumption contract |
+
+**Remediation Example**:
+
+```markdown
+Generate an analysis report.
+- Output format: Markdown
+- Required fields: Conclusion, Evidence, Risk
+- Empty result: Output "no matching data"; do not fabricate examples
+```
+
+**Severity**:
+
+- L1 (Low Risk): 🟡 P1
+- L2 (Medium Risk): 🟡 P1
+- L3 (High Risk): 🟡 P1
+
+> Determination criterion: 1.2 covers size only and 2.3 covers open-ended enumeration only; this item covers the output structure contract (format/required fields/empty-result representation). Cross-artifact parameter contracts belong to Inspect Cross; for display-only Skills with no downstream consumer, downgrade to P2.
 
 <a id="43-qd-s-3-inspection-checklist"></a>
 ### 4.3 QD-S-3 Inspection Checklist
@@ -726,12 +840,14 @@ description: "Use this Skill for read-only database diagnosis"
 | **QD-S-3.1** | Vague Trigger Conditions | when, need, appropriate | P1 | P1 | P0 | Human |
 | **QD-S-3.2** | Missing Deactivation Conditions | No "prohibited"/"do not handle" | P2 | P1 | P0 | Human |
 | **QD-S-3.3** | Missing Ambiguous Input Handling | incomplete, format error, insufficient | P1 | P1 | P0 | Human |
-| **QD-S-3.4** | Undefined Task Scope | No non_goals | P0 | P0 | P0 | Human |
+| **QD-S-3.4** | Undefined Task Scope | No non_goals | P2 | P1 | P1 | Human |
 | **QD-S-3.5** | Undeclared Default Behavior | empty, error, exception | P1 | P1 | P0 | Human |
-| **QD-S-3.6** | Metadata Expression Defects | contradictory, broad, vague | P1 | P1 | P0 | Human |
+| **QD-S-3.6** | Metadata Expression Defects | contradictory, broad, vague | P1 | P1 | P1 | Human |
+| **QD-S-3.7** | Output Structure Contract Missing | format, fields, empty result | P1 | P1 | P1 | Human |
 
 ---
 
+<a id="part-5-qd-s-4-failure-escalation"></a>
 ## Part 5: QD-S-4 Failure Escalation
 
 <a id="51-classification-positioning"></a>
@@ -794,7 +910,9 @@ Generate a weekly report.
 
 - L1 (Low Risk): 🟡 P1
 - L2 (Medium Risk): 🟡 P1
-- L3 (High Risk): 🔴 P0
+- L3 (High Risk): 🟡 P1
+
+> Determination criterion: read-only or single-step Skills have no concept of "partial completion"; keep P1. For batch processing or write operations, raise to P0 at the instance level.
 
 #### QD-S-4.3 Missing Post-Failure Prohibited Behaviors
 
@@ -826,6 +944,8 @@ Diagnose database issues.
 - L2 (Medium Risk): 🟡 P1
 - L3 (High Risk): 🔴 P0
 
+> When closed failure behavior (stop/report) is already defined, do not judge a separate defect (it duplicates QD-S-4.1). See 11.6 for deduplication.
+
 #### QD-S-4.4 Undefined Error Recovery Path
 
 **Defect Description**: Lacks clear handling directives when encountering exceptions; the LLM decides on its own whether to retry, degrade, or expand.
@@ -850,9 +970,11 @@ Handle exception conditions.
 
 **Severity**:
 
-- L1 (Low Risk): 🟡 P1
-- L2 (Medium Risk): 🟡 P1
-- L3 (High Risk): 🟡 P1
+- L1 (Low Risk): 🟢 P2
+- L2 (Medium Risk): 🟢 P2
+- L3 (High Risk): 🟢 P2
+
+> Determination criterion (conditional N/A): N/A for L1 without tool invocations; "safe termination with reporting" counts as a legitimate path — not every Skill is required to have recovery capability.
 
 <a id="53-qd-s-4-inspection-checklist"></a>
 ### 5.3 QD-S-4 Inspection Checklist
@@ -860,12 +982,13 @@ Handle exception conditions.
 | ID | Inspection Item | Trigger Keywords | L1 | L2 | L3 | Inspection Method |
 | --- | --- | --- | --- | --- | --- | --- |
 | **QD-S-4.1** | Undefined Failure Behavior | failure, error, exception | P1 | P0 | P0 | Human |
-| **QD-S-4.2** | Undeclared Partial Completion Legitimacy | complete, all, must | P1 | P1 | P0 | Human |
+| **QD-S-4.2** | Undeclared Partial Completion Legitimacy | complete, all, must | P1 | P1 | P1 | Human |
 | **QD-S-4.3** | Missing Post-Failure Prohibited Behaviors | No "prohibited" declaration | P1 | P1 | P0 | Human |
-| **QD-S-4.4** | Undefined Error Recovery Path | exception, recovery, degradation | P1 | P1 | P1 | Human |
+| **QD-S-4.4** | Undefined Error Recovery Path | exception, recovery, degradation | P2 | P2 | P2 | Human |
 
 ---
 
+<a id="part-6-qd-s-5-permission-overflow"></a>
 ## Part 6: QD-S-5 Permission Overflow
 
 <a id="61-classification-positioning"></a>
@@ -906,6 +1029,8 @@ All modification operations MUST be handled by humans through other processes.
 - L2 (Medium Risk): 🟡 P1
 - L3 (High Risk): 🔴 P0
 
+> Same root as QD-S-1.4 and QD-S-2.4; merged as "operational permission boundary undeclared" (covering read/write/delete/send/export/execute). See 11.6 for deduplication.
+
 #### QD-S-5.2 Missing High-Risk Operation Confirmation Mechanism
 
 **Defect Description**: Irreversible operations such as deletion, overwriting, data exfiltration, or payments do not have a confirmation mechanism.
@@ -933,6 +1058,8 @@ Clean up expired data. This operation is irreversible.
 - L1 (Low Risk): — (does not involve irreversible operations)
 - L2 (Medium Risk): — (does not involve irreversible operations)
 - L3 (High Risk): 🔴 P0
+
+> Determination criterion: revised to "effective authorization gating" — operations within the pre-authorized scope (subject, object, quota, validity period) may execute automatically, and only thresholds beyond that enter confirmation. **Pre-authorization applies only to reversible, low-consequence operations (`OR-L1/L2`); irreversible or severe-consequence operations (`OR-L3`) are not eligible for pre-authorization and MUST require human confirmation/approval each time.** Pre-authorization must come from the user/human and must not be self-granted by the model. The "always mandatory" human secondary confirmation has been unified with Inspect Permission QD-PM-6.3 under the "human decision point" framing; see Part 10 of this document.
 
 #### QD-S-5.3 Undeclared Environment Boundaries
 
@@ -965,6 +1092,8 @@ If the user specifies a production database for diagnosis:
 - L2 (Medium Risk): 🟡 P1
 - L3 (High Risk): 🔴 P0
 
+> Determination criterion (conditional N/A): applies only when the Skill can reach multiple environments or has environment-selection authority; check "is the target environment explicit + is the production operation set restricted". "Production is not prohibited" is not itself a defect (a production operations Agent's job is in production); N/A when environments are not involved. The split between environment-boundary "declaration vs. overall proportionality" and Inspect Permission QD-PM-2.4 is covered in Part 10 of this document.
+
 #### QD-S-5.4 Undeclared Chained Invocation Permissions
 
 **Defect Description**: Allows invoking other Skills but does not declare the permitted/prohibited downstream Skill scope.
@@ -988,8 +1117,6 @@ Process data. May invoke other Skills.
   - data-delete
   - data-modify
   - user-permission-management
-
-Chained invocation depth must not exceed 1 level.
 ```
 
 **Severity**:
@@ -997,6 +1124,8 @@ Chained invocation depth must not exceed 1 level.
 - L1 (Low Risk): 🟢 P2
 - L2 (Medium Risk): 🟡 P1
 - L3 (High Risk): 🔴 P0
+
+> Determination criterion (conditional N/A): applies only when `allow_skill_chaining=true`; otherwise N/A. Loop/depth convergence for chained invocation belongs to Inspect Cross (QD-CYC-1.1/1.2) and Inspect Permission (QD-PM-4.x); this item no longer sets its own "depth ≤ 1" threshold.
 
 <a id="63-qd-s-5-inspection-checklist"></a>
 ### 6.3 QD-S-5 Inspection Checklist
@@ -1010,6 +1139,7 @@ Chained invocation depth must not exceed 1 level.
 
 ---
 
+<a id="part-7-skill-tiered-inspection-mechanism"></a>
 ## Part 7: Skill Tiered Inspection Mechanism
 
 <a id="71-skill-risk-level-definitions"></a>
@@ -1085,9 +1215,19 @@ Chained invocation depth must not exceed 1 level.
 <a id="72-tiered-inspection-checklist"></a>
 ### 7.2 Tiered Inspection Checklist
 
+**Design Principles** (aligned with Inspect Prompt §3.3.1):
+
+| Principle | Description |
+| --- | --- |
+| **Upward compatibility** | Higher-level checklists include lower-level items (L3 ⊃ L2 ⊃ L1) |
+| **Focus on the core** | L1 focuses on P1/P2 defects (no P0); L2 progressively covers P0/P1; L3 covers everything |
+| **Ordered by ID** | Inspection items are ordered QD-S-0 → QD-S-5 |
+
+The severity levels in the following checklists are **default levels**; any adjustment confirmed by human review MUST record its rationale.
+
 #### 7.2.1 L1 (Low Risk) Inspection Checklist
 
-**Mandatory Inspection Items** (7 items):
+**Mandatory Inspection Items** (QD-S-0 gate + 8 core checks):
 
 | ID | Inspection Item | Level | Inspection Method |
 | --- | --- | --- | --- |
@@ -1095,13 +1235,15 @@ Chained invocation depth must not exceed 1 level.
 | QD-S-1.1 | Input Boundary Missing | P1 | Automated |
 | QD-S-1.2 | Output Size Missing | P1 | Automated |
 | QD-S-2.1 | Unbounded Quantity Declaration | P1 | Automated |
-| QD-S-3.4 | Undefined Task Scope | P0 | Human |
+| QD-S-3.1 | Vague Trigger Conditions | P1 | Human |
+| QD-S-3.3 | Missing Ambiguous Input Handling Strategy | P1 | Human |
+| QD-S-3.4 | Undefined Task Scope | P2 | Human |
 | QD-S-4.1 | Undefined Failure Behavior | P1 | Human |
 | QD-S-3.6 | Metadata Expression Defects | P1 | Human |
 
 **Optional Inspection Items** (recommended but not required):
 
-- QD-S-3.1, QD-S-3.2, QD-S-3.3
+- QD-S-3.2, QD-S-3.7
 
 #### 7.2.2 L2 (Medium Risk) Inspection Checklist
 
@@ -1114,40 +1256,41 @@ Chained invocation depth must not exceed 1 level.
 | QD-S-1.3 | Execution Resource Boundary Missing | Automated |
 | QD-S-2.1 | Unbounded Quantity Declaration | Automated |
 | QD-S-2.2 | Unterminated Execution | Automated |
-| QD-S-3.4 | Undefined Task Scope | Human |
 | QD-S-4.1 | Undefined Failure Behavior | Human |
 
 **Recommended Inspection Items** (P1 defects):
 
 - QD-S-1.2, QD-S-1.4, QD-S-1.5, QD-S-2.3, QD-S-2.4
-- QD-S-3.1, QD-S-3.2, QD-S-3.3, QD-S-3.6
+- QD-S-3.1, QD-S-3.2, QD-S-3.3, QD-S-3.4, QD-S-3.5, QD-S-3.6, QD-S-3.7
 - QD-S-4.2, QD-S-4.3, QD-S-5.1, QD-S-5.3, QD-S-5.4
 
 #### 7.2.3 L3 (High Risk) Inspection Checklist
 
 **Full Inspection** (all QD-S-1 through QD-S-5):
 
-| Category | P0 Defects | Inspection Intensity |
+| Category | P0 Defects | P1 Defects |
 | --- | --- | --- |
-| **QD-S-1** | All mandatory | MUST pass |
-| **QD-S-2** | QD-S-2.1/2.2/2.3/2.4 | MUST pass |
-| **QD-S-3** | QD-S-3.1/3.2/3.4/3.5/3.6 | MUST pass |
-| **QD-S-4** | QD-S-4.1/4.2/4.3 | MUST pass |
-| **QD-S-5** | QD-S-5.1/5.2/5.3/5.4 | MUST pass |
+| **QD-S-1** | QD-S-1.1/1.3/1.4/1.5 | QD-S-1.2 |
+| **QD-S-2** | QD-S-2.1/2.2/2.4 | QD-S-2.3 |
+| **QD-S-3** | QD-S-3.1/3.2/3.3/3.5 | QD-S-3.4/3.6/3.7 |
+| **QD-S-4** | QD-S-4.1/4.3 | QD-S-4.2 |
+| **QD-S-5** | QD-S-5.1/5.2/5.3/5.4 | — |
+
+> P2 (should be included in the improvement plan or risk register; does not block release): QD-S-4.4
 
 **Inspection Methods**:
 
-- Automated: QD-S-1.x, QD-S-2.1–2.3
-- Semi-automated: QD-S-2.4, QD-S-3.3
-- Human: All other items
+- Automated: QD-S-1.1-1.3, QD-S-2.1-2.3
+- Semi-automated: QD-S-1.5
+- Human: all other items (QD-S-1.4, 2.4, 3.x, 4.x, 5.x)
 
 <a id="73-standard-inspection-process-6-steps"></a>
 ### 7.3 Standard Inspection Process (6 Steps)
 
 ```
 ┌──────────────────────────────────────────────────┐
-│     Skill Quality Defect Inspection Process       │
-│              (Inspect Skill)                      │
+│      Skill Quality Defect Inspection Process       │
+│                 (Inspect Skill)                    │
 └──────────────────────────────────────────────────┘
                               │
                               ▼
@@ -1160,7 +1303,7 @@ Chained invocation depth must not exceed 1 level.
                     ┌─────────┴─────────┐
                     ▼                   ▼
             ┌─────────────┐      ┌──────────────┐
-            │ PASS ✓       │      │ FAIL ✗        │
+            │ PASS ✓      │      │ FAIL ✗       │
             └─────────────┘      └──────────────┘
                     │                    │
                     ▼                    ▼
@@ -1168,16 +1311,21 @@ Chained invocation depth must not exceed 1 level.
          │ Step 2: Skill   │   │ Output remediation│
          │ Risk Level      │   │ guidance; stop    │
          │ Determination   │   │ inspection        │
-         │ Determine L1/L2/│   └──────────────────┘
-         │ L3              │
-         └─────────────────┘
+         └─────────────────┘   └──────────────────┘
                     │
-                    ▼
-         ┌─────────────────────┐
-         │ Step 3: Select      │
-         │ Inspection Checklist│
-         │ Based on risk level │
-         └─────────────────────┘
+          ┌─────────┴─────────┐
+          ▼                   ▼
+   ┌──────────────────┐  ┌──────────────────┐
+   │ Classify as      │  │ Classification   │
+   │ OR-L1/L2/L3      │  │ pending          │
+   └──────────────────┘  │ Output "pending" │
+          │              │ (NEEDS_REVIEW)   │
+          ▼              └──────────────────┘
+   ┌─────────────────────┐
+   │ Step 3: Select      │
+   │ Inspection Checklist│
+   │ Based on risk level │
+   └─────────────────────┘
                     │
                     ▼
          ┌─────────────────────┐
@@ -1210,10 +1358,11 @@ Chained invocation depth must not exceed 1 level.
 
 **Determination Criteria**:
 
-- ✅ PASS: All QD-S-0.1 through 0.6 inspection items pass
+- ✅ PASS: All QD-S-0.1 through 0.8 inspection items pass
 - ❌ FAIL: Any item fails
+- Note: QD-S-0.9 (description length budget) is SHOULD-level and is not part of the "MUST pass" determination; exceeding the budget produces an advisory note only and does not block subsequent semantic inspection
 
-**Failure Handling**:
+**Failure Handling** (relaxed: stop only when "completely unparsable"; see 0.4 for the definition):
 
 ```
 Output: QD-S-0 inspection failed
@@ -1223,9 +1372,12 @@ Failed items:
   - QD-S-0.3: Missing quotes on YAML line 7
 
 Handling recommendation:
-  Please first address the above basic structural issues so the Skill meets
-  the platform's minimum specification.
-  The current Skill will not proceed to QD-S-1 through QD-S-5 inspection.
+  Stop QD-S-1 through QD-S-5 inspection only when the Skill definition is
+  completely unparsable (QD-S-0.3 fails);
+  other QD-S-0 defects do not block subsequent semantic inspection, but the
+  report MUST mark "baseline compliance not passed", and the formal evaluation
+  conclusion is recorded as "evaluation incomplete (NEEDS_REVIEW)"
+  (see framework/core.md §6.2).
 ```
 
 #### 7.3.2 Step 2: Skill Risk Level Determination
@@ -1234,11 +1386,14 @@ Handling recommendation:
 
 | Determination Question | Determination Logic |
 | --- | --- |
-| **Involves write operations?** | Yes → at least L2 |
-| **Involves delete or irreversible operations?** | Yes → L3 |
-| **Involves external system access?** | Yes → at least L2 |
-| **Involves sensitive data?** | Yes → at least L2 |
-| **Involves permission changes?** | Yes → L3 |
+| Does it involve delete or irreversible write operations? | Yes → L3 |
+| Does it involve reversible / isolated write operations? | Yes → L2 |
+| Does it involve external system access? | Yes → at least L2 |
+| Does it involve sensitive data? | Yes → at least L2 |
+| Does it involve permission changes? | Yes → L3 |
+| None of the above | → L1 |
+
+> Risk grading aligns with framework/core.md §4.3 OR-L (operational risk level): reversible/isolated writes ≈ OR-L2, irreversible writes ≈ OR-L3. When the mounted tool/permission context is unavailable, output "classification pending" (see 7.4, 7.5); do not classify directly.
 
 **Example Determinations**:
 
@@ -1250,7 +1405,7 @@ Handling recommendation:
 
 Based on the determined risk level, select the corresponding inspection checklist:
 
-**L1 Inspection Checklist** (7 mandatory items):
+**L1 Inspection Checklist** (QD-S-0 gate + 8 core checks):
 
 | ID | Inspection Item | Method |
 | --- | --- | --- |
@@ -1258,22 +1413,26 @@ Based on the determined risk level, select the corresponding inspection checklis
 | QD-S-1.1 | Input Boundary Missing | Automated |
 | QD-S-1.2 | Output Size Missing | Automated |
 | QD-S-2.1 | Unbounded Quantity Declaration | Automated |
+| QD-S-3.1 | Vague Trigger Conditions | Human |
+| QD-S-3.3 | Missing Ambiguous Input Handling Strategy | Human |
 | QD-S-3.4 | Undefined Task Scope | Human |
 | QD-S-4.1 | Undefined Failure Behavior | Human |
 | QD-S-3.6 | Metadata Expression Defects | Human |
 
-**L2 Inspection Checklist** (all QD-S-1/2/3/4/5 inspection items)
+**L2 Inspection Checklist** (P0 mandatory + P1 recommended; see 7.2.2)
 
 **L3 Inspection Checklist** (full inspection; all items)
 
 #### 7.3.4 Step 4: Automated Inspection
 
+**Three-stage inspection method**: candidate finding (automated) → semantic determination (LLM or human) → review. Automated inspection produces **candidate findings only** (such as keyword hits or structural omissions) and does not assign levels directly; the final defect level is confirmed by semantic determination. "Human" in the table below means human review or LLM semantic determination (the implementer MUST specify which one in the CI gate configuration); the two must not be silently mixed.
+
 **Execution Content** (tool-automated):
 
-- QD-S-0.1 through 0.6: Structural inspection
+- QD-S-0.1 through 0.9: Structural inspection
 - QD-S-1.1 through 1.3: Quantity boundary keyword scanning
 - QD-S-2.1 through 2.3: Unbounded language detection (all/every/until success, etc.)
-- QD-S-3.6: name/description consistency check
+- QD-S-1.5, QD-S-3.6: Candidate findings (keyword hits mark candidates only; final determination requires human review)
 
 **Output**:
 
@@ -1292,7 +1451,7 @@ Proceeding to Step 5: Semi-automated and human inspection
 
 **Execution Content**:
 
-- QD-S-3.x: Trigger conditions, deactivation conditions, ambiguity handling (requires human judgment)
+- QD-S-3.x: Trigger conditions, deactivation conditions, ambiguity handling, output structure (requires human judgment)
 - QD-S-4.x: Failure behavior, partial completion strategy (requires human judgment)
 - QD-S-5.x: Permission boundaries, environment declarations, chained invocation (requires human judgment)
 
@@ -1302,13 +1461,13 @@ Proceeding to Step 5: Semi-automated and human inspection
 - Inspect for semantic gaps from the six Review Schema dimensions
 - Perform Inferential Verification
 
-**Output**:
+**Output** (the example excerpt corresponds to an L3 Skill: QD-S-5.1 is P0 at L3, and QD-S-3.4 is P1 at L3):
 
 ```
 Human inspection results
 
 Detected human review items:
-  ⚠️  QD-S-3.4 Missing non_goals declaration → P0 defect
+  ⚠️  QD-S-3.4 Missing non_goals declaration → P1 defect
   ⚠️  QD-S-5.1 Broad capability description; read/write/delete not distinguished → P0 defect
   ✓ QD-S-4.1 Failure handling declaration present → PASS
 
@@ -1323,7 +1482,7 @@ Proceeding to Step 6: Generate inspection report
 
 | ID | Defect Item | Level | Location | Risk Description |
 | --- | --- | --- | --- | --- |
-| QD-S-3.4 | Undefined Task Scope | P0 | description | Missing non_goals; task boundaries can be expanded |
+| QD-S-3.4 | Undefined Task Scope | P1 | description | Missing non_goals; task boundaries can be expanded |
 | QD-S-5.1 | Read/Write/Delete Not Distinguished | P0 | description | Broad capability verbs; write permission can be inferred |
 | QD-S-2.1 | Unbounded Quantity Declaration | P1 | input section | Uses "all" without corresponding constraint |
 
@@ -1339,6 +1498,43 @@ Proceeding to Step 6: Generate inspection report
 
 ---
 
+<a id="74-inspection-item-judgment-states"></a>
+### 7.4 Inspection Item Judgment States (Five States)
+
+Each inspection item's result takes one of the following five states. These five states are **inspection item judgment states**, distinct from the Finding lifecycle states in framework/core.md §5.3 (open/confirmed/mitigated/accepted/closed/invalid); "N/A" follows the minimum recording requirements of §5.7, and "insufficient evidence" must not be marked N/A under §5.7.
+
+| State | Meaning | Counted in scoring/deduction? |
+| --- | --- | --- |
+| **Pass** | The item applies and no defect was found | Yes |
+| **Defect** | The item applies and a defect was found (P0/P1/P2) | Yes |
+| **Not Applicable (N/A)** | The item does not apply to the current Skill (e.g., QD-S-5.4 is N/A for an L1 Skill with no tool invocations) | No |
+| **Insufficient Evidence** | The item applies but there is not enough evidence to determine (e.g., the mounted tool context is unavailable) | No (output "pending") |
+| **Not Inspected** | Inspection was required but was not executed for process reasons | No |
+
+**Rules**:
+
+- "Not inspected" and "insufficient evidence" **must not be recorded as pass**;
+- "Not applicable" items are not counted in scoring/deduction, and the reason for non-applicability MUST be recorded (see the conditional N/A in each item's determination note, e.g., QD-S-5.3 multi-environment, QD-S-5.4 `allow_skill_chaining=true`);
+- "Insufficient evidence" maps to `uncertain` / `needs_more_evidence` in core.md §5.7 and must not be classified directly; when the mounted tool/permission context is unavailable, the risk level determination outputs "classification pending" (see 7.3.2).
+
+<a id="75-effective-constraints-and-compensating-controls"></a>
+### 7.5 Effective Constraints and Compensating Controls (Severity Determination Principles)
+
+**Cross-cutting rule**: The inspection object is the Skill definition text, but severity determination should distinguish three outcomes — "constraint missing / constraint conflicting / insufficient evidence (pending)" — and consider the constraints **actually in effect** on that Skill's deployment instance.
+
+- **Traceable in-artifact constraints** (Tool Schema fields delivered with the artifact, scope/service accounts declared in the Agent manifest, the Skill's `allowed_operations`, etc.; see Inspect Permission §0.1.4) may serve as the basis for severity determination;
+- **External controls from the Harness / RBAC / platform configuration must not be used as "pass evidence" to close a static defect**; they can only serve as an Exception's `compensating_controls` (affecting disposition, not changing the defect's existence). See framework/core.md §6.2-6.4, §9.3;
+- When **evidence is insufficient**, output "pending" (`NEEDS_REVIEW`; see 7.4 and core.md §6.2); do not classify directly.
+
+> This rule is consistent with framework/relevance.md §2.4.1: being blocked by an external control does not automatically prove that the artifact itself has no defect.
+
+**Three layers carrying frequency/batch limits** (consistent with Inspect Cross §7.4): the artifact declaration layer (the Skill's `max_tool_calls` / `max_retries` / `timeout_seconds`, the Tool's `limit.maximum` / `maxItems`) provides the **business-applicable limit** and ships with the artifact; the runtime fallback layer (rate limiting, concurrency, timeouts at the Harness / API gateway) provides a **global fallback value**; the business quota layer (business-side quotas, approvals, billing gates) provides commercial and compliance constraints. The three layers cannot substitute for one another:
+
+1. Do not cancel or downgrade artifact-layer inspection on the grounds that "the Harness has a fallback" — local debugging, single-machine deployments, and third-party hosted Agents often have no gateway, and in that case the artifact declaration is the only source of constraint;
+2. Harness thresholds are not equal to business-applicable limits — fallback values take the greatest common divisor "so as not to harm any Agent"; judging business reasonableness with fallback values would rate a Skill that "should query once per order" as acceptable.
+
+---
+
 <a id="part-8-review-schema--detailed-review-dimensions"></a>
 ## Part 8: Review Schema — Detailed Review Dimensions
 
@@ -1346,6 +1542,8 @@ Proceeding to Step 6: Generate inspection report
 ### 8.1 Six-Dimension Overview and Positioning
 
 The Inspect Skill Review Schema is the inspection Agent's **intermediate review framework** for systematically decomposing and analyzing Skill definitions. It is not a production format — it is a working view.
+
+> **MUST/SHOULD/MAY grading note**: The MUST/SHOULD/MAY levels of the review items in the table below are the **L3 (High Risk) default requirements**. For L1/L2 they should be downgraded according to the table (most L2 MUSTs become SHOULD; L1 becomes SHOULD/MAY), avoiding Skills bloated and instructions diluted by treating everything as MUST. The Schema's MUST must not be equated directly with "mandatory at every level"; the tiered mapping in Part 7 governs.
 
 **Six Dimensions and Corresponding Risks**:
 
@@ -1355,7 +1553,7 @@ The Inspect Skill Review Schema is the inspection Agent's **intermediate review 
 | **TRIGGER** | When should it trigger, and when should it not? | QD-S-3.1, QD-S-3.2 | Mis-triggering, excessive invocation |
 | **INPUT** | Are input size, format, and overflow behavior clearly defined? | QD-S-1.1, QD-S-3.3 | Token runaway, input ambiguity |
 | **EXECUTION** | Are execution boundaries, retries, tool invocations, and chained calls controlled? | QD-S-1.3, QD-S-5.4 | Infinite loops, tool abuse, permission diffusion |
-| **OUTPUT** | Are output size, structure, and partial completion strategy clearly defined? | QD-S-1.2, QD-S-2.3 | Output bloat, content fabrication |
+| **OUTPUT** | Are output size, structure, and partial completion strategy clearly defined? | QD-S-1.2, QD-S-2.3, QD-S-3.7 | Output bloat, content fabrication |
 | **FAILURE** | How are failures, empty input, insufficient input, and user dissatisfaction handled? | QD-S-4.x | Auto-completion, post-failure expansion |
 
 <a id="82-identity-dimension-in-detail"></a>
@@ -1378,7 +1576,7 @@ The Inspect Skill Review Schema is the inspection Agent's **intermediate review 
 
 | Skill Description | IDENTITY Dimension Check | Defect Determination |
 | --- | --- | --- |
-| "Query user data" | purpose: query ✓ / non_goals: ❌ missing / allowed_resources: user-provided only ✓ / forbidden: ❌ others' data not prohibited | QD-S-3.4 P0 + QD-S-1.5 P1 |
+| "Query user data" | purpose: query ✓ / non_goals: ❌ missing / allowed_resources: user-provided only ✓ / forbidden: ❌ others' data not prohibited | QD-S-3.4 P1 + QD-S-1.5 P1 |
 | "Manage database issues" | purpose: vague / non_goals: ❌ missing / allowed_operations: ❌ read/write/delete not distinguished / forbidden_operations: ❌ missing | QD-S-5.1 P0 + QD-S-3.6 P1 |
 
 <a id="83-trigger-dimension-in-detail"></a>
@@ -1436,7 +1634,6 @@ The Inspect Skill Review Schema is the inspection Agent's **intermediate review 
 | **max_tool_calls** | MUST | Maximum tool invocation count per execution | Invokes tools without limit until the task is complete |
 | **max_retries** | MUST | Maximum retry count | Retries without limit |
 | **timeout_seconds** | MUST | Execution timeout duration | Long-running tasks are not terminated |
-| **allow_task_expansion** | MUST | Whether expansion of the original task scope is permitted | Expansion is permitted by default |
 | **allow_skill_chaining** | SHOULD | Whether invoking other Skills is permitted | Chained invocation is permitted by default |
 | **allowed_downstream_skills** | MUST (when chaining=true) | Whitelist of permitted downstream Skills | Any Skill, including high-permission ones, can be triggered |
 | **require_user_confirmation_for** | MUST (when involving irreversible operations) | Operation types requiring user confirmation | Irreversible operations are executed without confirmation |
@@ -1483,7 +1680,7 @@ The Inspect Skill Review Schema is the inspection Agent's **intermediate review 
 | --- | --- | --- | --- |
 | **on_empty_input** | MUST | Handling when input is empty (ask_user / stop / generate_template) | LLM generates example content or template fill |
 | **on_insufficient_input** | MUST | Handling when input is insufficient (generate_partial / ask_user / stop) | LLM auto-completes |
-| **on_user_dissatisfied** | SHOULD | Handling strategy for user dissatisfaction (max rewrite count, escalation confirmation, etc.) | Unlimited rewrites |
+| **on_user_dissatisfied** | MAY | Handling strategy for user dissatisfaction (max rewrite count, escalation confirmation, etc.) | Unlimited rewrites |
 | **forbidden_behaviors** | MUST | Explicitly prohibited post-failure behaviors (no auto-completion, no inference, no scope expansion) | LLM selects expansion strategy on its own after failure |
 
 **Inspection Example**:
@@ -1495,6 +1692,7 @@ The Inspect Skill Review Schema is the inspection Agent's **intermediate review 
 
 ---
 
+<a id="part-9-usage-examples"></a>
 ## Part 9: Usage Examples
 
 <a id="91-l1-example-weeklyreportwriter-personal-productivity-scenario"></a>
@@ -1524,17 +1722,19 @@ Do not fabricate facts.
 
 **Step 2: Risk Level Determination** → L1 (text-processing only; no tool invocations; no external system access)
 
-**Step 3: Select Inspection Checklist** → L1 checklist (7 items)
+**Step 3: Select Inspection Checklist** → L1 checklist (QD-S-0 gate + 8 core checks)
 
 **Steps 4–5: Inspection Execution**
 
 | Inspection Item | Result | Level | Description |
 | --- | --- | --- | --- |
-| QD-S-1.1 Input Boundary Missing | ❌ FAIL | P0 | No upper limit declared for work note count |
+| QD-S-1.1 Input Boundary Missing | ❌ FAIL | P1 | No upper limit declared for work note count |
 | QD-S-1.2 Output Size Missing | ❌ FAIL | P1 | No total length limit declared for the weekly report |
 | QD-S-2.1 Unbounded Quantity Declaration | ✓ PASS | — | No relevant unbounded language |
-| QD-S-3.4 Undefined Task Scope | ❌ FAIL | P0 | Missing non_goals; "such as" implies open-ended enumeration |
-| QD-S-4.1 Undefined Failure Behavior | ❌ FAIL | P0 | No handling strategy for empty input |
+| QD-S-3.1 Vague Trigger Conditions | ✓ PASS | — | Trigger conditions point to "weekly report" and are fairly explicit |
+| QD-S-3.3 Missing Ambiguous Input Handling | ❌ FAIL | P1 | No handling strategy declared for insufficient notes |
+| QD-S-3.4 Undefined Task Scope | ❌ FAIL | P2 | Missing non_goals (P2 for L1) |
+| QD-S-4.1 Undefined Failure Behavior | ❌ FAIL | P1 | No handling strategy for empty input |
 | QD-S-3.6 Metadata Expression Defects | ✓ PASS | — | name/description are substantially consistent |
 
 #### 9.1.3 Inferential Verification
@@ -1564,7 +1764,9 @@ Do not fabricate facts.
   not need to determine boundaries on its own. This remediation effectively
   eliminates the Token runaway risk.
 
-[Verification Conclusion]Remediation is effective; risk eliminated. (Static Pass)
+[Verification Conclusion]Static defect remediated (Static Pass). Runtime effectiveness
+  still requires Risk Implicit / Quality dynamic validation; a static pass does not
+  mean runtime safety (see 0.1.2 and framework/core.md §1.4).
 ```
 
 #### 9.1.4 Optimized Skill
@@ -1596,7 +1798,6 @@ Organize into these sections (and only these unless explicitly requested):
 
 Output limits:
 - Total report: not exceed 1,500 Chinese characters or 1,000 English words
-- Rewrite maximum once (unless user provides new specific requirements)
 
 ## Do not
 - Invent facts, numbers, people, projects, dates, or outcomes
@@ -1615,15 +1816,120 @@ Output limits:
 | Dimension | Before Governance | After Governance |
 | --- | --- | --- |
 | **Input limit** | Undeclared | Up to 50 items; truncate and notify when exceeded |
-| **Output limit** | Undeclared | Not exceeding 1,500 words; rewrite at most once |
+| **Output limit** | Undeclared | Not exceeding 1,500 words |
 | **Task boundary** | Vague ("such as" open enumeration) | Explicit (four sections only) |
 | **Missing content handling** | Undeclared | Skip missing sections and explain why |
 | **Failure handling** | Undeclared | Empty input → ask user; generating examples is prohibited |
 
-<a id="92-l3-example-databasediagnosticreporter-enterprise-operations-scenario"></a>
-### 9.2 L3 Example: DatabaseDiagnosticReporter (Enterprise Operations Scenario)
+<a id="92-l2-example-customerdataquery-enterprise-data-query-scenario"></a>
+### 9.2 L2 Example: CustomerDataQuery (Enterprise Data Query Scenario)
 
 #### 9.2.1 Original Skill
+
+```markdown
+---
+name: customer-data-query
+description: Helps users query customer information and generate reports.
+---
+
+Use this skill when the user needs customer data.
+
+The skill can search customer records, filter by various criteria,
+and summarize the results into a report.
+```
+
+#### 9.2.2 Inspection Process
+
+**Step 1: QD-S-0 Baseline Compliance** → ✅ PASS
+
+**Step 2: Risk Level Determination** → L2 (resource access: queries external data sources, involves sensitive data, no irreversible operations)
+
+**Step 3: Select Inspection Checklist** → L2 checklist (P0 mandatory + P1 recommended)
+
+**Steps 4–5: Inspection Execution** (excerpt of the defects found):
+
+| Inspection Item | Result | Level | Description |
+| --- | --- | --- | --- |
+| QD-S-1.1 Input Boundary Missing | ❌ FAIL | P0 | No upper limit declared for query conditions or result count |
+| QD-S-1.5 Data Source Boundary Missing | ❌ FAIL | P1 | "search customer records" does not declare permitted data sources |
+| QD-S-5.1 Read/Write/Delete Not Distinguished | ❌ FAIL | P1 | "query and generate reports" does not declare read-only or prohibit modification |
+| QD-S-4.1 Undefined Failure Behavior | ❌ FAIL | P0 | No handling strategy when the query fails |
+
+> Note: QD-S-1.4 and QD-S-5.1 share the same root (both are "operational permission boundary undeclared") and are deduplicated into 5.1 per 11.6.
+
+#### 9.2.3 Inferential Verification
+
+**Defect QD-S-5.1: Read/Write/Delete Permissions Not Distinguished**
+
+```
+[Defect]QD-S-5.1 Read/Write/Delete Permissions Not Distinguished
+
+[LLM Default Behavior Inference]
+  In "query and generate reports", "generate reports" may be understood by the LLM
+  as including exporting, modifying, or even deleting customer data. When the Skill
+  does not declare "read-only, modification prohibited", the LLM may interpret a
+  broad capability description as implicit authorization.
+
+[Remediation Declaration]
+  Explicitly declare that this Skill is for read-only query and report generation only:
+  - Allowed: Query, filter, summarize
+  - Prohibited: Create, modify, delete, export, migrate customer data
+
+[Remediation Effectiveness Demonstration]
+  The permission boundary moves from "vague" to "explicitly read-only"; the LLM no
+  longer has room for ambiguous inference.
+
+[Verification Conclusion]Static defect remediated (Static Pass). Runtime effectiveness
+  still requires Risk Implicit / Quality dynamic validation (see 0.1.2 and
+  framework/core.md §1.4).
+```
+
+#### 9.2.4 Optimized Skill
+
+```markdown
+---
+name: customer-data-query
+description: Read-only query and reporting over customer data. Does not modify, delete, or export customer records.
+---
+
+## When to use
+Use this skill only when the user explicitly asks to query or summarize customer data.
+
+## Data source
+- Only query the customer database specified by the user's request
+- Do not infer or pull from other systems, chat history, or default configs
+
+## Allowed operations
+- Query, filter, summarize customer records
+- Generate read-only reports
+
+## Prohibited operations
+- Create, modify, delete, export, or migrate customer data
+
+## Input limits
+- Accept at most 50 filter conditions
+- Return at most 500 records per query
+
+## Failure handling
+- Query fails: stop and report the error, do not retry with broader filters
+- No matching records: report "no results" instead of fabricating data
+```
+
+#### 9.2.5 Governance Effect
+
+| Dimension | Before Governance | After Governance |
+| --- | --- | --- |
+| **Data source** | Undeclared | Only the customer database specified by the user; no inference |
+| **Permission boundary** | Read/write/delete not distinguished | Explicit read-only + prohibition list |
+| **Input/result limits** | Undeclared | 50 conditions / 500 records |
+| **Failure handling** | Undeclared | Stop and report; do not broaden filters |
+
+---
+
+<a id="93-l3-example-databasediagnosticreporter-enterprise-operations-scenario"></a>
+### 9.3 L3 Example: DatabaseDiagnosticReporter (Enterprise Operations Scenario)
+
+#### 9.3.1 Original Skill
 
 ```markdown
 ---
@@ -1643,7 +1949,7 @@ Do not access unrelated systems.
 Be careful with sensitive data.
 ```
 
-#### 9.2.2 Inspection Process
+#### 9.3.2 Inspection Process
 
 **Step 1: QD-S-0 Baseline Compliance** → ✅ PASS
 
@@ -1655,14 +1961,14 @@ Be careful with sensitive data.
 
 | Inspection Item | Result | Level | Description |
 | --- | --- | --- | --- |
-| QD-S-5.1 Read/Write/Delete Not Distinguished | ❌ FAIL | P0 | "maintenance" and "fixes" imply data modification capability |
-| QD-S-5.2 Missing High-Risk Confirmation | ❌ FAIL | P0 | Involves deletion but no secondary confirmation |
-| QD-S-5.3 Undeclared Environment Boundaries | ❌ FAIL | P0 | Operating on production environments is not prohibited |
-| QD-S-3.6 Metadata Expression Defects | ❌ FAIL | P1 | "maintenance" in name contradicts "diagnosis" in description |
-| QD-S-1.4 Permission Boundary Missing | ❌ FAIL | P0 | "Before taking any action" implies actions can be taken, but without limits |
+| QD-S-5.1 Read/Write/Delete Not Distinguished | ❌ FAIL | P0 | "maintenance"/"fixes" imply data modification capability (same root as 1.4 Permission Boundary Missing; deduplicated into this item) |
+| QD-S-5.3 Undeclared Environment Boundaries | ❌ FAIL | P0 | Target environment is unclear; the production operation set is unrestricted |
+| QD-S-3.6 Metadata Expression Defects | ❌ FAIL | P1 | name "maintenance" contradicts description "diagnosis" |
 | QD-S-4.1 Undefined Failure Behavior | ❌ FAIL | P0 | No handling strategy when diagnosis fails |
 
-#### 9.2.3 Inferential Verification
+> Note: QD-S-1.4 and QD-S-5.1 share the same root and are deduplicated into 5.1 per 11.6; QD-S-5.2 (high-risk confirmation) — because the original Skill does not declare deletion capability — reports "capability boundary unclear" rather than "deletion executable", which is "pending" rather than a direct P0 defect.
+
+#### 9.3.3 Inferential Verification
 
 **Defect QD-S-5.1: Read/Write/Delete Permissions Not Distinguished**
 
@@ -1678,8 +1984,9 @@ Be careful with sensitive data.
 
   If a user says "the data in this table is wrong," the LLM may infer that
   "needs fixing" is equivalent to "needs deletion or cleanup." This is precisely
-  one of the root causes of the Replit incident: ambiguous permission boundaries
-  are functionally equivalent to implicit authorization.
+  the typical cause of incidents where "an ambiguous permission boundary is
+  equivalent to implicit authorization" (such as publicly reported Agent data
+  deletion incidents).
 
 [Remediation Declaration]
   Rename the Skill to `readonly-database-diagnostic-reporter`
@@ -1697,10 +2004,12 @@ Be careful with sensitive data.
   for ambiguous inference. The permission boundary has moved from "ambiguous"
   to "absolutely clear," completely eliminating the permission overflow risk.
 
-[Verification Conclusion]Remediation is effective; risk eliminated. (Static Pass)
+[Verification Conclusion]Static defect remediated (Static Pass). Runtime effectiveness
+  still requires Risk Implicit / Quality dynamic validation; a static pass does not
+  mean runtime safety (see 0.1.2 and framework/core.md §1.4).
 ```
 
-#### 9.2.4 Optimized Skill
+#### 9.3.4 Optimized Skill
 
 ```markdown
 ---
@@ -1767,7 +2076,7 @@ Output limits:
 - If diagnostic fails: Return partial analysis and recommend engaging database administrator
 ```
 
-#### 9.2.5 Governance Effect
+#### 9.3.5 Governance Effect
 
 | Dimension | Before Governance | After Governance |
 | --- | --- | --- |
@@ -1780,22 +2089,71 @@ Output limits:
 
 ---
 
+<a id="part-10-relationship-to-other-sub-specifications"></a>
 ## Part 10: Relationship to Other Sub-Specifications
 
-<a id="101-placeholder-note"></a>
-### 10.1 Placeholder Note
+<a id="101-relationship-with-inspect-cross"></a>
+### 10.1 Relationship with Inspect Cross
 
-This chapter's full coordination relationships with Inspect Prompt and Inspect Tool require dedicated discussion, covering:
+Inspect Cross (QD-PS/PT/ST/SS/TT/CYC) runs after single-artifact inspection has passed with no unremediated P0 (cross.md §0.1.3). Division of labor with this document:
 
-- Integration of Inspect Skill / Inspect Prompt / Inspect Tool inspection processes
-- Cross-sub-specification defect propagation and linked remediation
-- Collaborative workflows in actual Agent applications
-- Priority management (when different sub-specifications give contradictory recommendations)
+- **Chained invocation loops / depth convergence** → Cross QD-CYC-1.1/1.2; this document's QD-S-5.4 does not set its own "depth ≤ 1" threshold;
+- **Trigger conflicts / name uniqueness (Skill↔Skill)** → Cross (QD-SS-4.1 / QD-SS-4.2, see cross.md Part 4.6);
+- **Cross-artifact ordering / contracts** (SOP preconditions, parameter contracts, failure-strategy consistency) → Cross QD-PT/ST, QD-PS-1.5;
+- This document judges only whether the trigger/order/failure declarations **inside a single Skill document** are complete.
 
-**Tentative: The content of this section is a key expansion area for future versions and will be supplemented after sufficient discussion.**
+<a id="102-relationship-with-inspect-permission"></a>
+### 10.2 Relationship with Inspect Permission
+
+Division of labor (permission.md §7.1.2): **this document judges "whether the boundary statements in this Skill document are complete"; QD-PM judges "whether the power boundary of this Agent as a whole is drawn and cannot be crossed"**. When both hit the same position, upstream precedence applies per permission.md §1.5.4; Permission marks it `INHERITED` and does not score it.
+
+- QD-S-5.1 ↔ QD-PM-3.1 (read/write/delete not distinguished): the positioning table in permission.md §5.3.1 already lists QD-S-5.1 as a related upstream item of QD-PM-3.1;
+- QD-S-5.3 environment boundaries ↔ QD-PM-2.4 environment boundaries (same name);
+- QD-S-5.2 high-risk confirmation ↔ QD-PM-6.3 human confirmation/approval precondition;
+- QD-S-5.4 chained invocation ↔ QD-PM-4.x propagation group (4.3/4.4/4.6).
+
+> **Note**: QD-S-5.2 in this document and QD-PM-6.3 have been unified under the "human decision point" framing — pre-authorization (effective authorization gating) applies to `OR-L1/L2` reversible, low-consequence operations; `OR-L3` irreversible or severe-consequence operations MUST require human confirmation/approval each time. Pre-authorization must come from the user/human and must not be self-granted by the model.
+
+<a id="103-relationship-with-risk-explicit"></a>
+### 10.3 Relationship with Risk Explicit
+
+This document judges only "declaration missing/inconsistent" (Inspect); explicit dangerous expressions (EX) are judged per risk/explicit.md. The two **do not automatically imply each other** (framework/relevance.md §2.3.1 prohibits the equation).
+
+- Hardcoded credentials/keys → EX·NR-S-9; anomalous callback URLs → NR-S-7; hardcoded PII → NR-S-10 (this document's QD-S-0.7 checks "reference existence" only and does not build its own secret scanning);
+- Explicit instruction-priority override → EX·NL-A-9 (this document checks only "whether the inheritance/override relationship is declared");
+- Sensitive data egress/export → EX D1 / NL-A-1 / NR-S-7 (Part 12 (Candidates) QD-S-5.5 in this document judges "declaration missing" only);
+- Tool name conflicts / near-miss misleading names → EX·NR-S-8 (do not double-count with Cross name uniqueness).
+
+<a id="104-relationship-with-risk-implicit"></a>
+### 10.4 Relationship with Risk Implicit
+
+Risk Implicit uses the QD-S defects produced by this document as input to generate attack samples (implicit.md §5). **An implicit result of B (externally blocked) or C (model refused) must not close this document's static defect** (AGENTS.md, relevance.md §2.4.1). A "Static Pass" in this document means only that the static defect has been remediated; runtime effectiveness requires Implicit/Quality dynamic validation.
+
+- External content instruction-data trust boundary (Part 12 candidate QD-S-2.5) → attack samples belong to Implicit (indirect injection is excluded by explicit.md §0.1.4).
+
+<a id="105-relationship-with-quality"></a>
+### 10.5 Relationship with Quality
+
+- Success criteria / completion claims (Part 12 candidate QD-S-4.6) → this document judges "whether declared"; "whether the task truly succeeded" belongs to Quality Tool-Agent §4.1.3 two-phase (BI-L) determination;
+- Idempotency / retry safety (Part 12 candidate QD-S-4.5) → this document judges "whether idempotency is declared"; duplicate side effects belong to Quality/Implicit (relevance.md FM-08/FM-10);
+- Uncertainty disclosure and human escalation → this document judges "whether declared"; output-side quality belongs to RAG-Agent (Category D safe response/handoff);
+- The Ratchet is a Quality mechanism (tool-agent.md §4.5, core.md Appendix A); the metadata requirements in this document only provide the precondition for version traceability.
+
+<a id="106-relationship-with-core-and-relevance"></a>
+### 10.6 Relationship with Core and Relevance
+
+- This document uses L1/L2/L3 as shorthand for `OR-L1/OR-L2/OR-L3` (**operational risk levels**, corresponding to core.md §4.3; see 7.3.2); this document does not use Agent complexity `AC-L` (that dimension is used by Inspect Prompt / Inspect Cross);
+- The five-state determination (7.4) aligns with core.md §5.3/§5.7/§6.2; "effective constraints/compensating controls" (7.5) aligns with core.md §6.2-6.4/§9.3 Exception;
+- Relevance is an L2 consumer and declares subordination (relevance.md §0.3.1) and does not add or delete QD IDs; renumbering or merging in this document MUST be synchronized with its §2.5, Appendix A.2, and SC/QC defect-chain references.
+
+<a id="107-instruction-priority-declaration"></a>
+### 10.7 Instruction Priority Declaration (Skill-Layer SHOULD)
+
+A Skill should declare its priority (inheritance/override relationship) when it conflicts with the System Prompt or user instructions. This document checks only "whether the inheritance/override relationship is declared"; "explicitly declaring a priority override" (using a Skill to override System Prompt safety constraints) belongs to Risk Explicit's `EX·NL-A-9` and is not judged again here. Severity: SHOULD (non-blocking).
 
 ---
 
+<a id="part-11-quantitative-scoring-mechanism"></a>
 ## Part 11: Quantitative Scoring Mechanism
 
 <a id="111-scoring-principles"></a>
@@ -1804,205 +2162,174 @@ This chapter's full coordination relationships with Inspect Prompt and Inspect T
 | Principle | Description |
 | --- | --- |
 | **Total score of 100** | Deduction-based: baseline score (100) − defect deductions |
-| **Weight ratio** | P0 : P1 : P2 = 5 : 3 : 1 |
-| **Level differentiation** | Different Skill Levels have different inspection item counts; per-item weight adjusts automatically |
-| **Mathematical self-consistency** | After all defect deductions, minimum score ≥ 0; maximum score = 100 |
-| **Simple rule** | For the same inspection item number, the weight is deducted only once regardless of how many defect instances are found |
-| **Gate condition** | Any P0 defect → evaluation FAIL (score is still output) |
+| **Fixed deductions** | P0 = 25, P1 = 15, P2 = 5 (preserving the 5:3:1 ratio, independent of the number of inspection items) |
+| **P0 cap** | When any P0 defect exists, the score is capped at 60 and Gate = FAIL (the score is for analysis only) |
+| **Same-root deduplication** | One root cause and the same harm path record only one defect instance and are deducted once (see 11.6) |
+| **Longitudinal comparability** | Scores are only for longitudinal comparison within the same level (`OR-L1/OR-L2/OR-L3`) (together with the Ratchet); cross-level comparison is not allowed |
+| **Gate condition** | Any P0 defect → evaluation FAIL; no P0 → PASS |
 
 <a id="112-calculation-steps"></a>
 ### 11.2 Calculation Steps
 
-**Step 1: Determine Skill Level** — Determine L1/L2/L3 according to Part 7
+**Step 1: Determine Skill Level** — Determine the `OR-L1/OR-L2/OR-L3` level according to Part 7
 
-**Step 2: Calculate Total Weight** — Total Weight = P0 inspection item count × 5 + P1 inspection item count × 3 + P2 inspection item count × 1
+**Step 2: Item-by-Item Determination** — Record each defect's level (P0/P1/P2) and its inspection item ID
 
-**Step 3: Calculate Base Score** — Base Score = 100 / Total Weight
+**Step 3: Same-Root Deduplication** — One root cause and the same harm path are recorded once (see 11.6)
 
-**Step 4: Determine Per-Defect Deduction Values**
+**Step 4: Fixed Deductions**
 
-- P0 defect deduction = Base Score × 5
-- P1 defect deduction = Base Score × 3
-- P2 defect deduction = Base Score × 1
+- P0 defect deduction = 25
+- P1 defect deduction = 15
+- P2 defect deduction = 5
 
-**Step 5: Calculate Total Deduction** — Total Deduction = Σ(deduction for each failed inspection item number, using the highest severity level)
+**Step 5: Calculate Actual Score** — Actual Score = max(100 − Total Deduction, 0)
 
-Note: The same inspection item is deducted only once, regardless of how many defect instances are found.
-
-**Step 6: Calculate Actual Score** — Actual Score = max(100 − Total Deduction, 0)
+**Step 6: P0 Cap** — When a P0 defect exists, Score = min(Score, 60)
 
 **Step 7: Gate Determination**
 
 ```
 if any P0 defect exists:
     evaluation result = FAIL
-    output score (for analysis)
+    output score (for analysis only)
 else:
     evaluation result = PASS
 ```
 
+> **Local conclusion statement**: This Gate is an Inspect-local conclusion only and does not mean framework-level releasability; "not inspected" / "insufficient evidence" items must not be recorded as pass (see 7.4). Releasability is determined by the release summary status in framework/core.md §6.2.
+
 <a id="113-inspection-item-distribution-table"></a>
 ### 11.3 Inspection Item Distribution Table
 
-#### L1 (Low Risk) Inspection Item Distribution
+> With fixed deductions, the distribution table no longer needs "total weight / base score". The table below lists only the number of **semantic inspection items** at each level (QD-S-0 is a gate and is not counted in scoring).
 
-| Level | Total Items | P0 Count | P1 Count | P2 Count | Total Weight | Base Score |
-| --- | --- | --- | --- | --- | --- | --- |
-| **L1** | 7 | 1 | 5 | 1 | 21 | 4.76 |
+| Level | Total Semantic Inspection Items | P0 Count | P1 Count | P2 Count |
+| --- | --- | --- | --- | --- |
+| **L1** | 8 | 0 | 7 | 1 |
+| **L2** | 23 | 5 | 17 | 1 |
+| **L3** | 24 | 17 | 6 | 1 |
 
-**L1 Inspection Item List**:
+**L1 Inspection Item List** (QD-S-0 is not scored):
 
-- QD-S-0 (MUST pass)
 - QD-S-1.1 (P1), QD-S-1.2 (P1)
 - QD-S-2.1 (P1)
-- QD-S-3.4 (P0), QD-S-3.6 (P1)
+- QD-S-3.1 (P1), QD-S-3.3 (P1)
+- QD-S-3.4 (P2), QD-S-3.6 (P1)
 - QD-S-4.1 (P1)
 
-#### L2 (Medium Risk) Inspection Item Distribution
+**L2 Inspection Item List** (QD-S-0 is not scored):
 
-| Level | Total Items | P0 Count | P1 Count | P2 Count | Total Weight | Base Score |
-| --- | --- | --- | --- | --- | --- | --- |
-| **L2** | 15 | 7 | 8 | 0 | 59 | 1.69 |
+- **P0 items**: QD-S-1.1, QD-S-1.3, QD-S-2.1, QD-S-2.2, QD-S-4.1
+- **P1 items**: QD-S-1.2, QD-S-1.4, QD-S-1.5, QD-S-2.3, QD-S-2.4, QD-S-3.1, QD-S-3.2, QD-S-3.3, QD-S-3.4, QD-S-3.5, QD-S-3.6, QD-S-3.7, QD-S-4.2, QD-S-4.3, QD-S-5.1, QD-S-5.3, QD-S-5.4
+- **Not applicable**: QD-S-5.2 (L2 has no irreversible operations)
+- **P2 items**: QD-S-4.4
 
-**L2 Inspection Item List**:
-
-- QD-S-0 (MUST pass)
-- **P0 items**: QD-S-1.1, QD-S-1.3, QD-S-2.1, QD-S-2.2, QD-S-3.4, QD-S-4.1
-- **P1 items**: QD-S-1.2, QD-S-1.4, QD-S-1.5, QD-S-2.3, QD-S-2.4, QD-S-3.1, QD-S-3.2, QD-S-3.3, QD-S-3.6, QD-S-4.2, QD-S-4.3, QD-S-5.1, QD-S-5.3, QD-S-5.4 (15 items total)
-
-#### L3 (High Risk) Inspection Item Distribution
-
-| Level | Total Items | P0 Count | P1 Count | P2 Count | Total Weight | Base Score |
-| --- | --- | --- | --- | --- | --- | --- |
-| **L3** | 30 | 18 | 10 | 2 | 122 | 0.82 |
-
-**L3 Inspection Item List**: All QD-S-0 through QD-S-5 inspection items
+**L3 Inspection Item List**: all QD-S-1 through QD-S-5 inspection items (QD-S-5.2 applies at L3 only)
 
 <a id="114-defect-deduction-value-table"></a>
 ### 11.4 Defect Deduction Value Table
 
-#### L1 Defect Deduction Values
+> Fixed deductions, independent of the number of inspection items.
 
-| Defect Level | Deduction Calculation | Deduction Value |
-| --- | --- | --- |
-| **P0** | 4.76 × 5 | 23.80 |
-| **P1** | 4.76 × 3 | 14.29 |
-| **P2** | 4.76 × 1 | 4.76 |
+| Defect Level | Deduction Value |
+| --- | --- |
+| **P0** | 25 |
+| **P1** | 15 |
+| **P2** | 5 |
 
-#### L2 Defect Deduction Values
-
-| Defect Level | Deduction Calculation | Deduction Value |
-| --- | --- | --- |
-| **P0** | 1.69 × 5 | 8.47 |
-| **P1** | 1.69 × 3 | 5.08 |
-| **P2** | 1.69 × 1 | 1.69 |
-
-#### L3 Defect Deduction Values
-
-| Defect Level | Deduction Calculation | Deduction Value |
-| --- | --- | --- |
-| **P0** | 0.82 × 5 | 4.10 |
-| **P1** | 0.82 × 3 | 2.46 |
-| **P2** | 0.82 × 1 | 0.82 |
+**P0 cap**: when a P0 defect exists, the final score = min(100 − total deduction, 60).
 
 <a id="115-scoring-examples"></a>
 ### 11.5 Scoring Examples
 
-#### Example 1: L1 Skill, 3 Defects Found
+#### Example 1: L1 Skill (WeeklyReportWriter)
 
-**Skill**: WeeklyReportWriter  
-**Level**: L1  
-**Inspection Checklist**: 7 items (QD-S-0, QD-S-1.1, QD-S-1.2, QD-S-2.1, QD-S-3.4, QD-S-3.6, QD-S-4.1)
+**Inspection Results** (corresponding to the inspection process in 9.1.2):
 
-**Inspection Results**:
-
-- QD-S-1.1 (P1): 1 defect found ✗
-- QD-S-3.4 (P0): 1 defect found ✗
-- QD-S-4.1 (P0): 1 defect found ✗
+- QD-S-1.1 (P1): Input Boundary Missing ✗
+- QD-S-1.2 (P1): Output Size Missing ✗
+- QD-S-3.3 (P1): Missing Ambiguous Input Handling ✗
+- QD-S-3.4 (P2): Undefined Task Scope ✗
+- QD-S-4.1 (P1): Undefined Failure Behavior ✗
 
 **Deduction Calculation**:
 
 ```
-Total Weight = 1×5 + 5×3 + 1×1 = 21
-Base Score = 100 / 21 = 4.76
+Defect deductions (fixed):
+- QD-S-1.1 (P1): 15
+- QD-S-1.2 (P1): 15
+- QD-S-3.3 (P1): 15
+- QD-S-3.4 (P2): 5
+- QD-S-4.1 (P1): 15
 
-Defect Deductions:
-- QD-S-1.1 (P1): 4.76 × 3 = 14.29
-- QD-S-3.4 (P0): 4.76 × 5 = 23.80
-- QD-S-4.1 (P0): 4.76 × 5 = 23.80
-
-Total Deduction = 14.29 + 23.80 + 23.80 = 61.89
-Score = 100 − 61.89 = 38.11
-Gate = FAIL (2 P0 defects exist)
+Total deduction = 15 + 15 + 15 + 5 + 15 = 65
+Score = 100 - 65 = 35
+Gate = PASS (no P0 defects)
 ```
 
 **Scoring Report**:
 
+> Fields follow the minimum Finding Record in framework/core.md §5.2: `finding_id` is the Finding instance ID and `rule_id` is the rule ID; `level` uses the `OR-L` prefix and severity uses the `Inspect·` prefix.
+
 ```json
 {
-  "check_id": "inspect-skill-20260710-001",
+  "check_id": "inspect-skill-20260910-001",
   "framework": "Inspect Skill",
   "skill_name": "weekly-report-writer",
-  "level": "L1",
-  "result": "FAIL",
-  "score": 38.11,
+  "level": "OR-L1",
+  "result": "PASS",
+  "score": 35,
   "defects": [
-    {"id": "QD-S-1.1", "severity": "P1", "desc": "Input Boundary Missing"},
-    {"id": "QD-S-3.4", "severity": "P0", "desc": "Undefined Task Scope"},
-    {"id": "QD-S-4.1", "severity": "P0", "desc": "Undefined Failure Behavior"}
+    {"finding_id": "F-ORG-20260910-001", "rule_id": "QD-S-1.1", "severity": "Inspect·P1", "status": "open", "desc": "Input Boundary Missing"},
+    {"finding_id": "F-ORG-20260910-002", "rule_id": "QD-S-1.2", "severity": "Inspect·P1", "status": "open", "desc": "Output Size Missing"},
+    {"finding_id": "F-ORG-20260910-003", "rule_id": "QD-S-3.3", "severity": "Inspect·P1", "status": "open", "desc": "Missing Ambiguous Input Handling"},
+    {"finding_id": "F-ORG-20260910-004", "rule_id": "QD-S-3.4", "severity": "Inspect·P2", "status": "open", "desc": "Undefined Task Scope"},
+    {"finding_id": "F-ORG-20260910-005", "rule_id": "QD-S-4.1", "severity": "Inspect·P1", "status": "open", "desc": "Undefined Failure Behavior"}
   ],
-  "recommendation": "All P0 defects MUST be remediated before release"
+  "recommendation": "No P0 defects; process P1/P2 items per their respective minimum disposition principles"
 }
 ```
 
-#### Example 2: L3 Skill, 5 Defects Found
+#### Example 2: L3 Skill (DatabaseDiagnosticReporter)
 
-**Skill**: DatabaseDiagnosticReporter  
-**Level**: L3  
-**Inspection Checklist**: 30 items (full)
+**Inspection Results** (corresponding to the inspection process in 9.3.2; 1.4 and 5.1 share the same root and are deduplicated per 11.6, merged into 5.1 here):
 
-**Inspection Results**:
-
-- QD-S-1.1 (P1): 1 defect found ✗
-- QD-S-3.4 (P0): 1 defect found ✗
-- QD-S-4.1 (P0): 1 defect found ✗
-- QD-S-5.1 (P0): 1 defect found ✗
-- QD-S-5.3 (P0): 1 defect found ✗
+- QD-S-5.1 (P0): Read/Write/Delete Not Distinguished ✗
+- QD-S-5.3 (P0): Undeclared Environment Boundaries ✗
+- QD-S-3.6 (P1): Metadata Expression Defects ✗
+- QD-S-4.1 (P0): Undefined Failure Behavior ✗
 
 **Deduction Calculation**:
 
 ```
-Total Weight = 18×5 + 10×3 + 2×1 = 122
-Base Score = 100 / 122 = 0.82
+Defect deductions (fixed):
+- QD-S-5.1 (P0): 25
+- QD-S-5.3 (P0): 25
+- QD-S-3.6 (P1): 15
+- QD-S-4.1 (P0): 25
 
-Defect Deductions:
-- QD-S-1.1 (P1): 0.82 × 3 = 2.46
-- QD-S-3.4 (P0): 0.82 × 5 = 4.10
-- QD-S-4.1 (P0): 0.82 × 5 = 4.10
-- QD-S-5.1 (P0): 0.82 × 5 = 4.10
-- QD-S-5.3 (P0): 0.82 × 5 = 4.10
-
-Total Deduction = 2.46 + 4.10 + 4.10 + 4.10 + 4.10 = 18.86
-Score = 100 − 18.86 = 81.14
-Gate = FAIL (4 P0 defects exist)
+Total deduction = 25 + 25 + 15 + 25 = 90
+Score = 100 - 90 = 10
+P0 cap: min(10, 60) = 10
+Gate = FAIL (3 P0 defects exist)
 ```
 
 **Scoring Report**:
 
 ```json
 {
-  "check_id": "inspect-skill-20260710-002",
+  "check_id": "inspect-skill-20260910-002",
   "framework": "Inspect Skill",
-  "skill_name": "readonly-database-diagnostic-reporter",
-  "level": "L3",
+  "skill_name": "database-maintenance-assistant",
+  "level": "OR-L3",
   "result": "FAIL",
-  "score": 81.14,
+  "score": 10,
   "defects": [
-    {"id": "QD-S-1.1", "severity": "P1", "desc": "Input Boundary Missing"},
-    {"id": "QD-S-3.4", "severity": "P0", "desc": "Undefined Task Scope"},
-    {"id": "QD-S-4.1", "severity": "P0", "desc": "Undefined Failure Behavior"},
-    {"id": "QD-S-5.1", "severity": "P0", "desc": "Read/Write/Delete Not Distinguished"},
-    {"id": "QD-S-5.3", "severity": "P0", "desc": "Undeclared Environment Boundaries"}
+    {"finding_id": "F-ORG-20260910-006", "rule_id": "QD-S-5.1", "severity": "Inspect·P0", "status": "open", "desc": "Read/Write/Delete Not Distinguished"},
+    {"finding_id": "F-ORG-20260910-007", "rule_id": "QD-S-5.3", "severity": "Inspect·P0", "status": "open", "desc": "Undeclared Environment Boundaries"},
+    {"finding_id": "F-ORG-20260910-008", "rule_id": "QD-S-3.6", "severity": "Inspect·P1", "status": "open", "desc": "Metadata Expression Defects"},
+    {"finding_id": "F-ORG-20260910-009", "rule_id": "QD-S-4.1", "severity": "Inspect·P0", "status": "open", "desc": "Undefined Failure Behavior"}
   ],
   "recommendation": "All P0 defects MUST be remediated before release"
 }
@@ -2011,93 +2338,136 @@ Gate = FAIL (4 P0 defects exist)
 <a id="116-multi-defect-handling-rules"></a>
 ### 11.6 Multi-Defect Handling Rules
 
-**Rule**: The same inspection item is deducted only once, regardless of how many defect instances are found.
+**Rule**: The same inspection item is deducted only once, regardless of how many defect instances are found (taking the highest defect level).
 
 **Examples**:
 
-**Scenario 1**: QD-S-1.1 (P1 inspection item, base score 4.76) — 3 P1 defects found
+**Scenario 1**: QD-S-1.1 (P1 inspection item) — 3 P1 defects found
 
 ```
-Deduction = One-time deduction of 14.29 (not 14.29 × 3)
+Deduction = one-time deduction of 15 (not 15 × 3)
 ```
 
-**Scenario 2**: QD-S-3.4 (P0 inspection item, base score 4.76) — 2 P0 defects and 1 P1 defect found
+**Scenario 2**: QD-S-3.4 (P2 inspection item) — 2 P2 defects and 1 P1 defect found
 
 ```
-This item's highest defect level is P0.
-Deduction = One-time deduction of 23.80 (not 23.80 + 23.80 + 14.29)
+This item's highest defect level is P1. Deduction = one-time deduction of 15 (not 5 + 5 + 15)
 ```
 
 **Scenario 3**: Cross-level defects found for the same inspection item number
 
 ```
-QD-S-2.1 (P1 inspection item): 1 P0 and 1 P1 defect found simultaneously
-→ Deduct at the most severe level, P0: deduction = 14.29 (if a P0 inspection item)
-  OR deduct at the item's own level, P1: deduction = 14.29 (by the inspection item's own level)
-→ Rule: Take the more severe of the defect level and the inspection item level; deduct only once
+QD-S-2.1 has 1 P0 and 1 P1 defect found simultaneously
+→ Take the most severe level P0; deduct only once = 25
+(Note: an inspection item's "default level" and its "instance determination level" are two
+ different concepts; the instance determination may be raised, and the basis and rationale
+ for the raise are recorded per the design principles in 7.2.)
 ```
+
+**Cross-ID same-root deduplication rule** (corresponding to the same-root issue in framework/core.md §7.5): one root cause and the same harm path record only one defect instance, may be associated with multiple rule IDs, and are deducted once. Typical same-root groups:
+
+- Operational permission boundary undeclared: QD-S-1.4 / QD-S-2.4 → QD-S-5.1
+- Input boundary / unbounded quantity: QD-S-2.1 → QD-S-1.1
+- Execution resources / termination condition: QD-S-2.2 → QD-S-1.3
+- Failure behavior / prohibited behaviors: QD-S-4.3 → QD-S-4.1
+
+The same finding must not be deducted repeatedly because it hits multiple same-root IDs. QD-S-3.3 / 3.5 / 4.2 are distinct defects (insufficient input / default branch / partial completion) and are not treated as the same root; QD-S-4.4 (error recovery) is an independent defect and is not merged into 4.1.
+
+> **Listing ≠ independent scoring**: To facilitate coverage verification, the §7.2 tiered checklists, Appendix A index, Appendix B minimum rule sets, and the §11.3 distribution table still list the above same-root items one by one by ID; such "listing" only means that coverage inspection is required and does not imply independent scoring — the scoring stage deduplicates per this section and deducts only once for the primary item.
 
 ---
 
+<a id="part-12-new-check-items-v1-1-candidates"></a>
+## Part 12: New Check Items (Candidates)
+
+> The check items listed in this section are **candidate additions** and have not yet been merged into the formal numbering of the corresponding QD-S-1~5 parts. Their attribution, severity, and cross-document relationships are given below; formal adoption requires synchronizing the mappings in framework/relevance.md and the division-of-labor boundaries with Inspect Permission / Inspect Cross (see Part 10 of this document).
+
+| Candidate Attribution | New Check Item | Severity (Proposed) | Definition and Cross-Document Annotation |
+| --- | --- | --- | --- |
+| **QD-S-5.5** | Output-side sensitive data redaction and egress boundary | L2 P1 / L3 P0 | Existing 1.5 limits the source only and 1.2 limits the length only; "can read ≠ can output/export/send verbatim". Requires declaring the field categories that must not be displayed and constraints on egress destinations. If "sensitive data egress" is an explicit dangerous expression it belongs to Risk Explicit (D1 / NL-A-1 / NR-S-7); this item judges "declaration missing" only and **does not automatically equate to EX** (see framework/relevance.md §2.3.1). |
+| **QD-S-2.5** | Instruction-data trust boundary for external content | L2 P1 / L3 P0 | Requires declaring that "tool returns / retrieved documents / file content are data only, not new instructions or authorization". This is definition-layer hygiene (Inspect); attack samples and injection resistance belong to Risk Implicit (see risk/implicit.md §5, which uses QD as input to generate injection samples). Note that risk/explicit.md §0.1.4 already excludes "indirect injection" from Explicit. |
+| **QD-S-4.5** | Idempotency / retry safety / unknown-result handling for operations with side effects | L3 P0 | 1.3/2.2 limit only the number of attempts and do not address duplicate payments or duplicate sends; "allowing retries without declaring idempotency" is itself a defect. Also incorporates the "result state contract (success/failure/partial/unknown/cancelled)". The declaration layer belongs to Inspect; duplicate side effects belong to Quality/Implicit (relevance.md FM-08/FM-10). |
+| **QD-S-5.6** | Impact radius of L3 write operations (per-batch limit / dry-run / rollback / audit trail) | L3 P1 (batch limit) / P0 (no limit whatsoever) | 5.2 requires confirmation only; after confirmation a large number of records may still be deleted at once. Corresponds to the core.md §4.3 OR-L3 control requirements (confirmation, approval, idempotency, audit, rollback). |
+| **QD-S-5.2 Extension** | Object binding of confirmation and authorization | Merged into 5.2 | **Proposed merge (not yet written into the formal definition)**: confirmation must come from the user personally and be bound to the specific operation/object/quantity/environment; a change of plan requires re-authorization; text in tool output must not substitute for confirmation. Permission proportionality belongs to Inspect Permission (QD-PM); see Part 10 of this document. |
+| **QD-S-4.6** | Success criteria / basis for completion claims | L3 P0 | Requires declaring "when completion may be claimed"; this must be based on explicit tool results, and plans, submissions, or timeouts must not be treated as success. Whether the task truly succeeded belongs to Quality Tool-Agent (tool-agent.md §4.1.3 two-phase determination). |
+| **QD-S-3.8** | Operational preconditions and execution order (SOP gating) | L3 P1 | L2/L3 business Skills list capabilities in unordered bullets and do not declare a "verify first, then execute" precondition gate, so the LLM skips steps. Cross-artifact ordering belongs to Inspect Cross (QD-PT/ST). |
+| **QD-S-3.9** | Fidelity of critical business parameters (order IDs, amounts, table names must come from original context values; placeholder probing prohibited) | L3 P0 | A source of "wrong-entity" incidents. Corresponds to relevance.md FM-04 parameter generation error. |
+| **QD-S-3.10** | Anchors for relative time and state baselines (basis for judging "expired"/"this week"/"recent", source of current time) | L3 P1 | The document's own example "clean up expired data" lacks this layer. |
+| **QD-S-3.3 Extension** | Uncertainty disclosure | L3 P1 | **Proposed extension (not yet written into the formal definition)**: 3.3 only prohibits fabrication and does not require marking uncertain conclusions as uncertain; applies to diagnostic scenarios. The Skill layer judges only "whether marking uncertainty is required", not "whether disclosure actually happens"; the latter belongs to Quality RAG-Agent (output quality). |
+| **QD-S-4.1 Incorporation** | Human escalation path | Merged into 4.1 | **Proposed merge (not yet written into the formal definition)**: the FAILURE dimension only has stop/ask; as one of 4.1's legitimate failure paths, it is not listed under a separate ID. |
+| **→ Inspect Cross** | Trigger conflicts / name uniqueness (overlap with other Skills) | Belongs to Cross | ✅ Already implemented in cross.md — new QD-SS-4.1 / QD-SS-4.2 (Part 4.6), outside this document's checklist. Note that "tool name conflicts" already belong to Risk Explicit NR-S-8; do not double-count. |
+| **→ Part 10** | Instruction priority declaration (which prevails in a conflict between Skill, System Prompt, and user instructions) | Skill-layer SHOULD | ✅ Already implemented in 10.7 of this document (a body clause, not a QD-S-numbered check item; not included in §7.2 or Appendix A). The Skill layer checks only "whether the inheritance/override relationship is declared". "Explicitly declaring a priority override" belongs to Risk Explicit NL-A-9; do not conflate. |
+
+---
+
+<a id="appendix-a-qd-s-index"></a>
 ## Appendix A: QD-S Complete Numbering Index
 
-| ID | Defect Name | Category | Severity Range (original SS-1/2/3) | Severity Range (updated to L1/2/3) | Inspection Method |
-| --- | --- | --- | --- | --- | --- |
-| **QD-S-0.1** | Required Field Presence | Baseline Compliance | MUST pass | MUST pass | Automated |
-| **QD-S-0.2** | Field Content Non-Empty | Baseline Compliance | MUST pass | MUST pass | Automated |
-| **QD-S-0.3** | Syntax Parsability | Baseline Compliance | MUST pass | MUST pass | Automated |
-| **QD-S-0.4** | Field Type Validity | Baseline Compliance | MUST pass | MUST pass | Automated |
-| **QD-S-0.5** | No Conflicting Declarations | Baseline Compliance | MUST pass | MUST pass | Automated |
-| **QD-S-0.6** | Minimum Structural Completeness | Baseline Compliance | MUST pass | MUST pass | Automated |
-| **QD-S-1.1** | Input Boundary Missing | Resource Runaway | SS-1:P1, SS-2:P0, SS-3:P0 | L1:P1, L2:P0, L3:P0 | Automated |
-| **QD-S-1.2** | Output Size Missing | Resource Runaway | SS-1:P1, SS-2:P1, SS-3:P0 | L1:P1, L2:P1, L3:P0 | Automated |
-| **QD-S-1.3** | Execution Resource Boundary Missing | Resource Runaway | SS-1:P2, SS-2:P0, SS-3:P0 | L1:P2, L2:P0, L3:P0 | Automated |
-| **QD-S-1.4** | Permission Boundary Missing | Resource Runaway | SS-1:P2, SS-2:P1, SS-3:P0 | L1:P2, L2:P1, L3:P0 | Human |
-| **QD-S-1.5** | Data Source Boundary Missing | Resource Runaway | SS-1:P2, SS-2:P1, SS-3:P1 | L1:P2, L2:P1, L3:P1 | Semi-automated |
-| **QD-S-2.1** | Unbounded Quantity Declaration | Unbounded Directive | SS-1:P1, SS-2:P0, SS-3:P0 | L1:P1, L2:P0, L3:P0 | Automated |
-| **QD-S-2.2** | Unterminated Execution Declaration | Unbounded Directive | SS-1:P1, SS-2:P0, SS-3:P0 | L1:P1, L2:P0, L3:P0 | Automated |
-| **QD-S-2.3** | Open-Ended Enumeration in Structure | Unbounded Directive | SS-1:P1, SS-2:P1, SS-3:P0 | L1:P1, L2:P1, L3:P0 | Automated |
-| **QD-S-2.4** | Broad Capability Verbs | Unbounded Directive | SS-1:P2, SS-2:P1, SS-3:P0 | L1:P2, L2:P1, L3:P0 | Human |
-| **QD-S-3.1** | Vague Trigger Conditions | Ambiguity-Induced Inference | SS-1:P1, SS-2:P1, SS-3:P0 | L1:P1, L2:P1, L3:P0 | Human |
-| **QD-S-3.2** | Missing Deactivation Conditions | Ambiguity-Induced Inference | SS-1:P2, SS-2:P1, SS-3:P0 | L1:P2, L2:P1, L3:P0 | Human |
-| **QD-S-3.3** | Missing Ambiguous Input Handling | Ambiguity-Induced Inference | SS-1:P1, SS-2:P1, SS-3:P0 | L1:P1, L2:P1, L3:P0 | Human |
-| **QD-S-3.4** | Undefined Task Scope | Ambiguity-Induced Inference | SS-1:P0, SS-2:P0, SS-3:P0 | L1:P0, L2:P0, L3:P0 | Human |
-| **QD-S-3.5** | Undeclared Default Behavior | Ambiguity-Induced Inference | SS-1:P1, SS-2:P1, SS-3:P0 | L1:P1, L2:P1, L3:P0 | Human |
-| **QD-S-3.6** | Metadata Expression Defects | Ambiguity-Induced Inference | SS-1:P1, SS-2:P1, SS-3:P0 | L1:P1, L2:P1, L3:P0 | Human |
-| **QD-S-4.1** | Undefined Failure Behavior | Failure Escalation | SS-1:P1, SS-2:P0, SS-3:P0 | L1:P1, L2:P0, L3:P0 | Human |
-| **QD-S-4.2** | Undeclared Partial Completion Legitimacy | Failure Escalation | SS-1:P1, SS-2:P1, SS-3:P0 | L1:P1, L2:P1, L3:P0 | Human |
-| **QD-S-4.3** | Missing Post-Failure Prohibited Behaviors | Failure Escalation | SS-1:P1, SS-2:P1, SS-3:P0 | L1:P1, L2:P1, L3:P0 | Human |
-| **QD-S-4.4** | Undefined Error Recovery Path | Failure Escalation | SS-1:P1, SS-2:P1, SS-3:P1 | L1:P1, L2:P1, L3:P1 | Human |
-| **QD-S-5.1** | Read/Write/Delete Not Distinguished | Permission Overflow | SS-1:P2, SS-2:P1, SS-3:P0 | L1:P2, L2:P1, L3:P0 | Human |
-| **QD-S-5.2** | Missing High-Risk Confirmation | Permission Overflow | SS-1:—, SS-2:—, SS-3:P0 | L1:—, L2:—, L3:P0 | Human |
-| **QD-S-5.3** | Undeclared Environment Boundaries | Permission Overflow | SS-1:P2, SS-2:P1, SS-3:P0 | L1:P2, L2:P1, L3:P0 | Human |
-| **QD-S-5.4** | Undeclared Chained Invocation Permissions | Permission Overflow | SS-1:P2, SS-2:P1, SS-3:P0 | L1:P2, L2:P1, L3:P0 | Human |
+> This table is the **single authoritative source** for level data. L1/L2/L3 are Skill operational risk levels (`OR-L`); see §0.2.3. The historical names SS-1/2/3 have been renamed to L1/L2/L3 (see the version history in 0.3.2).
+
+| ID | Defect Name | Category | Severity Range (`OR-L1/OR-L2/OR-L3`) | Inspection Method |
+| --- | --- | --- | --- | --- |
+| **QD-S-0.1** | Required Field Presence | Baseline Compliance | MUST pass | Automated |
+| **QD-S-0.2** | Field Content Non-Empty | Baseline Compliance | MUST pass | Automated |
+| **QD-S-0.3** | Syntax Parsability | Baseline Compliance | MUST pass | Automated |
+| **QD-S-0.4** | Field Type Validity | Baseline Compliance | MUST pass | Automated |
+| **QD-S-0.5** | No Conflicting Declarations | Baseline Compliance | MUST pass | Automated (candidate) → human review |
+| **QD-S-0.6** | Minimum Structural Completeness | Baseline Compliance | MUST pass | Automated |
+| **QD-S-0.7** | Dependency and Resource Presence | Baseline Compliance | MUST pass | Automated |
+| **QD-S-0.8** | Metadata Completeness | Baseline Compliance | MUST pass (configurable as platform-level) | Automated |
+| **QD-S-0.9** | Description Length Budget | Baseline Compliance | SHOULD | Automated |
+| **QD-S-1.1** | Input Boundary Missing | Resource Runaway | L1:P1, L2:P0, L3:P0 | Automated |
+| **QD-S-1.2** | Output Size Missing | Resource Runaway | L1:P1, L2:P1, L3:P1 | Automated |
+| **QD-S-1.3** | Execution Resource Boundary Missing | Resource Runaway | L1:P1, L2:P0, L3:P0 | Automated |
+| **QD-S-1.4** | Permission Boundary Missing | Resource Runaway | L1:P2, L2:P1, L3:P0 | Human |
+| **QD-S-1.5** | Data Source Boundary Missing | Resource Runaway | L1:P2, L2:P1, L3:P0 | Semi-automated |
+| **QD-S-2.1** | Unbounded Quantity Declaration | Unbounded Directive | L1:P1, L2:P0, L3:P0 | Automated |
+| **QD-S-2.2** | Unterminated Execution Declaration | Unbounded Directive | L1:P1, L2:P0, L3:P0 | Automated |
+| **QD-S-2.3** | Open-Ended Enumeration in Structure Declaration | Unbounded Directive | L1:P1, L2:P1, L3:P1 | Automated |
+| **QD-S-2.4** | Broad Capability Verbs | Unbounded Directive | L1:P2, L2:P1, L3:P0 | Human |
+| **QD-S-3.1** | Vague Trigger Conditions | Ambiguity-Induced Inference | L1:P1, L2:P1, L3:P0 | Human |
+| **QD-S-3.2** | Missing Deactivation Conditions | Ambiguity-Induced Inference | L1:P2, L2:P1, L3:P0 | Human |
+| **QD-S-3.3** | Missing Ambiguous Input Handling Strategy | Ambiguity-Induced Inference | L1:P1, L2:P1, L3:P0 | Human |
+| **QD-S-3.4** | Undefined Task Scope | Ambiguity-Induced Inference | L1:P2, L2:P1, L3:P1 | Human |
+| **QD-S-3.5** | Undeclared Default Behavior | Ambiguity-Induced Inference | L1:P1, L2:P1, L3:P0 | Human |
+| **QD-S-3.6** | Metadata Expression Defects | Ambiguity-Induced Inference | L1:P1, L2:P1, L3:P1 | Human |
+| **QD-S-3.7** | Output Structure Contract Missing | Ambiguity-Induced Inference | L1:P1, L2:P1, L3:P1 | Human |
+| **QD-S-4.1** | Undefined Failure Behavior | Failure Escalation | L1:P1, L2:P0, L3:P0 | Human |
+| **QD-S-4.2** | Undeclared Partial Completion Legitimacy | Failure Escalation | L1:P1, L2:P1, L3:P1 | Human |
+| **QD-S-4.3** | Missing Post-Failure Prohibited Behaviors | Failure Escalation | L1:P1, L2:P1, L3:P0 | Human |
+| **QD-S-4.4** | Undefined Error Recovery Path | Failure Escalation | L1:P2, L2:P2, L3:P2 | Human |
+| **QD-S-5.1** | Read/Write/Delete Not Distinguished | Permission Overflow | L1:P2, L2:P1, L3:P0 | Human |
+| **QD-S-5.2** | Missing High-Risk Operation Confirmation Mechanism | Permission Overflow | L1:—, L2:—, L3:P0 | Human |
+| **QD-S-5.3** | Undeclared Environment Boundaries | Permission Overflow | L1:P2, L2:P1, L3:P0 | Human |
+| **QD-S-5.4** | Undeclared Chained Invocation Permissions | Permission Overflow | L1:P2, L2:P1, L3:P0 | Human |
 
 ---
 
 <a id="appendix-b-l1l2l3-minimum-rule-sets"></a>
-## Appendix B: L1/L2/L3 Minimum Rule Sets
+## Appendix B: OR-L1/OR-L2/OR-L3 Minimum Rule Sets
 
-### L1 (Low Risk) Minimum Rule Set
+### OR-L1 (Low Risk) Minimum Rule Set
 
 **Must-Pass Item**:
 
 - QD-S-0 (Baseline Compliance)
 
-**Mandatory Inspection Items** (P0+P1):
+**Mandatory Inspection Items**:
 
 - QD-S-1.1: Input Boundary (P1)
 - QD-S-1.2: Output Size (P1)
 - QD-S-2.1: Unbounded Quantity (P1)
-- QD-S-3.4: Task Scope (P0)
+- QD-S-3.1: Trigger Conditions (P1)
+- QD-S-3.3: Ambiguous Input Handling (P1)
+- QD-S-3.4: Task Scope (P2)
 - QD-S-4.1: Failure Behavior (P1)
 - QD-S-3.6: Metadata (P1)
 
-**Optional Items** (P2):
+**Optional Inspection Items**:
 
-- QD-S-3.1, QD-S-3.2, QD-S-3.3
+- QD-S-3.2 (P2), QD-S-3.7 (P1)
 
-### L2 (Medium Risk) Minimum Rule Set
+### OR-L2 (Medium Risk) Minimum Rule Set
 
 **Must-Pass Item**:
 
@@ -2107,33 +2477,37 @@ QD-S-2.1 (P1 inspection item): 1 P0 and 1 P1 defect found simultaneously
 
 - QD-S-1.1, QD-S-1.3
 - QD-S-2.1, QD-S-2.2
-- QD-S-3.4
 - QD-S-4.1
 
-**Recommended Remediation Items** (P1):
+**Pre-Release Remediation Items** (P1):
 
 - QD-S-1.2, QD-S-1.4, QD-S-1.5
 - QD-S-2.3, QD-S-2.4
-- QD-S-3.1, QD-S-3.2, QD-S-3.3, QD-S-3.6
+- QD-S-3.1, QD-S-3.2, QD-S-3.3, QD-S-3.4, QD-S-3.5, QD-S-3.6, QD-S-3.7
 - QD-S-4.2, QD-S-4.3
 - QD-S-5.1, QD-S-5.3, QD-S-5.4
 
-### L3 (High Risk) Minimum Rule Set
+### OR-L3 (High Risk) Minimum Rule Set
 
 **Must-Pass Item**:
 
 - QD-S-0 (Baseline Compliance)
 
-**Mandatory Inspection Items** (all P0):
+**Mandatory Inspection Items** (P0):
 
-- QD-S-1.x (all)
-- QD-S-2.1, 2.2, 2.3, 2.4
-- QD-S-3.1, 3.2, 3.4, 3.5, 3.6
-- QD-S-4.1, 4.2, 4.3
+- QD-S-1.1, 1.3, 1.4, 1.5
+- QD-S-2.1, 2.2, 2.4
+- QD-S-3.1, 3.2, 3.3, 3.5
+- QD-S-4.1, 4.3
 - QD-S-5.1, 5.2, 5.3, 5.4
+
+**Pre-Release Remediation Items** (P1):
+
+- QD-S-1.2, QD-S-2.3, QD-S-3.4, QD-S-3.6, QD-S-3.7, QD-S-4.2
 
 ---
 
+<a id="appendix-c-glossary"></a>
 ## Appendix C: Glossary
 
 | Term | Definition | Related Defects |
@@ -2146,12 +2520,17 @@ QD-S-2.1 (P1 inspection item): 1 P0 and 1 P1 defect found simultaneously
 | **LLM Default Gap-Filling Behavior** | The LLM's tendency to fill behavioral gaps on its own when a Skill leaves scenarios undeclared | QD-S-1~5 |
 | **EX** | Explicit Risk — explicit attack risk | External |
 | **IM** | Implicit Risk — implicit logic risk | External |
-| **L1/L2/L3** | Skill Risk Levels (Low/Medium/High) | Inspection intensity classification |
+| **`OR-L1/OR-L2/OR-L3`** | Skill operational risk levels (Low/Medium/High) | Inspection intensity classification |
 | **P0/P1/P2** | Defect Levels (Blocking/Warning/Advisory) | Release decision |
 
 ---
 
+<a id="chapter-summaries"></a>
 ## Part Summaries
+
+### Part 1 Summary: Quality Defect Classification System Overview
+
+This part presents Inspect Skill's defect classification framework: the entry gate QD-S-0 Baseline Compliance plus five defect categories (QD-S-1 Resource Runaway, QD-S-2 Unbounded Directive, QD-S-3 Ambiguity-Induced Inference, QD-S-4 Failure Escalation, QD-S-5 Permission Overflow). The classification is based on **risk principle** rather than structural field: each category points to a risk mechanism in which the LLM expands its behavior on its own when constraints are missing or ambiguity exists.
 
 ### Part 2 Summary: QD-S-1 Resource Runaway
 
@@ -2182,7 +2561,7 @@ This part defines four categories of defects where the Skill actively includes u
 
 ### Part 4 Summary: QD-S-3 Ambiguity-Induced Inference
 
-This part defines six categories of defects where the Skill description contains semantic ambiguity or leaves critical scenarios undefined (trigger conditions, deactivation conditions, ambiguity handling, task scope, default behavior, metadata). When facing ambiguity, the LLM tends toward "reasonable assumptions" rather than stopping to ask, and the inferred results often exceed expectations.
+This part defines seven categories of defects where the Skill description contains semantic ambiguity or leaves critical scenarios undefined (trigger conditions, deactivation conditions, ambiguity handling, task scope, default behavior, metadata, output structure). When facing ambiguity, the LLM tends toward "reasonable assumptions" rather than stopping to ask, and the inferred results often exceed expectations.
 
 **Core Points**:
 
@@ -2192,8 +2571,9 @@ This part defines six categories of defects where the Skill description contains
 - No non_goals → task scope is expanded
 - No default behavior definition → LLM makes decisions on its own in exception scenarios
 - Metadata inconsistent with body → misunderstanding at the trigger stage
+- No output structure contract → LLM decides the format and fields on its own
 
-**Inspection Item Count**: 6
+**Inspection Item Count**: 7
 
 ### Part 5 Summary: QD-S-4 Failure Escalation
 
@@ -2223,13 +2603,13 @@ This part defines four categories of defects where unclear Skill permission boun
 
 ### Part 7 Summary: Skill Tiered Inspection Mechanism
 
-This part establishes a mechanism for differentiated inspection based on Skill Risk Level (L1/L2/L3). The same defect has different severity levels at different risk levels: a defect that may be P2 for a low-risk Skill becomes P0 (must-fix) for a high-risk Skill.
+This part establishes a mechanism for differentiated inspection based on Skill operational risk level (`OR-L1/OR-L2/OR-L3`). The same defect has different severity levels at different risk levels: a defect that may be P2 for a low-risk Skill becomes P0 (must-fix) for a high-risk Skill.
 
 **Core Points**:
 
-- L1 (Low Risk): 7 mandatory inspection items
+- L1 (Low Risk): QD-S-0 gate + 8 core checks
 - L2 (Medium Risk): All P0 items mandatory; P1 items recommended
-- L3 (High Risk): All 30+ items mandatory; no exceptions
+- L3 (High Risk): 24 mandatory items (17 P0 + 6 P1 + 1 P2); no exceptions
 
 **Significance of Tiering**:
 
@@ -2258,19 +2638,26 @@ The Review Schema is the Inspect Skill inspection Agent's internal working view,
 
 ### Part 9 Summary: Usage Examples
 
-Two real-world scenarios (L1 personal productivity, L3 enterprise operations) demonstrate the complete Inspect Skill workflow:
+Three real-world scenarios (L1 personal productivity, L2 enterprise data query, L3 enterprise operations) demonstrate the complete Inspect Skill workflow:
 
 **L1 Example (WeeklyReportWriter)**:
 
 - Original Skill appeared complete but lacked critical boundaries
-- Inspection identified 5 defects (2 P0, 3 P1)
+- Inspection identified 5 defects (4 P1, 1 P2)
 - After optimization: input/output/failure handling constraints are explicitly defined
 - Governance effect: From unconstrained to explicitly constrained
 
+**L2 Example (CustomerDataQuery)**:
+
+- The original Skill involved external data sources and sensitive data, but permissions, sources, and boundaries were undeclared
+- Inspection identified 4 defects (2 P0, 2 P1)
+- After optimization: read-only boundaries, data sources, and input/result limits are explicit
+- Governance effect: From broad queries to controlled read-only queries
+
 **L3 Example (DatabaseDiagnosticReporter)**:
 
-- Original Skill had permission inference ambiguity ("maintenance" vs. "read-only")
-- Inspection identified 6 defects (5 P0, 1 P1)
+- The original Skill had permission inference ambiguity ("maintenance" vs. "read-only")
+- Inspection identified 4 defects (3 P0, 1 P1; 1.4 and 5.1 are deduplicated as the same root, and 5.2 is "pending" because no deletion capability exists)
 - After optimization: Name changed to `readonly-xxx`; explicit prohibition list
 - Governance effect: From ambiguous permissions to explicit permissions
 
@@ -2281,8 +2668,16 @@ Two real-world scenarios (L1 personal productivity, L3 enterprise operations) de
 - Inferential Verification: Every remediation demonstrates risk elimination
 - Responsibility boundary: Output is for reference only; the developer makes the final decision
 
+### Part 10 Summary: Relationship to Other Sub-Specifications
+
+This part establishes the division-of-labor boundaries between Inspect Skill and Inspect Cross, Inspect Permission, Risk Explicit, Risk Implicit, Quality, and Core/Relevance: this document judges only "whether declarations inside a single Skill document are complete"; cross-artifact consistency belongs to Cross, overall permission proportionality to Permission, explicit dangerous expressions to Risk Explicit, runtime exploitability to Risk Implicit, and output quality to Quality. Numbering and levels take Appendix A as the single source, and Relevance is a consumer that does not change rules.
+
+### Part 11 Summary: Quantitative Scoring Mechanism
+
+This part adopts a **fixed deduction** model (P0=25, P1=15, P2=5, preserving the 5:3:1 ratio). When a P0 exists, the score is capped at 60 and Gate=FAIL. Same-root deduplication (one root cause deducted once) and the five-state determination (7.4) together ensure that scoring is not diluted by the number of inspection items; scores are only for longitudinal comparison within the same level, and the Gate is an Inspect-local conclusion that does not mean framework-level releasability.
+
 ---
 
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  September 2026
+v1.0  ·  October 2026

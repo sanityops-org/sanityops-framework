@@ -9,7 +9,7 @@ description: "Frequently asked questions about the SanityOps framework, its conc
 
 **Version**: v1.0
 
-**Release Date**: September 2026
+**Release Date**: October 2026
 
 **Maintained by**: Sanity AI Labs
 

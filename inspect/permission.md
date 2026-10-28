@@ -11,11 +11,104 @@ description: "Permission governance specification: mapping declared capabilities
 
 **Version**: v1.0
 
-**Release Date**: September 2026
+**Release Date**: October 2026
 
 **Maintained by**: Sanity AI Labs
 
 **License**: CC BY-SA 4.0
+
+---
+
+## Table of Contents
+
+- [Preface](#preface)
+  - [0.1 Positioning and Scope](#01-positioning-and-scope)
+  - [0.2 Terminology and Numbering System](#02-terminology-and-numbering-system)
+  - [0.3 Version Information](#03-version-information)
+- [Part I Permission Inspection Overview](#part-i-permission-inspection-overview)
+  - [1.1 Why Permissions Require Independent Inspection](#11-why-permissions-require-independent-inspection)
+  - [1.2 Basic Determination Structure of Inspection](#12-basic-determination-structure-of-inspection)
+  - [1.3 Inspection Inputs and Outputs](#13-inspection-inputs-and-outputs)
+  - [1.4 Classification Binding](#14-classification-binding)
+  - [1.5 Relationship with Other Inspect Subsets](#15-relationship-with-other-inspect-subsets)
+  - [1.6 Summary of This Part](#16-summary-of-this-part)
+- [Part II Extraction Layer — Construction of Permission Items and Responsibility Baselines](#part-ii-extraction-layer--construction-of-permission-items-and-responsibility-baselines)
+  - [2.0 Output Model (All Three Tables Delivered at Once)](#20-output-model-all-three-tables-delivered-at-once)
+  - [2.1 Baseline Filling Rules](#21-baseline-filling-rules)
+  - [2.2 Permission Item Filling Rules](#22-permission-item-filling-rules)
+  - [2.3 Merging and Splitting Rules](#23-merging-and-splitting-rules)
+  - [2.4 Identification and Change Tracking](#24-identification-and-change-tracking)
+  - [2.5 Extraction Failure Handling Summary Table](#25-extraction-failure-handling-summary-table)
+  - [2.7 Intra-Layer Dependency Relationships](#27-intra-layer-dependency-relationships)
+  - [2.8 Pending Arbitration Interfaces](#28-pending-arbitration-interfaces)
+- [Part III QD-PM-1 Permission Alignment](#part-iii-qd-pm-1-permission-alignment)
+  - [3.1 Inspection Relationship Explained](#31-inspection-relationship-explained)
+  - [3.2 Check Item Details](#32-check-item-details)
+  - [3.3 Localization and Remediation Suggestions](#33-localization-and-remediation-suggestions)
+  - [3.4 Summary](#34-summary)
+- [Part IV QD-PM-2 Permission Scope](#part-iv-qd-pm-2-permission-scope)
+  - [4.1 Inspection Relationship Explained](#41-inspection-relationship-explained)
+  - [4.2 Check Item Details](#42-check-item-details)
+  - [4.3 Localization and Remediation Suggestions](#43-localization-and-remediation-suggestions)
+  - [4.4 Summary](#44-summary)
+- [Part V QD-PM-3 Permission Granularity](#part-v-qd-pm-3-permission-granularity)
+  - [5.1 Inspection Relationship Explained](#51-inspection-relationship-explained)
+  - [5.2 Check Item Details](#52-check-item-details)
+  - [5.3 Localization and Remediation Suggestions](#53-localization-and-remediation-suggestions)
+  - [5.4 Summary](#54-summary)
+- [Part VI QD-PM-4 Permission Propagation](#part-vi-qd-pm-4-permission-propagation)
+  - [6.1 Inspection Relationship Explained](#61-inspection-relationship-explained)
+  - [6.2 Check Item Details](#62-check-item-details)
+  - [6.3 Localization and Remediation Suggestions](#63-localization-and-remediation-suggestions)
+  - [6.4 Summary](#64-summary)
+- [Part VII QD-PM-5 Permission Boundary](#part-vii-qd-pm-5-permission-boundary)
+  - [7.1 Inspection Relationship Explained](#71-inspection-relationship-explained)
+  - [7.2 Inspection Items Explained](#72-inspection-items-explained)
+  - [7.3 Positioning and Remediation Recommendations](#73-positioning-and-remediation-recommendations)
+  - [7.4 Summary](#74-summary)
+- [Part VIII QD-PM-6 Permission Auditability](#part-viii-qd-pm-6-permission-auditability)
+  - [8.1 Inspection Relationship Explained](#81-inspection-relationship-explained)
+  - [8.2 Inspection Items Explained](#82-inspection-items-explained)
+  - [8.3 Positioning and Remediation Recommendations](#83-positioning-and-remediation-recommendations)
+  - [8.4 Summary](#84-summary)
+- [Part IX Inspection Process, Gate-0, and Level Binding](#part-ix-inspection-process-gate-0-and-level-binding)
+  - [9.1 Process Overview](#91-process-overview)
+  - [9.2 Step 3 Gate-0 Prerequisite Verification](#92-step-3-gate-0-prerequisite-verification)
+  - [9.3 Step 4 Level Reading and Applicability Trimming](#93-step-4-level-reading-and-applicability-trimming)
+  - [9.4 Severity Level OR-L Binding](#94-severity-level-or-l-binding)
+  - [9.5 Step 7 Group-by-Group Inspection Sequence Constraints](#95-step-7-group-by-group-inspection-sequence-constraints)
+  - [9.6 Step 8 Overlap Adjudication](#96-step-8-overlap-adjudication)
+  - [9.7 Summary of This Part](#97-summary-of-this-part)
+- [Part X Location and Repair Mechanism](#part-x-location-and-repair-mechanism)
+  - [10.1 Location Mechanism](#101-location-mechanism)
+  - [10.2 Repair Mechanism](#102-repair-mechanism)
+  - [10.3 Handover Products to Downstream](#103-handover-products-to-downstream)
+  - [10.4 Summary of This Part](#104-summary-of-this-part)
+- [Part XI Inspection Timing and Ratchet Mechanism](#part-xi-inspection-timing-and-ratchet-mechanism)
+  - [11.1 Inspection Timing](#111-inspection-timing)
+  - [11.2 Ratchet Mechanism](#112-ratchet-mechanism)
+- [Part XII Quantitative Scoring Mechanism](#part-xii-quantitative-scoring-mechanism)
+  - [12.1 Scoring Principles](#121-scoring-principles)
+  - [12.2 Calculation Steps](#122-calculation-steps)
+  - [12.3 Inspection Item Distribution (Calibrated by `AC-L`)](#123-inspection-item-distribution-calibrated-by-ac-l)
+  - [12.4 Severity Level Distribution and Total Weight](#124-severity-level-distribution-and-total-weight)
+  - [12.5 Ratchet Impact on Scoring](#125-ratchet-impact-on-scoring)
+  - [12.6 Scoring Report Format](#126-scoring-report-format)
+  - [12.7 Summary of This Part](#127-summary-of-this-part)
+- [Part XIII Interface Specifications with Core / Inspect Other Subsets](#part-xiii-interface-specifications-with-core--inspect-other-subsets)
+  - [13.1 Interface Overview](#131-interface-overview)
+  - [13.2 Interface with Core](#132-interface-with-core)
+  - [13.3 Interface with Inspect Other Subsets](#133-interface-with-inspect-other-subsets)
+  - [13.4 Grouping Principles](#134-grouping-principles)
+  - [13.5 Output to Relevance Finding Specification](#135-output-to-relevance-finding-specification)
+  - [13.6 Out-of-Scope Matters (Reiteration)](#136-out-of-scope-matters-reiteration)
+- [Appendix A: Complete Inspection Item Index (43 Items)](#appendix-a-complete-inspection-item-index-43-items)
+- [Appendix B: Glossary](#appendix-b-glossary)
+- [Appendix C: End-to-End Walkthrough Example (SkyCare Airline Customer Service Agent)](#appendix-c-end-to-end-walkthrough-example-skycare-airline-customer-service-agent)
+- [Appendix D: Minimum Rule Sets (by `AC-L` Grade)](#appendix-d-minimum-rule-sets-by-ac-l-grade)
+- [Appendix E: Interface Schema](#appendix-e-interface-schema)
+- [Appendix F: Enterprise Platform Integration and Tool/Agent Separation Architecture Recommendations (Non-Normative)](#appendix-f-enterprise-platform-integration-and-toolagent-separation-architecture-recommendations-non-normative)
+- [References](#references)
 
 ---
 
@@ -25,7 +118,7 @@ description: "Permission governance specification: mapping declared capabilities
 
 #### 0.1.1 Position of This Subset Within the Framework
 
-The Inspect Permission Governance Specification (prefix `QD-PM`) is the **fifth subset of the Inspect dimension** in the SanityOps Framework, alongside Prompt (`QD-P`), Skill (`QD-S`), Tool (`QD-T`), and Cross (`QD-PS` / `QD-PT` / `QD-ST`).
+The Inspect Permission Governance Specification (prefix `QD-PM`) is the **fifth subset of the Inspect dimension** in the SanityOps Framework, alongside Prompt (`QD-P`), Skill (`QD-S`), Tool (`QD-T`), and Cross (`QD-PS` / `QD-PT` / `QD-ST` / `QD-SS` / `QD-TT` / `QD-CYC`).
 
 The other four subsets answer **"whether Logic Artifacts are written correctly and consistent with each other"**; this subset answers a separate question:
 
@@ -110,7 +203,7 @@ Permission inspection **must not** be executed in parallel with other Inspect su
 ```
 Step 1  Single-Artifact Inspection (QD-P / QD-S / QD-T)  
         → Fix all P0  
-Step 2  Cross-Artifact Inspection (QD-PS / QD-PT / QD-ST)  
+Step 2  Cross-Artifact Inspection (QD-PS / QD-PT / QD-ST / QD-SS / QD-TT / QD-CYC)  
         → Fix all P0  
 Step 3  Gate-0 Pre-check  
 Step 4  Permission Inspection (QD-PM)  
@@ -129,7 +222,7 @@ Step 3 verifies the following four conditions; all must be satisfied to proceed 
 | ID       | Prerequisite                                                   | Verification Method           |
 | -------- | -------------------------------------------------------------- | ----------------------------- |
 | **G0-1** | No unrepaired P0 in Single-Artifact Inspection (QD-P / QD-S / QD-T) | Read upstream inspection conclusions       |
-| **G0-2** | No unrepaired P0 in Cross-Artifact Inspection (QD-PS / QD-PT / QD-ST) | Read upstream inspection conclusions       |
+| **G0-2** | No unrepaired P0 in Cross-Artifact Inspection (QD-PS / QD-PT / QD-ST / QD-SS / QD-TT / QD-CYC) | Read upstream inspection conclusions       |
 | **G0-3** | Responsibility boundary statements exist and can be located to specific positions in Artifacts | Positional verification, locatable references required |
 | **G0-4** | For each Tool Schema, `name`, `description`, and parameter descriptions are complete and sufficient to determine operation semantics | Completeness verification          |
 
@@ -159,7 +252,7 @@ Examples:
   QD-PM-5.3   Permission Boundary Group, Item 3  
 ```
 
-The prefix `QD-PM` is isomorphic with existing Inspect subset prefixes `QD-P` / `QD-S` / `QD-T` / `QD-PS` / `QD-PT` / `QD-ST`.
+The prefix `QD-PM` is isomorphic with existing Inspect subset prefixes `QD-P` / `QD-S` / `QD-T` / `QD-PS` / `QD-PT` / `QD-ST` / `QD-SS` / `QD-TT` / `QD-CYC`.
 
 #### 0.2.2 Six Inspection Groups
 
@@ -259,13 +352,13 @@ Based on this, this subset establishes two binding rules:
 > **Rule 1 (Applicability determined by AC-L)**  
 > Whether a check item **is applicable** to this evaluation depends on whether the Agent's AC-L introduces the corresponding structural form.  
 > Example: Check items for multi-Agent delegation in the permission propagation group are only applicable under AC-L4; AC-L1 ~ AC-L3 do not have this form, so corresponding check items are marked N/A.  
-> **Supplement**: Check items marked as "conditional" in 9.3.3 are the only supplementary channel—their form availability is determined by OR-L or artifact facts (e.g., time constraint items require "time-period semantics or OR-L3"). Here OR-L only determines whether the form **exists**, not its severity; once applicability is confirmed, severity levels are still determined by Rule 2.
+> **Supplement**: Check items marked as "conditional" in 9.3.3 are the only supplementary channel—their form availability is determined by OR-L or artifact facts (e.g., time constraint items require "time-period semantics"). Here OR-L only determines whether the form **exists**, not its severity; once applicability is confirmed, severity levels are still determined by Rule 2 (see the 9.3.3 legend and footnotes; this does not violate the 9.4.4 anti-patterns).
 
 > **Rule 2 (Severity determined by OR-L)**  
 > The **severity level** (P0 / P1 / P2) of a defect depends on the OR-L of the operation corresponding to that permission.  
 > Example: For the same "permission scope exceeds responsibility requirements," when applied to read-only queries (OR-L1), it is classified as P1; when applied to production environment writes or data exfiltration (OR-L3), it is classified as P0.
 
-The significance of this separation is: **applicability of check items is a structural fact; severity of defects is a risk fact**. Confusing the two produces two types of systematic errors.
+The significance of this separation is: **applicability of check items is a structural fact; severity of defects is a risk fact**. Confusing the two produces two types of systematic errors—letting complexity determine severity underestimates simple but high-risk Agents (Core has explicitly stated that this combination really exists: an Agent that is structurally simple yet can read the full set of sensitive data may be `AC-L1` + `OR-L3`); letting risk determine applicability forces conclusions on forms that do not exist.
 
 ---
 
@@ -273,7 +366,7 @@ The significance of this separation is: **applicability of check items is a stru
 
 #### 1.5.1 Rationale: Why Permissions Deserve Extraction as an Independent Subset
 
-Existing Inspect subsets already contain scattered permission-related check items. Therefore, a question that must be answered directly: **Since these check items already exist, why create a new subset?**
+Existing Inspect subsets already contain scattered permission-related check items—the Skill subset has checks for insufficient permission boundary declarations and boundaries that can be broadly interpreted, and the Cross subset has items for Skill authorization consistency, permission boundary consistency, permission granularity consistency, and permission scope matching, many of which are included in the L1/L2/L3 minimum rule sets. Therefore, a question that must be answered directly: **Since these check items already exist, why create a new subset?**
 
 The answer is: In enterprise multi-Agent environments, fine-grained permission management has evolved from "one aspect of logical consistency" to an **independent security governance objective**. When an organization runs dozens to hundreds of Agents in parallel, delegating tasks to each other and sharing Tools and data channels, what governance needs to answer is no longer just "are this Agent's artifacts written consistently," but:
 
@@ -282,7 +375,7 @@ The answer is: In enterprise multi-Agent environments, fine-grained permission m
 - Do these powers combined constitute aggregated risks not visible within a single artifact?
 - When it delegates tasks, are powers narrowed or amplified?
 
-These questions **cannot be read from any single artifact or single artifact pair**; inspection must be reorganized with "permission" itself as the subject.
+These questions **cannot be read from any single artifact or single artifact pair**; inspection must be reorganized with "permission" itself as the subject. Extracting, optimizing, enriching, and systematizing the permission-related points scattered across the subsets so that they become a governance unit that can be executed independently, concluded independently, and integrated with downstream IAM and audit—this is precisely one of the core values of SanityOps as a **continuous governance framework** rather than a one-off inspection checklist.
 
 #### 1.5.2 Causes of Overlap
 
@@ -295,15 +388,15 @@ Permission and Cross have superficial overlap in check item names. This overlap 
 | Typical Conclusion | "Skill-declared operations exceed Prompt authorization scope" | "Although this operation is authorized by Prompt, the responsibility baseline cannot explain its necessity" |
 | Cases where both consistent but problems remain | Cannot detect | Can detect (artifacts consistently grant excessive permissions) |
 
-The key is in the last row: **Cross checks will pass when all artifacts are "consistently written wrong."**
+The key is in the last row: **Cross checks will pass when all artifacts are "consistently written wrong."** If Prompt, Skill, and Tool consistently declare that this Agent may delete production data, Cross determines full consistency; Permission instead asks which responsibility explains that deletion right, and creates an item when it cannot be explained. This is a blind spot that Cross structurally cannot cover.
 
 #### 1.5.3 Significance of Overlap
 
 Retaining this overlap is **intentional design**, for three reasons:
 
-1. **Defense in depth**: Permission is a secondary verification of Cross remediation actions.
-2. **Different determination bases**: Even when checking the same location, Cross bases its determination on another artifact's statement, while Permission bases its on the responsibility baseline.
-3. **Different output destinations**: Cross outputs serve artifact revision itself; Permission outputs also serve downstream permission baseline design and audit trails.
+1. **Defense in depth**: Permission is a secondary verification of Cross remediation actions. Remediation after Cross finds an inconsistency usually has two directions—narrowing the capability declaration or loosening the authorization declaration. The latter eliminates the Cross defect but may simultaneously create an excessive-permission problem. Permission runs after Cross precisely to catch such "new risks introduced by remediation."
+2. **Different determination bases**: Even when checking the same location, Cross bases its determination on another artifact's statement, while Permission bases its on the responsibility baseline. Different bases may yield different conclusions, and neither is redundant.
+3. **Different output destinations**: Cross outputs serve artifact revision itself; Permission outputs also serve downstream permission baseline design and audit trails, and therefore require an independent permission-responsibility mapping table and an independent score.
 
 #### 1.5.4 Handling Differences for Overlapping Hits
 
@@ -316,7 +409,7 @@ When the same location is hit by both Cross and Permission, handle according to 
 | Cross remediation complete, but proportionality **still does not hold** | Permission **independently creates item**, re-classifies according to this subset's numbering and determination basis (based on OR-L), counts normally |
 | Only Permission hits (Cross determined consistent) | Permission independently creates item, counts normally |
 
-> **Scoring Independence Principle**: Permission scores are **mutually independent** from other Inspect subset scores and must not be weighted and combined into a single composite score.
+> **Scoring Independence Principle**: Permission scores are **mutually independent** from other Inspect subset scores and must not be weighted and combined into a single composite score. The purpose of the `INHERITED` marker is to prevent the same defect from being punished twice within the framework, not to establish score dependencies between subsets.
 
 ---
 
@@ -328,7 +421,7 @@ When the same location is hit by both Cross and Permission, handle according to 
 | **Core Question** | Whether power and responsibility are proportional (including both excessive and insufficient directions) |
 | **Execution Position** | Last in four-stage sequence, executes after Gate-0 passes |
 | **When Prerequisites Not Met** | No list, no score, outputs "assessment cannot be effectively executed" signal, aggregated by Core as ERROR |
-| **Classification Binding** | Applicability determined by AC-L (mark N/A if not applicable; "conditional" items triggered by artifact facts or OR-L); severity levels determined by OR-L |
+| **Classification Binding** | Applicability determined by AC-L (mark N/A if not applicable; "conditional" items are additionally triggered by artifact facts or OR-L, see 9.3.3); severity levels determined by OR-L |
 | **Inspection Groups** | Six groups: Permission Alignment / Scope / Granularity / Propagation / Boundary / Auditability |
 | **Relationship with Cross** | Different ways of asking (consistency vs proportionality); overlap is defense in depth; overlapping hits marked INHERITED without double-counting |
 | **Boundary Discipline** | IAM deployment, runtime execution, and monitoring are downstream integration interfaces, not capability commitments of this framework |
@@ -437,7 +530,11 @@ Reasons:
 2. Ambiguity is a **local** fact; Gate-0 manages **global** admission, granularity mismatch.
 3. After `UNRESOLVED` passes down, 1.4 has corresponding check items to catch it.
 
-**Boundary**: After expansion, no Class D statements are valid (entire Prompt consists of covering verbs) → belongs to G0-3's "substantive absence", return to Gate-0. Criterion is **quantity**, not quality.
+**Boundary**: After expansion, no Class D statements are valid (entire Prompt consists of covering verbs) → belongs to G0-3's "substantive absence", return to Gate-0.
+
+> **Substantive Absence Criteria (see §2.8 ruling 1)**: satisfying either one constitutes "substantive absence" and returns to Gate-0—
+> 1. **Quantity criterion**: after expansion, not a single Class D statement holds;
+> 2. **Substantive criterion**: among the Class D statements that hold, **at least one must involve an actual business process (including verifiable objects and actions)**—if all Class D statements are vague one-line declarations (e.g., "properly handle user matters", with no verifiable object or action), it is likewise treated as substantive absence.
 
 ---
 
@@ -472,6 +569,8 @@ Misses almost all come from "only scanned T channel".
 > Both are **declarations within the workpiece**, belonging to facts checkable by this subset. **The core action of A channel is difference verification with T channel**: when credential declaration is wider than tool declaration, it's a solid defect source (connects to 4.8, 6.7). Not scanning A channel, this line is never visible.  
 > **Boundary (reiterating 0.1.4)**: A channel only reads credentials and authorization scope declared in the workpiece, not actual policy configurations in IAM/IdP; when workpiece does not declare credential scope, route per 4.8/6.5's "incomplete permission set", must not be filled by runtime detection.
 
+> **Attribution Ruling (see §2.8 item 3)**: The difference between the credential declaration and the Tool declaration is recorded in the "Credential Declaration" subfield of the same permission row in the permission item table (§2.2.3), without creating a separate A-channel row; when producing the mapping table, it is marked in an independent difference column.
+
 #### 2.2.3 Field Values
 
 | Field | Value | When Missing |
@@ -484,6 +583,7 @@ Misses almost all come from "only scanned T channel".
 | Condition Axis | Under what prerequisites can be executed | Not declared → `∅` |
 | Accepts Input | Data domain consumed by this operation | Not declared → `∅` |
 | Produces Output | Data domain produced by this operation | Not declared → `∅` |
+| Credential Declaration | Description of differences from the Tool declaration (output of A-channel verification, §2.2.2) | No difference or no credential verification → `—` |
 | Location | Position in Prompt / Skill / Tool layers respectively | Required (§2.4.4) |
 
 Four axes are taken from the scope group's dimension decomposition (resource / data / environment / condition).
@@ -517,6 +617,8 @@ It parallels the other two forms:
 1. Replacing list with identity ("has same permissions as operations engineer");
 2. Open loading ("call required tools as needed");
 3. **Operation objects determined by actual arguments** (this section).
+
+> **Routing (ruling)**: The corresponding check item for this form, "parameterized tool operation allowlist", is routed to **QD-T-3.7 (parameterized tool operation allowlist not declared, Inspect Tool Schema)**—determining whether parameterized/open-ended tools (`sql_query`/`exec`/`http_request`/`eval`, etc.) declare an operation allowlist (table names/commands/domains); see `inspect/tool.md`. The Permission side retains linkage: when that QD-T item hits, this subset handles it as a "non-closed set" under §2.5.1 priority 2, connecting to the §9.5 blocking point.
 
 **All three are set-level, follow §2.5's blocking point path, must not be downgraded to item-level `?`.** Treating it as "unclear semantics" systematically underestimates severity.
 
@@ -597,14 +699,16 @@ Re-check matches previous round's mapping table by fingerprint: match found → 
 
 #### 2.4.3 Change Type (Required)
 
-| Value | Meaning |
-| ----- | ------- |
-| `NEW` | Did not exist in previous round |
-| `SPLIT` | Split from one item into multiple |
-| `MERGED` | Merged from multiple items into one |
-| `NARROWED` | Scope narrowed |
-| `REMOVED` | Disappeared in this round |
-| `—` | No change |
+| Value | Meaning | Cross-Round Verification |
+| ----- | ------- | ------------------------ |
+| `NEW` | Did not exist in previous round | Marked directly in this round based on extraction action |
+| `SPLIT` | Split from one item into multiple | Backfilled in the next round after cross-round comparison confirmation |
+| `MERGED` | Merged from multiple items into one | Backfilled in the next round after cross-round comparison confirmation |
+| `NARROWED` | Scope narrowed | Marked directly in this round based on extraction action |
+| `REMOVED` | Disappeared in this round | Marked directly in this round based on extraction action |
+| `—` | No change | — |
+
+> **Output Timing (see §2.8 ruling 2)**: `NEW` / `NARROWED` / `REMOVED` are marked directly in this round based on extraction actions; `SPLIT` / `MERGED` can only be confirmed by cross-round comparison—after confirmation, backfill the "Cross-Round Verification" column in the next round. Single-round inspection still does not produce this field, per §2.4.5.
 
 > **Why only marking `NEW` is insufficient**: When splitting `order_admin` per §2.3.1, inevitably "old ID disappears, three new IDs appear". Without change type, ratchet would record a **successful granularity repair** as silent addition, repair recorded as degradation.
 
@@ -667,82 +771,30 @@ When both hit simultaneously, **route by 3.3/4.8, mark 6.5 as `INHERITED`** (in 
 
 **Extraction layer failures must manifest as a visible object in the table, not blanks outside the table.** Allow leaving a row with "operation semantics = `?`", prohibit skipping that row.
 
----
-
-### 2.6 Sensitivity Classification Table
-
-#### 2.6.1 Positioning and Applicable Boundaries (Must Be Hardcoded)
-
-This table is **the evidence table for generating severity level (P0/P1/P2) values**, not the rating rules themselves. Severity levels are determined by `OR-L` basic mapping plus adjustment rules: three independent rules (R1 fixed priority, R3 aggregate value, R4 structural elevation) and two inline rules (R2 highest value, R5 reviewability cap), see 9.4.2.
-
-Therefore this table **explicitly does not apply** to the following two categories:
-
-- **Items covered by R1 fixed levels** — 3.4, 5.4, 6.3, 6.5 are fixed P0, 6.7 is fixed P1, not subject to `OR-L` adjustment;
-- **Items covered by R3 aggregation** — 1.6, 3.6 rated by combined achievable effects, their combined effects derived from I/O connections in §2.2.3, not summed from this table item by item.
-
-This table's sole purpose: fill gaps when check items say "depends on sensitivity", avoiding reviewers relying on intuition.
-
-#### 2.6.2 Dimension One: Irreversibility
-
-| Level | Operation |
-| ----- | --------- |
-| IR-A | Delete, irreversible write, funds / permission changes |
-| IR-B | Reversible write, status changes |
-| IR-C | Exfiltrate (data leaves controllable boundary) |
-| IR-D | Read |
-
-> IR-C listed separately rather than merged into IR-D: exfiltration although "just reading", but read data goes external, cannot be recalled. Its irreversibility is IR-A, impact scope is IR-D, mixing into either would distort.
->
-> **Notation note**: `IR` = Irreversibility Rank. This notation is proprietary to this table, unrelated to `A/B/C/D` as Risk Implicit attack use case termination states in Core, must not cross-reference.
-
-#### 2.6.3 Dimension Two: Data Sensitivity
-
-| Level | Data |
-| ----- | ---- |
-| 1 | Identity credentials, keys, payment information |
-| 2 | Personal identity information, health, financial details |
-| 3 | Internal business data |
-| 4 | Public or anonymized data |
-
-#### 2.6.4 Calibration Values
-
-**The following table contains calibration values; individual cells may be adjusted per R1~R5.** (It is not derived from a formula, but engineering calibration results — do not use "take stricter" to explain it, that doesn't work: IR-A with sensitivity 3, IR-B with sensitivity 2, IR-D with sensitivity 1 are all P1.)
-
-| | 1 | 2 | 3 | 4 |
-| - | - | - | - | - |
-| **IR-A** | P0 | P0 | P1 | P1 |
-| **IR-B** | P0 | P1 | P1 | P2 |
-| **IR-C** | P0 | P0 | P1 | P2 |
-| **IR-D** | P1 | P1 | P2 | P2 |
-
-#### 2.6.5 Handling When Data Axis Unknown
-
-When data axis is `∅` or `?`, **treat as dimension two level 2**, and mark "sensitivity inferred" in mapping table.
-
-> Why not use strictest level 1: would make every permission without declared data scope become P0, report flooded, losing priority distinction — engineering-wise "all red lights equals no red lights". Treating as level 2 maintains conservative tendency while preserving layering. And "sensitivity inferred" annotation itself is a pending clarification item, does not disappear.
+> **Note**: This section has no 2.6. The former §2.6 "Sensitivity Classification Table" was a zero-reference dangling table and has been removed in its entirety; the number is retained to keep the subsequent section numbers (2.7–2.8) unchanged.
 
 ---
 
 ### 2.7 Intra-Layer Dependency Relationships
 
 ```
-§2.1 Responsibility Baseline ──► §2.2 Permission Items ──► §2.3 Deduplication/Merging ──► §2.4 Identification and Change
-(Reference Frame)      (Objects)               (Set)                        (Identification)
-                       ▲                                                        │
-                       │                                                        ▼
-                 §2.5 Failure Handling (Horizontal Interface)          §2.6 Sensitivity (Attribute Mounting)
+§2.1 Responsibility Baseline ──► §2.2 Permission Items ──► §2.3 Deduplication/Merging ──► §2.4 Identification and Change  
+(Reference Frame)              (Objects)                 (Set)                         (Identification)  
+                               ▲
+                               │
+                 §2.5 Failure Handling (Horizontal Interface)
 ```
 
-First three are unidirectional dependencies, order cannot be swapped. §2.5 horizontally connects all four-level routings; §2.6 mounts on IDs produced by §2.4, can be drafted independently.
+The first three are unidirectional dependencies, order cannot be changed. §2.5 horizontally connects all four-level routings.
 
 ---
 
 ### 2.8 Pending Arbitration Interfaces
 
-1. **§2.1.4's "substantive absence" criterion** — Is "no Class D valid after expansion" as criterion sufficient, or need to add other conditions. Currently quantity criterion, may be bypassed by "wrote one vague Class D".
-2. **§2.4.3 change type output timing** — `SPLIT`/`MERGED` only known when cross-round comparing, but must be written when filling table this round. Is it left empty for next round backfill, or directly determined this round by extraction action.
-3. **§2.2.2 A channel attribution** — Credential declaration vs Tool declaration differences, are they recorded in permission item table (one more A channel row), or as independent difference list. Former makes same permission appear in two rows, latter makes mapping table no longer self-sufficient.
-4. **§2.2.5 parameterized tool routing target** — Parameterized tools "operation objects determined by actual arguments", current §2.5.1 priority 2 routes to blocking points 3.3 / 4.8; but 3.3's determination object is "replacing specific operation authorization with role or identity", 4.8 is "permissions introduced via external protocols or external services", neither characterizes "non-closed set" this form. Whether to add dedicated check item or routing, pending arbitration.
+1. **§2.1.4's "substantive absence" criterion**—on top of the quantity criterion ("after expansion, not a single Class D statement holds"), a substantive criterion is superimposed: **at least one Class D statement must involve an actual business process (including verifiable objects and actions)**; vague one-line declarations do not count.
+2. **§2.4.3 change type output timing**—this round marks `new` / `narrowed` / `removed` directly based on extraction actions; `SPLIT` / `MERGED` are backfilled into the "Cross-Round Verification" column in the next round only upon cross-round comparison.
+3. **§2.2.2 A-channel attribution**—the difference between the credential declaration and the Tool declaration is recorded in the permission item table as the "Credential Declaration" subfield of the same permission row; when producing the mapping table, it is marked in an independent difference column.
+4. **§2.2.5 parameterized tool routing destination**—the "operation objects determined by actual arguments" non-closed-set form of parameterized tools is routed to **QD-T (Inspect Tool Schema)**: a new check item "parameterized tool operation allowlist" (see `inspect/tool.md`). The Permission side retains linkage: when that QD-T item hits, this subset handles it as a non-closed set under §2.5.1 priority 2, connecting to the §9.5 blocking point.
 
 ---
 ## Part III QD-PM-1 Permission Alignment
@@ -859,7 +911,7 @@ Determination cannot rely on literal good faith of Tool names. Names like `sync_
 | **Determination** | In the permission-responsibility mapping table produced by inspection, there exists permission items with no determination given (neither marked "proportional" nor "excessive/insufficient") |
 | **Nature** | Process completeness check item, ensuring this group has no silent omissions |
 | **Applicability** | Applicable to all levels |
-| **Severity Level** | Always P1 (when uncovered item involves `OR-L3` operation, P0) |
+| **Severity Level** | Always P2 (process completeness item; not elevated by `OR-L`) |
 
 ---
 
@@ -976,7 +1028,7 @@ From this, **8 check items** are derived for this group.
 | **Applicability** | Applicable to all levels |
 | **Severity Level** | Permission contains write or delete → P0; read-only → P1 |
 
-The Inspect Skill subset has already listed "environment boundary not declared" as a P0-level defect form; this item inherits the same qualitative determination from the permission perspective, but severity is now driven by `OR-L`.
+The Inspect Skill subset has already listed "environment boundary not declared" as a defect form (P0 under `OR-L3`); this item inherits the same qualitative determination from the permission perspective, but severity is now driven by `OR-L`.
 
 #### **QD-PM-2.5 No operation magnitude upper limit**
 
@@ -992,7 +1044,7 @@ The Inspect Skill subset has already listed "environment boundary not declared" 
 | Item | Content |
 | ---- | ------- |
 | **Determination** | High-risk permission does not declare executable time window, or does not declare credential/authorization validity period requirement |
-| **Applicability** | Only applicable when responsibility baseline itself contains time-period semantics (e.g., "process approvals during work hours") or the permission is `OR-L3`; otherwise mark `N/A` |
+| **Applicability** | Only applicable when the responsibility baseline itself explicitly contains time-period semantics (e.g., "process approvals during work hours", periodic execution); otherwise mark `N/A` |
 | **Severity Level** | `OR-L3` → P1; `OR-L2` → P2 |
 | **Scope Note** | This item only checks whether **declared** in workpiece; does not check token expiration engineering implementation (belongs to deployment layer, see 0.1.4) |
 
@@ -1004,6 +1056,8 @@ The Inspect Skill subset has already listed "environment boundary not declared" 
 | **Risk Nature** | LLM-driven retry loops can amplify a single acceptable operation into continuous side effects |
 | **Applicability** | Only applicable to permissions with side effects (read-only permissions mark `N/A`) |
 | **Severity Level** | Irreversible operation `OR-L3` → P0; reversible write `OR-L2` → P1 |
+
+> **Layering and Division of Labor**: This item checks the **proportionality** of Agent-level responsibility-permission (whether a frequency/idempotency upper limit is declared); consistency checks of artifact-level business-rate/batch expectations (call magnitude in Prompt/Skill, `max_tool_calls`, Tool's `limit.maximum`/`maxItems`) belong to Inspect Cross QD-PT-2.6 / QD-ST-3.4. Runtime Harness/gateway rate-limiting fallback **does not equal** a business applicability upper limit, and this item must not be cancelled on the grounds that "the Harness has a fallback" (see Inspect Cross §7.4).
 
 #### **QD-PM-2.8 Declared scope constraint inconsistent with actually reachable scope**
 
@@ -1052,7 +1106,7 @@ The Inspect Skill subset has already listed "environment boundary not declared" 
 | **Core Question** | For permissions already determined proportional, whether their scope of action is narrowed to responsibility requirements |
 | **Check Item Count** | 8 (2.1 resource / 2.2 affiliation / 2.3 fields / 2.4 environment / 2.5 magnitude / 2.6 time / 2.7 frequency / 2.8 constraint failure) |
 | **Four Axes** | Resource Axis, Data Axis, Environment Axis, Condition Axis |
-| **High N/A Items** | 2.5 (requires batch form), 2.6 (requires time-period semantics or `OR-L3`), 2.7 (requires side effects) |
+| **High N/A Items** | 2.5 (requires batch form), 2.6 (requires time-period semantics), 2.7 (requires side effects) |
 | **Prerequisite Dependency** | Only executed on permissions determined "proportional" by QD-PM-1 |
 
 ---
@@ -1100,7 +1154,7 @@ From this, **6 check items** are derived for this group.
 | **Applicability** | Applicable to all levels |
 | **Severity Level** | Bundle contains delete or production write (`OR-L3`) → P0; contains reversible write (`OR-L2`) → P1 |
 
-The Inspect Skill subset has already listed "read/write/delete permissions not distinguished" as a P0 defect, and noted that wording like `maintenance`, `fixes` implies modifiable data. This item uses the same identification signal from the permission perspective, with severity driven by `OR-L`.
+The Inspect Skill subset has already listed "read/write/delete permissions not distinguished" as a defect form (P0 under `OR-L3`), and noted that wording like `maintenance`, `fixes` implies modifiable data. This item uses the same identification signal from the permission perspective, with severity driven by `OR-L`.
 
 #### **QD-PM-3.2 Operations of different risk levels share same permission item**
 
@@ -1501,6 +1555,8 @@ From this, **7 inspection items** are derived for this group.
 | **Severity Level** | Exemption can cover `OR-L3` operation → P0; otherwise P1 |
 | **Relationship with Core** | Exceptions must be handled per Core's exception management requirements, cannot exist as free expressions in artifact |
 
+> **Implicit Exemption (Clarification)**: Timeout default approval constitutes an implicit exemption channel. For `OR-L3` operations, this channel does not hold (`OR-L3` does not accept pre-authorization; see QD-PM-6.3 / QD-S-5.2); for `OR-L1/L2` operations, trigger conditions, approver, effective scope, and audit trail requirements must be satisfied.
+
 ---
 
 ### 7.3 Positioning and Remediation Recommendations
@@ -1609,11 +1665,13 @@ From this, **7 inspection items** are derived for this group.
 
 | Item | Content |
 | ------------- | --------------------------------------------------------------- |
-| **Determination** | Irreversible or high-impact operation does not require human confirmation/approval |
+| **Determination** | Irreversible or high-impact operations (`OR-L3`) do not require human confirmation or approval every time |
 | **Difference from 3.4** | 3.4 determines "whether operation is split out as independent permission item" (granularity); 6.3 determines "whether human decision point is bound" (control strength). 3.4 is prerequisite for 6.3 |
 | **Applicability** | Only applicable when holding `OR-L3` permission; otherwise `N/A` |
 | **Severity Level** | Always P0 |
 | **Basis** | Core's confirmation and approval requirements for high `OR-L` operations |
+
+> **Timeout Default Disposition (Clarification)**: For `OR-L3` operations, pre-authorization (including timeout default approval) does not satisfy this item's requirements; if the default disposition after timeout is approval, it is directly judged P0. Pre-authorization applies only to reversible, low-consequence `OR-L1/L2` operations, and must come from the user/human, not self-authorized by the model (see QD-S-5.2).
 
 #### **QD-PM-6.4 Permission usage decision basis not reconstructable**
 
@@ -1638,7 +1696,7 @@ From this, **7 inspection items** are derived for this group.
 
 | Item | Content |
 | ---------- | ----------------------------------------------- |
-| **Determination** | Artifact does not declare permission review cycle, validity period, or expiration conditions, causing permissions to only increase not decrease |
+| **Determination** | Artifact does not declare permission review cycle, validity period, or expiration conditions, causing permissions to only increase not decrease; credentials (API Key / Token / OAuth scope, etc.) are also permission items, and their validity period and expiration conditions are likewise subject to this item's inspection |
 | **Continuous Governance Significance** | This is the only inspection item in this group facing **time dimension**, directly supporting Inspect's ratchet mechanism (see Part XI) |
 | **Applicability** | `AC-L2` and above; `AC-L1` mark `N/A` |
 | **Severity Level** | Contains `OR-L3` permission → P1; otherwise P2 |
@@ -1727,7 +1785,7 @@ Stage D  Permission inspection           Step 4 ~ Step 10
 | Step | Name | Output |
 |------|------|--------|
 | Step 1 | Single-artifact inspection (QD-P / QD-S / QD-T) | Upstream conclusions (P0 fixed) |
-| Step 2 | Cross-artifact inspection (QD-PS / QD-PT / QD-ST) | Upstream conclusions (P0 fixed) |
+| Step 2 | Cross-artifact inspection (QD-PS / QD-PT / QD-ST / QD-SS / QD-TT / QD-CYC) | Upstream conclusions (P0 fixed) |
 | **Step 3** | **Gate-0 prerequisite verification** | Admission determination (pass / fail) |
 | Step 4 | Level reading and applicability trimming | This applicable inspection item list (with `N/A` annotations) |
 | Step 5 | Permission set enumeration | Permission list (initial version); construction rules see §2.2 |
@@ -1781,7 +1839,7 @@ Subset: Inspect Permission Governance Specification (QD-PM)
 Execution Status: Not Executed
 Unsatisfied Conditions: G0-2, G0-4
 Blocking Reasons:
-  G0-2 — QD-ST-2.1 has unfixed P0
+  G0-2 — QD-ST-3.1 has unfixed P0
   G0-4 — Tool "sync_records" missing parameter description, operation semantics undeterminable
 Remediation Actions: Fix above upstream items, then re-enter Step 3
 ```
@@ -1820,7 +1878,7 @@ Per 1.4 Rule 1, determine applicability item by item:
 | 1.6 Aggregate over-permission | Cond | ✓ | ✓ | ✓ | Requires multi-permission combination morphology |
 | 2.1 ~ 2.4, 2.8 | ✓ | ✓ | ✓ | ✓ | No morphology dependency |
 | 2.5 Volume upper limit | Cond | ✓ | ✓ | ✓ | Requires batch operation morphology |
-| 2.6 Time constraint | Cond | Cond | Cond | Cond | Requires time semantics or `OR-L3` |
+| 2.6 Time constraint | Cond | Cond | Cond | Cond | Requires time-period semantics |
 | 2.7 Frequency constraint | Cond | Cond | Cond | Cond | Requires side-effect permissions |
 | 3.1 ~ 3.3 | ✓ | ✓ | ✓ | ✓ | No morphology dependency |
 | 3.4 High-risk not separated | Cond | Cond | Cond | Cond | Requires irreversible operation permissions |
@@ -1866,7 +1924,7 @@ Above basic mapping, following rules apply in priority order from high to low:
 
 | Priority | Rule | Content |
 |----------|------|---------|
-| **R1** | Fixed level priority | Items with fixed levels specified (3.4, 5.4, 6.3, 6.5 are fixed P0; 6.7 is fixed P1), not adjusted by `OR-L` |
+| **R1** | Fixed level priority | Items with fixed levels specified (3.4, 5.4, 6.3, 6.5 are fixed P0; 6.7 is fixed P1; 1.7 is fixed P2), not adjusted by `OR-L` |
 | **R2** | Highest item value | One permission covering multiple operations, take **highest `OR-L` contained**, not average, not main use |
 | **R3** | Aggregate effect value | Defects involving permission combinations (1.6, 3.6), take `OR-L` of **achievable effect after combination**, not by individual permission |
 | **R4** | Structural defect escalation | Defects invalidating existing narrowing conclusions overall (4.4 privilege escalation), even if involved operation is `OR-L2`, classified as P0 |
@@ -1919,7 +1977,7 @@ Six groups **must not be parallel**, must execute in 1 → 2 → 3 → 4 → 5 �
 | **QD-PM-3.3** (Role replacement authorization) | Permission item has no determination object, groups 1, 2 conclusions invalid | After expanding operation list, return to Step 5 (extraction layer re-entry rules see §2.4.5) |
 | **QD-PM-4.8** (External permissions not included) | Permission set incomplete, all subset conclusions incomplete | After supplementing declaration, return to Step 5 (extraction layer re-entry rules see §2.4.5) |
 
-> Both belong to **permission set undeterminable** problems, different from Gate-0 handling: Gate-0 blocks before execution, this blocking point occurs during execution, partial conclusions already produced must be marked "based on incomplete permission set" and voided after re-run.
+> Both belong to **permission set undeterminable** problems; their difference from Gate-0 lies only in **occurrence timing and re-entry location**: Gate-0 blocks before execution (Step 3), whereas this blocking point occurs during execution (Step 7); re-entry locations are as in the table above. But the **output convention is identical**: when hit, this subset produces no defect list, no score, and does **not externally publish** partial conclusions already produced (retained only as an internal intermediate state for re-entry continuation within the subset), aggregated by Core as `ERROR`, the same as Gate-0 not passed (see §9.2.4, §0.1.5.4).
 
 ---
 
@@ -1935,6 +1993,8 @@ Per 1.5.4 rules execution, here is complete adjudication table:
 | With Skill / Prompt subset same location | Same rules (upstream takes priority) |
 | **Within this subset**: 1.6 and 3.6 simultaneously hit | Log by 1.6, mark 3.6 as `INHERITED` |
 | **Within this subset**: 6.5 and 3.3 / 4.8 simultaneously hit | Log by 3.3 / 4.8, mark 6.5 as `INHERITED` |
+| **Within this subset**: 3.1 and 3.2 simultaneously hit | Log by 3.1, mark 3.2 as `INHERITED` |
+| **Within this subset**: 2.2 and 4.7 simultaneously hit | Causally independent, log and score separately (do not mark `INHERITED`) |
 
 > **`INHERITED` semantics**: This problem **has been recognized and logged by framework**, just scoring attributed elsewhere. It is neither "pass", nor "exemption". During repair verification, `INHERITED` items must be re-verified together with their primary items.
 
@@ -2217,7 +2277,7 @@ This subset's 43 inspection items have 20 with `N/A` conditions, `N/A` proportio
 
 ### 12.3 Inspection Item Distribution (Calibrated by `AC-L`)
 
-Per 9.3.3 matrix trimming 43 items level by level, **"conditional" items in table counted by "maximum applicable" basis** (i.e., assuming morphology exists); actual execution excludes untriggered items by artifact fact, denominator shrinks accordingly.
+Per 9.3.3 matrix trimming 43 items level by level, **"conditional" items in table counted by "maximum applicable" basis** (i.e., assuming morphology exists); actual execution excludes untriggered items by artifact fact, denominator shrinks accordingly. This table's "maximum applicable" basis differs from Appendix D's "must-inspect set" (unconditional items only) basis; do not mix them (see Appendix D.4 for comparison).
 
 | Group | Total Items | AC-L1 | AC-L2 | AC-L3 | AC-L4 |
 |-------|-------------|-------|-------|-------|-------|
@@ -2243,7 +2303,7 @@ Per 9.3.3 matrix trimming 43 items level by level, **"conditional" items in tabl
 
 Severity levels dynamically determined by `OR-L` (see 9.4), therefore **total weight is not fixed value**, must be calculated by this actual classification result. Table below gives a typical scenario weight example.
 
-**Example Scenario**: `AC-L2` + `OR-L3` Agent (holds production write and external send permissions, no delegation morphology, no batch operations, no exemption statements, no regulated data)
+**Example Scenario**: `AC-L2` + `OR-L3` Agent (holds production write and external-send permissions; responsibilities include time-period semantics and conditional authorization statements; connects to an external MCP protocol and contains an isolation declaration; no delegation form, no batch operations, no exemption statements, no regulated data)
 
 | Processing | Items |
 |------------|-------|
@@ -2251,28 +2311,28 @@ Severity levels dynamically determined by `OR-L` (see 9.4), therefore **total we
 | Condition not triggered (`N/A`) | 2.5 (no batch), 5.7 (no exemption), 6.7 (no regulated data) |
 | **Applicable items total** | 43 − 4 − 3 = **36** |
 
-Expand severity levels by `OR-L3` (fixed P0 items: 3.4, 5.4, 6.3, 6.5):
+Expand item by item according to the severity level row inherent in each item's definition (fixed-level items: 3.4, 5.4, 6.3, 6.5 fixed P0; 1.7 fixed P2):
 
-> **Simplified Assumption**: Actual execution, each inspection item classifies by **its defect involved operation's `OR-L`** item by item per 9.4.1; Agent-level `OR-L3` is just this Agent's highest level. To make this example calculable at once, here assume all 36 applicable items' item-by-item `OR-L` are `OR-L3`—this is the heaviest level for demonstration, actual report distribution is usually lighter.
+> **Simplified Assumption**: In actual execution, each inspection item is rated per 9.4.1 by **the `OR-L` of the operation involved in its defect**, item by item; the Agent-level `OR-L3` is only that Agent's highest level. To make this example computable in one pass, it is stipulated here that: the item-by-item `OR-L` all take the heaviest `OR-L3` basis (fixed-level items and R5-capped items are rated by their own rules); 1.3's circumvention determination takes the heaviest branch (circumvention path is `OR-L3`); 2.2 and 2.3 take the non-sensitive branch per the "no regulated data" scenario (2.2 → P1, 2.3 → P2); 3.4 is judged applicable on the basis that "external-send permission ≈ external publishing (one of the irreversible operations)". The distribution in an actual report depends on the specific defects.
 
 ```
-N_P0 = 22   N_P1 = 11   N_P2 = 3
-W = 22×5 + 11×3 + 3×1 = 110 + 33 + 3 = 146
-base = 100 / 146 ≈ 0.6849
-P0 deduction = 0.6849 × 5 ≈ 3.42
-P1 deduction = 0.6849 × 3 ≈ 2.05
-P2 deduction = 0.6849 × 1 ≈ 0.68
+N_P0 = 29   N_P1 = 5    N_P2 = 2
+W = 29×5 + 5×3 + 2×1 = 145 + 15 + 2 = 162
+base = 100 / 162 ≈ 0.6173
+P0 deduction = 0.6173 × 5 ≈ 3.09
+P1 deduction = 0.6173 × 3 ≈ 1.85
+P2 deduction = 0.6173 × 1 ≈ 0.62
 ```
 
 **Assumed failed items (deduplicate by number)**: P0 × 3, P1 × 2, P2 × 1
 
 ```
-Total deduction = 3×3.42 + 2×2.05 + 1×0.68 = 10.26 + 4.10 + 0.68 = 15.04
-Score   = 100 − 15.04 = 84.96 → 85
+Total deduction = 3×3.09 + 2×1.85 + 1×0.62 = 9.27 + 3.70 + 0.62 = 13.59
+Score   = 100 − 13.59 = 86.41 → 86
 Gate   = FAIL (3 P0 defects exist)
 ```
 
-> **Note this example's characteristic**: Score 85 but result FAIL. This is deduction system's inevitable morphology under high inspection item density—individual item weight diluted by large number of applicable items, small number of P0 has limited impact on score. Therefore **score for trend comparison, Gate for admission determination**, the two cannot replace each other.
+> **Note this example's characteristic**: Score 86 but result FAIL. This is deduction system's inevitable morphology under high inspection item density—individual item weight diluted by large number of applicable items, small number of P0 has limited impact on score. Therefore **score for trend comparison, Gate for admission determination**, the two cannot replace each other.
 
 ---
 
@@ -2294,7 +2354,7 @@ Gate   = FAIL (3 P0 defects exist)
 ```json
 {
   "subset": "QD-PM",
-  "version": "1.0",
+  "version": "1.0.2",
   "ac_level": "AC-L2",
   "or_level": "OR-L3",
   "gate0": "PASSED",
@@ -2304,19 +2364,19 @@ Gate   = FAIL (3 P0 defects exist)
     "by_condition": ["2.5", "5.7", "6.7"]
   },
   "inherited_items": [],
-  "total_weight": 146,
-  "base_score": 0.6849,
+  "total_weight": 162,
+  "base_score": 0.6173,
   "failed_items": [
-    {"id": "QD-PM-1.2", "severity": "P0", "or_basis": "Order deletion → OR-L3 → Basic mapping"},
-    {"id": "QD-PM-3.1", "severity": "P0", "or_basis": "Bundle contains production delete → OR-L3 → R2"},
-    {"id": "QD-PM-5.4", "severity": "P0", "or_basis": "Fixed level → R1"},
-    {"id": "QD-PM-6.1", "severity": "P1", "or_basis": "OR-L3 permission no purpose description → R5 cap"},
-    {"id": "QD-PM-2.3", "severity": "P2", "or_basis": "Redundant non-sensitive fields → OR-L1 → Basic mapping"},
-    {"id": "QD-PM-6.6", "severity": "P1", "or_basis": "Contains OR-L3 permission no verification declaration → P1"}
+    {"finding_id": "F-ORG-20261018-001", "rule_id": "QD-PM-1.2", "severity": "Inspect·P0", "status": "open", "or_basis": "Order deletion → OR-L3 → Basic mapping"},
+    {"finding_id": "F-ORG-20261018-002", "rule_id": "QD-PM-3.1", "severity": "Inspect·P0", "status": "open", "or_basis": "Bundle contains production delete → OR-L3 → R2"},
+    {"finding_id": "F-ORG-20261018-003", "rule_id": "QD-PM-5.4", "severity": "Inspect·P0", "status": "open", "or_basis": "Fixed level → R1"},
+    {"finding_id": "F-ORG-20261018-004", "rule_id": "QD-PM-6.1", "severity": "Inspect·P1", "status": "open", "or_basis": "OR-L3 permission without purpose description → R5 cap"},
+    {"finding_id": "F-ORG-20261018-005", "rule_id": "QD-PM-2.3", "severity": "Inspect·P2", "status": "open", "or_basis": "Redundant non-sensitive fields → OR-L1 → Basic mapping"},
+    {"finding_id": "F-ORG-20261018-006", "rule_id": "QD-PM-6.6", "severity": "Inspect·P1", "status": "open", "or_basis": "Contains OR-L3 permission without review declaration → P1"}
   ],
   "ratchet_events": [],
-  "total_deduction": 15.04,
-  "score": 85,
+  "total_deduction": 13.59,
+  "score": 86,
   "result": "FAIL"
 }
 ```
@@ -2325,7 +2385,7 @@ Gate   = FAIL (3 P0 defects exist)
 
 - Each failed item must carry `or_basis` (`OR-L` determination chain), missing then not scored and must be completed and re-issued (see 9.4.3);
 - `na_items` must distinguish `by_level` and `by_condition`;
-- `gate0` not passed, this report **not output**, replaced by 9.2.4 blocking output format.
+- `gate0` not passed, or a blocking point (3.3 / 4.8) is hit during execution, this report is **not output**—both are aggregated by Core as `ERROR`, and replaced by the blocking output format of 9.2.4 (when a blocking point is hit, partial conclusions are not published externally; see 9.5).
 
 ---
 
@@ -2353,7 +2413,7 @@ Permission is not an independent specification, it embeds in existing system, up
 |-----------|--------|-------------------|
 | **Upward** | Core | Object definitions, Finding structure, `AC-L` / `OR-L` level models, `P0/P1/P2` handling priorities, version and evidence, exception management |
 | **Forward (Prerequisite)** | QD-P / QD-S / QD-T | Gate-0's G0-1; trusted input for responsibility baseline and permission declarations |
-| **Forward (Prerequisite)** | QD-PS / QD-PT / QD-ST | Gate-0's G0-2; upstream priority items in overlap adjudication |
+| **Forward (Prerequisite)** | QD-PS / QD-PT / QD-ST / QD-SS / QD-TT / QD-CYC | Gate-0's G0-2; upstream priority items in overlap adjudication |
 | **Backward** | Relevance | Output `QD-PM-*` Finding, for impact mapping and linkage analysis |
 | **Backward (Non-specification)** | IAM / PEP / Audit | Permission baseline recommendations (input materials, not policy configurations) |
 
@@ -2373,7 +2433,7 @@ Permission is not an independent specification, it embeds in existing system, up
 
 #### 13.2.2 Prohibited Level Merging
 
-Core explicitly: `P0` does not equal `OR-L3`, nor does it equal Risk Explicit's `S3` or Risk Implicit's `A`; they can be associated, but must be separately recorded.
+Core explicitly: `P0` does not equal `OR-L3`, nor does it equal Risk Explicit's `Explicit·P0` or Risk Implicit's `A`; they can be associated, but must be separately recorded.
 
 This subset accordingly stipulates:
 
@@ -2394,7 +2454,7 @@ When this subset conflicts with Core expression, follow Core's priority rules: d
 Inspect existing structure: single-artifact inspection (Prompt / Skill / Tool) is prerequisite for cross-artifact inspection, Cross executes after single-artifact inspection passes and has independent scoring system. Permission is positioned after this sequence:
 
 ```
-QD-P / QD-S / QD-T  →  QD-PS / QD-PT / QD-ST  →  QD-PM
+QD-P / QD-S / QD-T  →  QD-PS / QD-PT / QD-ST / QD-SS / QD-TT / QD-CYC  →  QD-PM
 (Single-artifact)        (Cross-artifact)          (Permission)
 ```
 
@@ -2412,7 +2472,7 @@ Cross's core focus is "hidden defects under reasonable expression"—internally 
 
 #### 13.3.3 Level System Alignment Explanation
 
-Inspect existing subsets use L1/L2/L3 Agent levels, following upward compatibility (L3 ⊃ L2 ⊃ L1, higher levels automatically cover lower level inspection items), defect severity levels orthogonal to Agent levels.
+Inspect existing subsets have uniformly adopted the `AC-L` / `OR-L` notation: Prompt and Cross use `AC-L` (Agent complexity), Skill and Tool use `OR-L` (artifact operation risk), and follow upward compatibility (`AC-L3` ⊃ `AC-L2` ⊃ `AC-L1`, higher levels automatically cover lower level inspection items), with defect severity levels orthogonal to the classification models.
 
 This subset uniformly uses Core's `AC-L1~AC-L4` and `OR-L1~OR-L3`. Existing subset L levels are converted to this subset notation by upstream classification results, no longer maintaining separate L notation:
 
@@ -2428,7 +2488,7 @@ And follow two principles:
 - **Upward compatibility**: `AC-L4 ⊃ AC-L3 ⊃ AC-L2 ⊃ AC-L1` applicable item sets (see 9.3.3);
 - **Orthogonality**: Severity level determined by `OR-L`, orthogonal to `AC-L` (see 9.4.4 anti-patterns).
 
-> **Pending Adjudication (Severity Level Binding convention)**: This subset determines severity level by `OR-L` per 9.4; Inspect existing subsets (e.g., Cross 5.4) bind severity level by Agent level. Two binding conventions coexist in same framework, must adjudicate whether to remain independent (maintain status quo, each subset self-consistent) or unify to single convention.
+> **Cross-Subset Ruling (Severity Level Binding Convention)**: This subset determines severity level by `OR-L` per 9.4. Per `framework/core.md` §4.1 ruling, defect severity level is determined by `OR-L` and applicability/inspection scope by `AC-L`, with separation of concerns. Cross 5.4 now adopts the convention of "applicability determined by `AC-L`, severity escalated by `OR-L`", already aligned with this ruling (see 9.4.4 anti-patterns in this subset).
 
 #### 13.3.4 Overlap Adjudication Interface
 
@@ -2444,13 +2504,15 @@ This subset does not introduce parallel dimension divisions with this framework,
 
 ### 13.5 Output to Relevance Finding Specification
 
-This subset's output Finding numbers are `QD-PM-<Group>.<Sequence>`, same level as existing `QD-P-*`, `QD-S-*`, `QD-T-*`, output to Relevance.
+This subset's rule numbers are `QD-PM-<Group>.<Sequence>`, at the same level as existing `QD-P-*`, `QD-S-*`, `QD-T-*`; the Finding instances it produces adopt Core's `F-*` naming (see framework/core.md §5.2), and carry a rule number field in the Finding pointing to `QD-PM-*`, output to Relevance.
 
 Minimum field set:
 
 | Field | Source |
 |-------|--------|
-| `id` | Inspection item number |
+| `finding_id` | Finding instance number (`F-*`, Core §5.2) |
+| `rule_id` | Inspection item number (`QD-PM-*`) |
+| `status` | Core §5.3 finding status |
 | `object` / `version` | Core object and version identifiers |
 | `location_permission` / `location_duty` | Bilateral location (10.1.2) |
 | `severity` | P0 / P1 / P2 |
@@ -2479,10 +2541,6 @@ Follow Inspect existing scope boundaries:
 
 ---
 
-### 13.7 Interface: Extraction Layer and Core OR-L Evidence Interface
-
-Extraction layer §2.6 sensitivity classification table serves as evidence generator for severity level (P0/P1/P2) values, applicability boundaries see §2.6.1. Fixed level items (3.4, 5.4, 6.3, 6.5) and aggregate items (1.6, 3.6) not adjusted by this table.
-
 ## Appendix A: Complete Inspection Item Index (43 Items)
 
 **Legend**: `✓` = Unconditionally applicable; `△` = Determined by artifact facts; `—` = Not applicable; blank in the Fixed Level column means the level is determined by `OR-L`
@@ -2496,7 +2554,7 @@ Extraction layer §2.6 sensitivity classification table serves as evidence gener
 | 1.4 | Responsibility Baseline is too vague to support proportionality determination | ✓ | ✓ | ✓ | ✓ | | Meta-check item; corresponds to G0-3 |
 | 1.5 | Action type of permission is not explicitly identified | ✓ | ✓ | ✓ | ✓ | | Meta-check item; corresponds to G0-4 |
 | 1.6 | Permission combination yields aggregate capabilities beyond the duty | △ | ✓ | ✓ | ✓ | | Level by combination effect (R3) |
-| 1.7 | Permission–Duty mapping table is incomplete | ✓ | ✓ | ✓ | ✓ | | Process completeness item |
+| 1.7 | Permission–Duty mapping table is incomplete | ✓ | ✓ | ✓ | ✓ | **P2** | Process completeness item |
 | **QD-PM-2 Permission Scope (8)** | | | | | | | |
 | 2.1 | Resource access scope is not restricted | ✓ | ✓ | ✓ | ✓ | | Resource axis |
 | 2.2 | Ownership or affiliation constraint is missing | ✓ | ✓ | ✓ | ✓ | | Resource axis; horizontal privilege escalation |
@@ -2545,7 +2603,7 @@ Extraction layer §2.6 sensitivity classification table serves as evidence gener
 | ------------ | ---------------------------- |
 | Total inspection items | 43 |
 | Items with `N/A` conditions | 20 |
-| Fixed-level items | 5 (P0: 3.4, 5.4, 6.3, 6.5; P1: 6.7) |
+| Fixed-level items | 6 (P0: 3.4, 5.4, 6.3, 6.5; P1: 6.7; P2: 1.7) |
 | Blocking Points | 2 (3.3, 4.8) |
 | Meta-check items | 3 (1.4, 1.5, 1.7) |
 | AC-L4 exclusive items | 4 (4.3 ~ 4.6) |
@@ -2789,11 +2847,21 @@ Execution order: within Quick Mode, group 2 items (2.x) execute only on permissi
 - **New / changed Agent**: Must-Inspect Set (D.2) + Conditional Set triggered by artifact (D.3);
 - **High-risk (`OR-L3`) or `AC-L4` Agent**: Full set of 43 items.
 
+**Basis Comparison of the Three Execution Sets** (to avoid mixing with §12.3's "maximum applicable"):
+
+| Execution Set | Item Count (AC-L1 / L2 / L3 / L4) | Basis | Scenario |
+| --- | --- | --- | --- |
+| Quick Mode (D.1) | 17 (does not vary with AC-L) | Union of P0-reachable items | Inventory, high-risk quick screening |
+| Must-Inspect Set (D.2) | 23 / 28 / 28 / 32 | Unconditionally applicable items only (`✓`) | Routine CI/CD, lightest load |
+| Full Set (§12.3) | 36 / 39 / 39 / 43 | Maximum applicable (conditional items assumed triggered) | Full inspection, re-classification, architecture review |
+
 ---
 
-## Appendix E: Interface Schema (v0.1, Draft)
+## Appendix E: Interface Schema
 
 > **Positioning**: This appendix solidifies the three types of artifacts of this subset into **machine-readable data shapes**, serving as an **interface contract** between the platform and downstream (IAM / PEP / audit). It only defines "what the data looks like", not storage, batch execution, or aggregation implementation (those belong to the platform layer, see 0.1.4). Field names are identified in English.
+
+> **Version Status**: The E.3 `Finding` field set has taken effect via §13.5; E.2 `PermissionItem` and E.4 `BaselineAdvice` were reference shapes and are now formally contracted. When fields conflict with §13.5, §13.5 prevails.
 
 ### E.1 Three Object Types and Relationships
 
@@ -2826,13 +2894,13 @@ Ledger = aggregated view of PermissionItem (rows = permission items, columns = A
 | `verdict` | enum | suited / over / under / structural |
 | `finding_ids` | array | Associated defect numbers |
 | `change_type` | enum | new / split / merged / narrowed / removed / - |
-| `sensitivity_assumed` | bool | "Sensitivity assumption" flag when data axis is unknown |
 
 ### E.3 Finding (Solidified §13.5)
 
 | Field | Description |
 | --- | --- |
-| `finding_id` | `QD-PM-<group>.<seq>` |
+| `finding_id` | `F-<org>-<id>` (Finding instance number) |
+| `rule_id` | `QD-PM-<group>.<seq>` (rule number) |
 | `object` / `version` | Core object and version |
 | `location_permission` / `location_duty` | Bilateral positioning (10.1.2) |
 | `verdict` | over / under / structural |
@@ -2844,7 +2912,7 @@ Ledger = aggregated view of PermissionItem (rows = permission items, columns = A
 | `ratchet_status` | none / regression / relaxed / silent_new / approved_relaxation |
 | `evidence_refs` | Evidence location list (`anchors` of regression samples are their guards) |
 
-### E.4 BaselineAdvice
+### E.4 BaselineAdvice (Permission Baseline Advice)
 
 | Field | Description |
 | --- | --- |
@@ -2886,9 +2954,8 @@ deny[msg] {
   "baseline_refs": ["D-08", "R-03", "R-04"],
   "or_level": "OR-L3",
   "verdict": "over",
-  "finding_ids": ["QD-PM-2.6", "QD-PM-2.7", "QD-PM-6.2"],
-  "change_type": "-",
-  "sensitivity_assumed": false
+  "rule_ids": ["QD-PM-2.6", "QD-PM-2.7", "QD-PM-6.2"],
+  "change_type": "-"
 }
 ```
 
@@ -2901,7 +2968,7 @@ deny[msg] {
 | `anchors` | Existence guards for `Finding.evidence_refs` |
 | `gate0` | Determines whether `Finding` generation is allowed; if not passed, only outputs blocking objects |
 
-> **v0.1 Note**: This schema is a draft. **Executable implementation**: JSON Schema files and ledger keys/indexes have been landed in `demo/permission/schema/` (`permission-item` / `finding` / `baseline-advice` / `ledger` four files); regression samples can use `py run_regression.py --emit-schema` to generate schema-compliant Findings (`demo/permission/out/findings.json`) and self-check.
+> **Version Note**: This schema has been contracted (see "Version Status" at the beginning of this section). **Executable implementation**: JSON Schema files and ledger keys/indexes have been landed in `demo/permission/schema/` (`permission-item` / `finding` / `baseline-advice` / `ledger` four files); regression samples can use `py run_regression.py --emit-schema` to generate schema-compliant Findings (`demo/permission/out/findings.json`) and self-check.
 
 ---
 
@@ -2960,12 +3027,14 @@ The relationship between the two is the application of the **Monotonic Narrowing
 
 ## References
 
-[1] OWASP. (2024). OWASP Top 10 for LLM Applications 2025. https://genai.owasp.org/
+[1] OWASP. (2024). OWASP Top 10 for LLM Applications 2025. https://genai.owasp.org/ (accessed: 2026-09)
+[2] N. Hardy. (1988). The Confused Deputy: (or why capabilities might have been invented). ACM SIGOPS Operating Systems Review, 22(4).
+[3] Anthropic. (2024). Model Context Protocol. https://modelcontextprotocol.io/
 
 ---
 
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  September 2026
+v1.0  ·  October 2026
 
 

@@ -11,7 +11,7 @@ description: "Quality Tool-Agent white paper: binary-nature success evaluation, 
 
 **Version**: v1.0
 
-**Release Date**: September 2026
+**Release Date**: October 2026
 
 **Maintained by**: Sanity AI Labs
 
@@ -627,6 +627,8 @@ Impact dimensions:
 <a id="422-three-level-risk-classification"></a>
 #### 4.2.2 Three-Level Risk Classification
 
+The L1/L2/L3 in this section are exactly `BI-L1`/`BI-L2`/`BI-L3` (Business Impact Levels) as defined in framework/core.md §4.4.
+
 | Level | Definition | Typical Scenarios | Failure Impact |
 |-------|------------|-------------------|----------------|
 | **L1 (Low Risk)** | Read-only query type, no state changes | Information queries, data retrieval | User can retry, no persistent impact |
@@ -1147,4 +1149,4 @@ $$
 
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  September 2026
+v1.0  ·  October 2026

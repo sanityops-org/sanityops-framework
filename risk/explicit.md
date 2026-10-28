@@ -11,7 +11,7 @@ description: "Risk Explicit white paper: static auditing of explicit risks in Lo
 
 **Version**: v1.0
 
-**Release Date**: September 2026
+**Release Date**: October 2026
 
 **Maintained by**: Sanity AI Labs
 
@@ -390,7 +390,7 @@ Impact Type: D1
 
 - **Version Number**: v1.0
 - **Release Status**: Industry specification internal version
-- **Last Updated**: September 2026
+- **Last Updated**: October 2026
 - **Maintained by**: Sanity AI Labs
 
 <a id="052-applicability-statement"></a>
@@ -1453,4 +1453,4 @@ SanityOps Complete Audit Workflow
 
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  September 2026
+v1.0  ·  October 2026

@@ -50,7 +50,7 @@ Each owns a unique numbering namespace and is the **sole definition site** for i
 | `inspect/prompt.md` | `QD-P-*` | Is the System Prompt free of static defects? |
 | `inspect/skill.md` | `QD-S-*` | Is the Skill definition free of static defects? |
 | `inspect/tool.md` | `QD-T-*` | Is the Tool Schema free of static defects? |
-| `inspect/cross.md` | `QD-PS-*`, `QD-PT-*`, `QD-ST-*`, `QD-CYC-*` | Are Prompt–Skill–Tool contracts and invocation loops mutually consistent? |
+| `inspect/cross.md` | `QD-PS-*`, `QD-PT-*`, `QD-ST-*`, `QD-SS-*`, `QD-TT-*`, `QD-CYC-*` | Are Prompt–Skill–Tool contracts, multi-Skill/multi-Tool consistency, and invocation loops mutually consistent? |
 | `inspect/permission.md` | `QD-PM-*` | Are declared authorities proportionate to assigned responsibilities? |
 | `risk/explicit.md` | `EX-*` (`NL-A/B`, `NR-O/S`), `D1–D3`, `Explicit·P0/P1/P2` | Does artifact text explicitly express dangerous content/configuration? |
 | `risk/implicit.md` | `A/B/C/D` termination statuses | Can defects be exploited at runtime (shadow sandbox validation)? |
@@ -94,7 +94,7 @@ Authority dependencies inside Inspect are strictly ordered (`inspect/permission.
 ```
 QD-P / QD-S / QD-T (single artifacts, fix all P0)
         ↓
-QD-PS / QD-PT / QD-ST (Cross, fix all P0)
+QD-PS / QD-PT / QD-ST / QD-SS / QD-TT (Cross, fix all P0)
         ↓
 Gate-0 pre-check
         ↓
@@ -117,7 +117,7 @@ Relevance bridges the stages after Inspect produces defects. Every stage re-runs
 4. **Permission PASS scope**: it validates only what is *declared in the artifacts*. It says nothing about actual IAM/IdP configuration, PEP/PDP enforcement, or runtime monitoring (permission.md §0.1.4).
 5. **Quality failures are not root-cause proof**: a failed quality test yields candidate investigation directions (`FM`, reverse diagnostics); root cause may instead lie in retrieval, knowledge, model, runtime, or test assets.
 
-Known documentation gap: `inspect/skill.md` Part 10 ("Relationship to Other Sub-Specifications") is still a placeholder. Do not fabricate its intended content.
+Known documentation gap: none (the former `inspect/skill.md` Part 10 "Relationship to Other Sub-Specifications" placeholder is now filled in as 10.1–10.6).
 
 ---
 
@@ -128,7 +128,7 @@ Known documentation gap: `inspect/skill.md` Part 10 ("Relationship to Other Sub-
 - **Never** introduce new rules, thresholds, or numbering in L3 files (overview, README, FAQ, index, compare, samples).
 - **Never** convert Relevance's candidate associations into definitive causal statements.
 - **Never** delete a `QD` Finding based on a Risk Implicit `B`/`C` result or an external control interception.
-- Preserve document conventions: front matter (`title`/`description`), version block (v1.0, September 2026), normative keywords per RFC-style usage defined in core.md §0.4.
+- Preserve document conventions: front matter (`title`/`description`), version block (v1.0, October 2026), normative keywords per RFC-style usage defined in core.md §0.4.
 - This is a VitePress site: every root-level `.md` can become a public route. Keep content suitable for publication; legal texts under `legal/` must not be substantively edited without owner review.
 - Samples in `samples/artifacts/` are versioned post-remediation records ("Fixed Artifacts"); do not silently align them to new rule versions — their metadata reflects specific inspection rounds.
 

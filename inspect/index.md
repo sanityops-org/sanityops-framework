@@ -38,7 +38,7 @@ The reliability of an AI Agent depends on the quality of its **Logic Artifacts**
 
     Quality defect inspection standard for Skills.
 
-    Five defect categories: Resource Runaway (QD-S-1), Unbounded Directive (QD-S-2), Ambiguity-Induced Inference (QD-S-3), Failure Escalation (QD-S-4), Permission Overflow (QD-S-5). Includes the six-dimension Review Schema analysis framework.
+    Entry gate (QD-S-0) and five defect categories: Resource Runaway (QD-S-1), Unbounded Directive (QD-S-2), Ambiguity-Induced Inference (QD-S-3), Failure Escalation (QD-S-4), Permission Overflow (QD-S-5). Includes the six-dimension Review Schema analysis framework.
 
     **Numbering system**: QD-S-x.y
 
@@ -54,9 +54,9 @@ The reliability of an AI Agent depends on the quality of its **Logic Artifacts**
 
     Cross-Artifact consistency inspection standard.
 
-    Three inspection relationships: Prompt → Skill (QD-PS), Prompt → Tool (QD-PT), Skill ↔ Tool (QD-ST), with 19 inspection items that uncover hidden defects undetectable by single-artifact inspection.
+    The Cross sub-specification currently contains six groups of inspection relationships: Prompt → Skill (QD-PS), Prompt → Tool (QD-PT), Skill ↔ Tool (QD-ST), Skill ↔ Skill (QD-SS), Tool ↔ Tool (QD-TT), and circular invocation (QD-CYC), with 29 inspection items that uncover hidden defects undetectable by single-artifact inspection.
 
-    **Numbering system**: QD-PS/PT/ST-n.m
+    **Numbering system**: QD-PS/PT/ST/SS/TT/CYC-n.m
 
 - ### [Inspect Permission](./permission.md)
 
@@ -88,9 +88,9 @@ Different Agent risk levels apply different inspection intensity:
 
 | Agent Level | Typical Characteristics | Inspection Strategy |
 |:---:|:---|:---|
-| **L1** | Text processing only, no tool invocations | Minimum rule set |
-| **L2** | Resource access, medium permissions | Standard rule set |
-| **L3** | Sensitive operations, high permissions | Full rule set |
+| **AC-L1** | Text processing only, no tool invocations | Minimum rule set |
+| **AC-L2** | Resource access, medium permissions | Standard rule set |
+| **AC-L3** | Sensitive operations, high permissions | Full rule set |
 
 ---
 

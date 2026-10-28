@@ -11,11 +11,13 @@ description: "Inspect Prompt specification: defect rules for reviewing System Pr
 
 **Version**: v1.0
 
-**Release Date**: September 2026
+**Release Date**: October 2026
 
 **Maintained by**: Sanity AI Labs
 
 **License**: CC BY-SA 4.0
+
+**Dependent Specification**: Core v1.0 (objects, Finding, `AC-L`, versioning and evidence)
 
 ---
 
@@ -34,9 +36,9 @@ description: "Inspect Prompt specification: defect rules for reviewing System Pr
     - [1.2.5 Implication Defects](#125-implication-defects-qd-p-15)
   - [1.4 Detection Methods and Recommendations](#14-detection-methods-and-recommendations)
   - [1.5 Part Summary](#15-part-summary)
-- [1.6 Gray-Zone Logic Defects](#16-gray-zone-logic-defects)
+  - [1.6 Gray-Zone Logic Defects](#16-gray-zone-logic-defects-qd-p-16)
   - [1.7 Gray-Zone Summary](#17-gray-zone-summary)
-- [1.8 Complete Part 1 Structure](#18-complete-part-1-structure)
+  - [1.8 Complete Part 1 Structure](#18-complete-part-1-structure)
 - [2 Defects Requiring Explicit Prompts](#2-defects-requiring-explicit-prompts)
   - [2.1 Defect Characteristics Overview](#21-defect-characteristics-overview)
   - [2.2 Typical Defect Categories](#22-typical-defect-categories)
@@ -51,11 +53,13 @@ description: "Inspect Prompt specification: defect rules for reviewing System Pr
   - [2.4 Defect Severity Classification](#24-defect-severity-classification)
   - [2.5 Part Summary](#25-part-summary)
 - [3 Tiered Inspection Mechanism](#3-tiered-inspection-mechanism)
-  - [3.1 Agent Level Definitions](#31-agent-level-definitions)
+  - [3.1 Agent Level Definitions (`AC-L`)](#31-agent-level-definitions)
   - [3.2 Defect Severity Level Definitions](#32-defect-severity-level-definitions)
   - [3.3 Tiered Inspection Checklist](#33-tiered-inspection-checklist)
+    - [3.3.1 Checklist Design Principles](#331-checklist-design-principles)
     - [3.3.2 Complete Tiered Inspection Checklist](#332-complete-tiered-inspection-checklist)
     - [3.3.3 Inspection Item Statistics](#333-inspection-item-statistics)
+    - [3.3.4 Four-State Inspection Results](#334-inspection-result-four-states)
   - [3.4 Inspection Process](#34-inspection-process)
   - [3.5 Usage Examples](#35-usage-examples)
   - [3.6 Part Summary](#36-part-summary)
@@ -71,6 +75,7 @@ description: "Inspect Prompt specification: defect rules for reviewing System Pr
   - [A.2 L2 Minimum Rule Set](#a2-l2-minimum-rule-set)
   - [A.3 L3 Minimum Rule Set](#a3-l3-minimum-rule-set)
   - [A.4 Minimum Rule Set Usage Notes](#a4-minimum-rule-set-usage-notes)
+- [Version History](#version-history)
 
 ---
 
@@ -100,8 +105,10 @@ description: "Inspect Prompt specification: defect rules for reviewing System Pr
 | --- | --- |
 | **System Prompt** | The initial prompt loaded at Agent startup |
 | **Role Definition Prompt** | Text defining the Agent's identity, objectives, and responsibilities |
-| **Tool/Skill Descriptions** | Definitions of tool invocation methods, parameters, and return values |
+| **Orchestration and references to tools/Skills in the body** | How tools/Skills are invoked, parameterized, and constrained in the prompt body |
+| **Final effective prompt and assembly contract** | The assembly result of template variables/placeholders (source, substitution, naming consistency) |
 | **Example Design** | Positive examples, counter-examples, and boundary-condition examples |
+| **Metadata declaration** | Version, owner, change log, target model (precondition) |
 
 <a id="014-out-of-scope"></a>
 #### 0.1.4 Out of Scope
@@ -112,6 +119,17 @@ description: "Inspect Prompt specification: defect rules for reviewing System Pr
 | **Tool Schema** | Belongs to Inspect Tool (QD-T) scope |
 | **Infrastructure configuration** | Belongs to the deployment layer |
 | **Business process design** | Belongs to the product design layer |
+
+**Tool/permission responsibility attribution** (to avoid double registration with QD-T / Cross / QD-PM):
+
+| Situation | Attribution |
+| --- | --- |
+| Prompt body specifies wrong tool parameters | QD-P |
+| Tool Schema missing parameters/return values | QD-T |
+| Prompt and Tool declarations inconsistent | Cross (QD-PT) |
+| Authorization-responsibility proportionality | QD-PM |
+
+> The engineering implementation details of the assembly contract (placeholder source resolution, null-value behavior, high-trust-zone concatenation, etc.) are left for evaluation after code-contract is formalized.
 
 <a id="015-position-within-the-sanityops-framework"></a>
 #### 0.1.5 Position Within the SanityOps Framework
@@ -130,9 +148,9 @@ SanityOps Framework
 │   ├─ Risk Explicit ← Explicit Logic Artifact risk detection
 │   └─ Risk Implicit ← Implicit Agent runtime vulnerability scanning
 │
-└─ Quality (Service Quality)
-    ├─ Quality RAG-Agent ← RAG-Agent service quality assessment
-    └─ Quality Tool-Agent ← Tool-Agent service quality assessment
+├─ Quality (Service Quality)
+│   ├─ Quality RAG-Agent ← RAG-Agent service quality assessment
+│   └─ Quality Tool-Agent ← Tool-Agent service quality assessment
 │
 └─ Relevance (Impact Mapping)
     └─ Relevance ← defect → risk/quality diagnostic mapping
@@ -191,9 +209,8 @@ Full Examples:
 | --- | --- |
 | **LLM** | Large Language Model |
 | **Agent** | Autonomous Intelligent Agent |
-| **SP** | System Prompt |
 | **QD** | Quality Defect |
-| **L1/L2/L3** | Agent Level definitions (see Chapter 3) |
+| **AC-L1/L2/L3** | Agent Level definitions (see Chapter 3) |
 | **Checklist** | Quality Inspection Checklist |
 | **Schema** | Data Structure Definition |
 | **API** | Application Programming Interface |
@@ -204,8 +221,8 @@ Full Examples:
 | Symbol | Level | Meaning |
 | --- | --- | --- |
 | 🔴 | **P0** | Prevents Agent functionality or introduces security risk → **MUST be fixed** |
-| 🟡 | **P1** | May cause behavioral instability or functional defects → **SHOULD be fixed** |
-| 🟢 | **P2** | Affects readability or efficiency, but does not impact functionality → **MAY be fixed** |
+| 🟡 | **P1** | May cause behavioral instability or functional defects → **SHOULD be fixed before release** |
+| 🟢 | **P2** | Affects readability or efficiency, but does not impact functionality → **SHOULD be included in the improvement plan or risk register** |
 
 ---
 
@@ -223,8 +240,8 @@ The defects listed in this part all belong to the **formal logic and semantic co
 | Characteristic | Description |
 | --- | --- |
 | **Formalizable** | The problem can be described by formal logic rules (e.g., law of non-contradiction, implication relations, quantifier logic) |
-| **Contextually self-contained** | Can be determined without external knowledge or domain experts |
-| **Binary-decidable** | Present or absent; no gray zone |
+| **Contextually self-contained** | In most cases, can be determined without external knowledge or domain experts |
+| **Binary-decidable** | In most cases present or absent, but a gray zone exists (see 1.6) |
 | **LLM-endogenous capability** | Mainstream LLMs have acquired the relevant logical reasoning capabilities during pre-training |
 
 <a id="112-detection-method"></a>
@@ -234,8 +251,8 @@ The defects listed in this part all belong to the **formal logic and semantic co
 | --- | --- |
 | **Trigger condition** | Direct reading of the System Prompt text; no explicit guidance or special instructions needed |
 | **Detection efficiency** | Discoverable in a single read; no multi-turn dialogue or tool assistance required |
-| **Accuracy** | For typical manifestations, mainstream LLM detection accuracy ≥ 90% |
-| **False positive rate** | May produce false positives for boundary-ambiguous cases; human review required |
+| **Accuracy** | Implementers MUST report and continuously monitor on their own annotated sets; the following figures are empirical references (typical manifestations ≈ ≥90%) |
+| **False positive rate** | Depends on whether applicability preconditions are explicit; boundary-ambiguous cases may produce false positives and require human review |
 
 <a id="113-positioning-of-this-part"></a>
 #### 1.1.3 Positioning of This Part
@@ -278,7 +295,7 @@ The purpose of this part is not to "teach the LLM how to inspect," but rather:
 | --- | --- |
 | **Defective** | "You may freely access the user's file system. Accessing any user privacy files is prohibited." |
 | **Diagnosis** | File system access and privacy file prohibition form a direct contradiction; boundary is undefined |
-| **Fixed** | "You may access non-privacy directories specified by the user. Accessing files or directories containing Personally Identifiable Information (PII) is prohibited." |
+| **Fixed** | "You may access directories explicitly specified by the user (e.g., /tmp/user_workspace). Accessing other user directories under /etc or /home, or any file containing sensitive data such as national ID numbers or bank account numbers, is prohibited." |
 
 ##### QD-P-1.1.2 Priority Conflict
 
@@ -292,7 +309,7 @@ The purpose of this part is not to "teach the LLM how to inspect," but rather:
 - Security constraints conflict with efficiency constraints; no arbitration defined
 - Multi-dimensional evaluation criteria have no weight definitions
 
-**Severity**: P1
+**Severity**: P1 (L1/L2) / P0 (L3)
 
 **Remediation Guidance**:
 
@@ -332,16 +349,16 @@ The purpose of this part is not to "teach the LLM how to inspect," but rather:
 
 | Version | Content |
 | --- | --- |
-| **Defective** | Rule: "Answers MUST be concise, no more than 100 words." Example: "User: What's the weather today? Assistant: The weather is sunny today with pleasant temperatures, perfect for outdoor activities. I recommend bringing sunglasses and sunscreen, staying hydrated..." (exceeds 100 words) |
-| **Diagnosis** | The example output exceeds 100 words, contradicting the rule; this weakens the rule's binding force |
-| **Fixed** | Rule: "Answers MUST be concise, no more than 100 words." Example: "User: What's the weather today? Assistant: Sunny, 25°C, suitable for outdoor activities." |
+| **Defective** | Rule: "Answers MUST be concise, no more than 50 characters." Example: "User: What's the weather today? Assistant: Today is sunny with temperatures between 22 and 28 degrees Celsius, moderate humidity, very suitable for outdoor activities. I recommend bringing sunglasses and sunscreen, staying hydrated, avoiding prolonged sun exposure, and adding clothing as temperatures vary between morning and evening." (clearly exceeds 50 characters) |
+| **Diagnosis** | The example output clearly exceeds 50 characters, contradicting the rule; this weakens the rule's binding force |
+| **Fixed** | Rule: "Answers MUST be concise, no more than 50 characters." Example: "User: What's the weather today? Assistant: Sunny, 25°C, suitable for outdoor activities." |
 
 <a id="122-mismatch-defects-qd-p-12"></a>
 #### 1.2.2 Mismatch Defects (QD-P-1.2)
 
 ##### QD-P-1.2.1 Role-Responsibility Mismatch
 
-**Definition**: The identity/capability scope defined by the role does not match the behavioral requirements defined by the responsibilities.
+**Definition**: The identity/capability scope defined by the role does not match the behavioral requirements defined by the responsibilities. Determination should be based on capability, authorization, or task conflicts, not on the semantics of the role name; if the role has declared a handoff mechanism (responsibility has been transferred out), it does not constitute a defect. If it constitutes a defect, it is P0.
 
 **Detection Principle**: The LLM can understand the semantic scope of a role identity and judge whether a responsibility falls within that scope.
 
@@ -370,7 +387,7 @@ The purpose of this part is not to "teach the LLM how to inspect," but rather:
 
 ##### QD-P-1.2.2 Role-Output Style Mismatch
 
-**Definition**: The identity/style defined by the role is inconsistent with the required output style.
+**Definition**: The identity/style defined by the role is inconsistent with the required output style. It is determined as a defect only when the style requirement is explicitly incompatible.
 
 **Detection Principle**: The LLM can extract the stylistic characteristics of a role and perform semantic alignment with the output style requirements.
 
@@ -425,12 +442,32 @@ The purpose of this part is not to "teach the LLM how to inspect," but rather:
 | **Fixed A** | "Responsibility: Analyze the user's financial situation and provide investment advice. Constraint: Analyzing funds involving suspected money laundering or illegal sources is prohibited." |
 | **Fixed B** | "Responsibility: Provide general investment advice based on a financial summary provided by the user. Constraint: Do not proactively analyze raw financial data." |
 
+##### QD-P-1.2.4 Identity and Anthropomorphization Boundaries
+
+**Definition**: The prompt does not declare an AI identity, or allows the Agent to impersonate a real person or organization, leading to user misunderstanding or trust abuse.
+
+**Detection Principle**: The LLM can identify the semantic conflict between "claiming to be a real person/organization" and "declaring itself as AI," but may not proactively notice the absence of an identity declaration.
+
+**Typical Manifestations**:
+
+- Does not declare itself as an AI assistant
+- Allows the Agent to claim to be a real person, doctor, lawyer, or other identity
+- Allows the Agent to impersonate a specific organization or brand
+
+**Severity**: P1 (AC-L1/AC-L2/AC-L3); P0 when facing consumer (C-end) users
+
+**Remediation Guidance**:
+
+- Explicitly declare the AI identity in the System Prompt
+- Prohibit impersonating real persons or organizations
+- When professional identities are involved, state the "assistive" nature
+
 <a id="123-scope-definition-defects-qd-p-13"></a>
 #### 1.2.3 Scope Definition Defects (QD-P-1.3)
 
 ##### QD-P-1.3.1 Quantifier Misuse
 
-**Definition**: Misuse of universal quantifiers (∀) and existential quantifiers (∃), leading to incorrect semantic scope.
+**Definition**: Misuse of universal quantifiers (∀) and existential quantifiers (∃), leading to incorrect semantic scope. It is determined as a defect only when quantifier misuse produces a logical conflict with other rules; being "overly absolute" alone is not reported.
 
 **Detection Principle**: The LLM has acquired quantifier semantics during pre-training and can identify the logical relationship between quantifiers and predicates.
 
@@ -458,7 +495,7 @@ The purpose of this part is not to "teach the LLM how to inspect," but rather:
 
 ##### QD-P-1.3.2 Vague Qualifiers
 
-**Definition**: Qualifier words are semantically vague, leading to unclear behavioral boundaries.
+**Definition**: Qualifier words are semantically vague, leading to unclear behavioral boundaries for critical decisions. Critical decision boundaries must be specific; stylistic descriptions may allow discretion.
 
 **Detection Principle**: The LLM can identify vague qualifiers and discover their semantic boundary issues.
 
@@ -482,7 +519,7 @@ The purpose of this part is not to "teach the LLM how to inspect," but rather:
 | --- | --- |
 | **Defective** | "Answers should be appropriately detailed." |
 | **Diagnosis** | "Appropriately" is semantically vague; boundaries cannot be determined |
-| **Fixed** | "Simple questions: answer within 50 words. Complex questions: answer within 100–200 words. If more detail is needed, provide a summary first, then ask the user." |
+| **Fixed** | "Answer length is controlled by request type: factual queries no more than 50 characters; analytical requests 100–200 characters; if more detail is needed, provide a summary first and then ask the user." |
 
 ##### QD-P-1.3.3 Undefined Boundaries
 
@@ -496,7 +533,7 @@ The purpose of this part is not to "teach the LLM how to inspect," but rather:
 - Prohibition scope boundaries are undefined
 - Handoff conditions are undefined
 
-**Severity**: P1
+**Severity**: P1 (L1) / P0 (L2/L3)
 
 **Remediation Guidance**:
 
@@ -515,24 +552,25 @@ The purpose of this part is not to "teach the LLM how to inspect," but rather:
 <a id="124-redundancy-and-invalidity-defects-qd-p-14"></a>
 #### 1.2.4 Redundancy and Invalidity Defects (QD-P-1.4)
 
-##### QD-P-1.4.1 Duplicate Constraints
+##### QD-P-1.4.1 Duplicate Constraints and Redundant Expressions
 
-**Definition**: The same constraint appears repeatedly in multiple locations, or multiple constraints semantically overlap.
+**Definition**: The same constraint appears repeatedly in multiple locations, or multiple constraints semantically overlap, or the prompt language is redundant (repetitive expressions, overly long definitions, unnecessary modifiers) and only increases Token Consumption. Intentional repetition of safety/compliance constraints does not count as a defect.
 
-**Detection Principle**: The LLM identifies semantically duplicate constraints during processing.
+**Detection Principle**: The LLM discovers semantically duplicate or linguistically redundant constraints during processing.
 
 **Typical Manifestations**:
 
 - The same constraint appears repeatedly in different paragraphs
 - Multiple constraints express the same meaning
 - Examples repeat rules already stated in the body
+- Repetitive expressions, overly long definitions, unnecessary modifiers
 
-**Severity**: P2
+**Severity**: Suggestion item (ungraded) — no deduction, no launch blocking, no waiver required; optimization advice only
 
 **Remediation Guidance**:
 
 - Merge duplicate constraints
-- Remove redundant expressions
+- Remove redundant expressions and unnecessary modifiers
 - Retain the most precise version
 
 **Example**:
@@ -542,35 +580,6 @@ The purpose of this part is not to "teach the LLM how to inspect," but rather:
 | **Defective** | "You MUST protect user privacy. Leaking any user personal information is prohibited. All data involving privacy must be handled confidentially." |
 | **Diagnosis** | Three semantically overlapping constraints; increased redundancy |
 | **Fixed** | "Leaking user personal information is prohibited, including but not limited to name, contact information, financial data, and other sensitive information." |
-
-##### QD-P-1.4.2 Never-Triggered Conditions
-
-**Definition**: A conditional branch is defined, but the condition can never logically be triggered.
-
-**Detection Principle**: The LLM can analyze whether a condition's premises are reachable.
-
-**Typical Manifestations**:
-
-- A condition contradicts a constraint, making the condition never satisfiable
-- The condition's premises have already been excluded by other rules
-- Branch logic errors lead to dead code
-
-**Severity**: P2
-
-**Remediation Guidance**:
-
-- Remove the never-triggered conditional branch
-- Fix the condition logic error
-- Check whether the condition conflicts with other rules
-
-**Example**:
-
-| Version | Content |
-| --- | --- |
-| **Defective** | "Accessing any external network is prohibited. If you need to query external data, use the Web Search API." |
-| **Diagnosis** | The first sentence prohibits external network access; the second sentence's condition is never satisfiable (because external network is prohibited) |
-| **Fixed A** | "Prioritize using the internal knowledge base to answer questions. If the internal knowledge base lacks relevant information, use the Web Search API to query external data." |
-| **Fixed B** | "Directly accessing external networks is prohibited. All external data queries MUST go through the Web Search API." |
 
 ##### QD-P-1.4.3 Invalid Skill Definitions
 
@@ -584,7 +593,7 @@ The purpose of this part is not to "teach the LLM how to inspect," but rather:
 - The Skill's trigger conditions conflict with constraints
 - The Skill's parameter definitions do not match actual requirements
 
-**Severity**: P1
+**Severity**: — (L1) / P1 (L2) / P0 (L3)
 
 **Remediation Guidance**:
 
@@ -596,9 +605,9 @@ The purpose of this part is not to "teach the LLM how to inspect," but rather:
 
 | Version | Content |
 | --- | --- |
-| **Defective** | "Skill: send_email — sends email. Constraint: Sending any message without explicit user confirmation is prohibited." |
-| **Diagnosis** | The Skill and constraint conflict; if the constraint is strictly enforced, the Skill is never invoked |
-| **Fixed** | "Skill: send_email — sends email. Constraint: Explicit user confirmation MUST be obtained before sending an email. Once confirmed, this Skill may be invoked." |
+| **Defective** | "Skill: send_email — sends email. Constraint: Any external communication is prohibited." |
+| **Diagnosis** | The constraint prohibits all external communication; the send_email Skill directly conflicts with the constraint and is never invoked |
+| **Fixed** | "Skill: send_email — sends email. Constraint: Emails may be sent only to recipients explicitly specified by the user, and user confirmation MUST be obtained before sending." |
 
 <a id="125-implication-defects-qd-p-15"></a>
 #### 1.2.5 Implication Defects (QD-P-1.5)
@@ -629,7 +638,7 @@ The purpose of this part is not to "teach the LLM how to inspect," but rather:
 | --- | --- |
 | **Defective** | "Objective: Help users complete financial planning. Responsibility: Provide financial literacy articles." |
 | **Diagnosis** | "Financial planning" requires personalized analysis and advice, but the responsibility is limited to "literacy articles," which does not support the objective |
-| **Fixed** | "Objective: Help users complete financial planning. Responsibilities: (1) Understand the user's financial situation; (2) Provide personalized financial advice; (3) Recommend suitable financial products; (4) Track plan execution progress." |
+| **Fixed** | "Objective: Help users complete financial planning. Responsibilities: (1) Understand the user's financial situation; (2) Provide personalized financial advice; (3) Introduce types and risks of financial products (not constituting investment advice); (4) Track plan execution progress." |
 
 ##### QD-P-1.5.2 Resources Do Not Support the Workflow
 
@@ -643,7 +652,7 @@ The purpose of this part is not to "teach the LLM how to inspect," but rather:
 - A workflow step mentions "invoke an API" but no API definition is provided
 - A workflow step mentions "use tool X" but the tool is not authorized
 
-**Severity**: P0
+**Severity**: — (L1) / P0 (L2/L3)
 
 **Remediation Guidance**:
 
@@ -658,6 +667,8 @@ The purpose of this part is not to "teach the LLM how to inspect," but rather:
 | **Defective** | "Workflow: (1) Query user order data; (2) Analyze order trends; (3) Generate report. Resources: None." |
 | **Diagnosis** | Step (1) requires an order database, but no resource is defined |
 | **Fixed** | "Workflow: (1) Query user order data (using the order database); (2) Analyze order trends; (3) Generate report. Resources: Order database (read-only permission)." |
+
+> **Note**: This part has no Section 1.3; the number is reserved to keep subsequent section numbers (1.4–1.8) unchanged.
 
 <a id="14-detection-methods-and-recommendations"></a>
 ### 1.4 Detection Methods and Recommendations
@@ -696,7 +707,7 @@ Focus on:
 | --- | --- |
 | **Possible false positives** | LLMs may produce false positives for boundary-ambiguous cases; human review is required |
 | **Context dependency** | Some apparent "contradictions" may be scenario branches; check whether conditional qualifiers exist |
-| **Remediation priority** | P0 defects MUST be fixed; P1 defects SHOULD be fixed; P2 defects MAY be handled as appropriate |
+| **Remediation priority** | P0 defects MUST be fixed; P1 defects SHOULD be fixed before release; P2 defects MAY be handled as appropriate |
 | **Domain knowledge** | Some semantic judgments require domain knowledge; the LLM may not be sensitive to these |
 
 <a id="15-part-summary"></a>
@@ -713,19 +724,19 @@ The logic defects listed in this part all fall within the scope of autonomous LL
 
 ---
 
-<a id="16-gray-zone-logic-defects"></a>
-## 1.6 Gray-Zone Logic Defects (QD-P-1.6)
+<a id="16-gray-zone-logic-defects-qd-p-16"></a>
+### 1.6 Gray-Zone Logic Defects (QD-P-1.6)
 
 <a id="160-positioning-of-this-section"></a>
-### 1.6.0 Positioning of This Section
+#### 1.6.0 Positioning of This Section (section-level note; does not occupy a QD number)
 
 **Definition**: Gray-Zone Defects are logic problems that the LLM **has the capability to identify, but detection reliability is unstable**. Unlike the defects in Sections 1.2.1–1.2.5, these problems lack the "binary-decidable" characteristic — the LLM can accurately identify them in some contexts, but may miss or misjudge them in others.
 
 | Comparison Dimension | 1.2.1–1.2.5 Reliably Detectable Defects | 1.6 Gray-Zone Defects |
 | --- | --- | --- |
-| Detection stability | ≥ 90% | 40%–70% |
+| Detection stability | Relatively high (empirical; requires annotated-set validation) | Relatively low (empirical; requires annotated-set validation) |
 | Trigger method | Direct reading suffices | Requires specific context or prompting to trigger |
-| False positive rate | Low | Medium |
+| False positive rate | Depends on whether applicability preconditions are explicit | Medium; depends on applicability preconditions |
 | False negative rate | Low | Relatively high |
 | Handling strategy | Trust LLM results | LLM results + human review |
 
@@ -737,7 +748,7 @@ The logic defects listed in this part all fall within the scope of autonomous LL
 | Partially reliable | 🟠🟠 | Can identify the presence of a problem, but difficult to accurately characterize and provide remediation guidance |
 | Unstable | 🟠🟠🟠 | Sometimes discovered, sometimes completely missed; depends on specific phrasing |
 
-#### QD-P-1.6.1 Critical Decision Word Vagueness
+##### QD-P-1.6.1 Critical Decision Word Vagueness
 
 **Definition**: Vague qualifiers (e.g., "sensitive," "reasonable," "when necessary," "appropriate") are used to carry **critical decision judgments** rather than secondary descriptions.
 
@@ -761,7 +772,7 @@ The logic defects listed in this part all fall within the scope of autonomous LL
 
 **Detection Reliability**: Partially reliable
 
-**Severity**: P0 (when vague words carry security/permission/trigger decisions)
+**Severity**: P1 (default at all levels); upgraded to P0 (all levels) when vague words carry security or permission decisions
 
 **Remediation Guidance**:
 
@@ -777,9 +788,9 @@ The logic defects listed in this part all fall within the scope of autonomous LL
 | **Diagnosis** | "Sensitive information" carries the security boundary decision, but its scope is undefined. The LLM may identify that "sensitive" is vague, but may not judge this as a P0 issue |
 | **Fixed** | "Identify the following sensitive information in user messages and refuse to answer: (1) National ID numbers, passport numbers; (2) Bank account numbers, credit card numbers; (3) Medical diagnosis records; (4) Undisclosed trade secrets. For boundary cases, default to treating as sensitive and ask the user for confirmation." |
 
-#### QD-P-1.6.2 Rules Depending on Model Internal State
+##### QD-P-1.6.2 Rules Depending on Model Internal State
 
-**Definition**: Prompt rules depend on the LLM's internal state (e.g., confidence, intent judgment, motivation inference), when the LLM cannot actually reliably access or report these states.
+**Definition**: Prompt rules depend on the LLM's internal state (e.g., confidence, intent judgment, motivation inference), when the LLM cannot actually reliably access or report these states. It is determined as a defect only when a critical decision (security/permission/funds) relies solely on model self-assessment with no observable trigger.
 
 **Detection Principle**: The LLM can understand the literal meaning of the rule, but **struggles to recognize the meta-problem that "it cannot reliably assess its own internal state."** It may superficially comply with the rule while actually "simulating" confidence judgments.
 
@@ -792,7 +803,7 @@ The logic defects listed in this part all fall within the scope of autonomous LL
 
 **Detection Reliability**: Unstable
 
-**Severity**: P0
+**Severity**: P1 (AC-L1/AC-L2/AC-L3)
 
 **Remediation Guidance**:
 
@@ -808,9 +819,9 @@ The logic defects listed in this part all fall within the scope of autonomous LL
 | **Diagnosis** | "Uncertain" depends on the model's internal confidence, which the LLM cannot reliably self-assess. The LLM may not discover that it missed this problem — because it "understands" the rule's meaning but lacks the stable execution capability |
 | **Fixed** | "You MUST inform the user that you cannot determine the answer and request more information in the following cases: (1) The user's question involves data you cannot access; (2) The user's question has multiple reasonable interpretations; (3) The user-provided context is insufficient to support judgment. In other cases, follow the normal process to answer." |
 
-#### QD-P-1.6.3 Soft Rule Interweaving Without Arbitration
+##### QD-P-1.6.3 Soft Rule Interweaving Without Arbitration
 
-**Definition**: Multiple Soft Rules (non-Hard Constraints) interweave in practical scenarios, producing implicit conflicts, and no arbitration mechanism is defined.
+**Definition**: Multiple Soft Rules (non-Hard Constraints) interweave in practical scenarios, producing implicit conflicts, and no arbitration mechanism is defined. It is determined as a defect only when a concrete scenario of actual incompatibility can be given.
 
 **Detection Principle**: The LLM can identify **explicit conflicts** (such as QD-P-1.1.2 Priority Conflict), but for **implicit interweaving of Soft Rules** — where multiple rules are individually reasonable, but their combination produces a gray zone — LLM detection is unstable.
 
@@ -830,7 +841,7 @@ The logic defects listed in this part all fall within the scope of autonomous LL
 
 **Detection Reliability**: Conditionally reliable
 
-**Severity**: P1
+**Severity**: P1 (default at all levels); upgraded to P0 (all levels) when the interwoven conflict involves security or permission
 
 **Remediation Guidance**:
 
@@ -846,9 +857,9 @@ The logic defects listed in this part all fall within the scope of autonomous LL
 | **Diagnosis** | Four Soft Rules are individually reasonable, but their combination produces ambiguity: For professional users, which style should be used? How complete is complete enough before it becomes overload? The LLM may not proactively discover this interwoven set of problems |
 | **Fixed** | "Adjust answer style based on user background: If the user is a professional, use professional terminology and provide complete technical details. If the user is non-professional, use plain language and provide core points, with a note that 'further detail is available upon request.' Information volume control: Core answer should not exceed 300 words; supplementary information should be provided in collapsible or list format." |
 
-#### QD-P-1.6.4 Reasoning Method Constraints
+##### QD-P-1.6.4 Reasoning Method Constraints
 
-**Definition**: The prompt imposes constraints on the LLM's **reasoning method itself** (e.g., "MUST strictly use deductive reasoning," "MUST reason step by step," "Using inductive reasoning is prohibited"), while the compatibility of the LLM's actual reasoning mechanisms with these constraints is uncertain.
+**Definition**: The prompt imposes constraints on the LLM's **reasoning method itself** (e.g., "MUST strictly use deduction," "Using induction is prohibited"), while the compatibility of the LLM's actual reasoning mechanisms with these constraints is uncertain. It is determined as a defect only when "unverifiable internal reasoning methods" are used as a compliance guarantee; requiring output of reasoning steps or step-by-step reasoning does not count as a defect.
 
 **Detection Principle**: The LLM can understand the literal meaning of the rule and "claim compliance," but **cannot determine whether it is actually reasoning in the specified way** — because the LLM's reasoning process is implicit and not introspectable.
 
@@ -868,11 +879,11 @@ The logic defects listed in this part all fall within the scope of autonomous LL
 | --- | --- |
 | **Defective** | "You MUST strictly use deductive reasoning, deriving conclusions step by step from premises. Using inductive or analogical reasoning is prohibited." |
 | **Diagnosis** | "The LLM's reasoning mechanism is implicit; 'strict deduction' cannot be guaranteed. The LLM may not discover this problem — because it understands the rule's meaning and will 'claim' compliance" |
-| **Fixed** | "In your answer, you MUST output the reasoning process in the following format: (1) List known premises; (2) Derive step by step, annotating the basis rule for each step; (3) State the conclusion. Skipping steps or omitting the derivation chain is not permitted." |
+| **Fixed** | "In your answer, output the reasoning process in the following format: (1) List known premises; (2) Derive step by step, annotating the basis rule for each step; (3) State the conclusion." |
 
-#### QD-P-1.6.5 Self-Referential or Recursive Constraints
+##### QD-P-1.6.5 Self-Referential or Recursive Constraints
 
-**Definition**: The prompt contains self-referential constraints (rules referencing themselves) or recursive constraints (rule trigger conditions depending on the rule's own execution results), leading to logical loops or undecidability.
+**Definition**: The prompt contains self-referential constraints (rules referencing themselves) or recursive constraints (rule trigger conditions depending on the rule's own execution results), leading to logical loops or undecidability. Only recursion without a termination condition, unsatisfiable self-reference, or circular dependency is determined as a defect; "self-check once before output" is not reported.
 
 **Detection Principle**: The LLM can identify simple self-reference as "odd," but **typically does not judge complex recursive constraints as logic defects**.
 
@@ -894,13 +905,13 @@ The logic defects listed in this part all fall within the scope of autonomous LL
 | **Diagnosis** | "Recursive constraint with no termination condition. If the revised answer triggers other rules, an infinite loop may result. The LLM may not discover this problem" |
 | **Fixed** | "Before outputting your answer, check whether the answer violates the following core rules: (1) Does not disclose privacy; (2) Does not output harmful content; (3) Does not exceed role permissions. If violated, revise once and then output. If the answer still violates core rules after revision, output 'I am unable to answer this question.'" |
 
-#### QD-P-1.6.6 Implicit Assumption Dependency
+##### QD-P-1.6.6 Implicit Assumption Dependency
 
-**Definition**: Prompt rules depend on unstated assumptions (e.g., assuming the model possesses a certain capability, assuming the user has a certain background, assuming the environment meets a certain condition), and these assumptions may not hold.
+**Definition**: Prompt rules depend on unstated assumptions (e.g., assuming the model possesses a certain capability, assuming the user has a certain background, assuming the environment meets a certain condition), and these assumptions may not hold. It is determined as a defect only when the assumption is critical, non-obvious, and has no external safeguard.
 
 **Detection Reliability**: Conditionally reliable
 
-**Severity**: P1
+**Severity**: P1 (AC-L1/AC-L2/AC-L3)
 
 **Remediation Guidance**:
 
@@ -916,13 +927,13 @@ The logic defects listed in this part all fall within the scope of autonomous LL
 | **Diagnosis** | "Implicit assumptions: the user will definitely upload a file; the file format is definitely valid; the file content is definitely a financial report. These assumptions are not explicitly stated" |
 | **Fixed** | "Based on the financial report file uploaded by the user, calculate key financial metrics and generate an analysis report. Precondition checks: (1) If the user has not uploaded a file, prompt the user to upload; (2) If the file format is not supported, inform the user of the supported format list; (3) If the file content is not financial report data, inform the user and ask whether other assistance is needed." |
 
-#### QD-P-1.6.7 Non-Monotonic Reasoning Defects
+##### QD-P-1.6.7 Non-Monotonic Reasoning Defects
 
-**Definition**: Prompt rules are designed based on "static knowledge," but in actual scenarios, new information may invalidate previous conclusions (non-monotonicity), and the prompt does not define knowledge update and conclusion revision mechanisms.
+**Definition**: Prompt rules are designed based on "static knowledge," but in actual scenarios, new information may invalidate previous conclusions (non-monotonicity), and the prompt does not define knowledge update and conclusion revision mechanisms. It is determined only when cross-turn state or already-committed conclusions exist; single-turn scenarios are Not Applicable (N/A).
 
 **Detection Reliability**: Unstable
 
-**Severity**: P1
+**Severity**: P1 (AC-L1/AC-L2/AC-L3)
 
 **Remediation Guidance**:
 
@@ -938,44 +949,61 @@ The logic defects listed in this part all fall within the scope of autonomous LL
 | **Diagnosis** | "The user may update symptom descriptions during the conversation, but the prompt does not define how to revise previous suggestions" |
 | **Fixed** | "Based on the symptoms described by the user, provide possible health suggestions. When the user updates or revises symptom descriptions: (1) Note that previous suggestions may no longer be valid; (2) Re-evaluate based on the latest symptoms; (3) If new suggestions conflict with old ones, clearly explain the reason for the change." |
 
+##### QD-P-1.6.8 Rule Followability
+
+**Definition**: The prompt requires the model to perform operations it fundamentally cannot reliably complete (e.g., precise counting, timing, complex arithmetic, obtaining real-time information), making the rule itself unfollowable.
+
+**Detection Principle**: The LLM may "claim" to comply with such rules but in fact cannot execute them reliably; this is a generalization of QD-P-1.6.2.
+
+**Detection Reliability**: Conditionally reliable
+
+**Severity**: P1 (AC-L1/AC-L2/AC-L3)
+
+**Remediation Guidance**:
+
+- Replace "capabilities unreliable within the model" with observable constraints or tool invocations
+- For operations requiring precision, require completion through tools
+
 <a id="17-gray-zone-summary"></a>
 ### 1.7 Gray-Zone Summary
 
-#### Detection Reliability Summary
+#### 1.7.1 Detection Reliability Summary
 
-| Defect Type | Detection Reliability | Severity | Core Difficulty |
+| Defect Type | Detection Reliability | Severity (Default Level) | Core Difficulty |
 | --- | --- | --- | --- |
-| QD-P-1.6.1 | Partially reliable | P0 | LLM may not recognize severity upgrade |
-| QD-P-1.6.2 | Unstable | P0 | LLM cannot introspect its own capability boundaries |
-| QD-P-1.6.3 | Conditionally reliable | P1 | Requires reasoning to intersection scenarios to discover |
-| QD-P-1.6.4 | Unstable | P1 | LLM cannot determine its own reasoning method |
-| QD-P-1.6.5 | Unstable | P1 | Complex recursion treated as normal rules |
-| QD-P-1.6.6 | Conditionally reliable | P1 | Requires meta-reasoning to discover implicit premises |
-| QD-P-1.6.7 | Unstable | P1 | Requires simulating rule interactions under dynamic scenarios |
+| QD-P-1.6.1 | Partially reliable | P1 (default at all levels; upgraded to P0 for security/permission decisions) | LLM may not recognize severity upgrade |
+| QD-P-1.6.2 | Unstable | P1 (AC-L1/AC-L2/AC-L3) | LLM cannot introspect its own capability boundaries |
+| QD-P-1.6.3 | Conditionally reliable | P1 (default at all levels; upgraded to P0 for security/permission conflicts) | Requires reasoning to intersection scenarios to discover |
+| QD-P-1.6.4 | Unstable | P1 (AC-L1/AC-L2/AC-L3) | LLM cannot determine its own reasoning method |
+| QD-P-1.6.5 | Unstable | P1 (AC-L1/AC-L2/AC-L3) | Complex recursion treated as normal rules |
+| QD-P-1.6.6 | Conditionally reliable | P1 (AC-L1/AC-L2/AC-L3) | Requires meta-reasoning to discover implicit premises |
+| QD-P-1.6.7 | Unstable | P1 (AC-L1/AC-L2/AC-L3) | Requires simulating rule interactions under dynamic scenarios |
+| QD-P-1.6.8 | Conditionally reliable | P1 (AC-L1/AC-L2/AC-L3) | Requires unreliable model capabilities (counting/timing/arithmetic) |
 
-#### Handling Strategy
+#### 1.7.2 Handling Strategy
 
 ```
 Gray-Zone Defect Handling Strategy:
 
 1. Detection Phase:
    - Explicitly mention these defect types in the inspection instruction
-   - Example instruction: "Pay special attention to the following gray-zone issues: [list QD-P-1.6.1–QD-P-1.6.7]"
+   - Example instruction: "Pay special attention to the following gray-zone issues: [list QD-P-1.6.1–QD-P-1.6.8]"
 
 2. Assessment Phase:
    - Gray-zone defects reported by LLM → Human review confirmation
    - Gray-zone defects not reported by LLM but discovered by humans → Supplementary inspection
 
 3. Remediation Phase:
-   - P0 gray-zone defects (QD-P-1.6.1, QD-P-1.6.2) → MUST be fixed
-   - P1 gray-zone defects → SHOULD be fixed; define fallback strategy
+   - Automatically detected gray-zone defects → Record as "pending confirmation"; do not count toward Gate blocking
+   - After human review confirmation → Count according to the default levels in 3.3.2; confirmed P0 items are handled via the exception process
+   - P1 gray-zone defects → SHOULD be fixed before release; define a fallback strategy
 
 4. Framework Positioning:
    - The gray zone is the transition band from "Part 1 (LLM Autonomous)" to "Part 2 (Requires Explicit Prompts)"
    - Handling approach: Light explicit prompting + human review
 ```
 
-### Relationship to Part 1 and Part 2
+#### 1.7.3 Relationship to Part 1 and Part 2
 
 ```
 Detection Reliability Spectrum:
@@ -989,7 +1017,7 @@ Part 1 1.2.1–1.2.5 ──→ Gray Zone 1.6 ──→ Part 2
 ---
 
 <a id="18-complete-part-1-structure"></a>
-## 1.8 Complete Part 1 Structure
+### 1.8 Complete Part 1 Structure
 
 ```
 Part 1: Logic Defects Within LLM Autonomous Detection Capability
@@ -1002,7 +1030,8 @@ Part 1: Logic Defects Within LLM Autonomous Detection Capability
 ├─ QD-P-1.2 Mismatch Defects (Reliable Detection)
 │   ├─ QD-P-1.2.1 Role-Responsibility Mismatch
 │   ├─ QD-P-1.2.2 Role-Output Style Mismatch
-│   └─ QD-P-1.2.3 Constraint-Responsibility Mismatch
+│   ├─ QD-P-1.2.3 Constraint-Responsibility Mismatch
+│   └─ QD-P-1.2.4 Identity and Anthropomorphization Boundaries
 │
 ├─ QD-P-1.3 Scope Definition Defects (Reliable Detection)
 │   ├─ QD-P-1.3.1 Quantifier Misuse
@@ -1010,8 +1039,7 @@ Part 1: Logic Defects Within LLM Autonomous Detection Capability
 │   └─ QD-P-1.3.3 Undefined Boundaries
 │
 ├─ QD-P-1.4 Redundancy and Invalidity Defects (Reliable Detection)
-│   ├─ QD-P-1.4.1 Duplicate Constraints
-│   ├─ QD-P-1.4.2 Never-Triggered Conditions
+│   ├─ QD-P-1.4.1 Duplicate Constraints and Redundant Expressions (suggestion item, ungraded)
 │   └─ QD-P-1.4.3 Invalid Skill Definitions
 │
 ├─ QD-P-1.5 Implication Defects (Reliable Detection)
@@ -1025,7 +1053,8 @@ Part 1: Logic Defects Within LLM Autonomous Detection Capability
     ├─ QD-P-1.6.4 Reasoning Method Constraints
     ├─ QD-P-1.6.5 Self-Referential or Recursive Constraints
     ├─ QD-P-1.6.6 Implicit Assumption Dependency
-    └─ QD-P-1.6.7 Non-Monotonic Reasoning Defects
+    ├─ QD-P-1.6.7 Non-Monotonic Reasoning Defects
+    └─ QD-P-1.6.8 Rule Followability
 ```
 
 ---
@@ -1056,7 +1085,7 @@ The defects listed in this part all belong to the **structural, completeness, an
 | **Trigger condition** | Requires an explicit inspection checklist or structured guidance; the LLM will not proactively discover |
 | **Detection efficiency** | Requires systematic item-by-item inspection; less efficient than Part 1 |
 | **Accuracy** | With checklist guidance, the LLM can accurately identify |
-| **False positive rate** | Low (structured inspection reduces ambiguity) |
+| **False positive rate** | Depends on whether applicability preconditions are explicit (structured inspection reduces ambiguity) |
 
 <a id="213-positioning-of-this-part"></a>
 #### 2.1.3 Positioning of This Part
@@ -1073,33 +1102,7 @@ The purpose of this part is:
 <a id="221-structural-and-normative-defects-qd-p-21"></a>
 #### 2.2.1 Structural and Normative Defects (QD-P-2.1)
 
-##### QD-P-2.1.1 Format Compliance
-
-**Definition**: The prompt's format does not comply with specifications, affecting readability and parsing.
-
-**Why the LLM does not proactively notice**: The LLM is insensitive to format issues and will not proactively discover non-compliant formatting.
-
-**Typical Manifestations**:
-
-- Missing necessary section breaks or headings
-- Inconsistent numbering systems
-- Disorganized formatting that hinders parsing
-
-**Severity**: P2 (L3 inspection only)
-
-**Remediation Guidance**:
-
-- Unify formatting specifications
-- Add necessary section breaks and headings
-- Ensure consistent numbering systems
-
-**Example**:
-
-| Version | Content |
-| --- | --- |
-| **Defective** | A long prompt text with no section breaks, no headings, and chaotic numbering |
-| **Diagnosis** | Non-compliant formatting affects readability but does not impact functionality |
-| **Fixed** | Add section breaks, headings, and a unified numbering system |
+> **Section note**: QD-P-2.1.1 (Format Compliance) has been deleted; its injection-related point "unclosed code blocks or delimiters" has been merged into QD-P-2.5.6. QD-P-2.1.4 (Language Conciseness) has been merged into QD-P-1.4.1. In this section, QD-P-2.1.2 (Reference Clarity) retains its grading; QD-P-2.1.3 and QD-P-2.1.5 are **suggestion items (ungraded)** — no deduction, no blocking, no waiver.
 
 ##### QD-P-2.1.2 Reference Clarity
 
@@ -1113,7 +1116,7 @@ The purpose of this part is:
 - "Invoke the API" → Which API?
 - "Process the file" → Which file?
 
-**Severity**: P1 (L3 inspection only)
+**Severity**: — (L1) / P1 (L2/L3)
 
 **Remediation Guidance**:
 
@@ -1141,7 +1144,7 @@ The purpose of this part is:
 - Information hierarchy does not distinguish primary from secondary
 - Critical directives are dispersed, making them difficult to follow
 
-**Severity**: P2 (L3 inspection only)
+**Severity**: Suggestion item (ungraded) — no deduction, no launch blocking, no waiver required; optimization advice only
 
 **Remediation Guidance**:
 
@@ -1157,40 +1160,30 @@ The purpose of this part is:
 | **Diagnosis** | Unreasonable structural hierarchy; affects information delivery efficiency |
 | **Fixed** | Critical constraints placed in their own section, in a prominent position |
 
-##### QD-P-2.1.4 Language Conciseness
+##### QD-P-2.1.5 Context Budget Encroachment
 
-**Definition**: The prompt language is redundant, increasing Token Consumption, but does not affect functionality.
+**Definition**: The prompt, examples, and tool descriptions jointly encroach on the context window, leaving insufficient room for reasoning and generation.
 
-**Why the LLM does not proactively notice**: The LLM is insensitive to language conciseness and will not proactively discover "redundancy" issues.
+**Why the LLM does not proactively notice**: The LLM will not proactively discover the completeness gap of "context budget encroachment."
 
 **Typical Manifestations**:
 
-- Repetitive expressions
-- Overly long definitions
-- Unnecessary modifiers
+- The total length of prompt + examples + tool descriptions is not assessed
+- No truncation strategy is defined for insufficient context
 
-**Severity**: P2 (L3 inspection only)
+**Severity**: Suggestion item (ungraded) — no deduction, no launch blocking, no waiver required; optimization advice only
 
 **Remediation Guidance**:
 
-- Streamline language
-- Remove redundant expressions
-- Merge duplicate content
-
-**Example**:
-
-| Version | Content |
-| --- | --- |
-| **Defective** | "You must absolutely ensure that the answer is fully accurate, with no errors permitted whatsoever." (redundant expression) |
-| **Diagnosis** | Language is redundant; increases Token Consumption |
-| **Fixed** | "Answers must be accurate." |
+- Assess the context footprint of the prompt and tool descriptions
+- Define truncation and degradation strategies for insufficient context
 
 <a id="222-input-definition-defects-qd-p-22"></a>
 #### 2.2.2 Input Definition Defects (QD-P-2.2)
 
 ##### QD-P-2.2.1 Undeclared Input Source
 
-**Definition**: The Agent's input source is not declared, preventing the Agent from determining the data source.
+**Definition**: The Agent's input source is not declared, preventing the Agent from determining the data source. It is judged N/A only when the input source is self-evident (user messages only); it is judged P0 only when multiple sources exist.
 
 **Why the LLM does not proactively notice**: The LLM will not proactively discover the structural gap of "undeclared input source."
 
@@ -1218,15 +1211,13 @@ The purpose of this part is:
 
 ##### QD-P-2.2.2 Unconstrained Input Format
 
-**Definition**: The input data format is not constrained, potentially causing parsing failures.
+**Definition**: The input data format is not constrained, potentially causing parsing failures. L2 is judged P0 only when structured input is accepted.
 
 **Why the LLM does not proactively notice**: The LLM will not proactively discover the completeness gap of "unconstrained input format."
 
 **Typical Manifestations**:
 
 - Not declaring the input data format (e.g., CSV, JSON, text)
-- Not declaring the input data encoding
-- Not declaring the input data size limit
 
 **Severity**: P1 (L1) / P0 (L2/L3)
 
@@ -1242,11 +1233,11 @@ The purpose of this part is:
 | --- | --- |
 | **Defective** | "Process the file uploaded by the user." |
 | **Diagnosis** | File format is not constrained; may cause parsing failures |
-| **Fixed** | "Process CSV or JSON files uploaded by the user (UTF-8 encoding, single file not exceeding 5MB)." |
+| **Fixed** | "Process CSV or JSON files uploaded by the user." |
 
 ##### QD-P-2.2.3 Required/Optional Not Distinguished
 
-**Definition**: The required vs. optional nature of input parameters is not distinguished, potentially causing processing failures.
+**Definition**: The required vs. optional nature of input parameters is not distinguished, potentially causing processing failures. It is determined as a defect only when structured input is accepted; free-text input is generally N/A.
 
 **Why the LLM does not proactively notice**: The LLM will not proactively discover the completeness gap of "required/optional not distinguished."
 
@@ -1254,9 +1245,8 @@ The purpose of this part is:
 
 - Required parameters are not marked
 - Default values for optional parameters are not defined
-- Handling when parameters are missing is not defined
 
-**Severity**: P1 (L1) / P0 (L2/L3)
+**Severity**: — (L1, free-text input) / P1 (L1, structured input) / P0 (L2/L3, only when structured input is accepted)
 
 **Remediation Guidance**:
 
@@ -1270,7 +1260,7 @@ The purpose of this part is:
 | --- | --- |
 | **Defective** | "Query user information." |
 | **Diagnosis** | Required/optional parameters are not distinguished; may cause processing failures |
-| **Fixed** | "Query user information. Required parameter: User ID. Optional parameter: Query scope (default: all information)." |
+| **Fixed** | "Query user information. Required parameter: User ID. Optional parameter: Query scope (default: basic information only)." |
 
 ##### QD-P-2.2.4 Undefined Missing-Input Handling
 
@@ -1305,7 +1295,7 @@ The purpose of this part is:
 
 ##### QD-P-2.3.1 Undefined Output Format
 
-**Definition**: The output format is not defined, preventing downstream systems from correctly parsing the output.
+**Definition**: The output format is not defined, preventing downstream systems from correctly parsing the output. It is judged P0 only when the output is machine-consumed and there is no external structured output contract; otherwise P1/N/A.
 
 **Why the LLM does not proactively notice**: The LLM will not proactively discover the structural gap of "undefined output format."
 
@@ -1333,7 +1323,7 @@ The purpose of this part is:
 
 ##### QD-P-2.3.2 Incomplete Output Schema
 
-**Definition**: The output Schema definition is incomplete, preventing downstream systems from correctly parsing the output.
+**Definition**: The output Schema definition is incomplete, preventing downstream systems from correctly parsing the output. It is triggered only when structured output has been declared; Agents without a declared structured output are judged N/A. It is judged P0 only when the output is machine-consumed and there is no external structured output contract; otherwise P1/N/A.
 
 **Why the LLM does not proactively notice**: The LLM will not proactively discover the completeness gap of "incomplete output Schema."
 
@@ -1356,40 +1346,12 @@ The purpose of this part is:
 | Version | Content |
 | --- | --- |
 | **Defective** | "Output JSON format, including summary and metrics." |
-| **Diagnosis** | Schema is incomplete; missing the recommendations field |
-| **Fixed** | "Output JSON format, including summary (string), metrics (object), recommendations (array of strings)." |
-
-##### QD-P-2.3.3 Missing Output Stability Assurance
-
-**Definition**: Output stability assurance mechanisms are not defined, potentially causing inconsistent output.
-
-**Why the LLM does not proactively notice**: The LLM will not proactively discover the completeness gap of "missing output stability assurance."
-
-**Typical Manifestations**:
-
-- Output format stability assurance is not defined
-- Output content stability assurance is not defined
-- Output consistency check mechanisms are not defined
-
-**Severity**: — (L1) / P1 (L2) / P0 (L3)
-
-**Remediation Guidance**:
-
-- Define output format stability rules
-- Define output content stability rules
-- Define output consistency check mechanisms
-
-**Example**:
-
-| Version | Content |
-| --- | --- |
-| **Defective** | "Generate a summary." |
-| **Diagnosis** | Summary stability assurance is not defined; may cause inconsistent output |
-| **Fixed** | "Generate a summary. Stability assurance: Summary structure is fixed (title + core insight + key data); length is controlled at 100–150 words; avoid arbitrary variation." |
+| **Diagnosis** | Field types are not defined; downstream cannot determine the data types of summary/metrics |
+| **Fixed** | "Output JSON format, including summary (string) and metrics (object)." |
 
 ##### QD-P-2.3.4 Missing Security/Privacy Filtering
 
-**Definition**: Security and privacy filtering mechanisms are not defined, potentially causing privacy leaks.
+**Definition**: Security and privacy filtering mechanisms are not defined, potentially causing privacy leaks. It is determined as a defect only when personal data is involved; the criteria for personal data (PII) are given in Risk Explicit NR-S-10.
 
 **Why the LLM does not proactively notice**: The LLM will not proactively discover the security gap of "missing security/privacy filtering."
 
@@ -1399,7 +1361,7 @@ The purpose of this part is:
 - Privacy data handling methods are not defined
 - Security output constraints are not defined
 
-**Severity**: P0 (all levels)
+**Severity**: P0 when personal data is involved; otherwise N/A
 
 **Remediation Guidance**:
 
@@ -1413,22 +1375,89 @@ The purpose of this part is:
 | --- | --- |
 | **Defective** | "Output user information." |
 | **Diagnosis** | Privacy filtering is not defined; may cause privacy leaks |
-| **Fixed** | "Output user information. Privacy filtering: Mask national ID numbers, bank card numbers, contact information, and other sensitive information; output only name and non-sensitive data." |
+| **Fixed** | "Output user information. Privacy filtering: Mask national ID numbers, bank card numbers, contact information, and other sensitive information; output only the minimal fields required for the business, and de-identify direct identifiers such as names." |
+
+##### QD-P-2.3.5 Factuality and Hallucination Control Declaration
+
+**Definition**: The truthfulness constraints on output are not declared, so the Agent may fabricate facts without evidence. It applies only when the Agent involves retrieval, tools, or external knowledge and its output may be treated as fact.
+
+**Why the LLM does not proactively notice**: The LLM will not proactively discover the completeness gap of "missing factuality constraint declaration."
+
+**Typical Manifestations**:
+
+- Does not require "answer only based on the provided materials/tool results"
+- Does not require "explicitly state that you do not know when there is no evidence"
+- Does not prohibit fabricating citations, data, URLs, or field values
+
+**Severity**: — (L1) / P0 (L2/L3)
+
+> **Cross-subset attribution**: This item only checks "whether the factuality and hallucination control declaration exists"; factuality/hallucination control is the first priority of Quality RAG-Agent, and the factuality of actual output is verified by RAG-Agent quality assessment.
+
+**Remediation Guidance**:
+
+- Declare that answers are based only on the provided materials or tool results
+- Require explicitly stating "I don't know" rather than guessing when there is no evidence
+- Prohibit fabricating citations, data, URLs, or field values
+
+**Example**:
+
+| Version | Content |
+| --- | --- |
+| **Defective** | "Answer any question about the company's finances." |
+| **Diagnosis** | No factuality constraint is declared; the Agent may fabricate unfounded financial data |
+| **Fixed** | "Answer only based on the provided financial materials and tool query results; when the materials are insufficient, explicitly state 'no basis found in the materials'; fabricating data, citations, or URLs is prohibited." |
+
+##### QD-P-2.3.6 Output Length and Truncation
+
+**Definition**: The maximum output length and the over-length truncation strategy are not defined, potentially causing output to be truncated downstream or the context to overflow.
+
+**Why the LLM does not proactively notice**: The LLM will not proactively discover the completeness gap of "undefined output length."
+
+**Typical Manifestations**:
+
+- Maximum output length is not defined
+- Truncation or segmentation strategy for over-length output is not defined
+
+**Severity**: P2 (AC-L1/AC-L2/AC-L3)
+
+**Remediation Guidance**:
+
+- Define the maximum output length
+- Define truncation, segmentation, or summarization strategies for over-length output
+
+##### QD-P-2.3.7 Output Language/Localization and Conventions
+
+**Definition**: The output language, time zone, currency, units, and percentage conventions are not defined, causing inconsistent conventions in multi-region scenarios.
+
+**Why the LLM does not proactively notice**: The LLM will not proactively discover the completeness gap of "undefined localization conventions."
+
+**Typical Manifestations**:
+
+- Output language is not defined
+- Time zone, currency, and units are not defined
+- Numeric conventions such as percentages are not defined
+
+**Severity**: P1 in multi-region scenarios; N/A in single-region scenarios
+
+**Remediation Guidance**:
+
+- Define the output language and time zone
+- Define currency, unit, and percentage conventions
 
 <a id="224-workflow-and-resource-defects-qd-p-24"></a>
 #### 2.2.4 Workflow and Resource Defects (QD-P-2.4)
 
 ##### QD-P-2.4.1 Incomplete Workflow Steps
 
-**Definition**: Workflow step definitions are incomplete, potentially causing functional gaps.
+**Definition**: Workflow step definitions are incomplete, potentially causing functional gaps. A defect is determined only when dependencies are not declared, the order is contradictory, or undefined steps are referenced; "missing a critical step" is recorded as insufficient evidence.
 
 **Why the LLM does not proactively notice**: The LLM will not proactively discover the structural gap of "incomplete workflow steps."
 
 **Typical Manifestations**:
 
-- Workflow is missing critical steps
-- Workflow step order is unreasonable
 - Workflow step dependencies are not defined
+- Workflow step order is contradictory
+- The workflow references undefined steps
 
 **Severity**: — (L1) / P1 (L2) / P0 (L3)
 
@@ -1442,9 +1471,9 @@ The purpose of this part is:
 
 | Version | Content |
 | --- | --- |
-| **Defective** | "Workflow: (1) Query data; (2) Generate report." |
-| **Diagnosis** | Missing the "data analysis" step; may result in insufficient report quality |
-| **Fixed** | "Workflow: (1) Query data; (2) Analyze data; (3) Generate report. Step dependencies: (2) depends on (1); (3) depends on (2)." |
+| **Defective** | "Workflow: (1) Invoke data cleaning; (2) Generate report." |
+| **Diagnosis** | Step (1) references an undefined "data cleaning" step |
+| **Fixed** | "Workflow: (1) Clean data using the data cleaning tool (clean_data); (2) Generate report. Step dependencies: (2) depends on (1)." |
 
 ##### QD-P-2.4.2 Undeclared Resources/Tools
 
@@ -1474,64 +1503,82 @@ The purpose of this part is:
 | **Diagnosis** | The database or API used is not declared |
 | **Fixed** | "Query data using the 'User Database' (db_users, read-only permission)." |
 
-##### QD-P-2.4.3 Missing Tool Invocation Specification
+##### QD-P-2.4.3 Incorrect Tool Invocation Parameters or Order
 
-**Definition**: Tool invocation specifications are not defined, potentially causing invocation failures or privilege escalation.
+**Definition**: The prompt body explicitly writes wrong tool invocation parameters (name, type) or invocation order, potentially causing invocation failures. It checks only "wrongly written" cases in the body; handling after tool invocation failure belongs to QD-P-2.6.1 (Runtime Exceptions Not Covered).
 
-**Why the LLM does not proactively notice**: The LLM will not proactively discover the structural gap of "missing tool invocation specification."
+**Why the LLM does not proactively notice**: The LLM will not proactively discover the structural gap of "wrong parameters or order written in the body."
 
 **Typical Manifestations**:
 
-- Tool invocation parameter specifications are not defined
-- Tool invocation sequence specifications are not defined
-- Handling when tool invocation fails is not defined
+- Tool parameter names or types are written incorrectly in the body
+- Tool invocation order is written incorrectly in the body
 
-**Severity**: — (L1) / P0 (L2/L3)
+**Severity**: — (L1) / P1 (L2/L3)
 
 **Remediation Guidance**:
 
-- Define tool invocation parameter specifications
-- Define tool invocation sequence specifications
-- Define handling when tool invocation fails
+- Correct the parameter names and types in the body
+- Correct the invocation order in the body
 
 **Example**:
 
 | Version | Content |
 | --- | --- |
-| **Defective** | "Invoke the API to query data." |
-| **Diagnosis** | API invocation specification is not defined; may cause invocation failures |
-| **Fixed** | "Invoke the API to query data. Invocation specification: API name = query_user_data, required parameter = userId, optional parameter = scope. On failure: prompt the user and attempt the local data source." |
+| **Defective** | "First call query_user_data (parameter: userID), then call clean_data (parameter: userId)." |
+| **Diagnosis** | The same field has inconsistent parameter names across tools (userID vs. userId), and the invocation order is the reverse of the data dependency |
+| **Fixed** | "First call clean_data (parameter: userId), then call query_user_data (parameter: userId)." |
+
+##### QD-P-2.4.4 Multi-Turn Context, State, and Memory Boundaries
+
+**Definition**: The scope of historical context use, truncation behavior, and cross-session memory in multi-turn conversations are not declared, causing state inconsistency. It applies only when multi-turn conversation or cross-session state exists; single-turn stateless Agents are judged N/A.
+
+**Why the LLM does not proactively notice**: The LLM will not proactively discover the completeness gap of "undeclared memory boundaries."
+
+**Typical Manifestations**:
+
+- The retention scope of historical context is not declared
+- The truncation behavior of context is not declared
+- The use of cross-session memory is not declared
+
+**Severity**: — (L1) / P1 (L2/L3)
+
+**Remediation Guidance**:
+
+- Declare the scope of historical context use and truncation behavior
+- Declare the read/write boundaries of cross-session memory
 
 <a id="225-constraint-and-boundary-defects-qd-p-25"></a>
 #### 2.2.5 Constraint and Boundary Defects (QD-P-2.5)
 
 ##### QD-P-2.5.1 Missing Termination Constraints
 
-**Definition**: Termination constraints are not defined, potentially causing infinite loops or resource exhaustion.
+**Definition**: The task's completion conditions or abandonment conditions are not defined, potentially causing infinite loops or resource exhaustion.
 
 **Why the LLM does not proactively notice**: The LLM will not proactively discover the completeness gap of "missing termination constraints."
 
 **Typical Manifestations**:
 
-- Loop termination conditions are not defined
-- Recursion termination conditions are not defined
-- Maximum iteration count is not defined
+- Task completion conditions are not defined
+- Task abandonment conditions are not defined
+- How to report partial success is not defined
+- Which step failures MUST NOT lead to claiming overall success is not defined
 
 **Severity**: — (L1) / P1 (L2) / P0 (L3)
 
 **Remediation Guidance**:
 
-- Define loop termination conditions
-- Define recursion termination conditions
-- Define maximum iteration count
+- Define completion conditions and abandonment conditions
+- Define how to report partial success
+- Clarify which step failures MUST NOT lead to claiming overall success
 
 **Example**:
 
 | Version | Content |
 | --- | --- |
 | **Defective** | "Continuously monitor user messages and process them." |
-| **Diagnosis** | Termination conditions are not defined; may cause infinite loops |
-| **Fixed** | "Monitor user messages and process them. Termination conditions: User sends 'end' or no new messages for more than 5 minutes. Maximum iterations: 100." |
+| **Diagnosis** | Completion/abandonment conditions are not defined; may cause infinite loops |
+| **Fixed** | "Monitor user messages and process them. Completion conditions: The user explicitly ends the session or the task objective is achieved; abandonment condition: three consecutive failures to make progress. For partial success, state what has been completed and what has not." |
 
 ##### QD-P-2.5.2 Missing Security Boundary Constraints
 
@@ -1606,7 +1653,7 @@ The purpose of this part is:
 - Multiple optimization objectives have potential conflicts
 - Decision rules for when conflicts occur are not defined
 
-**Severity**: P1 (L1) / P0 (L2/L3)
+**Severity**: — (L1) / P1 (L2) / P0 (L3)
 
 **Remediation Guidance**:
 
@@ -1623,6 +1670,8 @@ The purpose of this part is:
 | **Fixed** | "Priority rule: Privacy/Security > Completeness > Response Speed. When constraints conflict, decide according to this priority." |
 
 ##### QD-P-2.5.5 Missing Resource Invocation Frequency Limits
+
+> **Deprecated**: Frequency limits are essentially runtime configuration; this item has been removed from QD-P and is managed by runtime configuration (Harness). Business-level invocation frequency/batch expectations are now handled by Inspect Cross `QD-PT-2.6` / `QD-ST-3.4`. The number is retained for traceability only and is no longer a QD-P inspection item.
 
 **Definition**: Resource invocation frequency limits are not defined, potentially causing resource abuse.
 
@@ -1650,6 +1699,98 @@ The purpose of this part is:
 | **Diagnosis** | Invocation frequency limits are not defined; may cause API abuse |
 | **Fixed** | "Invoke the API to query data. Frequency limit: Maximum 10 calls per minute. When the limit is exceeded, cache results and prompt the user to try again later." |
 
+##### QD-P-2.5.6 Instruction-Data Trust Boundary (Injection Defense Declaration)
+
+**Definition**: The trust boundary between instructions and external data (user input, retrieved content, tool returns) is not declared, and the defense declaration against injection attacks is missing.
+
+**Why the LLM does not proactively notice**: The LLM will not proactively discover the security gap of "missing injection defense declaration."
+
+**Typical Manifestations**:
+
+- Does not declare that external data MUST NOT be executed as instructions
+- Does not distinguish the sources of high-trust instructions and low-trust data
+- Does not declare how injected content is identified and isolated
+- Code blocks or delimiters are not closed, allowing external data to escape the instruction boundary
+
+**Severity**: — (L1) / P0 (L2/L3)
+
+**Remediation Guidance**:
+
+- Declare the trust boundary between instructions and data
+- Clarify that external data MUST NOT override system instructions
+- Define strategies for identifying and isolating injected content
+
+> This item only checks "missing or contradictory declarations"; actual resistance to injection is verified by the Risk Implicit subset.
+
+##### QD-P-2.5.7 Human Confirmation for High-Risk/Irreversible Operations
+
+**Definition**: The prompt does not declare that high-risk/irreversible operations (fund transfers, deletion, external sending, production changes, etc.) require human confirmation before execution. It applies only when the Agent has such side-effecting operations.
+
+**Why the LLM does not proactively notice**: The LLM will not proactively discover the security gap of "missing human confirmation gate for high-risk operations."
+
+**Typical Manifestations**:
+
+- Operations such as funds, deletion, external sending, or production changes do not require user confirmation
+- No secondary confirmation mechanism is defined for irreversible operations
+- High-risk actions are executed automatically without a human gate
+
+**Severity**: P0 (L2/L3) when high-risk/irreversible operations are involved; N/A when no such operations exist
+
+**Remediation Guidance**:
+
+- Define a list of high-risk/irreversible operations
+- Require user confirmation before executing operations on the list
+- Clarify the boundary between "automatic execution" and "requiring human confirmation"
+
+**Example**:
+
+| Version | Content |
+| --- | --- |
+| **Defective** | "Automatically delete log files older than 30 days." |
+| **Diagnosis** | Deletion is irreversible and does not require human confirmation; may cause accidental deletion |
+| **Fixed** | "Before deleting logs, list the files to be deleted and obtain user confirmation; emergency automatic cleanup is performed only when pre-authorized by the user and with an audit record." |
+
+##### QD-P-2.5.8 System Prompt Confidentiality and Leak Response
+
+**Definition**: The confidentiality requirements for the System Prompt itself and the response when it leaks are not declared.
+
+**Why the LLM does not proactively notice**: The LLM will not proactively discover the security gap of "missing prompt confidentiality declaration."
+
+**Typical Manifestations**:
+
+- Does not declare that the System Prompt MUST NOT be output externally
+- Does not declare the response after a leak
+- Confidentiality declarations are excessive, causing normal functions to be refused
+
+**Severity**: — (L1) / P1 (L2/L3)
+
+**Remediation Guidance**:
+
+- Declare the confidentiality requirements for the System Prompt
+- Define the response when a leak occurs
+- Balance confidentiality with normal functionality (avoid excessive refusal)
+
+> This item only checks "whether confidentiality and response are declared"; actual prompt leak verification is the responsibility of the Risk Implicit subset.
+
+##### QD-P-2.5.9 Industry Compliance and Disclaimer Boundaries
+
+**Definition**: Industry compliance constraints and disclaimer boundaries (e.g., medical, financial, legal) are not declared, potentially leading to non-compliant advice.
+
+**Why the LLM does not proactively notice**: The LLM will not proactively discover the security gap of "undeclared compliance boundaries."
+
+**Typical Manifestations**:
+
+- Industry compliance constraints are not declared
+- Disclaimer and referral boundaries are not declared
+- Professional advice is provided without stating qualification boundaries
+
+**Severity**: Triggered by domain (P0 in medical/financial/legal domains; N/A in other domains)
+
+**Remediation Guidance**:
+
+- Declare industry compliance constraints
+- Define disclaimers and referral mechanisms
+
 <a id="226-exception-handling-defects-qd-p-26"></a>
 #### 2.2.6 Exception Handling Defects (QD-P-2.6)
 
@@ -1665,7 +1806,7 @@ The purpose of this part is:
 - Handling of data parsing failures is not defined
 - Handling of external system exceptions is not defined
 
-**Severity**: — (L1) / P0 (L3)
+**Severity**: — (L1) / P1 (L2) / P0 (L3)
 
 **Remediation Guidance**:
 
@@ -1679,11 +1820,11 @@ The purpose of this part is:
 | --- | --- |
 | **Defective** | "Invoke the API to query data." |
 | **Diagnosis** | Handling when the API call fails is not defined |
-| **Fixed** | "Invoke the API to query data. Exception handling: If the API call fails, attempt the local cache. If the local cache has no data, prompt the user and provide an alternative." |
+| **Fixed** | "Invoke the API to query data. Exception handling: If the API call fails, attempt to use local cached data (the cache MUST be within the authorized scope and marked with its timeliness); if the local cache has no data or has expired, prompt the user and provide an alternative." |
 
 ##### QD-P-2.6.2 Missing Degradation and Recovery Strategy
 
-**Definition**: Degradation and recovery strategies are not defined, potentially preventing the Agent from recovering.
+**Definition**: The handling method upon failure (degradation, recovery, or stop-and-report) is not declared, potentially preventing the Agent from recovering or causing it to continue executing erroneously.
 
 **Why the LLM does not proactively notice**: The LLM will not proactively discover the completeness gap of "missing degradation and recovery strategy."
 
@@ -1691,54 +1832,79 @@ The purpose of this part is:
 
 - Functional degradation strategies are not defined
 - Error recovery strategies are not defined
-- Methods for recovering from anomalous states are not defined
+- "Stop and report" is not treated as a legitimate handling method
 
-**Severity**: — (L1) / P0 (L3)
+**Severity**: — (L1/L2) / P1 (L3)
 
 **Remediation Guidance**:
 
 - Define functional degradation strategies
 - Define error recovery strategies
-- Define methods for recovering from anomalous states
+- Treat "stop and report" as one of the legitimate failure-handling methods
 
 **Example**:
 
 | Version | Content |
 | --- | --- |
 | **Defective** | "Analyze user data." |
-| **Diagnosis** | Degradation and recovery strategy is not defined |
-| **Fixed** | "Analyze user data. Degradation strategy: If full analysis fails, provide a simplified analysis. Recovery strategy: If simplified analysis fails, prompt the user and log the error. On the next session, prompt the user to retry." |
+| **Diagnosis** | The failure handling method is not declared |
+| **Fixed** | "Analyze user data. Failure handling: If full analysis fails, provide a simplified analysis; if the simplified analysis also fails, stop and report the error, and prompt the user to retry later." |
 
 ##### QD-P-2.6.3 Unreasonable Retry Mechanism
 
-**Definition**: The retry mechanism is unreasonably defined, potentially causing resource waste.
+**Definition**: The retry mechanism is unreasonably defined, potentially causing resource waste or repeated side effects.
 
 **Why the LLM does not proactively notice**: The LLM will not proactively discover the completeness gap of "unreasonable retry mechanism."
 
 **Typical Manifestations**:
 
 - Retry count limit is not defined
-- Retry interval is not defined
-- Handling after retry failure is not defined
+- Whether write operations may be blindly retried is not defined
+- Handling when a timeout leaves the result unknown (check status first to confirm whether it has executed) is not defined
 
-**Severity**: — (L1) / P1 (L3)
+**Severity**: — (L1/L2) / P1 (L3)
 
 **Remediation Guidance**:
 
 - Define retry count limit
-- Define retry interval
-- Define handling after retry failure
+- Clarify whether write operations may be retried and their idempotency requirements
+- Define handling when a timeout leaves the result unknown (check status first to confirm whether it has executed)
+
+**Boundary with QD-P-2.6.2**: This item only checks "retry count limit, whether write operations are blindly retried, and whether status is checked first when a timeout leaves the result unknown"; the final handling "stop and report" belongs to QD-P-2.6.2 (Missing Degradation and Recovery Strategy). The two MUST NOT register duplicate defects for the same "stop and report" gap.
 
 **Example**:
 
 | Version | Content |
 | --- | --- |
 | **Defective** | "If the API call fails, retry." |
-| **Diagnosis** | Retry count and interval are not defined; may cause infinite retries |
-| **Fixed** | "If the API call fails, retry up to 3 times, with a 1-second interval. If all 3 attempts fail, prompt the user and log the error." |
+| **Diagnosis** | The retry count limit is not defined, and handling for write operations/timeout scenarios is not specified |
+| **Fixed** | "If a read-only API call fails, retry up to 3 times; for write operations, do not blindly retry — check status before retrying to confirm it has not executed; if the result is unknown, stop and report." |
+
+##### QD-P-2.6.4 Out-of-Scope Request Refusal and Human Handoff
+
+**Definition**: The refusal template, referral targets, and escalation conditions for out-of-scope requests are not defined, causing the Agent to handle them beyond its scope.
+
+**Why the LLM does not proactively notice**: The LLM will not proactively discover the completeness gap of "undefined out-of-scope refusal."
+
+**Typical Manifestations**:
+
+- The refusal template for out-of-scope requests is not defined
+- Referral targets (human, expert, other systems) are not defined
+- Escalation conditions are not defined
+
+**Severity**: P1 (L1/L2) / P0 (L3)
+
+**Remediation Guidance**:
+
+- Define the refusal template
+- Define referral targets and escalation conditions
 
 <a id="227-example-design-defects-qd-p-27"></a>
 #### 2.2.7 Example Design Defects (QD-P-2.7)
+
+> The **injection of harmful content in examples** (example poisoning) is outside the scope of this category and is scanned by Risk Explicit (see NL-A-6 embedded disguise, NR-S-5 tool-description field instruction poisoning, NR-S-6 parameter default/example value injection).
+>
+> All three items in this category (QD-P-2.7.1–2.7.3) are **suggestion items (ungraded)**: they have optimization value but do not directly determine output quality or safety; no deduction, no launch blocking, no waiver required.
 
 ##### QD-P-2.7.1 Insufficient Positive Example Representativeness
 
@@ -1752,7 +1918,9 @@ The purpose of this part is:
 - Positive examples are too simplistic and do not cover boundary cases
 - Positive examples are inconsistent with rules
 
-**Severity**: P1 (L1/L2) / P0 (L3)
+**Severity**: Suggestion item (ungraded) — no deduction, no launch blocking, no waiver required; optimization advice only
+
+> The injection of harmful content in examples (example poisoning) does not belong to this item; it belongs to Risk Explicit (NL-A-6 / NR-S-5 / NR-S-6).
 
 **Remediation Guidance**:
 
@@ -1780,7 +1948,9 @@ The purpose of this part is:
 - Counter-example types are monotonous
 - Counter-examples do not cover typical error patterns
 
-**Severity**: P1 (L1/L2) / P0 (L3)
+**Severity**: Suggestion item (ungraded) — no deduction, no launch blocking, no waiver required; optimization advice only
+
+> The injection of harmful content in examples (example poisoning) does not belong to this item; it belongs to Risk Explicit (NL-A-6 / NR-S-5 / NR-S-6).
 
 **Remediation Guidance**:
 
@@ -1807,7 +1977,9 @@ The purpose of this part is:
 - No boundary-case examples are provided
 - Boundary-case examples are incomplete
 
-**Severity**: P1 (L1/L2) / P0 (L3)
+**Severity**: Suggestion item (ungraded) — no deduction, no launch blocking, no waiver required; optimization advice only
+
+> The injection of harmful content in examples (example poisoning) does not belong to this item; it belongs to Risk Explicit (NL-A-6 / NR-S-5 / NR-S-6).
 
 **Remediation Guidance**:
 
@@ -1829,46 +2001,54 @@ The purpose of this part is:
 <a id="231-completeness-inspection-checklist"></a>
 #### 2.3.1 Completeness Inspection Checklist
 
+**Pre-check (metadata declaration)**: Before starting the completeness inspection, first verify that the artifact's metadata declarations are complete — version, owner, change log, target model. If metadata is missing or inconsistent with reality, record it as a precondition issue and do not enter the defect inspection items below (metadata is a precondition; see 0.1.3).
+
 ```
-□ Structural and Normative
-  □ Format Compliance: Is the Markdown hierarchy correct? Are code blocks properly closed?
-  □ Reference Clarity: Are pronouns explicit? Do references have sources?
-  □ Structural Hierarchy Reasonableness: Are paragraphs too long? Is the nesting depth excessive?
-  □ Language Conciseness: Are there redundant expressions?
+□ Structural and Normative (QD-P-2.1)
+  □ Reference Clarity (QD-P-2.1.2): Are pronouns explicit? Do references have sources?
+  □ [Suggestion] Structural Hierarchy Reasonableness (QD-P-2.1.3): Are paragraphs too long? Is the nesting depth excessive?
+  □ [Suggestion] Is the context budget assessed (do the prompt/examples/tool descriptions encroach on the context)? (QD-P-2.1.5)
 
-□ Input Definition
-  □ Are all input sources declared?
-  □ Are all input formats constrained?
-  □ Are required and optional inputs distinguished?
-  □ Is handling of missing input defined?
+□ Input Definition (QD-P-2.2)
+  □ Are all input sources declared? (QD-P-2.2.1)
+  □ Are all input formats constrained? (QD-P-2.2.2)
+  □ Are required and optional inputs distinguished? (QD-P-2.2.3; applies only to structured input)
+  □ Is handling of missing input defined? (QD-P-2.2.4)
 
-□ Output Definition
-  □ Is the output format defined?
-  □ Is the output Schema complete?
-  □ Is the output stability mechanism defined?
-  □ Are privacy masking rules defined?
+□ Output Definition (QD-P-2.3)
+  □ Is the output format defined? (QD-P-2.3.1)
+  □ Is the output Schema complete? (QD-P-2.3.2; applies only when structured output is declared)
+  □ Are privacy masking rules defined? (QD-P-2.3.4)
+  □ Is the factuality and hallucination control declaration defined? (QD-P-2.3.5)
+  □ Are the maximum output length and over-length truncation strategy defined? (QD-P-2.3.6)
+  □ Are the output language/time zone/currency/unit/percentage conventions defined? (QD-P-2.3.7)
 
-□ Workflow and Resources
-  □ Are workflow steps complete?
-  □ Are all tool invocations declared?
-  □ Are tool invocation specifications (parameters, return values, error handling, permissions) defined?
-  □ Are tool permissions scoped?
+□ Workflow and Resources (QD-P-2.4)
+  □ Are workflow steps complete? (QD-P-2.4.1)
+  □ Are all tool invocations declared? (QD-P-2.4.2)
+  □ Are the tool parameters and invocation order in the body written incorrectly? (QD-P-2.4.3)
+  □ Are the multi-turn context scope, truncation, and cross-session memory declared? (QD-P-2.4.4; applies only to multi-turn/cross-session)
 
-□ Constraints and Boundaries
-  □ Are termination constraints (max retries, timeout) defined?
-  □ Are security boundaries (prohibited operations) defined?
-  □ Are permission control boundaries (read-only/read-write) defined?
-  □ Are constraint priorities defined?
+□ Constraints and Boundaries (QD-P-2.5)
+  □ Are termination constraints (completion/abandonment conditions) defined? (QD-P-2.5.1)
+  □ Are security boundaries (prohibited operations) defined? (QD-P-2.5.2)
+  □ Are permission control boundaries (read-only/read-write) defined? (QD-P-2.5.3)
+  □ Are constraint priorities defined? (QD-P-2.5.4)
+  □ Is the instruction-data trust boundary (injection defense declaration, code block/delimiter closure) defined? (QD-P-2.5.6)
+  □ Is human confirmation for high-risk/irreversible operations declared? (QD-P-2.5.7)
+  □ Are System Prompt confidentiality and leak response declared? (QD-P-2.5.8)
+  □ Are industry compliance and disclaimer boundaries declared? (QD-P-2.5.9)
 
-□ Exception Handling
-  □ Are runtime exceptions (tool failure, timeout) covered?
-  □ Are degradation and recovery strategies defined?
-  □ Is the retry mechanism (count, interval, conditions) reasonable?
+□ Exception Handling (QD-P-2.6)
+  □ Are runtime exceptions (tool failure, timeout) covered? (QD-P-2.6.1)
+  □ Are degradation and recovery strategies defined? (QD-P-2.6.2)
+  □ Is the retry mechanism reasonable (count limit, whether write operations are blindly retried, whether status is checked first on timeout)? (QD-P-2.6.3)
+  □ Are the refusal template, referral targets, and escalation conditions for out-of-scope requests defined? (QD-P-2.6.4)
 
-□ Example Design
-  □ Do positive examples cover typical scenarios?
-  □ Do counter-examples cover typical errors?
-  □ Are there examples for boundary cases?
+□ Example Design (QD-P-2.7) — all are suggestion items (ungraded)
+  □ Do positive examples cover typical scenarios? (QD-P-2.7.1)
+  □ Do counter-examples cover typical errors? (QD-P-2.7.2)
+  □ Are there examples for boundary cases? (QD-P-2.7.3)
 ```
 
 <a id="232-detection-process"></a>
@@ -1877,9 +2057,9 @@ The purpose of this part is:
 ```
 Detection Process:
 
-Step 1: Structure Scan
-  → Use format checking tools (e.g., Markdown linter)
-  → Check format compliance
+Step 1: Structure Scan (suggestion item, ungraded — optional, non-blocking)
+  → Optionally use format checking tools (e.g., Markdown linter)
+  → Check format compliance and code block closure
 
 Step 2: Completeness Inspection
   → Use the Checklist to inspect the completeness of input, output, resource, and exception definitions item by item
@@ -1899,19 +2079,15 @@ Step 5: Domain Adaptation Inspection
 ```
 
 <a id="24-defect-severity-classification"></a>
-## 2.4 Defect Severity Classification
+### 2.4 Defect Severity Classification
 
-| Level | Symbol | Definition | Typical Defects | Disposition Priority |
-| --- | --- | --- | --- | --- |
-| **P0** | 🔴 | Prevents Agent functionality or introduces security risk | Missing termination constraints, missing security boundaries, unconstrained permissions, missing tool invocation specifications, undefined missing-input handling, uncovered runtime exceptions | **MUST be fixed** |
-| **P1** | 🟡 | May cause behavioral instability or functional defects | Incomplete input/output definitions, undefined constraint priority, missing degradation strategy, unreasonable retry mechanism, insufficient example coverage | **SHOULD be fixed** |
-| **P2** | 🟢 | Affects readability or efficiency, but does not impact functionality | Format compliance, language conciseness, structural hierarchy reasonableness | **MAY be fixed** |
+The definitions and disposition principles of defect severity levels (P0/P1/P2) are given in [0.2.5](#025-defect-level-definitions-p0p1p2) and are not repeated here. The default level applicable to each defect item is governed by the [3.3.2 Complete Tiered Inspection Checklist](#332-complete-tiered-inspection-checklist).
 
 <a id="25-part-summary"></a>
-## 2.5 Part Summary
+### 2.5 Part Summary
 
 <a id="251-core-points"></a>
-### 2.5.1 Core Points
+#### 2.5.1 Core Points
 
 The defects listed in this part all fall within the scope of things the LLM **will not proactively notice**. This means:
 
@@ -1920,7 +2096,7 @@ The defects listed in this part all fall within the scope of things the LLM **wi
 - **For framework design**: This part is the core value of the framework, ensuring completeness
 
 <a id="252-relationship-to-part-1"></a>
-### 2.5.2 Relationship to Part 1
+#### 2.5.2 Relationship to Part 1
 
 | Dimension | Part 1 | Part 2 |
 | --- | --- | --- |
@@ -1930,7 +2106,7 @@ The defects listed in this part all fall within the scope of things the LLM **wi
 | **Framework value** | List common errors; help avoid | Ensure completeness; no missing critical content |
 
 <a id="253-practice-recommendations"></a>
-### 2.5.3 Practice Recommendations
+#### 2.5.3 Practice Recommendations
 
 ```
 Practice Recommendations:
@@ -1945,7 +2121,7 @@ Practice Recommendations:
 
 3. Pre-Launch:
    - P0 defects MUST be fixed
-   - P1 defects SHOULD be fixed
+   - P1 defects SHOULD be fixed before release
    - P2 defects MAY be handled as appropriate
 
 4. Continuous Improvement:
@@ -1959,34 +2135,38 @@ Practice Recommendations:
 ## 3 Tiered Inspection Mechanism
 
 <a id="31-agent-level-definitions"></a>
-### 3.1 Agent Level Definitions
+### 3.1 Agent Level Definitions (`AC-L`)
+
+> **[Global symbol convention · Mandatory]** Throughout the body, tables, examples, and appendices of this document, `L1` / `L2` / `L3` are **always** shorthand for `AC-L1` / `AC-L2` / `AC-L3` (Agent complexity levels) and are fully equivalent. Except in this definition section, the `AC-` prefix is not repeated everywhere. Any isolated `L1` / `L2` / `L3` **MUST NOT** be interpreted as `OR-L` (operational risk level) or any other grading model. This convention is mandatory for all chapters, appendices, examples, and report fields.
 
 <a id="311-three-agent-levels"></a>
 #### 3.1.1 Three Agent Levels
 
 | Level | Name | Definition | Typical Characteristics |
 | --- | --- | --- | --- |
-| **L1** | Single-turn Task | Single invocation completes the task; no state retention | Single skill, no tool invocations, no multi-turn dialogue, no complex reasoning |
-| **L2** | Multi-turn Interactive | Requires multi-turn dialogue or simple tool invocations | Multi-turn dialogue, 1–3 tools, simple workflow, limited state |
-| **L3** | Complex Agent | Complex workflow, multi-tool collaboration, strong constraints | 4+ tools, complex workflow, security constraints, permission control, exception handling |
+| **AC-L1** | Single-turn Task | Single invocation completes the task; no state retention | Single skill, no tool invocations, no multi-turn dialogue, no complex reasoning |
+| **AC-L2** | Multi-turn Interactive | Requires multi-turn dialogue or simple tool invocations | Multi-turn dialogue, 1–3 tools, simple workflow, limited state |
+| **AC-L3** | Complex Agent | Complex workflow, multi-tool collaboration, strong constraints | 4+ tools, complex workflow, security constraints, permission control, exception handling |
 
 <a id="312-three-level-agent-determination-criteria"></a>
 #### 3.1.2 Three-Level Agent Determination Criteria
 
 | Level | Determination Criteria (any 2 or more satisfied) |
 | --- | --- |
-| **L1** | ✓ Single skill (e.g., translation, summarization, Q&A)<br>✓ No tool invocations<br>✓ No multi-turn dialogue<br>✓ No complex reasoning |
-| **L2** | ✓ Multi-turn dialogue<br>✓ 1–3 tool invocations<br>✓ Simple workflow (≤ 5 steps)<br>✓ Limited state management |
-| **L3** | ✓ 4+ tool invocations<br>✓ Complex workflow (> 5 steps)<br>✓ Security-sensitive (involves privacy/permissions)<br>✓ Requires exception handling mechanisms |
+| **AC-L1** | ✓ Single skill (e.g., translation, summarization, Q&A)<br>✓ No tool invocations<br>✓ No multi-turn dialogue<br>✓ No complex reasoning |
+| **AC-L2** | ✓ Multi-turn dialogue<br>✓ 1–3 tool invocations<br>✓ Simple workflow (≤ 5 steps)<br>✓ Limited state management |
+| **AC-L3** | ✓ 4+ tool invocations<br>✓ Complex workflow (> 5 steps)<br>✓ Security-sensitive (involves privacy/permissions)<br>✓ Requires exception handling mechanisms |
+
+> When an Agent satisfies the determination criteria of multiple levels, take the highest level.
 
 <a id="313-typical-examples-by-agent-level"></a>
 #### 3.1.3 Typical Examples by Agent Level
 
 | Level | Typical Examples |
 | --- | --- |
-| **L1** | Translation assistant, summarization, single-turn Q&A, format conversion, simple classification |
-| **L2** | Customer service bot, document Q&A, simple search assistant, schedule management, email assistant |
-| **L3** | Financial analysis Agent, code execution Agent, data processing Agent, security-sensitive Agent, multi-system collaboration Agent |
+| **AC-L1** | Translation assistant, summarization, single-turn Q&A, format conversion, simple classification |
+| **AC-L2** | Customer service bot, document Q&A, simple search assistant, schedule management, email assistant |
+| **AC-L3** | Financial analysis Agent, code execution Agent, data processing Agent, security-sensitive Agent, multi-system collaboration Agent |
 
 ---
 
@@ -1996,34 +2176,32 @@ Practice Recommendations:
 <a id="321-three-severity-levels"></a>
 #### 3.2.1 Three Severity Levels
 
-| Level | Symbol | Definition | Disposition Priority |
-| --- | --- | --- | --- |
-| **P0** | 🔴 | Prevents Agent functionality or introduces security risk | **MUST be fixed** |
-| **P1** | 🟡 | May cause behavioral instability or functional defects | **SHOULD be fixed** |
-| **P2** | 🟢 | Affects readability or efficiency, but does not impact functionality | **MAY be fixed** |
+The definitions and disposition principles of P0/P1/P2 are given in [0.2.5](#025-defect-level-definitions-p0p1p2) and are not repeated here.
 
 <a id="322-relationship-between-severity-level-and-agent-level"></a>
 #### 3.2.2 Relationship Between Severity Level and Agent Level
 
-**Core Principle**: Defect Severity Level and Agent Level are two orthogonal dimensions, but the severity of the same defect may differ across different Agent Levels.
+**Core Principle**: The **semantics** of defect severity (the meaning of P0/P1/P2) are independent of Agent Level, but the **value** of the same defect's severity varies with Agent Level (see 3.2.3). System Prompts have no operational-risk dimension; their defect severity levels are determined by `AC-L` (see framework/core.md §4.1).
 
 | Relationship | Description |
 | --- | --- |
-| **Defect Severity Level** | Determines "whether it MUST be fixed"; in principle, independent of Agent Level |
+| **Defect severity semantics** | The meaning of P0/P1/P2 is uniformly defined in 0.2.5 and is independent of Agent Level |
+| **Defect severity value** | The same defect may take different levels at different Agent Levels; see the default levels in 3.3.2 |
 | **Agent Level** | Determines "which items to inspect" — i.e., the inspection scope |
-| **Synergy** | Agent Level determines the inspection scope → defects within that scope are handled according to their Severity Level |
-| **Special Case** | The same defect may have its severity upgraded at different Agent Levels (because complexity amplifies the impact scope) |
+| **Default levels and arbitration** | The default level applicable to each defect item is governed by 3.3.2; if the "Severity" field in the body conflicts with it, 3.3.2 prevails |
 
 <a id="323-rules-for-severity-variation-across-agent-levels"></a>
 #### 3.2.3 Rules for Severity Variation Across Agent Levels
 
 | Variation Pattern | Description | Typical Example |
 | --- | --- | --- |
-| **🟢→🟡→🔴** | Impact scope progressively amplifies; severity progressively upgrades | Insufficient example coverage (L1P2→L3P0) |
-| **🟡→🔴→🔴** | Becomes a blocking condition at L2; remains blocking at L3 | Undefined output format (L1P1→L2/L3P0) |
+| **🟡→🟡→🔴** | Impact scope progressively amplifies; upgraded to blocking at L3 | Priority conflict (L1/L2 P1 → L3 P0) |
+| **🟡→🔴→🔴** | Becomes a blocking condition at L2; remains blocking at L3 | Undefined output format (L1 P1 → L2/L3 P0) |
 | **🔴→🔴→🔴** | Blocking at all levels; impact independent of complexity | Direct contradiction, missing security boundary constraints |
-| **🟡→🟡→🟡** | Consistent impact across all levels; does not change with complexity | Role definition clarity, language conciseness |
-| **🟢→🟢→🟢** | Optional at all levels; limited impact scope | Format compliance (L3 inspection only) |
+| **🟡→🟡→🟡** | Consistent impact across all levels; does not change with complexity | Quantifier misuse, vague qualifiers |
+| **🟢→🟢→🟢** | Optional at all levels; limited impact scope | Output length and truncation |
+
+**Downgrade and adjustment rules**: The levels listed in 3.3.2 are default levels and may be adjusted with human review and a recorded rationale in the following cases: the inspection item does not apply to the Agent → record N/A (removed from $W_{total}$); a gray-zone defect is automatically detected → record "pending confirmation," and after human review confirmation count it at the default level; narrow the criteria according to each item's applicability preconditions. Adjustments MUST NOT be used to eliminate a confirmed P0 defect unless the exception process is followed (see 0.2.5). Items whose notes say "upgraded to P0 when XX" (e.g., QD-P-1.2.4 upgraded to P0 for C-end users) are counted at the marked level by default; after the upgrade condition is triggered and confirmed by human review, they are counted at the upgraded level.
 
 ---
 
@@ -2036,11 +2214,14 @@ Practice Recommendations:
 | Principle | Description |
 | --- | --- |
 | **Upward-compatible** | Higher-level inspection items include lower-level items (L3 ⊃ L2 ⊃ L1) |
-| **Core-focused** | L1 focuses on P0 defects; L2 progressively covers P1; L3 provides full coverage |
-| **Number-ordered** | Inspection items are ordered by Part 1 and Part 2 numbering (QD-P-1.1.1 → QD-P-1.6.7 → QD-P-2.1.1 → QD-P-2.7.3) |
+| **Core-focused** | L1 is mainly P0 and covers necessary P1 items; L2 extends coverage of more P1/P0 items; L3 provides full coverage and upgrades some items to P0. Tier differences come mainly from "upgrading levels" rather than merely adding items |
+| **Number-ordered** | Inspection items are ordered by Part 1 and Part 2 numbering |
+| **Suggestion items separated** | Ungraded suggestion items (optimization value only) are not included in the tiered checklist, scoring, or Gate; they are listed separately |
 
 <a id="332-complete-tiered-inspection-checklist"></a>
 #### 3.3.2 Complete Tiered Inspection Checklist
+
+> The severity level of each defect listed below at the corresponding Agent Level is the **default level**. Adjustments confirmed by human review MUST have a recorded rationale (see 3.2.2).
 
 **Part 1: Logic Defects Within LLM Autonomous Detection Capability**
 
@@ -2052,61 +2233,86 @@ Practice Recommendations:
 | **QD-P-1.2.1** | Role-Responsibility Mismatch | 🔴 | 🔴 | 🔴 | P0 at all levels; role semantic scope not matching responsibility requirements is blocking in any scenario |
 | **QD-P-1.2.2** | Role-Output Style Mismatch | 🟡 | 🟡 | 🟡 | P1 at all levels; style mismatch affects output consistency but does not block functionality |
 | **QD-P-1.2.3** | Constraint-Responsibility Mismatch | 🔴 | 🔴 | 🔴 | P0 at all levels; a constraint prohibiting core responsibility behavior is blocking in any scenario |
+| **QD-P-1.2.4** | Identity and Anthropomorphization Boundaries | 🟡 | 🟡 | 🟡 | P1 at all levels; upgraded to P0 for consumer (C-end) users |
 | **QD-P-1.3.1** | Quantifier Misuse | 🟡 | 🟡 | 🟡 | P1 at all levels; quantifier semantic scope errors affect behavioral boundaries but do not block |
 | **QD-P-1.3.2** | Vague Qualifiers | 🟡 | 🟡 | 🟡 | P1 at all levels; vague qualifiers cause unstable behavioral boundaries |
 | **QD-P-1.3.3** | Undefined Boundaries | 🟡 | 🔴 | 🔴 | L1 P1; L2/L3 upgraded to P0 (boundary gaps have greater impact in multi-tool/complex workflows) |
-| **QD-P-1.4.1** | Duplicate Constraints | 🟢 | 🟢 | 🟢 | P2 at all levels; redundancy does not affect functionality |
-| **QD-P-1.4.2** | Never-Triggered Conditions | 🟢 | 🟢 | 🟢 | P2 at all levels; dead code does not affect functionality |
 | **QD-P-1.4.3** | Invalid Skill Definitions | — | 🟡 | 🔴 | L1 has no Skills; L2 P1; L3 P0 (invalid Skills in complex Agents may cause functional gaps) |
 | **QD-P-1.5.1** | Responsibilities Do Not Support Objective | 🔴 | 🔴 | 🔴 | P0 at all levels; responsible behaviors insufficient to accomplish the objective |
 | **QD-P-1.5.2** | Resources Do Not Support Workflow | — | 🔴 | 🔴 | L1 has no workflow; L2/L3 P0 (workflow steps cannot execute) |
-| **QD-P-1.6.1** | Critical Decision Word Vagueness | 🟡 | 🔴 | 🔴 | L1 P1; L2/L3 P0 (upgraded when vague words carry security/permission decisions) |
-| **QD-P-1.6.2** | Rules Depending on Model Internal State | 🟡 | 🟡 | 🔴 | L1/L2 P1; L3 P0 (internal state dependency risk is greater in complex Agents) |
-| **QD-P-1.6.3** | Soft Rule Interweaving Without Arbitration | 🟡 | 🟡 | 🔴 | L1/L2 P1; L3 P0 (Soft Rule interweaving impact is greater in complex Agents) |
+| **QD-P-1.6.1** | Critical Decision Word Vagueness | 🟡 | 🟡 | 🟡 | P1 at all levels; upgraded to P0 (all levels) when carrying security or permission decisions |
+| **QD-P-1.6.2** | Rules Depending on Model Internal State | 🟡 | 🟡 | 🟡 | P1 at all levels; reported only when a critical decision (security/permission/funds) relies solely on model self-assessment with no observable trigger |
+| **QD-P-1.6.3** | Soft Rule Interweaving Without Arbitration | 🟡 | 🟡 | 🟡 | P1 at all levels; upgraded to P0 (all levels) when the conflict involves security or permission |
 | **QD-P-1.6.4** | Reasoning Method Constraints | 🟡 | 🟡 | 🟡 | P1 at all levels; the LLM cannot guarantee its internal reasoning method |
 | **QD-P-1.6.5** | Self-Referential or Recursive Constraints | 🟡 | 🟡 | 🟡 | P1 at all levels; simple self-reference may be harmless, complex recursion may cause anomalies |
-| **QD-P-1.6.6** | Implicit Assumption Dependency | 🟡 | 🟡 | 🔴 | L1/L2 P1; L3 P0 (implicit assumption failure impact is greater in complex Agents) |
-| **QD-P-1.6.7** | Non-Monotonic Reasoning Defects | 🟡 | 🟡 | 🔴 | L1/L2 P1; L3 P0 (dynamic scenario rule interaction impact is greater in complex Agents) |
+| **QD-P-1.6.6** | Implicit Assumption Dependency | 🟡 | 🟡 | 🟡 | P1 at all levels; reported only for critical, non-obvious assumptions without external safeguards |
+| **QD-P-1.6.7** | Non-Monotonic Reasoning Defects | 🟡 | 🟡 | 🟡 | P1 when cross-turn state/committed conclusions exist; single-turn N/A |
+| **QD-P-1.6.8** | Rule Followability | 🟡 | 🟡 | 🟡 | P1 at all levels; reported only when unreliable model capabilities (counting/timing/arithmetic) are required |
 
 **Part 2: Defects Requiring Explicit Prompts**
 
 | QD-P ID | Defect Name | L1 | L2 | L3 | Severity Variation Notes |
 | --- | --- | --- | --- | --- | --- |
-| **QD-P-2.1.1** | Format Compliance | — | — | 🟢 | L3 inspection only; P2; affects readability but not functionality |
-| **QD-P-2.1.2** | Reference Clarity | — | — | 🟡 | L3 inspection only; P1; vague references in complex Agents may cause incorrect tool invocation parameters |
-| **QD-P-2.1.3** | Structural Hierarchy Reasonableness | — | — | 🟢 | L3 inspection only; P2; affects information delivery efficiency but not functionality |
-| **QD-P-2.1.4** | Language Conciseness | — | — | 🟢 | L3 inspection only; P2; increases Token Consumption but does not affect functionality |
+| **QD-P-2.1.2** | Reference Clarity | — | 🟡 | 🟡 | L1 has no tools; L2/L3 P1; vague references may cause incorrect tool invocation parameters |
 | **QD-P-2.2.1** | Undeclared Input Source | 🔴 | 🔴 | 🔴 | P0 at all levels; workflow cannot execute |
-| **QD-P-2.2.2** | Unconstrained Input Format | 🟡 | 🔴 | 🔴 | L1 P1; L2/L3 P0 (missing input format in multi-tool/complex workflows causes parsing failures) |
-| **QD-P-2.2.3** | Required/Optional Not Distinguished | 🟡 | 🔴 | 🔴 | L1 P1; L2/L3 P0 (undefined required nature in complex Agents causes processing failures) |
+| **QD-P-2.2.2** | Unconstrained Input Format | 🟡 | 🔴 | 🔴 | L1 P1; L2/L3 P0 only when structured input is accepted (missing input format causes parsing failures) |
+| **QD-P-2.2.3** | Required/Optional Not Distinguished | 🟡 | 🔴 | 🔴 | L1 P1; L2/L3 P0 only when structured input is accepted |
 | **QD-P-2.2.4** | Undefined Missing-Input Handling | 🟡 | 🔴 | 🔴 | L1 P1; L2/L3 P0 (missing-input impact is greater in complex Agents) |
 | **QD-P-2.3.1** | Undefined Output Format | 🟡 | 🔴 | 🔴 | L1 P1; L2/L3 P0 (output is parsed by downstream tools; non-compliant format causes tool invocation failures) |
-| **QD-P-2.3.2** | Incomplete Output Schema | 🟡 | 🔴 | 🔴 | L1 P1; L2/L3 P0 (downstream systems cannot correctly parse output) |
-| **QD-P-2.3.3** | Missing Output Stability Assurance | — | 🟡 | 🔴 | L1 single invocation does not need stability; L2 P1; L3 P0 |
-| **QD-P-2.3.4** | Missing Security/Privacy Filtering | 🔴 | 🔴 | 🔴 | P0 at all levels (may cause privacy leaks) |
+| **QD-P-2.3.2** | Incomplete Output Schema | 🟡 | 🔴 | 🔴 | Triggered only when structured output is declared; L1 P1; L2/L3 P0 |
+| **QD-P-2.3.4** | Missing Security/Privacy Filtering | — | — | — | P0 at all levels when personal data is involved; otherwise N/A (PII criteria see NR-S-10) |
+| **QD-P-2.3.5** | Factuality and Hallucination Control Declaration | — | 🔴 | 🔴 | L2/L3 P0; factuality/hallucination control is the first priority of RAG-Agent; L1 has no retrieval/tools → N/A |
+| **QD-P-2.3.6** | Output Length and Truncation | 🟢 | 🟢 | 🟢 | P2 at all levels; maximum length and over-length strategy are undefined |
+| **QD-P-2.3.7** | Output Localization and Conventions | — | — | — | P1 in multi-region scenarios; N/A in single-region scenarios; language/time zone/currency/unit conventions |
 | **QD-P-2.4.1** | Incomplete Workflow Steps | — | 🟡 | 🔴 | L1 has no workflow; L2 P1; L3 P0 (missing steps in complex workflows have greater impact) |
 | **QD-P-2.4.2** | Undeclared Resources/Tools | — | 🔴 | 🔴 | L1 has no tools; L2/L3 P0 (tool invocation fails) |
-| **QD-P-2.4.3** | Missing Tool Invocation Specification | — | 🔴 | 🔴 | L1 has no tools; L2/L3 P0 (tool invocation fails or privilege escalation) |
+| **QD-P-2.4.3** | Incorrect Tool Invocation Parameters or Order | — | 🟡 | 🟡 | L2/L3 P1; only when parameters or invocation order are written incorrectly in the body |
+| **QD-P-2.4.4** | Multi-Turn Context and Memory Boundaries | — | 🟡 | 🟡 | Applies only to multi-turn/cross-session; L2/L3 P1 |
 | **QD-P-2.5.1** | Missing Termination Constraints | — | 🟡 | 🔴 | L1 has no retries; L2 P1; L3 P0 (may cause resource exhaustion) |
 | **QD-P-2.5.2** | Missing Security Boundary Constraints | 🔴 | 🔴 | 🔴 | P0 at all levels; may cause security incidents |
 | **QD-P-2.5.3** | Missing Permission Control Boundaries | — | 🟡 | 🔴 | L1 has no permission control; L2 P1; L3 P0 (may cause privilege escalation) |
 | **QD-P-2.5.4** | Undefined Constraint Priority | — | 🟡 | 🔴 | L1 constraints are simple and do not need priority; L2 P1; L3 P0 |
-| **QD-P-2.5.5** | Missing Resource Invocation Frequency Limits | — | 🟡 | 🔴 | L1 has no resource invocations; L2 P1; L3 P0 (may cause resource abuse) |
-| **QD-P-2.6.1** | Runtime Exceptions Not Covered | — | — | 🔴 | L3 inspection only; P0 (exception impact is greater in complex Agents) |
-| **QD-P-2.6.2** | Missing Degradation and Recovery Strategy | — | — | 🔴 | L3 inspection only; P0 (complex Agents require degradation mechanisms) |
-| **QD-P-2.6.3** | Unreasonable Retry Mechanism | — | — | 🟡 | L3 inspection only; P1 (may cause resource waste) |
-| **QD-P-2.7.1** | Insufficient Positive Example Representativeness | 🟡 | 🟡 | 🔴 | L1/L2 P1; L3 P0 (insufficient examples in complex Agents may cause critical step execution errors) |
-| **QD-P-2.7.2** | Insufficient Counter-Example Coverage | 🟡 | 🟡 | 🔴 | L1/L2 P1; L3 P0 (missing counter-examples in complex Agents may cause repeated errors) |
-| **QD-P-2.7.3** | Missing Boundary-Case Examples | 🟡 | 🟡 | 🔴 | L1/L2 P1; L3 P0 (missing boundary cases in complex Agents have greater impact) |
+| **QD-P-2.5.6** | Instruction-Data Trust Boundary | — | 🔴 | 🔴 | L2/L3 P0 (missing injection defense declaration); actual resistance is verified by Risk Implicit |
+| **QD-P-2.5.7** | Human Confirmation for High-Risk Operations | — | — | — | L2/L3 P0 when high-risk irreversible operations such as funds/deletion/sending/production changes are involved; otherwise N/A |
+| **QD-P-2.5.8** | System Prompt Confidentiality and Leak Response | — | 🟡 | 🟡 | L2/L3 P1 (confidentiality/leak response declaration); actual leaks are verified by Risk Implicit |
+| **QD-P-2.5.9** | Industry Compliance and Disclaimer Boundaries | — | — | — | P0 in medical/financial/legal domains; N/A in other domains |
+| **QD-P-2.6.1** | Runtime Exceptions Not Covered | — | 🟡 | 🔴 | L1 has no tools; L2 P1; L3 P0 (exception impact is greater in complex Agents) |
+| **QD-P-2.6.2** | Missing Degradation and Recovery Strategy | — | — | 🟡 | L3 inspection only; P1; "stop and report" is a legitimate handling method |
+| **QD-P-2.6.3** | Unreasonable Retry Mechanism | — | — | 🟡 | L3 inspection only; P1 (count limit/blind retry of write operations/status not checked on timeout) |
+| **QD-P-2.6.4** | Out-of-Scope Request Refusal and Human Handoff | 🟡 | 🟡 | 🔴 | L1/L2 P1; L3 P0 (refusal template/referral/escalation conditions) |
+
+> **Suggestion items (ungraded; not included in the tiered checklist, scoring, or Gate)**: QD-P-1.4.1 (Duplicate Constraints and Redundant Expressions), QD-P-2.1.3 (Structural Hierarchy Reasonableness), QD-P-2.1.5 (Context Budget Encroachment), QD-P-2.7.1 (Insufficient Positive Example Representativeness), QD-P-2.7.2 (Insufficient Counter-Example Coverage), QD-P-2.7.3 (Missing Boundary-Case Examples). These items have optimization value only: no deduction, no launch blocking, no waiver required.
 
 <a id="333-inspection-item-statistics"></a>
 #### 3.3.3 Inspection Item Statistics
 
 | Agent Level | Total Items | P0 Items | P1 Items | P2 Items |
 | --- | --- | --- | --- | --- |
-| **L1** | 30 | 8 | 20 | 2 |
-| **L2** | 40 | 18 | 20 | 2 |
-| **L3** | 47 | 35 | 7 | 5 |
+| **L1** | 28 | 7 | 20 | 1 |
+| **L2** | 42 | 17 | 24 | 1 |
+| **L3** | 44 | 25 | 18 | 1 |
+
+> **Counting basis**:
+> - The "Total Items" column counts only inspection items **applicable** at that level (marked 🔴/🟡/🟢 in 3.3.2); items marked `-` (not applicable) are not counted. Therefore L3's 44 items = 48 rows in 3.3.2 − 4 "domain-triggered, no fixed level" conditional items (QD-P-2.3.4 / QD-P-2.3.7 / QD-P-2.5.7 / QD-P-2.5.9).
+> - Conditional items whose notes say "upgraded/triggered when XX" are counted at the **default marked level**; upgrades are counted only after human review confirmation.
+> - **Suggestion items (ungraded) are not counted**: QD-P-1.4.1, 2.1.3, 2.1.5, and 2.7.1–2.7.3 — 6 items in total — are not included in the table above and do not participate in scoring or the Gate.
+> - **QD-P-2.5.5 (Missing Resource Invocation Frequency Limits) is deprecated and not counted** (the number is retained for traceability only). Business-level invocation frequency/batch expectations are now handled by Inspect Cross `QD-PT-2.6` / `QD-ST-3.4` (artifact declaration layer), layered with the runtime fallback layer of Harness/gateways and the business quota layer (see Inspect Cross §7.4); Harness fallback values are not equivalent to business-applicable upper limits.
+> - **L2→L3 adds only 2 items** (QD-P-2.6.2, 2.6.3); the difference comes mainly from **level upgrades**: 8 items are upgraded from P1 to P0 (QD-P-1.1.2, 1.4.3, 2.4.1, 2.5.1, 2.5.3, 2.5.4, 2.6.1, 2.6.4), raising L3's P0 count from 17 to 25.
+
+<a id="334-inspection-result-four-states"></a>
+#### 3.3.4 Four-State Inspection Results
+
+In addition to "pass/fail," each inspection item also permits the following results, to avoid misclassifying inapplicable or undeterminable cases as defects:
+
+| Result | Meaning | Impact on Scoring |
+| --- | --- | --- |
+| **Pass** | The item applies and no defect is found | No deduction |
+| **Fail** | The item applies and a defect is found | Deduct according to the corresponding level |
+| **Not Applicable (N/A)** | The item does not apply to this Agent (e.g., "incorrect tool invocation parameters or order" for an Agent without tools) | Removed from the $W_{total}$ denominator |
+| **Insufficient Evidence** | Whether a defect exists cannot be determined from the static text; human judgment is required | Neither pass nor defect; recorded as "pending confirmation" |
+| **Suggestion (ungraded)** | Items with optimization value only; not in the tiered checklist | No deduction, no blocking, waiver-free |
+
+**Applicability preconditions**: Each rule SHOULD state its applicability preconditions; rules without stated preconditions apply to all Agent Levels by default. Automatic detection results for gray-zone defects (QD-P-1.6.x) are recorded as "pending confirmation" by default and counted at the default level after human review confirmation (see [1.7](#17-gray-zone-summary)). Suggestion items (ungraded) are not included in the tiered checklist, scoring, or Gate and are recorded only as optimization advice.
 
 ---
 
@@ -2120,26 +2326,29 @@ Practice Recommendations:
 Inspection Process:
 
 Step 1: Determine Agent Level
-  → Determine L1/L2/L3 based on Agent characteristics
-  → Refer to determination criteria (any 2 or more satisfied)
+  → Determine AC-L1/AC-L2/AC-L3 based on Agent characteristics
+  → Refer to determination criteria (any 2 or more satisfied); when the boundary is unclear, take the highest level and state the basis for the level determination in the report
+  → If the determination is wrong, correction upon review is allowed; the correction rationale and new level MUST be recorded
 
 Step 2: Determine Inspection Scope
-  → Determine the number of inspection items based on Agent Level
-  → L1: 30 items, L2: 40 items, L3: 47 items
+  → Applicable items at this level = this level's checklist (3.3.2) − items judged "Not Applicable (N/A)"
+  → Items judged not applicable MUST state the basis, to avoid being mistaken for missed inspection
+  → Reference default counts: AC-L1 ≈ 28 items, AC-L2 ≈ 42 items, AC-L3 ≈ 44 items (actual counts follow applicable items)
 
 Step 3: Execute Inspection
   → Inspect item by item in numerical order
   → Apply the severity level determination for the corresponding level
 
 Step 4: Classify and Handle
-  → P0 not passed → MUST be fixed
-  → P1 not passed → SHOULD be fixed (document risk)
-  → P2 not passed → MAY be fixed (handle as appropriate)
+  → P0 failed → MUST be fixed
+  → P1 failed → The Inspect Gate may pass, but the item MUST be fixed before release; if it cannot be fixed, an EXC-* exception approval MUST be obtained per core §9.3/§9.4
+  → P2 failed → SHOULD be included in the improvement plan or risk register (handle as appropriate)
+  → Suggestion item (ungraded) → Record optimization advice; no blocking, waiver-free
 
 Step 5: Confirm Pass
   → All P0 inspection items passed
-  → P1 inspection items assessed (fixed or risk accepted)
-  → Generate inspection report
+  → P1 inspection items are on the "fix before release" list or have obtained an EXC-* exception (Inspect Gate PASS ≠ release PASS)
+  → Generate inspection report (including level determination basis, N/A basis, P1 risk list, suggestion item list)
 ```
 
 <a id="342-recommended-inspection-timing"></a>
@@ -2147,25 +2356,23 @@ Step 5: Confirm Pass
 
 | Timing | Applicable Levels | Inspection Method |
 | --- | --- | --- |
-| **Authoring phase** | L1/L2/L3 | Due to the large number of inspection items, full automated Agent Checklist inspection is recommended |
-| **Review phase** | L2/L3 | Due to the large number of inspection items, full automated Agent Checklist inspection is recommended |
-| **Pre-launch** | L3 | Due to the large number of inspection items, full automated Agent Checklist inspection is recommended |
-| **Continuous iteration** | — | Automated Agent Checklist inspection is recommended for each update |
-| **Troubleshooting** | L1/L2/L3 | Prioritize inspection of the corresponding level's P0 items when Agent behavior is anomalous |
+| **Authoring phase** | AC-L1/AC-L2/AC-L3 | Lite self-check (use the Minimum Rule Set; see Appendix A) |
+| **Review phase** | AC-L1/AC-L2/AC-L3 | Full Checklist inspection (see 2.3.1) |
+| **Pre-launch** | AC-L1/AC-L2/AC-L3 | Minimum Rule Set + human review of gray-zone defects (see 1.7 and Appendix A) |
+| **Continuous iteration** | — | For each update, automated Agent Checklist inspection is recommended |
+| **Troubleshooting** | AC-L1/AC-L2/AC-L3 | Prioritize the corresponding level's P0 items when Agent behavior is anomalous |
 
 <a id="343-recommended-review-methods"></a>
 #### 3.4.3 Recommended Review Methods
 
-| Agent Level | Review Method |
-| --- | --- |
-| **L1** | Develop a Checklist based on lifecycle phases |
-| **L2** | Develop a Checklist based on lifecycle phases |
-| **L3** | Develop a Checklist based on lifecycle phases |
+Recommended review methods are given in [3.6.3 Practice Recommendations](#363-practice-recommendations).
 
 ---
 
 <a id="35-usage-examples"></a>
 ### 3.5 Usage Examples
+
+> Result markers: ❌ = P0 (MUST fix), ⚠️ = P1 (SHOULD fix before release), 🔸 = P2 (SHOULD be included in the improvement plan or risk register), ✅ = pass.
 
 <a id="351-l1-agent-inspection-example"></a>
 #### 3.5.1 L1 Agent Inspection Example
@@ -2174,7 +2381,7 @@ Step 5: Confirm Pass
 
 **Level Determination**: L1 (single skill, no tool invocations, no multi-turn dialogue)
 
-**Inspection Scope**: 30 items
+**Inspection Scope**: 28 items
 
 **Sample Inspection Results**:
 
@@ -2183,11 +2390,11 @@ Step 5: Confirm Pass
 | QD-P-1.1.1 | Direct Contradiction | ✅ PASS | P0 | — |
 | QD-P-1.1.2 | Priority Conflict | ✅ PASS | P1 | — |
 | QD-P-1.2.1 | Role-Responsibility Mismatch | ✅ PASS | P0 | — |
-| QD-P-1.3.1 | Quantifier Misuse | ⚠️ FAIL | P1 | SHOULD fix |
+| QD-P-1.3.1 | Quantifier Misuse | ⚠️ FAIL | P1 | SHOULD fix before release |
 | QD-P-2.2.1 | Undeclared Input Source | ✅ PASS | P0 | — |
-| QD-P-2.3.1 | Undefined Output Format | ⚠️ FAIL | P1 | SHOULD fix |
+| QD-P-2.3.1 | Undefined Output Format | ⚠️ FAIL | P1 | SHOULD fix before release |
 
-**Conclusion**: All P0 items passed; P1 items failed. Recommended to fix before launch.
+**Conclusion**: All P0 items passed; P1 items failed and SHOULD be fixed before launch.
 
 <a id="352-l2-agent-inspection-example"></a>
 #### 3.5.2 L2 Agent Inspection Example
@@ -2196,7 +2403,7 @@ Step 5: Confirm Pass
 
 **Level Determination**: L2 (multi-turn dialogue, 1–3 tools, simple workflow)
 
-**Inspection Scope**: 40 items
+**Inspection Scope**: 42 items
 
 **Sample Inspection Results**:
 
@@ -2204,9 +2411,9 @@ Step 5: Confirm Pass
 | --- | --- | --- | --- | --- |
 | QD-P-1.1.1 | Direct Contradiction | ✅ PASS | P0 | — |
 | QD-P-1.3.3 | Undefined Boundaries | ❌ FAIL | P0 | **MUST fix** |
-| QD-P-1.5.2 | Resources Do Not Support Workflow | ✅ PASS | P0 | — |
+| QD-P-2.3.2 | Incomplete Output Schema | ✅ PASS | P0 | — |
 | QD-P-2.4.2 | Undeclared Resources/Tools | ❌ FAIL | P0 | **MUST fix** |
-| QD-P-2.5.1 | Missing Termination Constraints | ⚠️ FAIL | P1 | SHOULD fix |
+| QD-P-2.5.1 | Missing Termination Constraints | ⚠️ FAIL | P1 | SHOULD fix before release |
 
 **Conclusion**: P0 items failed; MUST be fixed before launch.
 
@@ -2217,7 +2424,7 @@ Step 5: Confirm Pass
 
 **Level Determination**: L3 (4+ tools, complex workflow, security-sensitive)
 
-**Inspection Scope**: 47 items (full coverage)
+**Inspection Scope**: 44 items (full coverage)
 
 **Sample Inspection Results**:
 
@@ -2226,7 +2433,7 @@ Step 5: Confirm Pass
 | QD-P-1.1.2 | Priority Conflict | ❌ FAIL | P0 | **MUST fix** |
 | QD-P-1.6.1 | Critical Decision Word Vagueness | ❌ FAIL | P0 | **MUST fix** |
 | QD-P-2.3.4 | Missing Security/Privacy Filtering | ❌ FAIL | P0 | **MUST fix** |
-| QD-P-2.5.5 | Missing Resource Invocation Frequency Limits | ⚠️ FAIL | P0 | **MUST fix** |
+| QD-P-2.5.6 | Instruction-Data Trust Boundary | ❌ FAIL | P0 | **MUST fix** |
 | QD-P-2.6.1 | Runtime Exceptions Not Covered | ❌ FAIL | P0 | **MUST fix** |
 
 **Conclusion**: P0 items failed; MUST all be fixed before launch.
@@ -2263,12 +2470,12 @@ Step 5: Confirm Pass
 Practice Recommendations:
 
 1. Agent Design Phase:
-   → Determine the level based on Agent characteristics (L1/L2/L3)
+   → Determine the level based on Agent characteristics (AC-L1/AC-L2/AC-L3)
    → Design with reference to the corresponding level's inspection checklist
 
 2. Inspection Phase:
    → Use the corresponding level's inspection checklist for item-by-item inspection
-   → P0 MUST be fixed; P1 SHOULD be fixed
+   → P0 MUST be fixed; P1 SHOULD be fixed before release
 
 3. Agent Upgrade Phase:
    → If Agent complexity increases, re-determine the level
@@ -2300,12 +2507,18 @@ Practice Recommendations:
 | Simple rule | For the same inspection item number, the weight is deducted only once regardless of how many defect instances are found |
 | Gate condition | Any `P0` defect → evaluation FAIL (score is still output) |
 
+> **Supplementary notes**:
+> - The score reflects "relative completeness after defect deductions"; it is **not** the probability that a defect causes an incident, nor does it replace compliance determination.
+> - Different Agent Levels (AC-L1/AC-L2/AC-L3) have different total weights $W_{total}$, so **scores across levels are not directly comparable**.
+> - The scoring report SHOULD include `found_count` (the number of findings per item) for audit and trend analysis.
+> - When the Agent level determination changes, the original level's score SHOULD be retained as a baseline, and the migration rationale recorded.
+
 <a id="42-calculation-steps"></a>
 ### 4.2 Calculation Steps
 
 **Step 1: Determine Agent Level**
 
-- Determine L1/L2/L3 according to Chapter 3 of this document.
+- Determine AC-L1/AC-L2/AC-L3 according to Chapter 3 of this document.
 
 **Step 2: Calculate Total Weight**
 
@@ -2325,6 +2538,8 @@ Practice Recommendations:
   base=\frac{100}{W_{total}}
   $$
 
+> Rounding rule: $base$ retains two decimal places (e.g., $0.56$) for subsequent deduction calculations; the final $Score$ retains two decimal places.
+
 **Step 4: Determine Per-Defect Deduction Values**
 
 - $P0$ defect deduction = $base \times 5$
@@ -2333,7 +2548,7 @@ Practice Recommendations:
 
 **Step 5: Calculate Total Deduction**
 
-- Total deduction = sum of per-severity deductions for each failed inspection item number.
+- Total deduction = deduct once for each "failed inspection item number" according to its severity level.
 - **The same inspection item number is deducted only once, regardless of how many defect instances are found.**
 
 **Step 6: Calculate Actual Score**
@@ -2347,7 +2562,7 @@ Practice Recommendations:
 **Step 7: Gate Determination**
 
 - If any `P0` defect exists → result = FAIL (score is still output)
-- Otherwise → result = PASS
+- Otherwise → Inspect Gate result = PASS (P1 does not block the Inspect Gate, but MUST be fixed before release or an EXC-* exception obtained; this result is not equivalent to a release-summary PASS — see core §6.1/§6.2)
 
 <a id="43-per-sub-standard-inspection-item-distribution-table"></a>
 ### 4.3 Per-Sub-Standard Inspection Item Distribution Table (Inspect Prompt)
@@ -2356,20 +2571,18 @@ Based on the statistics from Section 3.3.3:
 
 | Agent Level | Total Items | P0 Count | P1 Count | P2 Count | Total Weight $W_{total}$ | Base Score $base$ |
 | --- | --- | --- | --- | --- | --- | --- |
-| **L1** | 30 | 8 | 20 | 2 | $5\cdot8+3\cdot20+1\cdot2=102$ | $100/102=0.98$ |
-| **L2** | 40 | 18 | 20 | 2 | $5\cdot18+3\cdot20+1\cdot2=152$ | $100/152=0.66$ |
-| **L3** | 47 | 35 | 7 | 5 | $5\cdot35+3\cdot7+1\cdot5=201$ | $100/201=0.50$ |
+| **L1** | 28 | 7 | 20 | 1 | $5\cdot7+3\cdot20+1\cdot1=96$ | $100/96=1.04$ |
+| **L2** | 42 | 17 | 24 | 1 | $5\cdot17+3\cdot24+1\cdot1=158$ | $100/158=0.63$ |
+| **L3** | 44 | 25 | 18 | 1 | $5\cdot25+3\cdot18+1\cdot1=180$ | $100/180=0.56$ |
 
 <a id="44-defect-deduction-value-table"></a>
-### 4.4 Defect Deduction Value Table (Example: Inspect Prompt L1)
+### 4.4 Defect Deduction Value Table (Example)
 
-L1: $base=0.98$
-
-| Defect Level | Deduction Calculation | Deduction Value |
-| --- | --- | --- |
-| P0 | $base \times 5$ | $0.98\times5=4.90$ |
-| P1 | $base \times 3$ | $0.98\times3=2.94$ |
-| P2 | $base \times 1$ | $0.98\times1=0.98$ |
+| Agent Level | Base Score $base$ | P0 Deduction (×5) | P1 Deduction (×3) | P2 Deduction (×1) |
+| --- | --- | --- | --- | --- |
+| **L1** | 1.04 | 5.20 | 3.12 | 1.04 |
+| **L2** | 0.63 | 3.15 | 1.89 | 0.63 |
+| **L3** | 0.56 | 2.80 | 1.68 | 0.56 |
 
 <a id="45-scoring-examples"></a>
 ### 4.5 Scoring Examples (Including Gate: FAIL)
@@ -2377,48 +2590,86 @@ L1: $base=0.98$
 **Example Scenario**: L2 Agent  
 After inspection, the failed items (deduplicated by inspection item number) are:
 
-- Failed `P0` items: 2
-- Failed `P1` items: 1
-- Failed `P2` items: 0  
+- Failed `P0` inspection items: 2
+- Failed `P1` inspection items: 1
+- Failed `P2` inspection items: 0  
   Therefore, `P0` defect exists → Gate = FAIL.
 
 L2:
 
-- $W_{total}=152$
-- $base=100/152=0.66$
-- $P0$ deduction = $base\times5 = 3.29$
-- $P1$ deduction = $base\times3 = 1.97$
+- $W_{total}=158$
+- $base=100/158=0.63$
+- $P0$ deduction = $base\times5 = 3.15$
+- $P1$ deduction = $base\times3 = 1.89$
 
 **Total Deduction**:
 $$
-\text{Total Deduction} = 2\cdot3.29 + 1\cdot1.97
-= 6.58 + 1.97
-= 8.55
+\text{Total Deduction} = 2\cdot3.15 + 1\cdot1.89
+= 6.30 + 1.89
+= 8.19
 $$
 
 **Score**:
 $$
-Score = 100 - 8.55 = 91.45
+Score = 100 - 8.19 = 91.81
 $$
 
 **Result**:
 
 - result = FAIL (P0 exists)
-- score = 91.45
+- score = 91.81
 
 **Scoring Report (Example JSON)**:
 
+> Fields follow framework/core.md §5.2 Minimum Finding Record: `finding_id` is the Finding instance ID and `rule_id` is the rule ID; the two MUST NOT be merged. Severity carries the `Inspect·` domain prefix.
+
 ```json
 {
-  "check_id": "inspect-20260710-001",
+  "inspection_id": "inspect-20261010-001",
   "framework": "SanityOps/Inspect Prompt",
-  "level": "L2",
+  "spec_version": "v1.0",
+  "checker_version": "1.0.0",
+  "artifact_version": "1.0.0",
+  "agent_level": "AC-L2",
   "result": "FAIL",
-  "score": 91.45,
+  "score": 91.81,
   "defects": [
-    {"check_id": "QD-P-1.1.1", "level": "P0", "found_count": 1},
-    {"check_id": "QD-P-2.2.4", "level": "P0", "found_count": 1},
-    {"check_id": "QD-P-1.3.2", "level": "P1", "found_count": 1}
+    {
+      "finding_id": "F-ORG-20261010-001",
+      "rule_id": "QD-P-1.1.1",
+      "severity": "Inspect·P0",
+      "status": "open",
+      "applicability": "applicable",
+      "evidence": "Prompt body, paragraph 2: <verbatim excerpt>",
+      "rationale": "The same behavior is simultaneously permitted and prohibited",
+      "reviewer": "<reviewer>",
+      "waiver": null,
+      "found_count": 1
+    },
+    {
+      "finding_id": "F-ORG-20261010-002",
+      "rule_id": "QD-P-2.2.4",
+      "severity": "Inspect·P0",
+      "status": "open",
+      "applicability": "applicable",
+      "evidence": "Prompt body, paragraph 5: <verbatim excerpt>",
+      "rationale": "Handling when input is missing is not defined",
+      "reviewer": "<reviewer>",
+      "waiver": null,
+      "found_count": 1
+    },
+    {
+      "finding_id": "F-ORG-20261010-003",
+      "rule_id": "QD-P-1.3.2",
+      "severity": "Inspect·P1",
+      "status": "open",
+      "applicability": "applicable",
+      "evidence": "Prompt body, paragraph 3: <verbatim excerpt>",
+      "rationale": "The qualifier 'appropriate' does not define a judgment boundary",
+      "reviewer": "<reviewer>",
+      "waiver": null,
+      "found_count": 1
+    }
   ]
 }
 ```
@@ -2428,7 +2679,23 @@ $$
 
 - **Same inspection item number is counted as at most one failure**: Repeated triggering of the same inspection item results in only one deduction of that item's corresponding severity-level weight.
 - **Multiple defects falling under the same inspection item do not incur duplicate deductions**: For example, if the same QD-P number has multiple issues in a single inspection, it is still handled as "that number failed once."
+- **Primary defect consolidation**: If the same fact hits multiple semantically overlapping numbers, deduct only under one primary number and record the others as "related" without duplicate deduction.
 - **Gate and level are based on the severity level at the Agent's level**.
+
+**Known semantic overlap groups** (the primary number is the one whose definition fits best; the others are recorded as related):
+
+| Primary Number | Related Numbers |
+| --- | --- |
+| QD-P-1.1.2 | QD-P-1.6.3, QD-P-2.5.4 |
+| QD-P-1.3.2 | QD-P-1.6.1 |
+| QD-P-1.3.3 | QD-P-2.5.2, QD-P-2.5.3 |
+| QD-P-1.5.2 | QD-P-2.4.2 |
+| QD-P-2.2.3 | QD-P-2.2.4 |
+| QD-P-1.6.5 | QD-P-2.5.1 |
+| QD-P-2.6.2 | QD-P-2.6.3 |
+| QD-P-2.1.2 | QD-P-2.4.2 |
+
+> Overlap groups merged or downgraded in this revision and no longer participating in deductions: QD-P-2.1.4 (merged into QD-P-1.4.1), QD-P-2.7.1/2.7.3 (both downgraded to suggestion items). The division of labor between QD-P-2.4.3 and QD-P-2.6.1 is annotated in their definitions and is no longer listed as an overlap group.
 
 ---
 
@@ -2437,7 +2704,7 @@ $$
 > **Minimum Rule Sets** define the inspection items that MUST be passed for each Agent Level, forming the core basis for compliance determination.
 
 <a id="a1-l1-minimum-rule-set"></a>
-### A.1 L1 Minimum Rule Set (8 P0 Items)
+### A.1 L1 Minimum Rule Set (7 P0 Items)
 
 | QD-P ID | Defect Name | Category |
 | --- | --- | --- |
@@ -2447,13 +2714,12 @@ $$
 | QD-P-1.2.3 | Constraint-Responsibility Mismatch | Mismatch |
 | QD-P-1.5.1 | Responsibilities Do Not Support Objective | Implication |
 | QD-P-2.2.1 | Undeclared Input Source | Input Definition |
-| QD-P-2.3.4 | Missing Security/Privacy Filtering | Output Definition |
 | QD-P-2.5.2 | Missing Security Boundary Constraints | Constraints/Boundaries |
 
-> **L1 Agent Compliance Determination**: MUST pass the above 8 P0 inspection items. P1 items SHOULD be fixed; P2 items MAY be fixed.
+> **L1 Agent Compliance Determination**: MUST pass the above 7 P0 inspection items. P1 items SHOULD be fixed before release; P2 items SHOULD be included in the improvement plan or risk register.
 
 <a id="a2-l2-minimum-rule-set"></a>
-### A.2 L2 Minimum Rule Set (18 P0 Items)
+### A.2 L2 Minimum Rule Set (17 P0 Items)
 
 | QD-P ID | Defect Name | Category |
 | --- | --- | --- |
@@ -2464,22 +2730,21 @@ $$
 | QD-P-1.3.3 | Undefined Boundaries | Scope Definition |
 | QD-P-1.5.1 | Responsibilities Do Not Support Objective | Implication |
 | QD-P-1.5.2 | Resources Do Not Support Workflow | Implication |
-| QD-P-1.6.1 | Critical Decision Word Vagueness | Gray-Zone |
 | QD-P-2.2.1 | Undeclared Input Source | Input Definition |
 | QD-P-2.2.2 | Unconstrained Input Format | Input Definition |
 | QD-P-2.2.3 | Required/Optional Not Distinguished | Input Definition |
 | QD-P-2.2.4 | Undefined Missing-Input Handling | Input Definition |
 | QD-P-2.3.1 | Undefined Output Format | Output Definition |
 | QD-P-2.3.2 | Incomplete Output Schema | Output Definition |
-| QD-P-2.3.4 | Missing Security/Privacy Filtering | Output Definition |
+| QD-P-2.3.5 | Factuality and Hallucination Control Declaration | Output Definition |
 | QD-P-2.4.2 | Undeclared Resources/Tools | Workflow/Resources |
-| QD-P-2.4.3 | Missing Tool Invocation Specification | Workflow/Resources |
 | QD-P-2.5.2 | Missing Security Boundary Constraints | Constraints/Boundaries |
+| QD-P-2.5.6 | Instruction-Data Trust Boundary | Constraints/Boundaries |
 
-> **L2 Agent Compliance Determination**: MUST pass the above 18 P0 inspection items. P1 items SHOULD be fixed; P2 items MAY be fixed.
+> **L2 Agent Compliance Determination**: MUST pass the above 17 P0 inspection items. P1 items SHOULD be fixed before release; P2 items SHOULD be included in the improvement plan or risk register.
 
 <a id="a3-l3-minimum-rule-set"></a>
-### A.3 L3 Minimum Rule Set (34 P0 Items)
+### A.3 L3 Minimum Rule Set (25 P0 Items)
 
 | QD-P ID | Defect Name | Category |
 | --- | --- | --- |
@@ -2489,36 +2754,39 @@ $$
 | QD-P-1.2.1 | Role-Responsibility Mismatch | Mismatch |
 | QD-P-1.2.3 | Constraint-Responsibility Mismatch | Mismatch |
 | QD-P-1.3.3 | Undefined Boundaries | Scope Definition |
+| QD-P-1.4.3 | Invalid Skill Definitions | Redundancy/Invalidity |
 | QD-P-1.5.1 | Responsibilities Do Not Support Objective | Implication |
 | QD-P-1.5.2 | Resources Do Not Support Workflow | Implication |
-| QD-P-1.6.1 | Critical Decision Word Vagueness | Gray-Zone |
-| QD-P-1.6.2 | Rules Depending on Model Internal State | Gray-Zone |
-| QD-P-1.6.3 | Soft Rule Interweaving Without Arbitration | Gray-Zone |
-| QD-P-1.6.6 | Implicit Assumption Dependency | Gray-Zone |
-| QD-P-1.6.7 | Non-Monotonic Reasoning Defects | Gray-Zone |
 | QD-P-2.2.1 | Undeclared Input Source | Input Definition |
 | QD-P-2.2.2 | Unconstrained Input Format | Input Definition |
 | QD-P-2.2.3 | Required/Optional Not Distinguished | Input Definition |
 | QD-P-2.2.4 | Undefined Missing-Input Handling | Input Definition |
 | QD-P-2.3.1 | Undefined Output Format | Output Definition |
 | QD-P-2.3.2 | Incomplete Output Schema | Output Definition |
-| QD-P-2.3.3 | Missing Output Stability Assurance | Output Definition |
-| QD-P-2.3.4 | Missing Security/Privacy Filtering | Output Definition |
+| QD-P-2.3.5 | Factuality and Hallucination Control Declaration | Output Definition |
 | QD-P-2.4.1 | Incomplete Workflow Steps | Workflow/Resources |
 | QD-P-2.4.2 | Undeclared Resources/Tools | Workflow/Resources |
-| QD-P-2.4.3 | Missing Tool Invocation Specification | Workflow/Resources |
 | QD-P-2.5.1 | Missing Termination Constraints | Constraints/Boundaries |
 | QD-P-2.5.2 | Missing Security Boundary Constraints | Constraints/Boundaries |
 | QD-P-2.5.3 | Missing Permission Control Boundaries | Constraints/Boundaries |
 | QD-P-2.5.4 | Undefined Constraint Priority | Constraints/Boundaries |
-| QD-P-2.5.5 | Missing Resource Invocation Frequency Limits | Constraints/Boundaries |
+| QD-P-2.5.6 | Instruction-Data Trust Boundary | Constraints/Boundaries |
 | QD-P-2.6.1 | Runtime Exceptions Not Covered | Exception Handling |
-| QD-P-2.6.2 | Missing Degradation and Recovery Strategy | Exception Handling |
-| QD-P-2.7.1 | Insufficient Positive Example Representativeness | Example Design |
-| QD-P-2.7.2 | Insufficient Counter-Example Coverage | Example Design |
-| QD-P-2.7.3 | Missing Boundary-Case Examples | Example Design |
+| QD-P-2.6.4 | Out-of-Scope Request Refusal and Human Handoff | Exception Handling |
 
-> **L3 Agent Compliance Determination**: MUST pass the above 34 P0 inspection items. P1 items SHOULD be fixed; P2 items MAY be fixed.
+> **L3 Agent Compliance Determination**: MUST pass the above 25 P0 inspection items. P1 items SHOULD be fixed before release; P2 items SHOULD be included in the improvement plan or risk register.
+
+#### A.3.1 Conditionally Triggered P0 Items (Not Included in the Fixed Count)
+
+The following 3 items are treated as P0 when their trigger conditions are met. Because "whether triggered" depends on artifact facts, they are not included in the fixed P0 counts (7/17/25) of A.1–A.3, nor in the scoring denominator (§4.2). During inspection, determine item by item whether they are triggered:
+
+| QD-P ID | Defect Name | Trigger Condition | When Not Triggered |
+| --- | --- | --- | --- |
+| QD-P-2.3.4 | Missing Security/Privacy Filtering | Processing involves personal data (PII) | N/A |
+| QD-P-2.5.7 | Human Confirmation for High-Risk/Irreversible Operations | Possesses side-effecting operations such as funds/deletion/sending/production changes (L2/L3) | N/A |
+| QD-P-2.5.9 | Industry Compliance and Disclaimer Boundaries | Regulated domains such as medical/financial/legal | N/A |
+
+Once triggered, it is P0 and MUST be fixed; if not triggered, mark `N/A` and remove it from the denominator (see §3.3.4).
 
 <a id="a4-minimum-rule-set-usage-notes"></a>
 ### A.4 Minimum Rule Set Usage Notes
@@ -2526,13 +2794,13 @@ $$
 #### A.4.1 Rapid Determination Process
 
 ```
-Step 1: Determine Agent Level (L1/L2/L3)
+Step 1: Determine Agent Level (AC-L1/AC-L2/AC-L3)
   → Refer to 3.1 Agent Level Definitions
 
 Step 2: Execute the corresponding level's Minimum Rule Set inspection
-  → L1: Inspect 8 items
-  → L2: Inspect 18 items (includes L1's 8 items)
-  → L3: Inspect 34 items (includes L2's 18 items)
+  → L1: Inspect 7 items
+  → L2: Inspect 17 items (includes L1's 7 items)
+  → L3: Inspect 25 items (includes L2's 17 items)
 
 Step 3: Compliance Determination
   → All P0 inspection items passed → Compliant
@@ -2553,6 +2821,12 @@ Step 3: Compliance Determination
 
 ---
 
+## Version History
+
+- **v1.0** (October 2026): Initial release.
+
+---
+
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  September 2026
+v1.0  ·  October 2026

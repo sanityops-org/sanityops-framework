@@ -9,7 +9,7 @@ description: "Quality RAG-Agent white paper: governed test cases, multi-dimensio
 ---
 **Version**: v1.0
 
-**Release Date**: September 2026
+**Release Date**: October 2026
 
 **Maintained by**: Sanity AI Labs
 
@@ -1049,6 +1049,8 @@ The scale of test cases should be determined by business scope and risk. Start w
 <a id="62-change-classification"></a>
 ## 6.2 Change Classification
 
+The L1/L2/L3/L4 in this section are exactly `CH-L1`–`CH-L4` (Change Levels) as defined in framework/core.md §4.5.
+
 | Level | Typical Changes                                  | Recommended Evaluation Scope            |
 | ----- | ------------------------------------------------ | --------------------------------------- |
 | L1    | Copy, display format, low-risk configuration     | Quick Regression Set                    |
@@ -1537,4 +1539,4 @@ Exception explanation and risk acceptance record:
 ---
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  September 2026
+v1.0  ·  October 2026

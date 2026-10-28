@@ -9,7 +9,7 @@ description: "Core terminology, governance objects, phases, and decision baselin
 
 **Version**: v1.0
 
-**Release Date**: September 2026
+**Release Date**: October 2026
 
 **Maintained by**: Sanity AI Labs
 
@@ -125,7 +125,7 @@ description: "Core terminology, governance objects, phases, and decision baselin
 | Short Name | SanityOps Core |
 | Version | v1.0 |
 | Status | Published |
-| Date | September 2026 |
+| Date | October 2026 |
 | Scope | All current and future SanityOps sub-specifications, rule assets, tool implementations, reports, CI/CD pipelines, and governance processes |
 | Maintained by | Sanity AI Labs |
 | Document Nature | Framework-level normative baseline |
@@ -439,9 +439,10 @@ Aliases in historical documents do not automatically constitute errors, but subs
 | Prompt Defect | `QD-P-*` | Inspect Prompt | Prompt Static Defects |
 | Skill Defect | `QD-S-*` | Inspect Skill | Skill Static Defects |
 | Tool Defect | `QD-T-*` | Inspect Tool | Tool / Schema Static Defects |
-| Cross Defect | `QD-PS-*`, `QD-PT-*`, `QD-ST-*`, `QD-CYC-*` | Inspect Cross | Cross-Artifact relationship and circular invocation defects |
+| Cross Defect | `QD-PS-*`, `QD-PT-*`, `QD-ST-*`, `QD-SS-*`, `QD-TT-*`, `QD-CYC-*` | Inspect Cross | Cross-Artifact relationships, multi-Skill/multi-Tool consistency, and circular invocation defects |
 | Permission Defect | `QD-PM-*` | Inspect Permission | Permission-responsibility proportionality defects |
-| Explicit Risk | `NL-A-*`, `NL-B-*`, `NR-O-*`, `NR-S-*` | Risk Explicit | Explicit Risk classification |
+| Embedded Code Contract Defect (Draft) | `QD-CC-*` | Inspect Code Contract (Draft, unpublished) | Static defects in code snippets embedded in Logic Artifacts |
+| Explicit Risk | `EX-*` (classification prefix); `NL-A-*`, `NL-B-*`, `NR-O-*`, `NR-S-*` | Risk Explicit | Explicit Risk classification |
 | Attack Surface | `AS-*` | Relevance | Security impact mapping |
 | Behavioral Failure Mode | `FM-*` | Relevance | Tool-Agent quality diagnostic mapping |
 | Security Defect Chain | `SC-*` | Relevance | Candidate security integration paths |
@@ -1700,4 +1701,4 @@ Only when the common objects, terminology, evidence, and decision boundaries are
 
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  September 2026
+v1.0  ·  October 2026
