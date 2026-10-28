@@ -112,8 +112,10 @@ description: "Permission governance specification: mapping declared capabilities
 
 ---
 
+<a id="preface"></a>
 ## Preface
 
+<a id="01-positioning-and-scope"></a>
 ### 0.1 Positioning and Scope
 
 #### 0.1.1 Position of This Subset Within the Framework
@@ -240,6 +242,7 @@ This signal is **aggregated by the Core layer** and reflected in the overall eva
 
 ---
 
+<a id="02-terminology-and-numbering-system"></a>
 ### 0.2 Terminology and Numbering System
 
 #### 0.2.1 Numbering Format
@@ -287,6 +290,7 @@ All risk insights of this subset are grouped autonomously according to the relat
 
 ---
 
+<a id="03-version-information"></a>
 ### 0.3 Version Information
 
 | Item    | Value                                                          |
@@ -301,8 +305,10 @@ All risk insights of this subset are grouped autonomously according to the relat
 
 ---
 
+<a id="part-i-permission-inspection-overview"></a>
 ## Part I Permission Inspection Overview
 
+<a id="11-why-permissions-require-independent-inspection"></a>
 ### 1.1 Why Permissions Require Independent Inspection
 
 The fundamental assumption of traditional permission governance is: **the permission consumer is a deterministic program**—with fixed code paths, the "granted permissions" largely align with "permissions actually used," allowing control points to be placed on the resource side.
@@ -314,6 +320,7 @@ Agents break this assumption. Agent behavior is determined by LLMs at runtime; t
 
 Therefore, permissions must be inspected **at the configuration layer, statically**—this is precisely the scope of SanityOps Inspect.
 
+<a id="12-basic-determination-structure-of-inspection"></a>
 ### 1.2 Basic Determination Structure of Inspection
 
 For each permission, this subset requires one of three determinations:
@@ -328,6 +335,7 @@ For each permission, this subset requires one of three determinations:
 
 > **Construction Method Guide**: The construction methods for inspection objects (permission items and responsibility baselines) are found in Part II (Extraction Layer).
 
+<a id="13-inspection-inputs-and-outputs"></a>
 ### 1.3 Inspection Inputs and Outputs
 
 **Inputs**:
@@ -343,6 +351,7 @@ For each permission, this subset requires one of three determinations:
 - Quantitative score (see Part XII for details);
 - Permission baseline recommendations for downstream IAM / PEP (non-mandatory output).
 
+<a id="14-classification-binding"></a>
 ### 1.4 Classification Binding
 
 This subset uses the two classification models from Core with **separation of concerns**. According to Core's definitions, AC-L describes the Agent's technical form and collaboration complexity, used to determine applicable Inspect depth and scope, and does not directly indicate data sensitivity or security severity; OR-L describes permissions, side effects, irreversibility, and impact scope, used to determine the intensity of confirmation, approval, audit, and least-privilege control requirements. The two are clearly distinguished in Core's classification model and do not represent each other.
@@ -362,6 +371,7 @@ The significance of this separation is: **applicability of check items is a stru
 
 ---
 
+<a id="15-relationship-with-other-inspect-subsets"></a>
 ### 1.5 Relationship with Other Inspect Subsets
 
 #### 1.5.1 Rationale: Why Permissions Deserve Extraction as an Independent Subset
@@ -413,6 +423,7 @@ When the same location is hit by both Cross and Permission, handle according to 
 
 ---
 
+<a id="16-summary-of-this-part"></a>
 ### 1.6 Summary of This Part
 
 | Key Point | Description |
@@ -427,6 +438,7 @@ When the same location is hit by both Cross and Permission, handle according to 
 | **Boundary Discipline** | IAM deployment, runtime execution, and monitoring are downstream integration interfaces, not capability commitments of this framework |
 
 ---
+<a id="part-ii-extraction-layer--construction-of-permission-items-and-responsibility-baselines"></a>
 ## Part II Extraction Layer — Construction of Permission Items and Responsibility Baselines
 
 **Positioning**: Located after Gate-0 and before QD-PM-1~6 determinations, covering **Step 5 (Permission Set Enumeration)** and **Step 6 (Responsibility Baseline Extraction)** of the process. The outputs are three tables: **Baseline Table**, **Permission Item Table**, and **Mapping Table Skeleton**.
@@ -439,6 +451,7 @@ The determination layer does not create new tables; it only attaches IDs to the 
 
 ---
 
+<a id="20-output-model-all-three-tables-delivered-at-once"></a>
 ### 2.0 Output Model (All Three Tables Delivered at Once)
 
 #### 2.0.1 Table 1 Baseline Table
@@ -479,6 +492,7 @@ The columns "Determination", "Defect ID", and "Severity Level" are filled by the
 
 ---
 
+<a id="21-baseline-filling-rules"></a>
 ### 2.1 Baseline Filling Rules
 
 #### 2.1.1 Three Classes of Statements Enter the Baseline
@@ -538,6 +552,7 @@ Reasons:
 
 ---
 
+<a id="22-permission-item-filling-rules"></a>
 ### 2.2 Permission Item Filling Rules
 
 #### 2.2.1 Minimum Unit Criteria
@@ -624,6 +639,7 @@ It parallels the other two forms:
 
 ---
 
+<a id="23-merging-and-splitting-rules"></a>
 ### 2.3 Merging and Splitting Rules
 
 #### 2.3.1 Atomic Unit
@@ -675,6 +691,7 @@ The real costs of insufficient deduplication are three others:
 
 ---
 
+<a id="24-identification-and-change-tracking"></a>
 ### 2.4 Identification and Change Tracking
 
 #### 2.4.1 ID's Responsibility
@@ -733,6 +750,7 @@ Extraction layer will be re-run (3→1, 2 re-run; 3.3/4.8 re-enter Step 5). **Ha
 
 ---
 
+<a id="25-extraction-failure-handling-summary-table"></a>
 ### 2.5 Extraction Failure Handling Summary Table
 
 This is the most critical interface of the entire layer: it must simultaneously catch G0-3, G0-4, 3.3/4.8 blocking, 6.5 fallback, and overlap arbitration.
@@ -775,6 +793,7 @@ When both hit simultaneously, **route by 3.3/4.8, mark 6.5 as `INHERITED`** (in 
 
 ---
 
+<a id="27-intra-layer-dependency-relationships"></a>
 ### 2.7 Intra-Layer Dependency Relationships
 
 ```
@@ -789,6 +808,7 @@ The first three are unidirectional dependencies, order cannot be changed. §2.5 
 
 ---
 
+<a id="28-pending-arbitration-interfaces"></a>
 ### 2.8 Pending Arbitration Interfaces
 
 1. **§2.1.4's "substantive absence" criterion**—on top of the quantity criterion ("after expansion, not a single Class D statement holds"), a substantive criterion is superimposed: **at least one Class D statement must involve an actual business process (including verifiable objects and actions)**; vague one-line declarations do not count.
@@ -797,8 +817,10 @@ The first three are unidirectional dependencies, order cannot be changed. §2.5 
 4. **§2.2.5 parameterized tool routing destination**—the "operation objects determined by actual arguments" non-closed-set form of parameterized tools is routed to **QD-T (Inspect Tool Schema)**: a new check item "parameterized tool operation allowlist" (see `inspect/tool.md`). The Permission side retains linkage: when that QD-T item hits, this subset handles it as a non-closed set under §2.5.1 priority 2, connecting to the §9.5 blocking point.
 
 ---
+<a id="part-iii-qd-pm-1-permission-alignment"></a>
 ## Part III QD-PM-1 Permission Alignment
 
+<a id="31-inspection-relationship-explained"></a>
 ### 3.1 Inspection Relationship Explained
 
 #### 3.1.1 This Group's Inspection Relationship
@@ -833,6 +855,7 @@ From this, **7 check items** are derived for this group.
 
 ---
 
+<a id="32-check-item-details"></a>
 ### 3.2 Check Item Details
 
 #### **QD-PM-1.1 Permission exists that cannot be explained by responsibility baseline**
@@ -915,6 +938,7 @@ Determination cannot rely on literal good faith of Tool names. Names like `sync_
 
 ---
 
+<a id="33-localization-and-remediation-suggestions"></a>
 ### 3.3 Localization and Remediation Suggestions
 
 #### 3.3.1 Localization Table Format
@@ -949,6 +973,7 @@ Each defect type in this group has **two directions** of remediation; the inspec
 
 ---
 
+<a id="34-summary"></a>
 ### 3.4 Summary
 
 | Item | Content |
@@ -962,8 +987,10 @@ Each defect type in this group has **two directions** of remediation; the inspec
 
 ---
 
+<a id="part-iv-qd-pm-2-permission-scope"></a>
 ## Part IV QD-PM-2 Permission Scope
 
+<a id="41-inspection-relationship-explained"></a>
 ### 4.1 Inspection Relationship Explained
 
 #### 4.1.1 This Group's Division of Labor with QD-PM-1
@@ -989,6 +1016,7 @@ From this, **8 check items** are derived for this group.
 
 ---
 
+<a id="42-check-item-details"></a>
 ### 4.2 Check Item Details
 
 #### **QD-PM-2.1 Resource access scope not restricted**
@@ -1072,6 +1100,7 @@ The Inspect Skill subset has already listed "environment boundary not declared" 
 
 ---
 
+<a id="43-localization-and-remediation-suggestions"></a>
 ### 4.3 Localization and Remediation Suggestions
 
 #### 4.3.1 Localization Table Example (QD-PM-2.3 field-level scope not restricted)
@@ -1098,6 +1127,7 @@ The Inspect Skill subset has already listed "environment boundary not declared" 
 
 ---
 
+<a id="44-summary"></a>
 ### 4.4 Summary
 
 | Item | Content |
@@ -1111,8 +1141,10 @@ The Inspect Skill subset has already listed "environment boundary not declared" 
 
 ---
 
+<a id="part-v-qd-pm-3-permission-granularity"></a>
 ## Part V QD-PM-3 Permission Granularity
 
+<a id="51-inspection-relationship-explained"></a>
 ### 5.1 Inspection Relationship Explained
 
 #### 5.1.1 Difference Between Granularity and Scope
@@ -1143,6 +1175,7 @@ From this, **6 check items** are derived for this group.
 
 ---
 
+<a id="52-check-item-details"></a>
 ### 5.2 Check Item Details
 
 #### **QD-PM-3.1 Read, write, delete permissions not distinguished**
@@ -1212,6 +1245,7 @@ This item is the connection point between Granularity group and Alignment group:
 
 ---
 
+<a id="53-localization-and-remediation-suggestions"></a>
 ### 5.3 Localization and Remediation Suggestions
 
 #### 5.3.1 Localization Table Example (QD-PM-3.1 read/write/delete not distinguished)
@@ -1242,6 +1276,7 @@ This item is the connection point between Granularity group and Alignment group:
 
 ---
 
+<a id="54-summary"></a>
 ### 5.4 Summary
 
 | Item | Content |
@@ -1256,8 +1291,10 @@ This item is the connection point between Granularity group and Alignment group:
 
 ---
 
+<a id="part-vi-qd-pm-4-permission-propagation"></a>
 ## Part VI QD-PM-4 Permission Propagation
 
+<a id="61-inspection-relationship-explained"></a>
 ### 6.1 Inspection Relationship Explained
 
 #### 6.1.1 This Group's Inspection Relationship
@@ -1317,6 +1354,7 @@ From this, **8 check items** are derived for this group.
 
 ---
 
+<a id="62-check-item-details"></a>
 ### 6.2 Check Item Details
 
 #### **QD-PM-4.1 Upstream permission constraint not inherited downstream**
@@ -1400,6 +1438,7 @@ This item complements Scope group 2.2 (affiliation constraint): 2.2 requires "li
 
 ---
 
+<a id="63-localization-and-remediation-suggestions"></a>
 ### 6.3 Localization and Remediation Suggestions
 
 #### 6.3.1 Localization Table Example (QD-PM-4.3 delegation not narrowed)
@@ -1430,6 +1469,7 @@ This item complements Scope group 2.2 (affiliation constraint): 2.2 requires "li
 
 ---
 
+<a id="64-summary"></a>
 ### 6.4 Summary
 
 | Item | Content |
@@ -1444,8 +1484,10 @@ This item complements Scope group 2.2 (affiliation constraint): 2.2 requires "li
 
 ---
 
+<a id="part-vii-qd-pm-5-permission-boundary"></a>
 ## Part VII QD-PM-5 Permission Boundary
 
+<a id="71-inspection-relationship-explained"></a>
 ### 7.1 Inspection Relationship Explained
 
 #### 7.1.1 Difference Between Boundary, Scope, and Propagation
@@ -1482,6 +1524,7 @@ From this, **7 inspection items** are derived for this group.
 
 ---
 
+<a id="72-inspection-items-explained"></a>
 ### 7.2 Inspection Items Explained
 
 #### **QD-PM-5.1 Power boundary not explicitly declared**
@@ -1559,6 +1602,7 @@ From this, **7 inspection items** are derived for this group.
 
 ---
 
+<a id="73-positioning-and-remediation-recommendations"></a>
 ### 7.3 Positioning and Remediation Recommendations
 
 #### 7.3.1 Positioning Table Example (QD-PM-5.2 Boundary can be broadly interpreted)
@@ -1587,6 +1631,7 @@ From this, **7 inspection items** are derived for this group.
 
 ---
 
+<a id="74-summary"></a>
 ### 7.4 Summary
 
 | Item | Content |
@@ -1600,8 +1645,10 @@ From this, **7 inspection items** are derived for this group.
 
 ---
 
+<a id="part-viii-qd-pm-6-permission-auditability"></a>
 ## Part VIII QD-PM-6 Permission Auditability
 
+<a id="81-inspection-relationship-explained"></a>
 ### 8.1 Inspection Relationship Explained
 
 #### 8.1.1 Why This Group Exists
@@ -1640,6 +1687,7 @@ From this, **7 inspection items** are derived for this group.
 
 ---
 
+<a id="82-inspection-items-explained"></a>
 ### 8.2 Inspection Items Explained
 
 #### **QD-PM-6.1 Permission lacks business purpose description**
@@ -1712,6 +1760,7 @@ From this, **7 inspection items** are derived for this group.
 
 ---
 
+<a id="83-positioning-and-remediation-recommendations"></a>
 ### 8.3 Positioning and Remediation Recommendations
 
 #### 8.3.1 Positioning Table Example (QD-PM-6.3 High-risk operation without manual confirmation)
@@ -1741,6 +1790,7 @@ From this, **7 inspection items** are derived for this group.
 
 ---
 
+<a id="84-summary"></a>
 ### 8.4 Summary
 
 | Item | Content |
@@ -1769,8 +1819,10 @@ From this, **7 inspection items** are derived for this group.
 > Actual applicable item counts under each `AC-L` level see Appendix A; scoring model see Part XII.
 
 ---
+<a id="part-ix-inspection-process-gate-0-and-level-binding"></a>
 ## Part IX Inspection Process, Gate-0, and Level Binding
 
+<a id="91-process-overview"></a>
 ### 9.1 Process Overview
 
 Permission's complete execution process consists of **four stages, ten steps**. Stages A, B are outside this subset (executed by other Inspect subsets), this subset starts from Stage C.
@@ -1797,6 +1849,7 @@ Stage D  Permission inspection           Step 4 ~ Step 10
 
 ---
 
+<a id="92-step-3-gate-0-prerequisite-verification"></a>
 ### 9.2 Step 3 Gate-0 Prerequisite Verification
 
 #### 9.2.1 Four Admission Conditions
@@ -1852,6 +1905,7 @@ This output is aggregated by Core layer, reflected in overall evaluation conclus
 
 ---
 
+<a id="93-step-4-level-reading-and-applicability-trimming"></a>
 ### 9.3 Step 4 Level Reading and Applicability Trimming
 
 #### 9.3.1 Input
@@ -1906,6 +1960,7 @@ Per 1.4 Rule 1, determine applicability item by item:
 
 > **Minimum Rule Set**: Engineering execution sets of above matrix (quick mode / must-inspect set / conditional set) see Appendix D.
 
+<a id="94-severity-level-or-l-binding"></a>
 ### 9.4 Severity Level OR-L Binding
 
 #### 9.4.1 Basic Mapping
@@ -1957,6 +2012,7 @@ Following practices explicitly prohibited:
 
 ---
 
+<a id="95-step-7-group-by-group-inspection-sequence-constraints"></a>
 ### 9.5 Step 7 Group-by-Group Inspection Sequence Constraints
 
 Six groups **must not be parallel**, must execute in 1 → 2 → 3 → 4 → 5 → 6 order, basis:
@@ -1981,6 +2037,7 @@ Six groups **must not be parallel**, must execute in 1 → 2 → 3 → 4 → 5 �
 
 ---
 
+<a id="96-step-8-overlap-adjudication"></a>
 ### 9.6 Step 8 Overlap Adjudication
 
 Per 1.5.4 rules execution, here is complete adjudication table:
@@ -2000,6 +2057,7 @@ Per 1.5.4 rules execution, here is complete adjudication table:
 
 ---
 
+<a id="97-summary-of-this-part"></a>
 ### 9.7 Summary of This Part
 
 | Key Point | Content |
@@ -2014,8 +2072,10 @@ Per 1.5.4 rules execution, here is complete adjudication table:
 
 ---
 
+<a id="part-x-location-and-repair-mechanism"></a>
 ## Part X Location and Repair Mechanism
 
+<a id="101-location-mechanism"></a>
 ### 10.1 Location Mechanism
 
 #### 10.1.1 Mandatory Location
@@ -2066,6 +2126,7 @@ Mapping table functions:
 
 ---
 
+<a id="102-repair-mechanism"></a>
 ### 10.2 Repair Mechanism
 
 #### 10.2.1 Bidirectional Repair Principle
@@ -2125,6 +2186,7 @@ Cross-group repairs, execute by following priority (before high-priority items f
 
 ---
 
+<a id="103-handover-products-to-downstream"></a>
 ### 10.3 Handover Products to Downstream
 
 After this subset execution completes (Gate-0 passed and all six groups have issued conclusions), delivers three products to downstream:
@@ -2139,6 +2201,7 @@ After this subset execution completes (Gate-0 passed and all six groups have iss
 
 ---
 
+<a id="104-summary-of-this-part"></a>
 ### 10.4 Summary of This Part
 
 | Key Point | Content |
@@ -2154,8 +2217,10 @@ After this subset execution completes (Gate-0 passed and all six groups have iss
 
 ---
 
+<a id="part-xi-inspection-timing-and-ratchet-mechanism"></a>
 ## Part XI Inspection Timing and Ratchet Mechanism
 
+<a id="111-inspection-timing"></a>
 ### 11.1 Inspection Timing
 
 Permission is not a one-time evaluation, but a governance action **repeated by trigger conditions** throughout Agent lifecycle.
@@ -2173,6 +2238,7 @@ Permission is not a one-time evaluation, but a governance action **repeated by t
 
 ---
 
+<a id="112-ratchet-mechanism"></a>
 ### 11.2 Ratchet Mechanism
 
 #### 11.2.1 Definition
@@ -2221,10 +2287,12 @@ Mapping table adds three columns from second round:
 
 ---
 
+<a id="part-xii-quantitative-scoring-mechanism"></a>
 ## Part XII Quantitative Scoring Mechanism
 
 > **Preliminary Statement**: Scores do not replace compliance determination. As long as any `P0` defect exists, evaluation result remains FAIL, but this part still outputs scores for analysis and trend comparison.
 
+<a id="121-scoring-principles"></a>
 ### 12.1 Scoring Principles
 
 This subset follows Inspect's existing scoring model, does not establish separate rules:
@@ -2246,6 +2314,7 @@ This subset follows Inspect's existing scoring model, does not establish separat
 
 > **Determination Priority**: This subset's primary determinations are **Gate Conclusion + Defect List**; 100-point score for trend comparison and intra-subset analysis, not for admission determination.
 
+<a id="122-calculation-steps"></a>
 ### 12.2 Calculation Steps
 
 | Step | Action |
@@ -2275,6 +2344,7 @@ This subset's 43 inspection items have 20 with `N/A` conditions, `N/A` proportio
 
 ---
 
+<a id="123-inspection-item-distribution-calibrated-by-ac-l"></a>
 ### 12.3 Inspection Item Distribution (Calibrated by `AC-L`)
 
 Per 9.3.3 matrix trimming 43 items level by level, **"conditional" items in table counted by "maximum applicable" basis** (i.e., assuming morphology exists); actual execution excludes untriggered items by artifact fact, denominator shrinks accordingly. This table's "maximum applicable" basis differs from Appendix D's "must-inspect set" (unconditional items only) basis; do not mix them (see Appendix D.4 for comparison).
@@ -2299,6 +2369,7 @@ Per 9.3.3 matrix trimming 43 items level by level, **"conditional" items in tabl
 
 ---
 
+<a id="124-severity-level-distribution-and-total-weight"></a>
 ### 12.4 Severity Level Distribution and Total Weight
 
 Severity levels dynamically determined by `OR-L` (see 9.4), therefore **total weight is not fixed value**, must be calculated by this actual classification result. Table below gives a typical scenario weight example.
@@ -2336,6 +2407,7 @@ Gate   = FAIL (3 P0 defects exist)
 
 ---
 
+<a id="125-ratchet-impact-on-scoring"></a>
 ### 12.5 Ratchet Impact on Scoring
 
 | Ratchet Event | Scoring Handling |
@@ -2349,6 +2421,7 @@ Gate   = FAIL (3 P0 defects exist)
 
 ---
 
+<a id="126-scoring-report-format"></a>
 ### 12.6 Scoring Report Format
 
 ```json
@@ -2389,6 +2462,7 @@ Gate   = FAIL (3 P0 defects exist)
 
 ---
 
+<a id="127-summary-of-this-part"></a>
 ### 12.7 Summary of This Part
 
 | Key Point | Content |
@@ -2403,8 +2477,10 @@ Gate   = FAIL (3 P0 defects exist)
 
 ---
 
+<a id="part-xiii-interface-specifications-with-core--inspect-other-subsets"></a>
 ## Part XIII Interface Specifications with Core / Inspect Other Subsets
 
+<a id="131-interface-overview"></a>
 ### 13.1 Interface Overview
 
 Permission is not an independent specification, it embeds in existing system, upward depends on Core, forward depends on Inspect single-artifact and Cross subsets, backward outputs to Relevance and downstream governance links.
@@ -2419,6 +2495,7 @@ Permission is not an independent specification, it embeds in existing system, up
 
 ---
 
+<a id="132-interface-with-core"></a>
 ### 13.2 Interface with Core
 
 #### 13.2.1 Content Provided by Core That This Subset Must Not Redefine
@@ -2447,6 +2524,7 @@ When this subset conflicts with Core expression, follow Core's priority rules: d
 
 ---
 
+<a id="133-interface-with-inspect-other-subsets"></a>
 ### 13.3 Interface with Inspect Other Subsets
 
 #### 13.3.1 Execution Sequence Position
@@ -2496,12 +2574,14 @@ Upstream subsets must provide to this subset: logged number, location, status (n
 
 ---
 
+<a id="134-grouping-principles"></a>
 ### 13.4 Grouping Principles
 
 This subset does not introduce parallel dimension divisions with this framework, but groups by "Alignment—Scope—Granularity—Propagation—Boundary—Auditability" six relational morphologies (see 0.2.2), making each group correspond to an independently determinable, independently repairable relational problem (inter-group dependencies see 9.5). Grouping basis is framework's own relational definitions, not dependent on any external scheme; when conflicting with main text, main text prevails.
 
 ---
 
+<a id="135-output-to-relevance-finding-specification"></a>
 ### 13.5 Output to Relevance Finding Specification
 
 This subset's rule numbers are `QD-PM-<Group>.<Sequence>`, at the same level as existing `QD-P-*`, `QD-S-*`, `QD-T-*`; the Finding instances it produces adopt Core's `F-*` naming (see framework/core.md §5.2), and carry a rule number field in the Finding pointing to `QD-PM-*`, output to Relevance.
@@ -2527,6 +2607,7 @@ Minimum field set:
 
 > Machine-readable field shapes (`Finding` / `PermissionItem` / `BaselineAdvice`) see Appendix E.
 
+<a id="136-out-of-scope-matters-reiteration"></a>
 ### 13.6 Out-of-Scope Matters (Reiteration)
 
 Follow Inspect existing scope boundaries:
@@ -2541,6 +2622,7 @@ Follow Inspect existing scope boundaries:
 
 ---
 
+<a id="appendix-a-complete-inspection-item-index-43-items"></a>
 ## Appendix A: Complete Inspection Item Index (43 Items)
 
 **Legend**: `✓` = Unconditionally applicable; `△` = Determined by artifact facts; `—` = Not applicable; blank in the Fixed Level column means the level is determined by `OR-L`
@@ -2613,6 +2695,7 @@ Follow Inspect existing scope boundaries:
 
 > **Execution Set Note**: Quick Mode and Must-Inspect Set by `AC-L` grade see Appendix D.
 
+<a id="appendix-b-glossary"></a>
 ## Appendix B: Glossary
 
 > This table only includes terms newly introduced or requiring specific definition in this subset. General terms such as Agent, Logic Artifact, Finding, Control, Baseline, Gate, and Exception adopt the Core definitions.
@@ -2653,6 +2736,7 @@ Follow Inspect existing scope boundaries:
 
 ---
 
+<a id="appendix-c-end-to-end-walkthrough-example-skycare-airline-customer-service-agent"></a>
 ## Appendix C: End-to-End Walkthrough Example (SkyCare Airline Customer Service Agent)
 
 > This section uses the SkyCare artifact in `demo/` to fully demonstrate Step 4 → Step 10, verifying the executability of this subset and calibrating the determination scope. The example artifact is for simulation/testing purposes.
@@ -2789,6 +2873,7 @@ Applicability trimming (per 9.3.3): 4.3~4.6 are level `N/A` under `AC-L3`; furth
 
 ---
 
+<a id="appendix-d-minimum-rule-sets-by-ac-l-grade"></a>
 ## Appendix D: Minimum Rule Sets (by `AC-L` Grade)
 
 > Purpose: In addition to the full 43 items, provide phased execution sets. `AC-L` determines **whether applicable**, `OR-L` determines **severity level** (see 9.3.3, 9.4). Three tiers from weak to strong: **Quick Mode → Must-Inspect Set → Full set (43 items)**.
@@ -2857,6 +2942,7 @@ Execution order: within Quick Mode, group 2 items (2.x) execute only on permissi
 
 ---
 
+<a id="appendix-e-interface-schema"></a>
 ## Appendix E: Interface Schema
 
 > **Positioning**: This appendix solidifies the three types of artifacts of this subset into **machine-readable data shapes**, serving as an **interface contract** between the platform and downstream (IAM / PEP / audit). It only defines "what the data looks like", not storage, batch execution, or aggregation implementation (those belong to the platform layer, see 0.1.4). Field names are identified in English.
@@ -2972,6 +3058,7 @@ deny[msg] {
 
 ---
 
+<a id="appendix-f-enterprise-platform-integration-and-toolagent-separation-architecture-recommendations-non-normative"></a>
 ## Appendix F: Enterprise Platform Integration and Tool/Agent Separation Architecture Recommendations (Non-Normative)
 
 > This appendix only provides integration navigation and architecture recommendations, and does not carry any QD-PM determination, scoring, or threshold; it does not produce inspection items or participate in scoring. Inspection logic is based on the main text.
@@ -3025,6 +3112,7 @@ The relationship between the two is the application of the **Monotonic Narrowing
 
 ---
 
+<a id="references"></a>
 ## References
 
 [1] OWASP. (2024). OWASP Top 10 for LLM Applications 2025. https://genai.owasp.org/ (accessed: 2026-09)
