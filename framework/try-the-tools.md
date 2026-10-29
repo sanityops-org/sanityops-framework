@@ -31,7 +31,11 @@ Defect Inspector is fully open source, allowing the community to freely use, aud
 
 - **Note**: The open-source CLI covers two things: the full Inspect inspection (including Permission) and Risk Explicit; and CI/CD integration — it can act as a client of the SanityOps Platform. The remaining capabilities (e.g., Risk Implicit, Quality evaluation, and the version-level evidence chain) are delivered on the Platform.
 
-> **No-install quick try**: [sanityops-inspect-lite](https://github.com/sanityops-org/sanityops-inspect-lite) is a detect-only, report-only skill that applies the condensed Inspect checklists in your host model — no CLI, no scripts. It covers the Inspect subset only (not Risk / Quality) and is not the full engine; for the complete ruleset, use the CLI below.
+> **No-install quick try**: [sanityops-inspect-lite](https://github.com/sanityops-org/sanityops-inspect-lite) is a detect-only, report-only skill applied by your host model — no CLI, no scripts, no network call. It covers a condensed subset of Inspect (single-artifact checks, Cross-Artifact contracts, and Permission quick mode) plus a lite Risk Explicit scan; it does not run Risk Implicit or runtime Quality, and it never repairs artifacts — for the complete Inspect ruleset and Risk Explicit, use the CLI below; remediation and the remaining capabilities are delivered on the Platform.
+>
+> **How to use it**: in Claude Code, add the marketplace and install the plugin —
+> `/plugin marketplace add sanityops-org/sanityops-inspect-lite` then `/plugin install sanityops-inspect-lite@sanityops`.
+> For any other agent, `git clone` the repository and load `plugins/sanityops-inspect-lite/skills/sanityops-inspect-lite/` (its `SKILL.md` + `references/`) as a skill, or paste `SKILL.md` and the reference checklists in as instructions. Then provide the artifacts to inspect, their tier declarations, and a version label; the skill runs its seven-stage flow and emits the report.
 
 ### Install
 
