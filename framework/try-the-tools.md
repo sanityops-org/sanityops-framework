@@ -27,7 +27,7 @@ Defect Inspector is fully open source, allowing the community to freely use, aud
 
 - **GitHub Repository**: [sanityops-cli](https://github.com/sanityops-org/sanityops-cli) — Apache 2.0
 
-- **Use Case**: Static defect inspection of **logic artifacts** (System Prompt / Skill / Tool Schema / Cross-artifact relationships / Permission) plus **Risk Explicit** checks, suitable for local development or CI/CD integration.
+- **Use Case**: Static defect inspection of **Logic Artifacts** (System Prompt / Skill / Tool Schema), their cross-artifact relationships, and Permission — plus **Risk Explicit** checks, suitable for local development or CI/CD integration.
 
 - **Note**: The open-source CLI covers two things: the full Inspect inspection (including Permission) and Risk Explicit; and CI/CD integration — it can act as a client of the SanityOps Platform. The remaining capabilities (e.g., Risk Implicit, Quality evaluation, and the version-level evidence chain) are delivered on the Platform.
 
@@ -123,7 +123,7 @@ Add `--skip-defect-check` to scan and upload artifacts without running the defec
 | Mode | What you need | What happens |
 | --- | --- | --- |
 | **Local only** | An LLM API key in `model.api_key` | Inspect (including Permission) and Risk Explicit run entirely on your machine. No account and no upload required. |
-| **As a Platform client** | An LLM API key in `model.api_key` + a Platform API key in `server.api_key` | Checks still run locally; your logic artifacts are synchronized to a Platform project as a new version, where the remaining capabilities are delivered. |
+| **As a Platform client** | An LLM API key in `model.api_key` + a Platform API key in `server.api_key` | Checks still run locally; your Logic Artifacts are synchronized to a Platform project as a new version, where the remaining capabilities are delivered. |
 
 Both modes require your own LLM API key — connecting to the Platform only adds artifact synchronization; the model is never run by the Platform.
 
