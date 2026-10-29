@@ -41,7 +41,7 @@ SanityOps is an open, vendor-neutral methodology for AI Agent governance, built 
 
     Openness overview and tooling entry points.
 
-    How to access the open-source Inspect CLI, the Risk and Quality SaaS demos, and self-hosted deployment options.
+    How to access the open-source Inspect CLI (Inspect + Risk Explicit), the Risk Implicit and Quality SaaS demos, and self-hosted deployment options.
 
 - ### [FAQ](./FAQ.md)
 

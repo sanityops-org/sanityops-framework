@@ -71,7 +71,7 @@ SanityOps provides two complementary delivery forms:
 
 - **Framework (Open Source Specification)**: Complete methodology documentation across Inspect, Risk, Quality, Relevance, and Core, released under CC BY-SA 4.0, enabling enterprises to build their own toolchain
 - **Platform (Tooling)**: The set of tools that implement the specification:
-  - 🟢 **Open source** — the standalone Inspector CLI (Apache 2.0, supporting L1/L2/L3)
+  - 🟢 **Open source** — the standalone Inspector CLI (Apache 2.0): full Inspect coverage including Permission, plus Risk Explicit; integrates into CI/CD and can act as a client of the SanityOps Platform
   - 🔵 **Commercial** — the full feature suite (Defect Inspector, Risk Scanner, Quality Evaluator), offered as SaaS / self-hosted
 
 Both forms share the same governance language and evaluation standards; enterprises can choose their adoption path based on their circumstances.

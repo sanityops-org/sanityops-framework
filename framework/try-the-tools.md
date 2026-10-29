@@ -14,10 +14,10 @@ description: "Hands-on guide to the SanityOps tools, Defect Inspector and Risk S
 | Core Subset | Spec License | Tool License / Delivery                               | Audience                                |
 | ----------- | ------------ | ----------------------------------------------------- | --------------------------------------- |
 | **Inspect** | CC BY-SA 4.0 | **Apache 2.0** (open-source CLI) + SaaS / self-hosted | Everyone                                |
-| **Risk**    | CC BY-SA 4.0 | Closed-source SaaS / self-hosted (code-reviewable)    | Paying enterprise customers (under NDA) |
+| **Risk**    | CC BY-SA 4.0 | **Risk Explicit**: Apache 2.0 (open-source CLI); **Risk Implicit**: closed-source SaaS / self-hosted (code-reviewable) | Explicit: everyone; Implicit: paying enterprise customers (under NDA) |
 | **Quality** | CC BY-SA 4.0 | Closed-source SaaS / self-hosted (code-reviewable)    | Paying enterprise customers (under NDA) |
 
-> The specification is always open — anyone can inspect, study, and independently implement the methodology behind all three subsets. Tool openness differs: **Inspect**'s tooling itself is open source; **Risk** and **Quality** are offered as SaaS for trial, with enterprise customers granted code-review access under a self-hosted deployment.
+> The specification is always open — anyone can inspect, study, and independently implement the methodology behind all three subsets. Tool openness differs: **Inspect** and **Risk Explicit** tooling is open source; **Risk Implicit** and **Quality** are offered as SaaS for trial, with enterprise customers granted code-review access under a self-hosted deployment.
 
 ---
 
@@ -27,9 +27,9 @@ Defect Inspector is fully open source, allowing the community to freely use, aud
 
 - **GitHub Repository**: [sanityops-cli](https://github.com/sanityops-org/sanityops-cli) — Apache 2.0
 
-- **Use Case**: Static defect inspection of **logical artifacts** (System Prompts, Skills, Tool Schemas), suitable for local development or CI/CD integration.
+- **Use Case**: Static defect inspection of **logic artifacts** (System Prompt / Skill / Tool Schema / Cross-artifact relationships / Permission) plus **Risk Explicit** checks, suitable for local development or CI/CD integration.
 
-- **Note**: The open-source CLI provides the full Inspect capability (inspection, suggestions, and remediation). On the Platform, Inspect results are cross-linked with Risk and Quality findings and archived into the version-level evidence chain.
+- **Note**: The open-source CLI covers two things: the full Inspect inspection (including Permission) and Risk Explicit; and CI/CD integration — it can act as a client of the SanityOps Platform. The remaining capabilities (e.g., Risk Implicit, Quality evaluation, and the version-level evidence chain) are delivered on the Platform.
 
 > **No-install quick try**: [sanityops-inspect-lite](https://github.com/sanityops-org/sanityops-inspect-lite) is a detect-only, report-only skill that applies the condensed Inspect checklists in your host model — no CLI, no scripts. It covers the Inspect subset only (not Risk / Quality) and is not the full engine; for the complete ruleset, use the CLI below.
 
@@ -114,22 +114,14 @@ sanityops-cli inspect --check-level L3      # deep
 
 Add `--skip-defect-check` to scan and upload artifacts without running the defect analysis, `--config <path>` to use a config file elsewhere, and `--model` / `--provider` to override the model for one run.
 
-**4. Generate fixes (optional)**
-
-```bash
-sanityops-cli inspect repair
-```
-
-Reads the latest inspection report and produces repaired artifacts. Use `--report <path>` to target a specific report.
-
 ### Two Ways to Run the CLI
 
 | Mode | What you need | What happens |
 | --- | --- | --- |
-| **Local only** | An LLM API key in `model.api_key` | Inspection runs entirely on your machine. No account and no upload required. |
-| **Connected to the Platform** | An LLM API key in `model.api_key` + a Platform API key in `server.api_key` | Inspection still runs locally; the scanned artifacts are then pushed to a Platform project as a new version. |
+| **Local only** | An LLM API key in `model.api_key` | Inspect (including Permission) and Risk Explicit run entirely on your machine. No account and no upload required. |
+| **As a Platform client** | An LLM API key in `model.api_key` + a Platform API key in `server.api_key` | Checks still run locally; your logic artifacts are synchronized to a Platform project as a new version, where the remaining capabilities are delivered. |
 
-Both modes require your own LLM API key — connecting to the Platform only adds artifact upload; the model is never run by the Platform.
+Both modes require your own LLM API key — connecting to the Platform only adds artifact synchronization; the model is never run by the Platform.
 
 To connect the CLI to the Platform, take an API key from **Personal → API Keys** and store it:
 
@@ -154,7 +146,7 @@ sanityops-cli inspect
 
 ## Risk & Quality — Try the Demo, or Deploy for Your Enterprise
 
-Risk Scanner and Quality Evaluator are delivered as SaaS and self-hosted deployments. Their methodology is fully open source; the tool implementation is not currently released as public source code.
+The Risk Scanner's implicit-validation capability and the Quality Evaluator are delivered as SaaS and self-hosted deployments. Their methodology is fully open source; their tool implementation is not currently released as public source code. Risk Explicit is also available in the open-source CLI.
 
 - **Live Demo**: https://demo.sanityops.org/
   - The demo platform is currently in an early access phase. Because core detection features rely on third-party LLM API calls, access is invite-only to keep service quality high and inference cost manageable.
@@ -170,7 +162,7 @@ Risk Scanner and Quality Evaluator are delivered as SaaS and self-hosted deploym
 
 ## Why Are Inspect, Risk, and Quality Unified into the SanityOps Platform?
 
-The Inspect ruleset and CLI are open source — you can use it independently for static defect checking. Risk and Quality can likewise be adopted as standalone capabilities. The methodology behind all three is fully decoupled: **you can use just one, or combine them freely.**
+The Inspect ruleset and CLI are open source — you can use them independently for static defect and explicit-risk checking. Risk Implicit and Quality can likewise be adopted as standalone capabilities. The methodology behind all three is fully decoupled: **you can use just one, or combine them freely.**
 
 Within the SanityOps Platform, however, we integrate all three into a unified system, for the following reasons:
 

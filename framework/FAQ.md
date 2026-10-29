@@ -562,7 +562,7 @@ Therefore, the Guardrail as a "shallow, fast, last layer" defense-in-depth is ne
 
 ### Q49. Is SanityOps open source?
 
-**Answer**: SanityOps adopts a layered open-source strategy: the core Framework specification (11 sub-specifications: Inspect/Risk/Quality/Relevance/Core) is open source under CC BY-SA 4.0; the Inspect CLI is separately open source under Apache 2.0, providing full Inspect capabilities (inspection, suggestions, and repair). The Platform — including Inspect, Risk, and Quality — is not open source (closed-source SaaS / self-hosted), but enterprise customers under specific contractual conditions can obtain code-review access under NDA.
+**Answer**: SanityOps adopts a layered open-source strategy: the core Framework specification (11 sub-specifications: Inspect/Risk/Quality/Relevance/Core) is open source under CC BY-SA 4.0; the Inspect CLI is separately open source under Apache 2.0, covering the full Inspect inspection (including Permission) and Risk Explicit. The Platform — including Inspect, Risk, and Quality — is not open source (closed-source SaaS / self-hosted), but enterprise customers under specific contractual conditions can obtain code-review access under NDA.
 
 **Source**:
 
@@ -598,7 +598,7 @@ Therefore, the Guardrail as a "shallow, fast, last layer" defense-in-depth is ne
 
 ### Q53. What is the relationship between the Inspect CLI and the Platform?
 
-**Answer**: The Inspect CLI (sanityops-cli) is the open-source implementation providing full Inspect capabilities (inspection, suggestions, and repair), running locally and usable independently. The Platform is the commercial full suite (Defect Inspector, Risk Scanner, Quality Evaluator), provided as SaaS / self-hosted; on the Platform, Inspect results are cross-correlated with Risk/Quality findings and archived into the version-level evidence chain. Risk and Quality checks are provided only by the Platform, not by the open-source CLI. The CLI can optionally connect to the Platform via `server.api_key` (or `SANITYOPS_API_KEY` / `SANITYOPS_BASE_URL`) to upload artifacts as a new version, but inspection itself still runs locally, and the model is always driven by the user's own credentials.
+**Answer**: The Inspect CLI (sanityops-cli) is the open-source implementation: it covers the full Inspect inspection (Prompt / Skill / Tool / Cross / Permission) and Risk Explicit, runs locally, and is usable independently. The Platform is the commercial full suite (Defect Inspector, Risk Scanner, Quality Evaluator), provided as SaaS / self-hosted; there, inspection results are cross-correlated with Risk/Quality findings and archived into the version-level evidence chain. Risk Implicit and Quality checks are provided only by the Platform. The CLI can act as a client of the Platform: connected via `server.api_key` (or `SANITYOPS_API_KEY` / `SANITYOPS_BASE_URL`), it synchronizes your logic artifacts to the Platform as a new version, while the checks themselves still run locally and the model is always driven by the user's own credentials.
 
 **Source**:
 
@@ -607,7 +607,7 @@ Therefore, the Guardrail as a "shallow, fast, last layer" defense-in-depth is ne
 
 ### Q54. How do I download and use the Inspect CLI?
 
-**Answer**: The Inspect CLI (sanityops-cli) is open source (Apache 2.0), provides full Inspect capabilities, and requires Python ≥ 3.11 and your own LLM API key. Install: install script (macOS/Linux `curl .../install.sh | bash`; Windows `irm .../install.ps1 | iex`) or `pip install sanityops-cli`, or from source. Use: `sanityops-cli init` generates `.sanityops/inspect_config.yaml` (containing the model and artifact paths); `sanityops-cli inspect` runs the inspection (`--check-level L1` fast / L2 default / L3 deep); `sanityops-cli inspect repair` generates fixes from the latest report. Optional: `sanityops-cli config server.api_key` connects to the Platform; omit it to run entirely locally.
+**Answer**: The Inspect CLI (sanityops-cli) is open source (Apache 2.0), covers the full Inspect inspection (including Permission) and Risk Explicit, and requires Python ≥ 3.11 and your own LLM API key. Install: install script (macOS/Linux `curl .../install.sh | bash`; Windows `irm .../install.ps1 | iex`) or `pip install sanityops-cli`, or from source. Use: `sanityops-cli init` generates `.sanityops/inspect_config.yaml` (containing the model and artifact paths); `sanityops-cli inspect` runs the inspection (`--check-level L1` fast / L2 default / L3 deep). Optional: `sanityops-cli config server.api_key` makes the CLI act as a client of the Platform for artifact synchronization; omit it to run entirely locally.
 
 **Source**:
 
@@ -625,7 +625,7 @@ Therefore, the Guardrail as a "shallow, fast, last layer" defense-in-depth is ne
 
 ### Q56. Can SanityOps help me fix the defects it finds in Inspect?
 
-**Answer**: Whether you use the Inspect CLI, the Platform's online dashboard, or the PDF report, a repaired version targeting the defect is provided. But it must be emphasized: because SanityOps does not know the user's business elements, many remediation suggestions — especially numeric ones — are for reference only; after receiving SanityOps's repaired version, users must perform human review against the actual business elements before going live.
+**Answer**: On the Platform (online dashboard or PDF report), a repaired version targeting the defect is provided. But it must be emphasized: because SanityOps does not know the user's business elements, many remediation suggestions — especially numeric ones — are for reference only; after receiving SanityOps's repaired version, users must perform human review against the actual business elements before going live.
 
 ### Q57. How are the problems found by Quality and Risk fixed?
 

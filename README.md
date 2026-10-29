@@ -62,7 +62,7 @@ SanityOps has two parts:
 
 2. **Platform (the tooling)** — the set of tools that implement the specifications above:
 
-   - 🟢 **Open source** — the standalone Inspector CLI (Apache 2.0, supporting L1/L2/L3).
+   - 🟢 **Open source** — the standalone Inspector CLI (Apache 2.0): full Inspect coverage including Permission, plus Risk Explicit; integrates into CI/CD and can act as a client of the SanityOps Platform.
 
    - 🔵 **Commercial** — the full feature suite (Defect Inspector, Risk Scanner, Quality Evaluator), offered as **SaaS / self-hosted**.
 
@@ -125,11 +125,11 @@ Inspect performs static defect and permission checks on logical artifacts; Risk 
 
 ## Get Started
 
-The framework specification is fully open; the Inspect CLI is open source (Apache 2.0); Risk and Quality are offered as **SaaS / self-hosted**.
+The framework specification is fully open; the Inspect CLI is open source (Apache 2.0); Risk Implicit and Quality are offered as **SaaS / self-hosted**.
 
 - **Read the framework** — a guided reading path: [Framework Home](framework/index.md)
 - **Try it with zero install** — a no-install, report-only skill that runs condensed Inspect checks in your host model: [sanityops-inspect-lite](https://github.com/sanityops-org/sanityops-inspect-lite). A quick way to understand Inspect before installing the CLI.
-- **Try the Inspect CLI** — install and run static defect checks locally or in CI/CD: [Try the Tools](framework/try-the-tools.md) · `pip install sanityops-cli`
+- **Try the Inspect CLI** — full Inspect checks (including Permission) plus Risk Explicit, locally or in CI/CD: [Try the Tools](framework/try-the-tools.md) · `pip install sanityops-cli`
 - **Try the live demo** — the full Inspect + Risk + Quality loop: [demo.sanityops.org](https://demo.sanityops.org/). Sign-up is invite-only (LLM inference costs) — click **Get Code** on the registration form.
 - **Browse sample logical artifacts** — System Prompts, Skills, and Tool Schemas for three example agents (energy, freight logistics, medication): [samples/artifacts/](samples/artifacts/)
 - **Review sample audit reports** — formal PDF reports for a "Voyager" sample agent, spanning Inspect, Risk (Explicit & Implicit), and Quality, each with a full audit and an executive summary: [public/samples/report/](public/samples/report/)
@@ -155,7 +155,7 @@ The framework specification is fully open; the Inspect CLI is open source (Apach
 | **Tool Schema compliance check**            | Verify whether Tool Schema parameter constraints and side-effect declarations comply with specifications                                 | [Inspect Tool](inspect/tool.md)                                | 🟢 Defect Inspector  |
 | **Cross-artifact consistency verification** | Verify whether authorization, parameters, and contracts among Prompt–Skill–Tool are consistent                                           | [Inspect Cross](inspect/cross.md)                              | 🟢 Defect Inspector  |
 | **Permission proportionality check**        | Check whether permissions granted to an Agent exceed its responsibility boundaries, evaluating permission-responsibility proportionality | [Inspect Permission](inspect/permission.md)                    | 🟢 Defect Inspector  |
-| **Explicit risk audit**                     | Audit and quantitatively grade dangerous expressions, scripts, and dangerous authorizations in logical artifacts                         | [Risk Explicit](risk/explicit.md)                              | 🔵 Risk Scanner      |
+| **Explicit risk audit**                     | Audit and quantitatively grade dangerous expressions, scripts, and dangerous authorizations in logical artifacts                         | [Risk Explicit](risk/explicit.md)                              | 🟢 Risk Explicit / 🔵 Risk Scanner      |
 | **Implicit risk attack verification**       | Simulate sophisticated logical attacks in the shadow environment to detect runtime vulnerabilities                                       | [Risk Implicit](risk/implicit.md)                              | 🔵 Risk Scanner      |
 | **Tool-Agent reliability evaluation**       | Evaluate the task success rate of tool-based Agents, establishing risk-driven testing rigor                                              | [Quality Tool-Agent](quality/tool-agent.md)                    | 🔵 Quality Evaluator |
 | **RAG-Agent quality evaluation**            | Evaluate knowledge-based Agents' accuracy, completeness, relevance, traceability, and timeliness through four dimensions and 12 metrics  | [Quality RAG-Agent](quality/rag-agent.md)                      | 🔵 Quality Evaluator |

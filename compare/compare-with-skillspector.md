@@ -28,7 +28,7 @@ description: "Technical comparison of SanityOps Inspect and Risk with NVIDIA Ski
 
 SkillSpector is a security scanner for AI Agent Skills. SanityOps is a governance framework spanning three dimensions: Inspect, Risk, and Quality. The comparable surface between the two is **Inspect (Defect Inspection) + Risk (Risk Scanning)**. The Quality subset, which assesses user-visible service quality, has no counterpart in SkillSpector and is therefore **excluded from this comparison** to keep it fair.
 
-Both are production-grade tooling: SkillSpector ships as a CLI / Docker image. On the SanityOps side, the corresponding tools are **Defect Inspector** (the Inspect implementation; open source, CLI, SaaS + self-hosted) and **Risk Scanner** (the Risk implementation; SaaS + self-hosted).
+Both are production-grade tooling: SkillSpector ships as a CLI / Docker image. On the SanityOps side, the corresponding tools are **Defect Inspector** (the Inspect implementation; open source, CLI, SaaS + self-hosted) and **Risk Scanner** (the Risk implementation; Risk Explicit available in the open-source CLI, full capability SaaS + self-hosted).
 
 ---
 
