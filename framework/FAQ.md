@@ -7,7 +7,7 @@ description: "Frequently asked questions about the SanityOps framework, its conc
 
 ---
 
-**Version**: v1.0
+**Version**: v1.1
 
 **Release Date**: October 2026
 
@@ -81,7 +81,7 @@ description: "Frequently asked questions about the SanityOps framework, its conc
 
 ### Q5. Does SanityOps evaluate the LLM?
 
-**Answer**: SanityOps v1.0 does not evaluate the LLM (model) itself. It accepts a given LLM and does not involve model fine-tuning; its assessment objects are the quality and risk of Logic Artifacts (Prompt / Skill / Tool Schema), and the Agent's actual task/service quality. Quality assesses "the LLM's decision quality under a specific task scenario, constrained by Logic Artifacts", not the model's general capability.
+**Answer**: SanityOps v1.1 does not evaluate the LLM (model) itself. It accepts a given LLM and does not involve model fine-tuning; its assessment objects are the quality and risk of Logic Artifacts (Prompt / Skill / Tool Schema), and the Agent's actual task/service quality. Quality assesses "the LLM's decision quality under a specific task scenario, constrained by Logic Artifacts", not the model's general capability.
 
 **Source**:
 

@@ -9,7 +9,7 @@ description: "Quality Tool-Agent white paper: binary-nature success evaluation, 
 
 ---
 
-**Version**: v1.0
+**Version**: v1.1
 
 **Release Date**: October 2026
 
@@ -1149,4 +1149,4 @@ $$
 
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  October 2026
+v1.1  ·  October 2026

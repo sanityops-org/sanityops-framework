@@ -7,7 +7,7 @@ description: "Quality RAG-Agent white paper: governed test cases, multi-dimensio
 
 # Quality RAG-Agent White Paper
 ---
-**Version**: v1.0
+**Version**: v1.1
 
 **Release Date**: October 2026
 
@@ -1539,4 +1539,4 @@ Exception explanation and risk acceptance record:
 ---
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  October 2026
+v1.1  ·  October 2026

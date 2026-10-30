@@ -9,7 +9,7 @@ description: "Inspect Skill specification: defect rules for reviewing Skill defi
 
 ---
 
-**Version**: v1.0
+**Version**: v1.1
 
 **Release Date**: October 2026
 
@@ -17,7 +17,7 @@ description: "Inspect Skill specification: defect rules for reviewing Skill defi
 
 **License**: CC BY-SA 4.0
 
-**Depends on**: Core v1.0 (objects, Finding, `OR-L`, versioning and evidence)
+**Depends on**: Core v1.1 (objects, Finding, `OR-L`, versioning and evidence)
 
 ---
 
@@ -248,7 +248,7 @@ QD-S-x.y
 
 #### 0.3.1 Current Version
 
-- **Version**: v1.0
+- **Version**: v1.1
 - **Release Status**: Released
 - **Last Updated**: October 2026
 - **Maintained by**: Sanity AI Labs
@@ -258,6 +258,7 @@ QD-S-x.y
 | Version | Release Date | Major Changes |
 | --- | --- | --- |
 | v1.0 | 2026-10 | Initial release |
+| v1.1 | 2026-10 | Expanded Inspect and Permission defect coverage; Risk Explicit regraded to P0/P1/P2; multi-hit design principle clarified; terminology aligned to Logic Artifacts |
 
 ---
 
@@ -296,7 +297,7 @@ QD-S-0 is the **entry gate** for Skill inspection and runs before the semantic i
 <a id="11-five-defect-classification-framework"></a>
 ### 1.1 Five Defect Classification Framework
 
-Inspect Skill v1.0 classifies defects by **risk principle** rather than structural field, comprising five defect categories:
+Inspect Skill v1.1 classifies defects by **risk principle** rather than structural field, comprising five defect categories:
 
 | Category | ID | Risk Principle | Typical Manifestation |
 | --- | --- | --- | --- |
@@ -2688,4 +2689,4 @@ This part adopts a **fixed deduction** model (P0=25, P1=15, P2=5, preserving the
 
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  October 2026
+v1.1  ·  October 2026

@@ -27,6 +27,7 @@ export default defineConfig({
   srcExclude: [
     'README.md',
     'RELEASE-NOTE-v1.0.md',
+    'RELEASE-NOTE-v1.1.md',
     'inspect-skill/_process/**', // fetch workspace + drafting logs, not website content
   ],
 

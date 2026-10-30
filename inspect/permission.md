@@ -9,7 +9,7 @@ description: "Permission governance specification: mapping declared capabilities
 
 ---
 
-**Version**: v1.0
+**Version**: v1.1
 
 **Release Date**: October 2026
 
@@ -304,10 +304,10 @@ All risk insights of this subset are grouped autonomously according to the relat
 | Item    | Value                                                          |
 | ---- | ---------------------------------------------------------- |
 | Document Name | SanityOps Framework — Inspect Permission Governance Specification        |
-| Version   | v1.0                                                       |
+| Version   | v1.1                                                       |
 | Dimension | Inspect                                                    |
 | Numbering Prefix | `QD-PM`                                                    |
-| Dependencies | Core v1.0 (leveling model, state terminology, evidence requirements); Inspect v1.0 (conventions, scoring isomorphism, Cross inspection relationships) |
+| Dependencies | Core v1.1 (leveling model, state terminology, evidence requirements); Inspect v1.1 (conventions, scoring isomorphism, Cross inspection relationships) |
 | Execution Position | Fourth step of Inspect process, after Gate-0                                    |
 | Status   | Released                                                       |
 
@@ -3102,7 +3102,7 @@ The relationship between the two is the application of the **Monotonic Narrowing
 
 ### F.4 Responsibility Boundary with Relevance
 
-| Matter | permission (this subset) | Relevance v1.0 |
+| Matter | permission (this subset) | Relevance v1.1 |
 | --- | --- | --- |
 | QD-PM inspection item definition, severity level, OR-L determination | Single source of truth | Only reference, no rewrite |
 | QD-PM → AS-* mapping | Not done | Single source of truth (A.5) |
@@ -3131,6 +3131,6 @@ The relationship between the two is the application of the **Monotonic Narrowing
 
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  October 2026
+v1.1  ·  October 2026
 
 

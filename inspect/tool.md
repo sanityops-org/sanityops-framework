@@ -9,7 +9,7 @@ description: "Inspect Tool specification: defect rules for reviewing Tool Schema
 
 ---
 
-**Version**: v1.0
+**Version**: v1.1
 
 **Release Date**: October 2026
 
@@ -17,7 +17,7 @@ description: "Inspect Tool specification: defect rules for reviewing Tool Schema
 
 **License**: CC BY-SA 4.0
 
-**Dependent Specification**: Core v1.0 (objects, Finding, `OR-L`, versioning and evidence)
+**Dependent Specification**: Core v1.1 (objects, Finding, `OR-L`, versioning and evidence)
 
 ---
 
@@ -254,7 +254,7 @@ The risk grading in this specification (OR-L1/OR-L2/OR-L3) is the **Operational 
 <a id="031-current-version"></a>
 #### 0.3.1 Current Version
 
-- **Version**: v1.0
+- **Version**: v1.1
 - **Release Status**: In revision (includes Pending Cross-Spec Alignment items E-1 to E-21 in Appendix E)
 - **Release Basis Note**: This version contains the pending cross-spec alignment items listed in Appendix E (E-1 to E-21). Scoring results for inspection items marked PENDING are provisional and subject to review after alignment.
 - **Last Updated**: October 2026
@@ -266,11 +266,12 @@ The risk grading in this specification (OR-L1/OR-L2/OR-L3) is the **Operational 
 | Version | Release Date | Major Changes |
 | ---- | ------- | -------------------------- |
 | v1.0 | 2026-10 | Initial release |
+| v1.1 | 2026-10 | Expanded Inspect and Permission defect coverage; Risk Explicit regraded to P0/P1/P2; multi-hit design principle clarified; terminology aligned to Logic Artifacts |
 
 <a id="033-applicability-statement"></a>
 #### 0.3.3 Applicability Statement
 
-This specification v1.0 applies to the Tool Schema quality inspection phase of the SanityOps Framework. When using this specification for Tool quality inspection, all requirements of the corresponding version SHALL be followed.
+This specification v1.1 applies to the Tool Schema quality inspection phase of the SanityOps Framework. When using this specification for Tool quality inspection, all requirements of the corresponding version SHALL be followed.
 
 ---
 
@@ -2789,4 +2790,4 @@ The items below involve responsibility boundaries with other subsets (Core / Ins
 
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  October 2026
+v1.1  ·  October 2026

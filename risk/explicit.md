@@ -9,7 +9,7 @@ description: "Risk Explicit white paper: static auditing of explicit risks in Lo
 
 ---
 
-**Version**: v1.0
+**Version**: v1.1
 
 **Release Date**: October 2026
 
@@ -388,7 +388,7 @@ Impact Type: D1
 <a id="051-current-version"></a>
 #### 0.5.1 Current Version
 
-- **Version Number**: v1.0
+- **Version Number**: v1.1
 - **Release Status**: Industry specification internal version
 - **Last Updated**: October 2026
 - **Maintained by**: Sanity AI Labs
@@ -396,7 +396,7 @@ Impact Type: D1
 <a id="052-applicability-statement"></a>
 #### 0.5.2 Applicability Statement
 
-This specification v1.0 applies to the explicit risk audit phase of the SanityOps Framework. When using this specification for audit, all requirements of the corresponding version should be followed.
+This specification v1.1 applies to the explicit risk audit phase of the SanityOps Framework. When using this specification for audit, all requirements of the corresponding version should be followed.
 
 ---
 
@@ -1453,4 +1453,4 @@ SanityOps Complete Audit Workflow
 
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  October 2026
+v1.1  ·  October 2026

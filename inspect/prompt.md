@@ -9,7 +9,7 @@ description: "Inspect Prompt specification: defect rules for reviewing System Pr
 
 ---
 
-**Version**: v1.0
+**Version**: v1.1
 
 **Release Date**: October 2026
 
@@ -17,7 +17,7 @@ description: "Inspect Prompt specification: defect rules for reviewing System Pr
 
 **License**: CC BY-SA 4.0
 
-**Dependent Specification**: Core v1.0 (objects, Finding, `AC-L`, versioning and evidence)
+**Dependent Specification**: Core v1.1 (objects, Finding, `AC-L`, versioning and evidence)
 
 ---
 
@@ -2635,7 +2635,7 @@ $$
 {
   "inspection_id": "inspect-20261010-001",
   "framework": "SanityOps/Inspect Prompt",
-  "spec_version": "v1.0",
+  "spec_version": "v1.1",
   "checker_version": "1.0.0",
   "artifact_version": "1.0.0",
   "agent_level": "AC-L2",
@@ -2832,9 +2832,10 @@ Step 3: Compliance Determination
 ## Version History
 
 - **v1.0** (October 2026): Initial release.
+- **v1.1** (October 2026): Expanded Inspect and Permission defect coverage; Risk Explicit regraded to P0/P1/P2; multi-hit design principle clarified; terminology aligned to Logic Artifacts.
 
 ---
 
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  October 2026
+v1.1  ·  October 2026

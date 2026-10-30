@@ -7,7 +7,7 @@ description: "How SanityOps maps discovered defects to their business and qualit
 
 ---
 
-**Version**: v1.0
+**Version**: v1.1
 
 **Release Date**: October 2026
 
@@ -15,7 +15,7 @@ description: "How SanityOps maps discovered defects to their business and qualit
 
 **License**: CC BY-SA 4.0
 
-**Depends on Specification**: Core v1.0 (unified numbering, association types, causal boundaries)
+**Depends on Specification**: Core v1.1 (unified numbering, association types, causal boundaries)
 
 ---
 
@@ -121,7 +121,7 @@ description: "How SanityOps maps discovered defects to their business and qualit
 | Item | Content |
 |------|---------|
 | Document Name | SanityOps Inspect Defect Impact and Linkage Mapping Specification |
-| Version | v1.0 |
+| Version | v1.1 |
 | Status | Released |
 | Date | October 2026 |
 | Applicable Framework | SanityOps Inspect, Risk, Quality Subsets |
@@ -191,15 +191,15 @@ This specification establishes mapping relationships based on the following Sani
 
 | Source Sub-specification | Adopted Version | Usage in This Specification |
 |--------------------------|-----------------|----------------------------|
-| Inspect Prompt | v1.0 | Uses `QD-P` numbering, definitions, and `Inspect·P0/P1/P2` rules |
-| Inspect Skill | v1.0 | Uses `QD-S` numbering, Review Schema, and risk classification rules |
-| Inspect Tool | v1.0 | Uses `QD-T` numbering, Schema constraints, and high-risk operation definitions |
-| Inspect Cross | v1.0 | Uses `QD-PS`, `QD-PT`, `QD-ST`, `QD-SS`, `QD-TT`, `QD-CYC` numbering and consistency relationships |
-| Inspect Permission | v1.0 | Uses QD-PM numbering and permission baseline domain determinations (QD-PM-1~6) |
-| Risk Explicit | v1.0 | Uses `EX`, D1/D2/D3, `Explicit·P0/P1/P2` risk model |
-| Risk Implicit | v1.0 | Uses shadow sandbox, dynamic attack, and continuous validation principles |
-| Quality Tool-Agent | v1.0 | Uses task success/failure, reliability, and risk-driven testing principles |
-| Quality RAG-Agent | v1.0 | Uses four-dimensional 12 metrics, critical test cases, and regression Gate principles |
+| Inspect Prompt | v1.1 | Uses `QD-P` numbering, definitions, and `Inspect·P0/P1/P2` rules |
+| Inspect Skill | v1.1 | Uses `QD-S` numbering, Review Schema, and risk classification rules |
+| Inspect Tool | v1.1 | Uses `QD-T` numbering, Schema constraints, and high-risk operation definitions |
+| Inspect Cross | v1.1 | Uses `QD-PS`, `QD-PT`, `QD-ST`, `QD-SS`, `QD-TT`, `QD-CYC` numbering and consistency relationships |
+| Inspect Permission | v1.1 | Uses QD-PM numbering and permission baseline domain determinations (QD-PM-1~6) |
+| Risk Explicit | v1.1 | Uses `EX`, D1/D2/D3, `Explicit·P0/P1/P2` risk model |
+| Risk Implicit | v1.1 | Uses shadow sandbox, dynamic attack, and continuous validation principles |
+| Quality Tool-Agent | v1.1 | Uses task success/failure, reliability, and risk-driven testing principles |
+| Quality RAG-Agent | v1.1 | Uses four-dimensional 12 metrics, critical test cases, and regression Gate principles |
 
 <a id="031-source-specification-priority-principle"></a>
 ### 0.3.1 Source Specification Priority Principle
@@ -380,7 +380,7 @@ Conclusions from different subsets cannot substitute for each other. When surfac
 <a id="21-security-impact-dimensions"></a>
 ### 2.1 Security Impact Dimensions
 
-This specification adopts five types of potential security consequences. Among them, D1, D2, D3 correspond to Risk Explicit impact type labels, but specific grading still follows Risk Explicit v1.0 independently. Grading is determined by `Explicit·P0/P1/P2`.
+This specification adopts five types of potential security consequences. Among them, D1, D2, D3 correspond to Risk Explicit impact type labels, but specific grading still follows Risk Explicit v1.1 independently. Grading is determined by `Explicit·P0/P1/P2`.
 
 | Security Consequence | Corresponding Dimension | Typical Consequences |
 |----------------------|------------------------|----------------------|
@@ -1330,7 +1330,7 @@ For defect chains that have been dynamically validated as exploitable, closure m
 
 ## A.5 Permission Defect Mapping
 
-> `QD-PM-*` are produced by the Inspect Permission Governance subset (permission v1.0). This table only defines mapping directions,
+> `QD-PM-*` are produced by the Inspect Permission Governance subset (permission v1.1). This table only defines mapping directions,
 > and does not automatically determine permission defects as EX risks or actual events; `EX` classification is still independently determined by Risk Explicit.
 > The Permission subset executes after other subsets and is subject to Gate-0 preconditions; when Gate-0 is not met,
 > no QD-PM defects are produced, and this table does not apply.
@@ -1743,13 +1743,14 @@ This specification can reference OWASP risk language, but does not use OWASP num
 | Version | Release Date | Key Changes |
 |---------|--------------|-------------|
 | v1.0 | 2026-10 | Initial release |
+| v1.1 | 2026-10 | Expanded Inspect and Permission defect coverage; Risk Explicit regraded to P0/P1/P2; multi-hit design principle clarified; terminology aligned to Logic Artifacts |
 
 ---
 
-**The SanityOps Inspect Defect Impact and Linkage Mapping Specification v1.0 main text and appendices are now complete.**
+**The SanityOps Inspect Defect Impact and Linkage Mapping Specification v1.1 main text and appendices are now complete.**
 
 ---
 
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  October 2026
+v1.1  ·  October 2026

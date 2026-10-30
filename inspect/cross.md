@@ -9,7 +9,7 @@ description: "Inspect Cross specification: cross-artifact consistency checks acr
 
 ---
 
-**Version**: v1.0
+**Version**: v1.1
 
 **Release Date**: October 2026
 
@@ -17,7 +17,7 @@ description: "Inspect Cross specification: cross-artifact consistency checks acr
 
 **License**: CC BY-SA 4.0
 
-**Dependency**: Core v1.0 (object relationships, `AC-L`, versioning and evidence)
+**Dependency**: Core v1.1 (object relationships, `AC-L`, versioning and evidence)
 
 ---
 
@@ -226,9 +226,9 @@ SanityOps Framework
 | **Capability Boundary Match** | Whether a Skill's capability declarations are consistent with the actual capabilities of its associated Tools |
 | **Hidden Defect Under Reasonable Expression** | An inconsistency that emerges from artifact combinations, where each artifact's expression is individually specification-compliant |
 | **Linked Defect** | A defect where the same root cause simultaneously hits ≥2 inspection item numbers, and the evidence falls in the same field/declaration and remediation is inseparable (see 6.2.2) |
-| **AC-L1/L2/L3** | Agent complexity levels (as defined in Inspect Prompt v1.0) |
-| **OR-L1/L2/L3** | Tool / Skill operation risk levels (as defined in Inspect Tool / Skill v1.0) |
-| **P0/P1/P2** | Defect severity levels (as defined in Inspect Skill v1.0) |
+| **AC-L1/L2/L3** | Agent complexity levels (as defined in Inspect Prompt v1.1) |
+| **OR-L1/L2/L3** | Tool / Skill operation risk levels (as defined in Inspect Tool / Skill v1.1) |
+| **P0/P1/P2** | Defect severity levels (as defined in Inspect Skill v1.1) |
 
 <a id="022-numbering-system"></a>
 #### 0.2.2 Numbering System
@@ -278,25 +278,25 @@ QD-XY-n.m
 | 🟡 | **P1** | May cause behavioral instability or functional defects → **SHOULD be fixed** |
 | 🟢 | **P2** | Affects readability or efficiency, but does not impact functionality → **MAY be fixed** |
 
-**Note**: The defect severity levels in this specification follow the P0/P1/P2 definitions from Inspect Skill v1.0.
+**Note**: The defect severity levels in this specification follow the P0/P1/P2 definitions from Inspect Skill v1.1.
 
 <a id="024-abbreviation-table"></a>
 #### 0.2.4 Abbreviation Table
 
 | Abbreviation | Full Name | Source Specification |
 | --- | --- | --- |
-| **QD-P** | Quality Defect - Prompt | Inspect Prompt v1.0 |
-| **QD-T** | Quality Defect - Tool | Inspect Tool v1.0 |
-| **QD-S** | Quality Defect - Skill | Inspect Skill v1.0 |
+| **QD-P** | Quality Defect - Prompt | Inspect Prompt v1.1 |
+| **QD-T** | Quality Defect - Tool | Inspect Tool v1.1 |
+| **QD-S** | Quality Defect - Skill | Inspect Skill v1.1 |
 | **QD-PS** | Quality Defect - Prompt/Skill | This specification |
 | **QD-PT** | Quality Defect - Prompt/Tool | This specification |
 | **QD-ST** | Quality Defect - Skill/Tool | This specification |
 | **QD-SS** | Quality Defect - Skill/Skill | This specification |
 | **QD-TT** | Quality Defect - Tool/Tool | This specification |
 | **QD-CYC** | Quality Defect - Circular Invocation | This specification |
-| **AC-L1/L2/L3** | Agent complexity level | Inspect Prompt v1.0 |
-| **OR-L1/L2/L3** | Tool/Skill operation risk level | Inspect Tool / Skill v1.0 |
-| **P0/P1/P2** | Defect Level | Inspect Skill v1.0 |
+| **AC-L1/L2/L3** | Agent complexity level | Inspect Prompt v1.1 |
+| **OR-L1/L2/L3** | Tool/Skill operation risk level | Inspect Tool / Skill v1.1 |
+| **P0/P1/P2** | Defect Level | Inspect Skill v1.1 |
 
 ---
 
@@ -306,8 +306,8 @@ QD-XY-n.m
 <a id="031-current-version"></a>
 #### 0.3.1 Current Version
 
-- **Version**: v1.0
-- **Release Status**: Initial release
+- **Version**: v1.1
+- **Release Status**: Released
 - **Last Updated**: October 2026
 - **Maintained by**: Sanity AI Labs
 
@@ -317,6 +317,7 @@ QD-XY-n.m
 | Version | Release Date | Major Changes |
 | --- | --- | --- |
 | v1.0 | 2026-10 | Initial release |
+| v1.1 | 2026-10 | Expanded Inspect and Permission defect coverage; Risk Explicit regraded to P0/P1/P2; multi-hit design principle clarified; terminology aligned to Logic Artifacts |
 
 ---
 
@@ -2281,7 +2282,7 @@ Field level → Prompt's workflow/orchestration definitions
 <a id="541-three-severity-levels-p0p1p2"></a>
 #### 5.4.1 Three Severity Levels (P0/P1/P2)
 
-**Definitions** (as defined in Inspect Skill v1.0):
+**Definitions** (as defined in Inspect Skill v1.1):
 
 | Level | Symbol | Definition | Disposition Priority |
 | --- | --- | --- | --- |
@@ -2292,7 +2293,7 @@ Field level → Prompt's workflow/orchestration definitions
 <a id="542-agent-level-definitions-l1l2l3"></a>
 #### 5.4.2 Agent Complexity Level Definitions (`AC-L`, following AC-L1/AC-L2/AC-L3)
 
-**Definitions** (as defined in Inspect Prompt v1.0):
+**Definitions** (as defined in Inspect Prompt v1.1):
 
 | Level | Name | Definition | Typical Characteristics |
 | --- | --- | --- | --- |
@@ -2338,8 +2339,8 @@ The "Severity (Default)" column in Appendix A gives the default level; the "→ 
 | --- | --- |
 | **Inspection process** | 7-step process: prerequisite verification → relationship identification → six inspection groups → impact assessment → report output |
 | **Automated execution** | All inspection items are executable via automation (LLM Agent) |
-| **Severity levels** | P0/P1/P2 (as defined in Inspect Skill v1.0) |
-| **Agent complexity levels** | AC-L (AC-L1/AC-L2/AC-L3, as defined in Inspect Prompt v1.0) |
+| **Severity levels** | P0/P1/P2 (as defined in Inspect Skill v1.1) |
+| **Agent complexity levels** | AC-L (AC-L1/AC-L2/AC-L3, as defined in Inspect Prompt v1.1) |
 | **Level binding** | Different Agent levels correspond to different inspection intensity |
 
 ---
@@ -3753,8 +3754,8 @@ INPUT:
 | **Inspection Focus** | Hidden Defects Under Reasonable Expression — each artifact individually valid but semantic conflicts arise when combined |
 | **Inspection Relationships** | Six inspection groups: QD-PS (authorization coverage), QD-PT (invocation contract), QD-ST (capability match), QD-SS (Skill-to-Skill conflicts), QD-TT (Tool-to-Tool data flow/semantic competition), QD-CYC (circular invocation, cross-cutting) |
 | **Inspection Item Count** | 29 total (QD-PS: 7, QD-PT: 7, QD-ST: 7, QD-SS: 2, QD-TT: 3, QD-CYC: 3); applicable per AC-L as 7/20/29 |
-| **Severity Levels** | P0/P1/P2 (as defined in Inspect Skill v1.0) |
-| **Agent Levels** | AC-L1/AC-L2/AC-L3 (as defined in Inspect Prompt v1.0) |
+| **Severity Levels** | P0/P1/P2 (as defined in Inspect Skill v1.1) |
+| **Agent Levels** | AC-L1/AC-L2/AC-L3 (as defined in Inspect Prompt v1.1) |
 | **Quantitative Scoring** | Total score of 100; deduction-based; P0:P1:P2 = 5:3:1; rounded to nearest integer |
 | **Gate Condition** | Any P0 defect present → FAIL |
 | **Remediation Principle** | Principle of least risk; Tool > Skill > Prompt |
@@ -3784,4 +3785,4 @@ INPUT:
 
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  October 2026
+v1.1  ·  October 2026

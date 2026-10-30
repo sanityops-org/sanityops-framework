@@ -7,7 +7,7 @@ description: "Core terminology, governance objects, phases, and decision baselin
 
 ---
 
-**Version**: v1.0
+**Version**: v1.1
 
 **Release Date**: October 2026
 
@@ -123,7 +123,7 @@ description: "Core terminology, governance objects, phases, and decision baselin
 | --- | --- |
 | Document Title | SanityOps Framework Core: Terminology, Objects, and Decision Baselines |
 | Short Name | SanityOps Core |
-| Version | v1.0 |
+| Version | v1.1 |
 | Status | Published |
 | Date | October 2026 |
 | Scope | All current and future SanityOps sub-specifications, rule assets, tool implementations, reports, CI/CD pipelines, and governance processes |
@@ -1052,7 +1052,7 @@ SanityOps requires at minimum the following version objects to be distinguished:
 
 | Version Type | Example | Description |
 | --- | --- | --- |
-| Specification Version | `Inspect Tool v1.0` | The document version defining rules, terminology, and adjudication requirements. |
+| Specification Version | `Inspect Tool v1.1` | The document version defining rules, terminology, and adjudication requirements. |
 | Rule or Mapping Library Version | `relevance-map-1.0.0` | Machine-executable rule, detector, mapping, or template versions. |
 | Artifact Version | Git commit, immutable hash, release package version | The version of the Logic Artifact being inspected, validated, or assessed. |
 | Runtime Version | Model version, Agent Runtime, framework, Connector version | The runtime environment version influencing actual behavior. |
@@ -1443,7 +1443,7 @@ status: open
 
 source:
   standard: Inspect Tool
-  standard_version: "v1.0"
+  standard_version: "v1.1"
   rule_id: QD-T-3.2
   rule_version: "2.4.0"
 
@@ -1701,4 +1701,4 @@ Only when the common objects, terminology, evidence, and decision boundaries are
 
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.0  ·  October 2026
+v1.1  ·  October 2026

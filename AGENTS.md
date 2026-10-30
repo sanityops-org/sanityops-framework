@@ -4,7 +4,7 @@ This file tells AI/automation agents how the SanityOps documentation is organize
 
 It is a **map of relationships and authority**, not a restatement of any specification. When this guide conflicts with a normative document, the normative document wins; please report the mismatch instead of silently following this file.
 
-Last updated: 2026-10-07 · Framework v1.0
+Last updated: 2026-10-07 · Framework v1.1
 
 ---
 
@@ -13,7 +13,7 @@ Last updated: 2026-10-07 · Framework v1.0
 - A **pure documentation repository** (VitePress site + GitHub `README.md`). There is no executable framework source here.
 - The SanityOps Framework is an open specification (CC BY-SA 4.0) for AI Agent continuous governance, built on Logic Artifact defect inspection.
 - The implementing CLI lives in a **separate repository**: `sanityops-org/sanityops-cli` (Apache 2.0). Do not look for tool source code here.
-- "Logic Artifacts" covered by v1.0 are strictly three types: **System Prompt, Skill, Tool Schema** (plus Permission as a cross-cutting inspection aspect).
+- "Logic Artifacts" covered by v1.1 are strictly three types: **System Prompt, Skill, Tool Schema** (plus Permission as a cross-cutting inspection aspect).
 
 ---
 
@@ -128,7 +128,7 @@ Known documentation gap: none (the former `inspect/skill.md` Part 10 "Relationsh
 - **Never** introduce new rules, thresholds, or numbering in L3 files (overview, README, FAQ, index, compare, samples).
 - **Never** convert Relevance's candidate associations into definitive causal statements.
 - **Never** delete a `QD` Finding based on a Risk Implicit `B`/`C` result or an external control interception.
-- Preserve document conventions: front matter (`title`/`description`), version block (v1.0, October 2026), normative keywords per RFC-style usage defined in core.md §0.4.
+- Preserve document conventions: front matter (`title`/`description`), version block (v1.1, October 2026), normative keywords per RFC-style usage defined in core.md §0.4.
 - This is a VitePress site: every root-level `.md` can become a public route. Keep content suitable for publication; legal texts under `legal/` must not be substantively edited without owner review.
 - Samples in `samples/artifacts/` are versioned post-remediation records ("Fixed Artifacts"); do not silently align them to new rule versions — their metadata reflects specific inspection rounds.
 
