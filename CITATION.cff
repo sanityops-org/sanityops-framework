@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use SanityOps in research, in a product, or in internal AI Agent governance, please cite this specification."
+title: "SanityOps Framework: AI Agent Continuous Governance Specification"
+abstract: >-
+  SanityOps is a vendor-neutral framework for the continuous governance of AI Agent logic
+  artifacts (System Prompt, Skill, Tool Schema, and Permission). It defines static defect
+  inspection, explicit and implicit risk auditing, and RAG-Agent / Tool-Agent quality
+  evaluation, bound to artifact versions through a Baseline and Gate ratchet mechanism.
+authors:
+  - family-names: Young
+    given-names: Leo
+    orcid: "https://orcid.org/0009-0000-2579-9355"
+    affiliation: "Sanity AI Labs"
+version: 1.1.0
+date-released: 2026-10-30
+license: CC-BY-SA-4.0
+type: standard
+repository-code: "https://github.com/sanityops-org/sanityops-framework"
+url: "https://www.sanityops.org"
+keywords:
+  - AI agent governance
+  - logic artifact inspection
+  - system prompt quality
+  - LLM agent reliability
+  - AI agent security
+  - quality evaluation

@@ -1,0 +1,45 @@
+{
+  "title": "SanityOps Framework: AI Agent Continuous Governance Specification (v1.1)",
+  "description": "<p>SanityOps is a vendor-neutral framework for the continuous governance of AI Agent logic artifacts — System Prompt, Skill, Tool Schema, and Permission.</p><p>It starts from static defect inspection of logic artifacts and permission proportionality, maps each defect to the security or quality failure it could cause, and verifies those mappings through explicit and implicit risk auditing plus RAG-Agent and Tool-Agent quality evaluation. Conclusions are bound to artifact versions through a Baseline and Gate ratchet mechanism, so a finding always resolves to a specific artifact version and rule version.</p><p>This record archives the v1.1 specification set: Core, Inspect (Prompt, Skill, Tool, Cross, Permission), Risk (Explicit, Implicit), Quality (RAG-Agent, Tool-Agent), and Relevance mapping, together with sample logic artifacts and reproducible audit reports. The open-source Inspector CLI is maintained in a separate repository under Apache 2.0.</p>",
+  "creators": [
+    {
+      "name": "Young, Leo",
+      "orcid": "0009-0000-2579-9355",
+      "affiliation": "Sanity AI Labs"
+    }
+  ],
+  "keywords": [
+    "AI agent governance",
+    "logic artifact inspection",
+    "system prompt quality",
+    "tool schema inspection",
+    "LLM agent reliability",
+    "AI agent security",
+    "quality evaluation",
+    "risk audit"
+  ],
+  "license": "CC-BY-SA-4.0",
+  "upload_type": "publication",
+  "publication_type": "technicalnote",
+  "language": "eng",
+  "access_right": "open",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/sanityops-org/sanityops-cli",
+      "relation": "isSupplementedBy",
+      "scheme": "url",
+      "resource_type": "software"
+    },
+    {
+      "identifier": "https://github.com/sanityops-org/sanityops-inspect-lite",
+      "relation": "isSupplementedBy",
+      "scheme": "url",
+      "resource_type": "software"
+    },
+    {
+      "identifier": "https://www.sanityops.org",
+      "relation": "isDocumentedBy",
+      "scheme": "url"
+    }
+  ]
+}
