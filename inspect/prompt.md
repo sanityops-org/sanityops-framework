@@ -81,6 +81,14 @@ description: "Inspect Prompt specification: defect rules for reviewing System Pr
 
 ## Foreword
 
+> **Document design principle: serving both inspection and audit needs.**
+>
+> To reduce the risk of missed findings and to preserve traceable audit evidence, this document **allows the same object to be hit by multiple inspection items across different dimensions** — this may look like "similarity / duplication / subsumption" on the surface, but it is intentional by design, not redundancy.
+>
+> At the quantitative scoring stage, however, to avoid double deductions and to reflect the true quality of the inspected Logic Artifact objectively, same-source deduplication and merging must follow the "Multi-Defect Handling Rules" (§4.6) of this document: one root cause and one harm path are deducted only once.
+>
+> If you question whether certain inspection items are "overly redundant", verify consistency with counter-examples and edge cases — confirm whether the trigger conditions truly overlap and whether the attribution reaches consistent boundary conclusions — rather than concluding from surface similarity alone.
+
 <a id="01-positioning-and-scope"></a>
 ### 0.1 Positioning and Scope
 
