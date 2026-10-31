@@ -133,7 +133,7 @@ Promptfoo's YAML configuration files can, of course, be version-controlled along
 
 The SanityOps Governance Closed Loop, as defined in the Core specification, follows a deliberate sequence: **Inspect (Static Defect) → Risk Explicit (Explicit Risk Audit) → Risk Implicit (Dynamic Validation) → Quality**.
 
-Risk Explicit audits the static text of Logic Artifacts — System Prompts, Skills, Tool Schemas — for Explicit Risks across both NL (Natural Language) and NR (Non-Directly-Readable) risk families, classified at S0–3 severity. It is typically applied to artifacts sourced from the internet or third parties, where the provenance and authoring intent cannot be assumed safe.
+Risk Explicit audits the static text of Logic Artifacts — System Prompts, Skills, Tool Schemas — for Explicit Risks across both NL (Natural Language) and NR (Non-Directly-Readable) risk families, graded as Explicit·P0/P1/P2. It is typically applied to artifacts sourced from the internet or third parties, where the provenance and authoring intent cannot be assumed safe.
 
 Risk Implicit then takes those same artifacts and subjects them to dynamic, runtime validation — generating artifact-driven attacks against the defects surfaced by Inspect and audited by Explicit. Together, they form a complete static + dynamic dual-layer coverage model.
 

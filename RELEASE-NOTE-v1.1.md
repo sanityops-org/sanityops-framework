@@ -83,11 +83,11 @@ Reports produced against v1.0.0 remain valid records of the rules in force at th
 | Change | Action |
 |--------|--------|
 | Specification documents bumped to v1.1 | Update the rule/standard version recorded in report metadata |
-| Risk Explicit regraded to `P0/P1/P2` | Re-map any `D1–D3` severity statements to the new grading |
+| Risk Explicit regraded to `P0/P1/P2` | Re-map any `S0–S3` severity statements to the new `Explicit·P0/P1/P2` grading; `D1/D2/D3` are retained as traceability-only impact type labels |
 | Inspect item numbering expanded | Re-run Inspect; historical findings keep their original numbering |
 | Terminology "Logic Artifacts" | Update custom checklists and internal docs that quote older wording |
 
-There are no breaking changes to the Core object model, terminology glossary, or Gate independence rules.
+There are no breaking changes to the Core object model, terminology glossary, or Gate independence rules. However, Risk Explicit grading is **tightened**: the same risk item can change blocking conclusion (for example, complete data/conversation leakage is `S1` under v1.0 but `P0` under v1.1). v1.0 reports MUST NOT be restated under v1.1 terminology without re-inspection.
 
 ---
 
@@ -105,6 +105,26 @@ There are no breaking changes to the Core object model, terminology glossary, or
 - Risk scanning and quality evaluation (Risk Scanner, Quality Evaluator) are commercial and not part of the open-source CLI.
 - The live demo at `demo.sanityops.org` is invite-only due to LLM inference costs.
 - A2A service-contract inspection and derivative-model (DMC) evaluation, previously slated for v1.1, are now planned for **v1.2**.
+
+---
+
+## Errata
+
+This section records post-release documentation corrections. The normative specification text under the `v1.1.0` tag is immutable; these corrections apply to the working branch and are binding for readers of this note.
+
+### E-1: Risk Explicit grading is a tightening, not a rename
+
+Under v1.0, `S0–S3` was derived by merging three harm dimensions (`D1/D2/D3`). Under v1.1, `Explicit·P0/P1/P2` is graded directly by worst possible consequence, and `D1/D2/D3` are retained only as traceability labels that do not participate in grading. The quantified score (0–20) and CVSS approximation were removed.
+
+**Consequence**: The same risk item can change blocking conclusion across versions — for example, complete data/conversation leakage is `S1` (medium) under v1.0 but `P0` (block release) under v1.1. Reports produced against v1.0 MUST NOT be restated under v1.1 without re-inspection.
+
+### E-2: Migration table correction
+
+The migration row "Re-map any `D1–D3` severity statements" was corrected to "Re-map any `S0–S3` severity statements". `D1/D2/D3` are not severity levels and are not re-mapped; they remain as impact type labels.
+
+### E-3: Known residual in `framework/core.md`
+
+`framework/core.md` §1.3 still lists `S-levels` in the Risk row of the "Core Problems and Specification Domains" table. This is a normative-body residual that cannot be corrected as an erratum and will be fixed in the next specification version. The correct term is `Explicit·P0/P1/P2`.
 
 ---
 

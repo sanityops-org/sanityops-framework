@@ -30,7 +30,7 @@ Traditional runtime Guardrails face an **impossible triangle** of real-time dete
 
     Static audit of explicit risks expressed in Logic Artifacts.
 
-    Scans System Prompts, Skills, and Tool Schemas for dangerous content across 32 subcategories in 4 families: Continuous NL (NL-A), Non-Continuous NL (NL-B), Obfuscated Coding (NR-O), and Structured Configuration (NR-S). Applies a three-dimension harm assessment model — **confidentiality (D1)**, **integrity (D2)**, and **authorization (D3)** — with quantified **S0/S1/S2/S3** severity levels.
+    Scans System Prompts, Skills, and Tool Schemas for dangerous content across 32 subcategories in 4 families: Continuous NL (NL-A), Non-Continuous NL (NL-B), Obfuscated Coding (NR-O), and Structured Configuration (NR-S). Assigns impact type labels — **confidentiality (D1)**, **integrity (D2)**, and **authorization (D3)** — recorded for traceability only, and grades severity as **Explicit·P0/P1/P2**.
 
     **Numbering system**: EX-x.y — NL-A, NL-B, NR-O, NR-S
 
@@ -92,10 +92,9 @@ Signal Score → Gate Decision
 
 | Level | Meaning | Disposition |
 |:---:|:---|:---|
-| **S3** | Critical: confirmed catastrophic harm (integrity/authorization veto) | MUST remediate immediately |
-| **S2** | High: confirmed exploitable with significant impact | MUST remediate before release |
-| **S1** | Medium: potentially exploitable or partial impact | SHOULD remediate |
-| **S0** | No Risk: no apparent harm across all three dimensions | MAY accept or monitor |
+| **P0** | Data/conversation leakage, irreversible consequences, core functionality bypassed, or security restrictions completely bypassed | Block release |
+| **P1** | Recoverable tampering or limited privilege escalation | Fix before release, or approved exemption |
+| **P2** | Read-only, or within existing permission scope | Record in risk ledger |
 
 ---
 

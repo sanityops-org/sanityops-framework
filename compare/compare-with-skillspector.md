@@ -102,7 +102,7 @@ Risk (Risk Scanning)
 
 | Dimension               | SkillSpector                                                | Inspect                                                           | Risk Explicit                                                 | Risk Implicit                                                                     |
 | ----------------------- | ----------------------------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| Basis for determination | Vulnerability pattern library (68 patterns / 17 categories) | Rule-based inspection items + six-dimension review framework      | 32 Explicit Risk categories + three-dimension harm assessment | Attack test cases derived from defects                                            |
+| Basis for determination | Vulnerability pattern library (68 patterns / 17 categories) | Rule-based inspection items + six-dimension review framework      | 32 Explicit Risk categories + impact type labels + P0/P1/P2 grading | Attack test cases derived from defects                                            |
 | Driving mode            | Pattern-driven                                              | Rule / checklist-driven                                           | Semantic classification-driven                                | **Artifact-Driven** (understands internal structure to generate targeted attacks) |
 | Input source            | The scanned package                                         | Raw artifacts                                                     | Artifacts that have passed Inspect                            | Inspect defect list + Explicit results                                            |
 | Executes the target?    | No                                                          | No                                                                | No                                                            | Yes (Shadow Sandbox)                                                          |
@@ -119,7 +119,7 @@ Risk (Risk Scanning)
 | Dimension                | SkillSpector                                                                             | Inspect                                        | Risk Explicit                                                          |
 | ------------------------ | ---------------------------------------------------------------------------------------- | ---------------------------------------------- | ---------------------------------------------------------------------- |
 | Conclusion form          | 0–100 risk score + severity + install recommendation (`SAFE / CAUTION / DO_NOT_INSTALL`) | Defect list + remediation recommendations      | Risk item list + severity level + deduction                            |
-| Rating system            | LOW / MEDIUM / HIGH / CRITICAL                                                           | P0 / P1 / P2; P0 constitutes the Gate          | D1/D2/D3 → S-level                                                     |
+| Rating system            | LOW / MEDIUM / HIGH / CRITICAL                                                           | P0 / P1 / P2; P0 constitutes the Gate          | worst-consequence → P0/P1/P2                                                     |
 | Localization granularity | File : line number + confidence                                                          | Rule ID + artifact entry                       | Risk item + owning artifact                                            |
 | Root-cause answer        | "Which line of code is dangerous"                                                        | "Which design element is missing a constraint" | "Why the defense fell, and which Logic Artifact went wrong" (Implicit) |
 | Pass criterion           | Human decision based on score                                                            | All P0 passed + P1 assessed → report issued    | Decision after risk rating                                             |
@@ -139,7 +139,7 @@ Risk (Risk Scanning)
 | Cross-Artifact Consistency                            | ✗            | ✓            | ✗                                 | Indirect      |
 | Runtime attack validation                             | ✗            | ✗            | ✗                                 | ✓             |
 | Root-cause localization to Logic Artifact             | ✗            | ✓            | ✓                                 | ✓             |
-| Quantitative risk rating                              | ✓ (0–100)    | ✓ (P0/P1/P2) | ✓ (S-level)                       | ✓             |
+| Quantitative risk rating                              | ✓ (0–100)    | ✓ (P0/P1/P2) | ✓ (P0/P1/P2)                       | ✓             |
 
 ---
 

@@ -320,13 +320,13 @@ They must not be conflated: the four answer different questions and must carry t
 **Answer**:
 
 - **P0/P1/P2** (Inspect defect disposition priority): P0 Blocking Defect, must be fixed, and must not pass the Gate if undisposed; P1 Major Defect, fix before release; P2 Improvement Item, add to the plan.
-- **S0~S3** (Risk Explicit severity): S0 No Risk, S1 Medium, S2 High, S3 Critical (three-dimension merged rating).
+- **Explicit·P0/P1/P2** (Risk Explicit grading): P0 Block release, P1 Fix before release, P2 Record in risk ledger (graded by worst possible consequence; D1/D2/D3 are traceability-only impact type labels).
 - **A/B/C/D** (Risk Implicit termination status): A Attack Successful; B Blocked by external control; C Agent/model refused; D Insufficient conditions / indeterminable.
 
 **Source**:
 
 - [core.md](./core.md) 4.6~4.8, Appendix B.2
-- [explicit.md](../risk/explicit.md) 3.3 (S0~S3 specific definitions)
+- [explicit.md](../risk/explicit.md) 3.2 (Explicit·P0/P1/P2 grading)
 
 #### Q27. How are Quality test cases generated?
 

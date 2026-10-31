@@ -52,7 +52,7 @@ Each owns a unique numbering namespace and is the **sole definition site** for i
 | `inspect/tool.md` | `QD-T-*` | Is the Tool Schema free of static defects? |
 | `inspect/cross.md` | `QD-PS-*`, `QD-PT-*`, `QD-ST-*`, `QD-SS-*`, `QD-TT-*`, `QD-CYC-*` | Are Prompt–Skill–Tool contracts, multi-Skill/multi-Tool consistency, and invocation loops mutually consistent? |
 | `inspect/permission.md` | `QD-PM-*` | Are declared authorities proportionate to assigned responsibilities? |
-| `risk/explicit.md` | `EX-*` (`NL-A/B`, `NR-O/S`), `D1–D3`, `Explicit·P0/P1/P2` | Does artifact text explicitly express dangerous content/configuration? |
+| `risk/explicit.md` | `EX-*` (`NL-A/B`, `NR-O/S`), `D1–D3` (impact type labels, traceability-only), `Explicit·P0/P1/P2` | Does artifact text explicitly express dangerous content/configuration? |
 | `risk/implicit.md` | `A/B/C/D` termination statuses | Can defects be exploited at runtime (shadow sandbox validation)? |
 | `quality/rag-agent.md` | 4 dimensions / 12 metrics, three-layer Gates | Does RAG-Agent output meet the quality bar? |
 | `quality/tool-agent.md` | Reliability metric, Ratchet Mechanism | Does the Tool-Agent complete tasks reliably? |
