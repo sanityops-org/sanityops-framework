@@ -126,6 +126,10 @@ The migration row "Re-map any `D1–D3` severity statements" was corrected to "R
 
 `framework/core.md` §1.3 still lists `S-levels` in the Risk row of the "Core Problems and Specification Domains" table. This is a normative-body residual that cannot be corrected as an erratum and will be fixed in the next specification version. The correct term is `Explicit·P0/P1/P2`.
 
+### E-4: Known residual in `framework/relevance.md`
+
+A mapping-record example in `framework/relevance.md` still carries `source_standard_version: v1.0` for a `source_standard: Inspect Tool` entry. Inspect Tool is v1.1 in this release, so the example value is stale. This is a normative-body residual that cannot be corrected as an erratum and will be fixed in the next specification version.
+
 ---
 
 ## Documentation & Links

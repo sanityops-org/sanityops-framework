@@ -131,6 +131,7 @@ Known documentation gap: none (the former `inspect/skill.md` Part 10 "Relationsh
 - Preserve document conventions: front matter (`title`/`description`), version block (v1.1, October 2026), normative keywords per RFC-style usage defined in core.md §0.4.
 - This is a VitePress site: every root-level `.md` can become a public route. Keep content suitable for publication; legal texts under `legal/` must not be substantively edited without owner review.
 - Samples in `samples/artifacts/` are versioned post-remediation records ("Fixed Artifacts"); do not silently align them to new rule versions — their metadata reflects specific inspection rounds.
+- **Post-release errata boundary**: once a version is tagged, normative-body documents (L0 `framework/core.md`, the L1 sub-specifications, L2 `framework/relevance.md`) are never edited silently; known residuals are recorded in the release note's Errata section and fixed in the next version. Editable-by-errata scope is limited to L3 derived documents (`framework/overview.md`, `README.md`, `framework/FAQ.md`, `index.md` files, `compare/*`, `samples/*`) and `AGENTS.md`.
 
 ---
 

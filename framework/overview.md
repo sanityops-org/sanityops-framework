@@ -147,14 +147,21 @@ Terms appearing in this document such as logical artifact, Prompt / Skill / Tool
 
 ## Road Map
 
-**v1.0 · September 2026**
+**v1.0 · October 2026**
 
 - ✅ Framework 1.0 core specification released
 - ✅ A complete methodology system for Inspect, Risk, Quality, and Relevance has been formed
 - ✅ Inspect CLI fully open-sourced, with a free CLI provided
 - ✅ Commercial **SaaS / self-hosted** services and reports available
 
-**v1.1 · November 2026**
+**v1.1 · October 2026**
+
+- ✅ Inspect and Permission defect coverage expanded; Permission Quick Mode grown to 17 items
+- ✅ Risk Explicit regraded to P0/P1/P2, with Relevance and Cross aligned
+- ✅ Multi-hit inspection design principle stated explicitly in all five Inspect sub-specifications
+- ✅ Terminology normalized to "Logic Artifacts"; `sanityops-inspect-lite` instance records added
+
+**v1.2 · November 2026**
 
 - 🔜 DMC 1.0 derivative model capability evaluation and optimization method
 - 🔜 Inspect A2A 1.0, A2A Service Contract Defect Inspection Specification
