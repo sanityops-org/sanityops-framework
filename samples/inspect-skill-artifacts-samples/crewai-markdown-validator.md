@@ -7,13 +7,15 @@ description: "sanityops-inspect lite inspection of the crewAI-examples markdown_
 
 > Instance output of the **sanityops-inspect** lite inspector (SanityOps Framework v1.0 condensed checklists, detect-only). This is an **F-* level instance record**, not a rule definition; the normative sources remain `inspect/prompt.md`, `inspect/tool.md`, `inspect/cross.md`, `inspect/permission.md`, and `framework/relevance.md`.
 
+> **Stale-notice (2026-10)**: produced against an earlier skill revision — the skill is now **seven-stage and non-blocking** (P0 findings never halt the flow), and the impact-outlook stage is now **Stage F** (Stage E = Risk Explicit). Some cited rule IDs have since been deleted/transferred/merged; see the current checklists in the `sanityops-inspect-lite` repository (`references/`).
+
 ## Part 0 — Provenance
 
 | Item | Value |
 |---|---|
 | Repository | https://github.com/crewAIInc/crewAI-examples (project path `markdown_validator/`) |
-| Branch / HEAD SHA | `main` · SHA unrecorded (fetched via raw.githubusercontent.com; GitHub API rate-limited at fetch time) |
-| Artifact license | **No repo-level LICENSE found (404 at fetch time)** — treated as all-rights-reserved; artifacts are therefore outlined structurally with only short attributed quotes (≤ 10 lines total), per the anthropics/skills precedent |
+| Branch / HEAD SHA | `main` · SHA unrecorded (fetched via raw.githubusercontent.com; GitHub API rate-limited at fetch time) — quotes below carry line numbers but **cannot be pinned to a commit**, so byte-exact re-verification is not guaranteed |
+| Artifact license | **No repo-level LICENSE found (404 at fetch time)** — treated as all-rights-reserved; only isolated short quotes are reproduced, each tagged with its exact source line, and no contiguous passage is quoted in full |
 | Fetched | 2026-10-07 |
 | Fetched files | `src/markdown_validator/config/agents.yaml`, `src/markdown_validator/config/tasks.yaml`, `src/markdown_validator/crew.py`, `src/markdown_validator/tools/markdownTools.py`, `src/markdown_validator/main.py` |
 | Artifact version label | `crewAI-examples/markdown_validator@main (fetched 2026-10-07, SHA unrecorded)` |
@@ -42,16 +44,16 @@ DO NOT provide examples of how to fix the issues or recommend other tools to use
 
 ### 1.2 `config/tasks.yaml` — single task `syntax_review_task` (19 lines)
 
-Structure: `description` = use `markdown_validation_tool` to review the file(s) at `{filename}` (L3); pass only the file path (L4); an explicit call-format example (`Action: markdown_validation_tool` / `Action Input: {filename}`, L5–8); summarize the tool results into "a list of changes the developer should make to the document" (L10–11); three prohibition/criticality clauses (L12–14, quoted below); a tool-skip escape clause (L16–17, quoted below). `expected_output` (L18–19): a list of changes the developer should make to the document based on the markdown validation results.
+Structure: `description` = use `markdown_validation_tool` to review the file(s) at `{filename}` (L3); pass only the file path (L4); an explicit call-format example (`Action: markdown_validation_tool` / `Action Input: {filename}`, L5–8); summarize the tool results into "a list of changes the developer should make to the document" (L10–11); three prohibition/criticality clauses (L12–14; L12 and L14 quoted below, L13 described only); a tool-skip escape clause (L16–17, quoted below). `expected_output` (L18–19): a list of changes the developer should make to the document based on the markdown validation results.
 
-Quoted (tasks.yaml L12, L14, L16–17):
+Quoted by exact source line — separate source lines are never concatenated, and no intervening line is omitted silently:
 
-```text
-DO NOT recommend ways to update the document.
-It is critical to your task to only respond with a list of changes.
-If you already know the answer or if you do not need to use a tool, 
-return it as your Final Answer.
-```
+- L12 — `DO NOT recommend ways to update the document.`
+- L14 — `It is critical to your task to only respond with a list of changes.`
+- L16 — `If you already know the answer or if you do not need to use a tool,`
+- L17 — `return it as your Final Answer.`
+
+L13 (the third prohibition clause) is described in the structure line above but not reproduced.
 
 ### 1.3 `tools/markdownTools.py` — tool definition (54 lines)
 

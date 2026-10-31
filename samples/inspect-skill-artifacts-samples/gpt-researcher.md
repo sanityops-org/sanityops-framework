@@ -7,6 +7,8 @@ description: "sanityops-inspect lite inspection of gpt-researcher logic artifact
 
 > Instance output of the **sanityops-inspect** lite inspector (SanityOps Framework v1.0 condensed checklists, detect-only). This is an **F-* level instance record**, not a rule definition; the normative sources remain `inspect/prompt.md`, `inspect/tool.md`, `inspect/cross.md`, `inspect/permission.md`, and `framework/relevance.md`.
 
+> **Stale-notice (2026-10)**: produced against an earlier skill revision — the skill is now **seven-stage and non-blocking** (P0 findings never halt the flow), and the impact-outlook stage is now **Stage F** (Stage E = Risk Explicit). Some cited rule IDs have since been deleted/transferred/merged; see the current checklists in the `sanityops-inspect-lite` repository (`references/`).
+
 ## Part 0 — Provenance
 
 | Item | Value |

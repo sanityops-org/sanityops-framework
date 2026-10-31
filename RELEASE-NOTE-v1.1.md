@@ -34,7 +34,7 @@
 
 - Terminology normalized to **Logic Artifacts** throughout; the Inspect use case is stated more precisely.
 - The obsolete `inspect-skill` landing page was removed; the lite inspector deliverable lives in its own repository.
-- Six `sanityops-inspect-lite` instance records added under `samples/inspect-skill-artifacts-samples/` (non-normative).
+- Six `sanityops-inspect-lite` instance records added under `samples/inspect-skill-artifacts-samples/` (non-normative). Four remain in this repository: the `anthropics/skills pdf` record was withdrawn for licence reasons (the source artifacts carry a no-derivative / no-distribution licence), and the self-check report is maintained in the `sanityops-inspect-lite` repository only.
 
 ---
 

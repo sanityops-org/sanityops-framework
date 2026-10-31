@@ -43,6 +43,8 @@ description: "Final post-repair artifacts for a freight logistics Assistant: sys
 
 **PASS Criteria**: Any P0 defect present → FAIL. All artifacts below are the **post-repair** versions that passed the final Gate inspection with 0 P0 defects. File paths are relative to the agent root.
 
+> **Rule-version note (2026-10)**: the PASS above reflects the v1.0 rule set and `sanityops-cli` v0.1.5 as of the dates listed. Newer rule versions add checks that this record does not adjudicate, so a re-scan under a later version may surface additional findings, including P0 items. The artifacts below remain the historical post-repair snapshot and are not silently re-aligned to newer rules (AGENTS.md §5).
+
 ---
 
 <a id="1-system-prompt"></a>
