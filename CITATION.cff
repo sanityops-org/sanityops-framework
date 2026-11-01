@@ -11,8 +11,8 @@ authors:
     given-names: Leo
     orcid: "https://orcid.org/0009-0000-2579-9355"
     affiliation: "Sanity AI Labs"
-version: 1.1.0
-date-released: 2026-10-30
+version: 1.1.1
+date-released: 2026-11-01
 license: CC-BY-SA-4.0
 type: standard
 repository-code: "https://github.com/sanityops-org/sanityops-framework"
