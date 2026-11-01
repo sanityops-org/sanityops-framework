@@ -29,7 +29,7 @@ description: "Frequently asked questions about the SanityOps framework, its conc
 
 2. **Composition**: Three loosely coupled professional systems — Inspect (defect inspection), Risk (risk audit and dynamic validation), and Quality (quality assessment) — connected by Relevance, which maps defects → risk/quality.
 
-3. Delivery forms are the open-source Framework specification (CC BY-SA 4.0) + tools (the Inspect CLI is open source; Risk/Quality are commercial SaaS / self-hosted).
+3. Delivery forms are the open-source Framework specification (CC BY-SA 4.0) + tools (the `sanityops-inspect-lite` skill and the Inspect CLI are open source; Risk/Quality are commercial SaaS / self-hosted).
 
 4. **What it is not**: It does not replace IAM, network/backend security, production monitoring, model fine-tuning, or data governance; it cannot guarantee that Agents governed by SanityOps are absolutely secure or completely correct; and the conclusions of each system cannot substitute for one another (e.g., "Inspect PASS ≠ Security PASS").
 
@@ -562,7 +562,7 @@ Therefore, the Guardrail as a "shallow, fast, last layer" defense-in-depth is ne
 
 ### Q49. Is SanityOps open source?
 
-**Answer**: SanityOps adopts a layered open-source strategy: the core Framework specification (11 sub-specifications: Inspect/Risk/Quality/Relevance/Core) is open source under CC BY-SA 4.0; the Inspect CLI is separately open source under Apache 2.0, covering the full Inspect inspection (including Permission) and Risk Explicit. The Platform — including Inspect, Risk, and Quality — is not open source (closed-source SaaS / self-hosted), but enterprise customers under specific contractual conditions can obtain code-review access under NDA.
+**Answer**: SanityOps adopts a layered open-source strategy: the core Framework specification (11 sub-specifications: Inspect/Risk/Quality/Relevance/Core) is open source under CC BY-SA 4.0; two inspection tools are open source — the `sanityops-inspect-lite` skill (CC BY-SA 4.0), a lite version for quick in-agent checks, and the Inspect CLI (Apache 2.0), covering the full Inspect inspection (including Permission) and Risk Explicit. The Platform — including Inspect, Risk, and Quality — is not open source (closed-source SaaS / self-hosted), but enterprise customers under specific contractual conditions can obtain code-review access under NDA.
 
 **Source**:
 
@@ -571,7 +571,7 @@ Therefore, the Guardrail as a "shallow, fast, last layer" defense-in-depth is ne
 
 ### Q50. How does SanityOps charge?
 
-**Answer**: The Framework specification is free and open source (CC BY-SA 4.0); the Inspect CLI is open source (Apache 2.0), and its local mode is unmetered (it runs on your own model credentials); the commercial full-featured version (Defect Inspector, Risk Scanner, Quality Evaluator) is provided as SaaS / self-hosted. The hosted platform has no fixed public per-day limit (quota is confirmed together with your invite code); pricing is not listed and requires contacting sales (hello@sanityops.org).
+**Answer**: The Framework specification is free and open source (CC BY-SA 4.0); two inspection tools are open source — the `sanityops-inspect-lite` skill (CC BY-SA 4.0) and the Inspect CLI (Apache 2.0) — both run on your own model credentials at no charge; the commercial full-featured version (Defect Inspector, Risk Scanner, Quality Evaluator) is provided as SaaS / self-hosted. The hosted platform has no fixed public per-day limit (quota is confirmed together with your invite code); pricing is not listed and requires contacting sales (hello@sanityops.org).
 
 **Source**:
 
@@ -580,7 +580,7 @@ Therefore, the Guardrail as a "shallow, fast, last layer" defense-in-depth is ne
 
 ### Q51. Can SanityOps be tried out?
 
-**Answer**: Yes. demo.sanityops.org provides an online demo of the full Inspect+Risk+Quality loop (in an early-access phase, invite-only, due to third-party LLM inference costs). How to request access: open the demo and click Register, click Get Code on the registration form, and the dialog shows the address to write to; email hello@sanityops.org from your registration email describing your use case, and we will send an invite code. In addition, the open-source CLI (sanityops-cli) is free, its local mode is unmetered, and it can be installed and used locally.
+**Answer**: Yes. demo.sanityops.org provides an online demo of the full Inspect+Risk+Quality loop (in an early-access phase, invite-only, due to third-party LLM inference costs). How to request access: open the demo and click Register, click Get Code on the registration form, and the dialog shows the address to write to; email hello@sanityops.org from your registration email describing your use case, and we will send an invite code. In addition, both open-source tools — the `sanityops-inspect-lite` skill and the CLI (sanityops-cli) — are free to use locally.
 
 **Source**:
 

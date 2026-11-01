@@ -18,4 +18,4 @@ Join the SanityOps community. Learn about the project, explore partnership oppor
 
 ---
 
-**SanityOps is open by design**: the framework specification is open under CC BY-SA 4.0, and the Inspector CLI is open source under Apache 2.0; the broader Platform is offered commercially as SaaS or self-hosted.
+**SanityOps is open by design**: the framework specification is open under CC BY-SA 4.0, and two inspection tools are open source — a lite inspection skill (CC BY-SA 4.0) and the Inspector CLI (Apache 2.0); the broader Platform is offered commercially as SaaS or self-hosted.

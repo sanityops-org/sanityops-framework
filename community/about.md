@@ -23,7 +23,7 @@ SanityOps grew out of that question.
 
 SanityOps is a quality, safety, and governance framework for AI agents. It connects three activities: inspecting the logical artifacts that define agent behavior, validating security risks, and evaluating the quality of the service users receive.
 
-We publish the methodology as an open specification and build tools that implement it. The Inspector CLI is open source; the broader Platform, including Risk and Quality tools, is offered commercially through SaaS and self-hosted deployments.
+We publish the methodology as an open specification and build tools that implement it. Two inspection tools are open source — a lite inspection skill and the Inspector CLI; the broader Platform, including Risk and Quality tools, is offered commercially through SaaS and self-hosted deployments.
 
 Our goal is not to promise perfect correctness or absolute safety. It is to support repeatable validation, traceable evidence, and better-informed release decisions.
 
@@ -31,7 +31,7 @@ Our goal is not to promise perfect correctness or absolute safety. It is to supp
 
 **Open specification.** The framework specification is released under CC BY-SA 4.0. Anyone can review its reasoning, challenge its assumptions, adapt it under the license, or implement it independently.
 
-**Open-source inspection.** The Inspector CLI is released under Apache 2.0. It can run entirely locally with your own model credentials: no SanityOps account is required, and artifacts are not uploaded to the SanityOps Platform unless you choose to. Model requests go to the endpoint you configure.
+**Open-source inspection.** Two tools are open source: the `sanityops-inspect-lite` skill (CC BY-SA 4.0) and the Inspector CLI (Apache 2.0). The CLI can run entirely locally with your own model credentials: no SanityOps account is required, and artifacts are not uploaded to the SanityOps Platform unless you choose to. Model requests go to the endpoint you configure.
 
 **Deployment under your control.** Enterprise deployments can be self-hosted, with support for your own model endpoints, including locally hosted models. In a self-hosted / private deployment, all customer data stays within your own environment and is never transmitted to the public SanityOps Platform. Contracted enterprise customers can also obtain source-code review access under NDA.
 
