@@ -19,6 +19,12 @@
 
 ## What Changed Since v1.0.0
 
+### Core
+
+- **`P0/P1/P2` unified as the Static Audit Disposition Level** across Inspect and Risk Explicit (§4.6), replacing the Inspect-only "defect disposition priority" wording; reports now carry the domain prefix `Inspect·P0` / `Explicit·P0`.
+- **Risk Explicit grading `S0–S3` replaced by `Explicit·P0/P1/P2`** (§4.7), graded by worst possible consequence with a binary trigger condition label (`conditional` / `unconditional`).
+- **Cross-defect namespaces expanded** (§3.2): `QD-SS-*`, `QD-TT-*`, `QD-CYC-*` registered for multi-Skill/multi-Tool consistency and circular invocation, plus a draft `QD-CC-*` namespace for embedded code-contract defects.
+
 ### Inspect
 
 - **Expanded defect coverage** across `inspect/prompt.md`, `inspect/skill.md`, `inspect/tool.md`, `inspect/cross.md`, and `inspect/permission.md`; the Inspect and Relevance specifications were rewritten for the broader rule set.
