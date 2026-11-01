@@ -257,7 +257,7 @@ Natural-language form does not reduce governance requirements. Prompts, Skills, 
 | Domain | Core Problem | Primary Conclusions |
 | --- | --- | --- |
 | **Inspect** | Do artifact definitions or cross-artifact relationships contain Static Defects? | `QD`, static evidence, severity level, remediation recommendations |
-| **Risk** | Do artifacts contain Explicit Risks, or can security-risk behaviors be triggered under controlled conditions? | `EX`, D1/D2/D3, S-levels, A/B/C/D, Signal, validation evidence |
+| **Risk** | Do artifacts contain Explicit Risks, or can security-risk behaviors be triggered under controlled conditions? | `EX`, D1/D2/D3, Explicit·P0/P1/P2, A/B/C/D, Signal, validation evidence |
 | **Quality** | Does the Agent's actual task execution — or the user-visible service — meet the defined quality bar? | Reliability, quality metrics, test case results, Quality Gate, regression conclusions |
 | **Relevance** | Which Attack Surfaces, validation strategies, Failure Modes, and regression requirements might a Static Defect correlate with? | `AS`, `FM`, Defect Chains, mapping recommendations, Candidate Root Causes |
 

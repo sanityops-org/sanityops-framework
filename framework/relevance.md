@@ -1506,7 +1506,7 @@ source:
   defect_name: Untrusted Input Entering an Executable Context
   artifact_type: Tool
   source_standard: Inspect Tool
-  source_standard_version: v1.0
+  source_standard_version: v1.1
 
 applicability:
   or_levels: [OR-L2, OR-L3]
