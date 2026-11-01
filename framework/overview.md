@@ -21,7 +21,7 @@ Runtime evaluation of an Agent's output quality and detection of sophisticated l
 
 The output quality and logical vulnerabilities of an Agent are closely tied to the rigor of each logical artifact (Prompt, Skill, Tool Schema, Permission), manifesting as a wide variety of defects as well as permission requests disproportionate to the assigned responsibilities.
 
-In our inspection of 500+ logical artifacts from 50+ agents, over 90% contained defects — including LLM-generated ones.
+We inspected 500+ logical artifacts from 50+ agents — including LLM-generated artifacts — and over 90% had at least one defect (minor defects included). This is an informal observation, not a rigorous study — run the open-source sanityops-inspect-lite skill on your own artifacts and see for yourself.
 
 Therefore, we start from the inspection and remediation of defects and permissions in logical artifacts, and extend to evaluating Agent output quality and detecting logical risks.
 
