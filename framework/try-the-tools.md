@@ -111,16 +111,10 @@ Artifact entries accept any plaintext format (`.md`, `.json`, `.py`, `.ts`, ...)
 **3. Run the inspection**
 
 ```bash
-sanityops-cli inspect                       # standard depth (L2)
-sanityops-cli inspect --check-level L1      # fast
-sanityops-cli inspect --check-level L3      # deep
+sanityops-cli inspect
 ```
 
-| Level | Description | Use Case |
-| --- | --- | --- |
-| L1 | Fast | Quick validation during development |
-| L2 | Standard | Default, balanced depth for regular use |
-| L3 | Deep | Comprehensive analysis for production releases |
+Every run performs the full deep inspection (L3) across all configured artifacts — there is no depth parameter to tune.
 
 Add `--skip-defect-check` to scan and upload artifacts without running the defect analysis, `--config <path>` to use a config file elsewhere, and `--model` / `--provider` to override the model for one run.
 
