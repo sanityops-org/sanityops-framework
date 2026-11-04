@@ -80,8 +80,8 @@ These explain, navigate, or exemplify. They **must never define or redefine rule
 - `framework/try-the-tools.md` — tool access/installation guide (CLI vs SaaS).
 - All `index.md` files — navigation hubs only.
 - `compare/*` — ecosystem positioning; `sanityops-positioning.md` is the overview, the other four files (FDE, Harness, Promptfoo, RAGAS, SkillSpector) are topic branches.
-- `samples/artifacts/*.md` (3 agents) and `samples/report/*.pdf` (8 reports) — **instance outputs** (analogous to `F-*` Finding instances in core.md §3.3), not rule definitions.
-- `samples/inspect-skill-artifacts-samples/*` — instance outputs of the lite inspector: combined source-logic-artifact + inspection-report records for external agents; non-normative. A copy also ships in the standalone `sanityops-inspect-lite` repository.
+- `samples/cases/*.md` (3 agents) — **test cases / inputs**: version-frozen "Fixed Artifacts" bundles (System Prompt + Skills + Tool Schemas per agent); not rule definitions.
+- `samples/results/*` — **inspection results / outputs** (analogous to `F-*` Finding instances in core.md §3.3): lite-skill records, CLI runs, manual re-scans, and the platform's Voyager PDFs (`public/samples/report/`). Each record is bound to the tool and rule version stated in its header.
 - `inspect-skill/*` — no published site content. The `sanityops-inspect-lite` inspector deliverable (SKILL.md, a non-normative `README.md` auxiliary guide, condensed `references/` checklists, and worked samples) lives in its own repository (`sanityops-org/sanityops-inspect-lite`); it is a condensed extraction of the L1 sub-specifications it covers, defines no new rules, and never overrides its sources. Only the non-published, gitignored `inspect-skill/_process/**` fetch workspace remains in this repo.
 - `community/*`, `legal/*` — independent of the specification system; never cite them as normative basis.
 
@@ -130,7 +130,7 @@ Known documentation gap: none (the former `inspect/skill.md` Part 10 "Relationsh
 - **Never** delete a `QD` Finding based on a Risk Implicit `B`/`C` result or an external control interception.
 - Preserve document conventions: front matter (`title`/`description`), version block (v1.1, October 2026), normative keywords per RFC-style usage defined in core.md §0.4.
 - This is a VitePress site: every root-level `.md` can become a public route. Keep content suitable for publication; legal texts under `legal/` must not be substantively edited without owner review.
-- Samples in `samples/artifacts/` are versioned post-remediation records ("Fixed Artifacts"); do not silently align them to new rule versions — their metadata reflects specific inspection rounds.
+- Samples in `samples/cases/` are versioned post-remediation records ("Fixed Artifacts"); do not silently align them to new rule versions — their metadata reflects specific inspection rounds. Records in `samples/results/` are bound to the tool/rule version in their header and are never rewritten to match a newer version.
 - **Post-release errata boundary**: once a version is tagged, normative-body documents (L0 `framework/core.md`, the L1 sub-specifications, L2 `framework/relevance.md`) are never edited silently; known residuals are recorded in the release note's Errata section and fixed in the next version. Editable-by-errata scope is limited to L3 derived documents (`framework/overview.md`, `README.md`, `framework/FAQ.md`, `index.md` files, `compare/*`, `samples/*`) and `AGENTS.md`.
 
 ---
@@ -144,4 +144,4 @@ Known documentation gap: none (the former `inspect/skill.md` Part 10 "Relationsh
 5. `quality/rag-agent.md` and/or `quality/tool-agent.md`
 6. `framework/relevance.md` — how the stages connect
 7. `framework/FAQ.md` — curated Q&A with source pointers
-8. `samples/` — concrete artifacts and PDF reports
+8. `samples/` — test cases and inspection results

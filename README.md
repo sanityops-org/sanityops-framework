@@ -133,8 +133,8 @@ The framework specification is fully open, along with two open-source tools — 
 - **Check an artifact in your own agent** — a lite, report-only inspection skill ([`sanityops-inspect-lite`](https://github.com/sanityops-org/sanityops-inspect-lite)) that runs Inspect and Risk Explicit checks on a Prompt, Skill, or Tool Schema inside your host model.
 - **Try the Inspect CLI** — full Inspect checks (including Permission) plus Risk Explicit, locally or in CI/CD: [Try the Tools](framework/try-the-tools.md) · `pip install sanityops-cli`
 - **Try the live demo** — the full Inspect + Risk + Quality loop: [demo.sanityops.org](https://demo.sanityops.org/). Sign-up is invite-only (LLM inference costs) — click **Get Code** on the registration form.
-- **Browse sample logical artifacts** — System Prompts, Skills, and Tool Schemas for three example agents (energy, freight logistics, medication): [samples/artifacts/](samples/artifacts/)
-- **Review sample audit reports** — formal PDF reports for a "Voyager" sample agent, spanning Inspect, Risk (Explicit & Implicit), and Quality, each with a full audit and an executive summary: [public/samples/report/](public/samples/report/)
+- **Browse the test cases** — System Prompts, Skills, and Tool Schemas for three example agents (energy, freight logistics, medication), ready to feed to the lite skill or the CLI: [samples/cases/](samples/cases/)
+- **Review inspection results** — lite-skill records, CLI runs, and the platform's PDF reports for the "Voyager" sample agent, each bound to the tool and rule version that produced it: [samples/results/](samples/results/)
 
 ---
 

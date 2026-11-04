@@ -232,8 +232,8 @@ export default defineConfig({
           text: 'Samples',
           link: '/samples/',
           items: [
-            { text: 'Logical Artifacts', link: '/samples/artifacts/' },
-            { text: 'Report', link: '/samples/report/' },
+            { text: 'Test Cases', link: '/samples/cases/' },
+            { text: 'Results', link: '/samples/results/' },
           ],
         },
       ],

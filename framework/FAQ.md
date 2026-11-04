@@ -398,7 +398,7 @@ They must not be conflated: the four answer different questions and must carry t
 
 **Source**:
 
-- [samples/report/](../samples/report/) directory (8 PDFs: inspect/explicit/implicit/quality × audit/summary)
+- [samples/results/](/samples/results/) — platform reports section (8 PDFs: inspect/explicit/implicit/quality × audit/summary)
 - [core.md](./core.md) 6.2 (release summary status)
 
 #### Q34. What are the summary report samples?
@@ -412,7 +412,7 @@ They must not be conflated: the four answer different questions and must carry t
 
 **Source**:
 
-- [samples/report/](../samples/report/) directory
+- [samples/results/](/samples/results/) — platform reports section
 
 #### Q35. What are the audit report samples?
 
@@ -425,7 +425,7 @@ They must not be conflated: the four answer different questions and must carry t
 
 **Source**:
 
-- [samples/report/](../samples/report/) directory
+- [samples/results/](/samples/results/) — platform reports section
 
 ### 4.5 Samples and Walkthroughs
 
@@ -433,13 +433,13 @@ They must not be conflated: the four answer different questions and must carry t
 
 **Answer**: There are 3 typical inspection-and-remediation examples (each with a complete remediation process):
 
-- [energy-management-assistant.md](../samples/artifacts/energy-management-assistant.md) Energy Management Assistant
-- [freight-logistics-assistant.md](../samples/artifacts/freight-logistics-assistant.md) Freight Logistics Assistant
-- [medication-information-assistant.md](../samples/artifacts/medication-information-assistant.md) Medication Information Assistant
+- [energy-management-assistant.md](../samples/cases/energy-management-assistant.md) Energy Management Assistant
+- [freight-logistics-assistant.md](../samples/cases/freight-logistics-assistant.md) Freight Logistics Assistant
+- [medication-information-assistant.md](../samples/cases/medication-information-assistant.md) Medication Information Assistant
 
 **Source**:
 
-- [samples/artifacts/](../samples/artifacts/) directory
+- [samples/cases/](../samples/cases/) directory
 
 ---
 
