@@ -29,6 +29,8 @@ Inspect ships as two open-source tools that run the same checks in different way
 
 A lite, report-only inspection skill applied by your host model. It runs the same Inspect and Risk Explicit checks on a single artifact, using a condensed subset (including Permission quick mode); it does not run Risk Implicit or runtime Quality, and it never repairs artifacts. For the full Inspect ruleset, use the CLI below.
 
+- **GitHub Repository**: [sanityops-inspect-lite](https://github.com/sanityops-org/sanityops-inspect-lite) — CC BY-SA 4.0
+
 **How to use it**: in Claude Code, add the marketplace and install the plugin —
 `/plugin marketplace add sanityops-org/sanityops-inspect-lite` then `/plugin install sanityops-inspect-lite@sanityops`.
 For any other agent, `git clone` the repository and load **both** skills from `plugins/sanityops-inspect-lite/skills/` — `pre-inspect-extract/` (extraction layer) and `sanityops-inspect-lite/` (seven-stage inspector) — as skills, or paste `SKILL.md` and the reference checklists in as instructions. Then provide the artifacts to inspect, their tier declarations, and a version label; the skill runs its seven-stage flow and emits the report.
@@ -79,7 +81,7 @@ Get-Content .\install.ps1
 sanityops-cli init
 ```
 
-This writes `.sanityops/inspect_config.yaml` into the current directory, along with a `.sanityops/.gitignore` so credentials stay out of version control.
+This writes `.sanityops/inspect_config.yaml` into the current directory. The file holds your LLM API key, so keep it out of version control yourself.
 
 **2. Configure your artifacts and model**
 
@@ -92,7 +94,7 @@ project:
 
 model:                                          # optional — remove to use LLM_* env vars instead
   provider: anthropic                           # anthropic, openai, azure, etc.
-  api_key: ""                                   # Required: keep this file out of git
+  api_key: ""                                   # your LLM API key — never commit a real one
   model_id: claude-sonnet-4-20250514
   base_url: ""                                  # optional: custom endpoint
 
@@ -138,7 +140,7 @@ A project is created automatically on the first upload, and its id is written ba
 
 ### CI/CD Integration
 
-1. Commit `.sanityops/inspect_config.yaml` to the repository — the generated `.sanityops/.gitignore` already prevents secrets from being committed.
+1. Commit `.sanityops/inspect_config.yaml` to the repository with the `model:` section omitted — it is the only part carrying a credential.
 2. Inject the LLM credentials as pipeline secrets via the `LLM_*` environment variables described above.
 3. Run the inspection as a step:
 
