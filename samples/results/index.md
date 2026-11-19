@@ -35,10 +35,10 @@ Three different conclusions over the same three artifacts is the intended lesson
 
 Formal PDF reports for the "Voyager" sample agent — a different artifact set from the three cases above — covering Inspect, Risk (Explicit & Implicit), and Quality, each with an audit and a summary.
 
-- Inspect — [audit](/samples/report/Voyager_inspect-audit_20260927.pdf) · [summary](/samples/report/Voyager_inspect-summary_20260927.pdf)
-- Risk Explicit — [audit](/samples/report/Voyager_explicit-audit_20260927.pdf) · [summary](/samples/report/Voyager_explicit-summary_20260927.pdf)
-- Risk Implicit — [audit](/samples/report/Voyager_implicit-audit_20260926.pdf) · [summary](/samples/report/Voyager_implicit-summary_20260926.pdf)
-- Quality — [audit](/samples/report/Voyager_quality-audit_20260927.pdf) · [summary](/samples/report/Voyager_quality-summary_20260927.pdf)
+- Inspect — [audit](https://downloads.sanityops.org/samples/report/Voyager_inspect-audit_20260927.pdf) · [summary](https://downloads.sanityops.org/samples/report/Voyager_inspect-summary_20260927.pdf)
+- Risk Explicit — [audit](https://downloads.sanityops.org/samples/report/Voyager_explicit-audit_20260927.pdf) · [summary](https://downloads.sanityops.org/samples/report/Voyager_explicit-summary_20260927.pdf)
+- Risk Implicit — [audit](https://downloads.sanityops.org/samples/report/Voyager_implicit-audit_20260926.pdf) · [summary](https://downloads.sanityops.org/samples/report/Voyager_implicit-summary_20260926.pdf)
+- Quality — [audit](https://downloads.sanityops.org/samples/report/Voyager_quality-audit_20260927.pdf) · [summary](https://downloads.sanityops.org/samples/report/Voyager_quality-summary_20260927.pdf)
 
 ## Not covered by these records
 
