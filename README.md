@@ -13,7 +13,7 @@
 
 ---
 
-> A vendor-neutral, enterprise-grade quality and safety governance framework covering the full lifecycle of AI Agents.
+> A vendor-neutral, enterprise-grade quality and safety governance framework covering the full lifecycle of AI Agents. 
 
 <details>
 <summary>Table of Contents</summary>
