@@ -14,5 +14,5 @@ Two separate things live here: the **test cases** you can inspect, and the **res
 | Compare what different tools find | [Results → Same cases, different tools](./results/#same-cases-different-tools) |
 
 ::: warning Results are version snapshots
-Every page under `results/` is bound to the tool and rule version stated in its header (for example `sanityops-inspect-lite v1.1.0`, SanityOps Framework v1.1). Results are **not re-run on every release**. For a current conclusion, re-run the inspection with `sanityops-cli` — see [Try the Tool](/framework/try-the-tools).
+Every page under `results/` is bound to the tool and rule version stated in its header (for example `sanityops-inspect-lite v1.1.0`, SanityOps Framework v1.1). Results are **not re-run on every release**. For a current conclusion, re-run the inspection with `sanityops-cli` — see [Try the Tools](/framework/try-the-tools).
 :::
