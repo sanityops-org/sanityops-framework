@@ -1,6 +1,6 @@
 ---
 title: Samples
-description: "Test cases and inspection results:  three complete example agents, and what the lite skill, the CLI, and the platform report on them."
+description: "Test   cases and inspection results:  three complete example agents, and what the lite skill, the CLI, and the platform report on them."
 ---
 
 # Samples
