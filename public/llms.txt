@@ -1,0 +1,39 @@
+# SanityOps
+
+> SanityOps is an open, vendor-neutral framework for AI Agent continuous governance. It specifies how to inspect Logic Artifacts (System Prompt, Skill, Tool Schema, Permission) for defects, scan explicit and implicit risks, and evaluate output quality — bound to versioned baselines and release gates. Open specification under CC BY-SA 4.0 (Framework v1.1).
+
+## Getting Started
+
+- [Home](https://www.sanityops.org/): Site entry point.
+- [Framework Overview](https://www.sanityops.org/framework/overview.html): Big-picture introduction and recommended reading order.
+- [Core](https://www.sanityops.org/framework/core.html): Normative foundation — terminology, object model, grading models, gates, versioning, baselines.
+- [Try the Tools](https://www.sanityops.org/framework/try-the-tools.html): How to install and run the open-source inspection CLI and lite skill.
+- [FAQ](https://www.sanityops.org/framework/FAQ.html): Curated Q&A, each answer citing its normative source.
+
+## Inspect — Defect & Permission Inspection
+
+- [Prompt](https://www.sanityops.org/inspect/prompt.html): QD-P-* — System Prompt static defect rules.
+- [Skill](https://www.sanityops.org/inspect/skill.html): QD-S-* — Skill definition static defect rules.
+- [Tool](https://www.sanityops.org/inspect/tool.html): QD-T-* — Tool Schema static defect rules.
+- [Cross](https://www.sanityops.org/inspect/cross.html): QD-PS/PT/ST/SS/TT/CYC-* — cross-artifact contract consistency.
+- [Permission](https://www.sanityops.org/inspect/permission.html): QD-PM-* — responsibility–authority proportionality.
+
+## Risk — Explicit & Implicit
+
+- [Explicit](https://www.sanityops.org/risk/explicit.html): EX-* — statically expressed dangerous content and configuration.
+- [Implicit](https://www.sanityops.org/risk/implicit.html): Runtime vulnerability scanning in a production-equivalent shadow sandbox.
+
+## Quality
+
+- [RAG-Agent](https://www.sanityops.org/quality/rag-agent.html): Four dimensions / twelve metrics for knowledge-based agents.
+- [Tool-Agent](https://www.sanityops.org/quality/tool-agent.html): Reliability metric and ratchet mechanism for tool-based agents.
+
+## Relevance — Cross-Domain Mapping
+
+- [Relevance](https://www.sanityops.org/framework/relevance.html): Maps Inspect defects to candidate attack surfaces, failure modes, and quality chains.
+
+## Ecosystem & Community
+
+- [Positioning](https://www.sanityops.org/compare/sanityops-positioning.html): How SanityOps relates to other tools and frameworks.
+- [Samples](https://www.sanityops.org/samples/): Version-frozen test cases and inspection results.
+- [About](https://www.sanityops.org/community/about.html): About SanityOps and contact.

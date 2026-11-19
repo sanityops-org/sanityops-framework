@@ -258,7 +258,30 @@ At the component level, this loop can be drawn as the workflow below — Inspect
 - [skill.md](../inspect/skill.md) 1.1 (Five Defect Classification Framework)
 - [tool.md](../inspect/tool.md) Part Two, Part Three
 
-#### Q21. What is the relationship between Inspect Permission and existing permission management?
+#### Q21. Why is "declaring only what the Agent can do, without declaring what it must not do" judged as a defect? Isn't that a false positive when no sensitive tools are mounted?
+
+**Answer**:
+
+Not necessarily — and the rules themselves define where the false-positive boundary lies. Four questions must be separated: does the item apply, does a defect exist, how severe is it, and can it be closed.
+
+1. **What the defect is.** A boundary-absence defect is judged on the artifact's observable completeness — incomplete, ambiguous, or unbounded definitions — not on developer intent (skill.md §0.1.1; core.md §5.1). The underlying risk principle is the LLM's default gap-filling behavior: a broad capability declaration (e.g., "manage user data") is treated as implicit authorization for all related operations, so the LLM may invoke operations beyond what was intended (skill.md §8.2, QD-S-5.1).
+
+2. **The built-in false-positive boundary.** The rules do NOT require a negative list in every case — they require a **closed boundary**, which can be achieved either by a sufficiently precise positive declaration or by an explicit negative list. When the positive purpose is already sufficiently closed, a missing `non_goals` list counts as PASS, not a defect (QD-S-3.4 determination note); likewise, sufficiently bounded positive trigger conditions make a counter-example list optional (QD-S-3.2 note). Several boundary items are conditionally N/A — QD-S-5.3 is N/A when no multi-environment access is involved ("production is not prohibited" is by itself not a defect), and QD-S-5.4 is N/A when skill chaining is disabled. Boundary-ambiguous hits are routed to human review rather than auto-convicted (prompt.md §1.4.3, §1.6; the QD-S-5.x items are all graded "Human" inspection method). So "only states capabilities" becomes a defect only when the positive declaration is not self-closing and the missing boundary leaves room for the LLM to broaden scope on its own.
+
+3. **Severity is graded separately.** When the item applies and a defect exists, severity follows the Skill's risk level, which aligns with OR-L (skill.md §7.3.2); e.g., QD-S-5.1 is P2 at L1, P1 at L2, and P0 at L3. A low-risk, text-only assistant therefore receives a P2 improvement item, not a blocker. When the mounted tool/permission context is unavailable, the result is "classification pending", not a forced grade (§7.4, §7.5).
+
+4. **Why external controls cannot close it.** Local debugging, single-machine deployments, and third-party hosted Agents often have no gateway, in which case the artifact declaration is the only source of constraint (skill.md §7.5). Harness / RBAC / platform controls may therefore only serve as an Exception's `compensating_controls` — they change disposition, not the defect's existence (core.md §6.2–6.4, §9.3).
+
+5. **It is not an attack prediction.** A missing boundary is an Inspect *static* defect, distinct from Risk Explicit's "explicit dangerous expression" and from runtime exploitability; no automatic inference runs between them (relevance.md §2.3.1). Symmetrically, a dynamic attack being blocked (termination status B) does not prove the artifact is safe or close the static defect (core.md §4.8; relevance.md §2.4.1).
+
+**Source**:
+
+- [skill.md](../inspect/skill.md) 0.1.1 (defect determination basis), 7.3.2 (risk level ↔ OR-L), 7.4 (five judgment states), 7.5 (effective constraints and compensating controls), 8.2 (LLM default gap-filling); determination notes of QD-S-3.2 / 3.4 / 5.1 / 5.3 / 5.4
+- [prompt.md](../inspect/prompt.md) 1.4.3 (false positives and human review), 1.6 (Gray-Zone handling strategy)
+- [core.md](./core.md) 4.8 (termination status B), 5.1 (Finding model), 6.2–6.4 & 9.3 (Exception / compensating controls)
+- [relevance.md](./relevance.md) 2.3.1 (prohibited automatic inference), 2.4.1 (blocked ≠ no defect)
+
+#### Q22. What is the relationship between Inspect Permission and existing permission management?
 
 **Answer**: Inspect Permission and IAM / permission management systems are an "upstream/downstream" relationship, not a substitution: it only statically checks whether permission constraints and "responsibility–permission proportion" are declared within Logic Artifacts; it does not check the IAM/IdP deployment layer, runtime PEP/PDP (policy enforcement point / decision point), or monitoring. Its output (proportionality determination, permission list, and business-purpose statements) can serve as input to IAM policy design and PEP rule generation, but it does not promise or replace those downstream capabilities. Key boundary: it checks the credentials/authorization scope "declared within the artifact", not the effective policy "actually configured on the platform"; a PASS conclusion ≠ runtime permission security.
 
@@ -268,7 +291,7 @@ At the component level, this loop can be drawn as the workflow below — Inspect
 - [permission.md](../inspect/permission.md) 1.5.1 (why extracted as an independent subset)
 - [core.md](./core.md) 0.3 (does not replace IAM, backend controls)
 
-#### Q22. What is the relationship among SanityOps's three professional systems?
+#### Q23. What is the relationship among SanityOps's three professional systems?
 
 **Answer**: The three professional systems are loosely coupled, each independently complete, and flexibly combinable: Inspect checks static defects, Risk checks security risks, Quality assesses output quality; each has independent value and can be adopted alone or combined as needed. But their conclusions cannot substitute for one another: Inspect PASS ≠ Security/Quality PASS, Risk not exploited ≠ no defects, Quality PASS ≠ no risks. Relevance connects the three, mapping defects to attack surfaces, failure modes, and regression scope, and "correlation ≠ causation".
 
@@ -278,7 +301,7 @@ At the component level, this loop can be drawn as the workflow below — Inspect
 - [overview.md](./overview.md) "Architecture" (division of labor among subsets)
 - [sanityops-positioning.md](../compare/sanityops-positioning.md) Section 2 (governance closed-loop overview)
 
-#### Q23. How does SanityOps grade Agents?
+#### Q24. How does SanityOps grade Agents?
 
 **Answer**:
 
@@ -294,7 +317,7 @@ They must not be conflated: the four answer different questions and must carry t
 - [core.md](./core.md) 4.1 (Grading Models Must Not Be Conflated), 4.2 AC-L, 4.3 OR-L, 4.4 BI-L, 4.5 CH-L
 - [permission.md](../inspect/permission.md) 1.4 (level binding)
 
-#### Q24. Does every SanityOps tool have a quantified score?
+#### Q25. Does every SanityOps tool have a quantified score?
 
 **Answer**: Not every tool has a unified score; each subset's scoring model is independent: Permission uses a 100-point deduction system (P0:P1:P2 = 5:3:1), but the primary criteria are the Gate conclusion + defect list, and the score is used only for trend comparison; Quality RAG-Agent uses 12 metrics across four dimensions, weighted by test-case risk to compute a total score, used only for trend observation and version comparison. Scores never substitute for the Gate: any P0 defect, critical factual error, high-risk boundary misjudgment, or successful attack (Status A) results in FAIL. A cross-subset total risk score must be defined by a separate model and must not be mechanically summed.
 
@@ -304,7 +327,7 @@ They must not be conflated: the four answer different questions and must carry t
 - [permission.md](../inspect/permission.md) 12.1
 - [core.md](./core.md) 4.9, Appendix B
 
-#### Q25. What determination methods does SanityOps use?
+#### Q26. What determination methods does SanityOps use?
 
 **Answer**: Three types of determination methods: ① static defect inspection (Inspect) — item-by-item determination via an automated Checklist (Automated / Semi-automated / Human), with Gray-Zone defects using "LLM result + human review"; ② quality determination (Quality) — Rule Verification (numbers / dates / formats / prohibited behavior), LLM-as-Judge (semantics / relevance / completeness), and Embedding Assistance (paraphrase screening); for Tool Agents, Binary Determination of success/failure (structured exact match, natural-language semantic match, crash/timeout = failure); ③ risk determination (Risk Implicit) — the four dynamic-attack termination statuses A Attack Successful / B Blocked by Third Party / C LLM Refused / D Conditions Not Met.
 
@@ -315,7 +338,7 @@ They must not be conflated: the four answer different questions and must carry t
 - [prompt.md](../inspect/prompt.md) 3.4
 - [implicit.md](../risk/implicit.md) 4.2
 
-#### Q26. What defect or risk levels does SanityOps have?
+#### Q27. What defect or risk levels does SanityOps have?
 
 **Answer**:
 
@@ -328,7 +351,7 @@ They must not be conflated: the four answer different questions and must carry t
 - [core.md](./core.md) 4.6~4.8, Appendix B.2
 - [explicit.md](../risk/explicit.md) 3.2 (Explicit·P0/P1/P2 grading)
 
-#### Q27. How are Quality test cases generated?
+#### Q28. How are Quality test cases generated?
 
 **Answer**: Quality generates test cases separately for the two Agent types. Tool-Agent: the Mock Data Agent takes Logic Artifacts (System Prompt / Skill / Tool Schema) as input, parses Schema constraints, identifies Skill branches, and generates simulated data conforming to structural constraints, covering normal / boundary / exception scenarios. RAG-Agent: extracts atomic knowledge units and key rules from authoritative materials, automatically generates candidate questions, expected conclusions, and test variants, which are then confirmed by business experts, frozen as a version, and added to the regression set.
 
@@ -340,7 +363,7 @@ They must not be conflated: the four answer different questions and must carry t
 
 ### 4.2 Execution Order and Dependencies
 
-#### Q28. Why must the basic Logic Artifact inspection be completed before subsequent inspections can run?
+#### Q29. Why must the basic Logic Artifact inspection be completed before subsequent inspections can run?
 
 **Answer**: Because permission proportionality is a semantic determination that depends on a trustworthy responsibility baseline; if the baseline itself is defective (a Prompt's responsibilities are self-contradictory, a Skill's declaration is inconsistent with the Prompt, or a Tool's description cannot determine operation semantics), the proportionality determination loses its reference and produces "reasoning noise under a wrong premise" rather than inspection results. Therefore the order must be single-artifact first, then cross-artifact, with permission last (Gate-0 intercepts unremediated P0).
 
@@ -349,7 +372,7 @@ They must not be conflated: the four answer different questions and must carry t
 - [permission.md](../inspect/permission.md) 0.1.5 (four-stage order, basis for the order, Gate-0)
 - [core.md](./core.md) 1.4 (Non-Substitutability Principle), 1.5 (closed-loop order)
 
-#### Q29. Why is it recommended to run Inspect first, then Quality and Risk?
+#### Q30. Why is it recommended to run Inspect first, then Quality and Risk?
 
 **Answer**: First run Inspect to produce a static defect list; Risk Implicit then generates targeted attack cases from it (artifact-driven), and Quality designs supplementary tests based on the defects, avoiding inefficient blind testing. Locating root causes statically first, then dynamically validating exploitability and reliability, is efficient and traceable. But Inspect only checks static defects; passing ≠ Security/Quality pass, and it must be confirmed by Risk dynamic validation and Quality actual output.
 
@@ -360,7 +383,7 @@ They must not be conflated: the four answer different questions and must carry t
 - [relevance.md](./relevance.md) 0.4, 1.4
 - [core.md](./core.md) 1.3, 7.1
 
-#### Q30. Can SanityOps tools be used independently?
+#### Q31. Can SanityOps tools be used independently?
 
 **Answer**: Yes, they can be used independently. The three — Inspect / Risk / Quality — are "loosely coupled, each independent, and flexibly combinable", each with independent value: doing only Inspect checks artifact rigor, doing only Quality quantifies output quality, and doing only Risk completes a security audit. The framework explicitly supports "phased adoption" — an organization need not implement all capabilities at once and can build progressively by implementation stage (basic governance → verifiable → governable → sustainable operations → extensible governance); combining the three forms a complete governance closed loop.
 
@@ -372,7 +395,7 @@ They must not be conflated: the four answer different questions and must carry t
 
 ### 4.3 Mapping and Correlation
 
-#### Q31. What is the mapping between defects and quality/risk? Please give examples.
+#### Q32. What is the mapping between defects and quality/risk? Please give examples.
 
 **Answer** (`QD-*` are Inspect defect IDs: QD-P = Prompt, QD-S = Skill, QD-T = Tool): ① Single-defect mapping: `QD-P-2.5.2 Missing security boundary constraints` → instruction boundary confusion, unauthorized responses, sensitive information output, recommending "injection / system prompt extraction / unauthorized request validation"; `QD-T-3.2 Raw input passthrough` → input and parameter injection attack surface. ② Defect-chain mapping: `QD-P-2.5.2 missing security boundary + QD-S-5.1 read/write/delete not distinguished + QD-T-3.2 raw passthrough + QD-T-3.5 cross-Tool data flow risk = injection → unauthorized call → sensitive data exfiltration` candidate chain.
 
@@ -380,7 +403,7 @@ They must not be conflated: the four answer different questions and must carry t
 
 - [relevance.md](./relevance.md) 1.4 (single-defect mapping), 1.5 (defect-chain mapping)
 
-#### Q32. What is Relevance? How does it correlate defects to risk and quality?
+#### Q33. What is Relevance? How does it correlate defects to risk and quality?
 
 **Answer**: Relevance is one of SanityOps's four specification domains, answering "which attack surfaces, validation strategies, failure modes, and regression requirements a static defect may correlate with". It maps the QD defects found by Inspect in a four-stage structure: defect layer → impact layer (Attack Surface AS, candidate Failure Mode FM) → validation layer (Risk validation recommendations, Quality supplementary test recommendations) → evidence layer, and identifies defect chains that accumulate across artifacts. Its core principle is "correlation ≠ causation": mapping produces only risk correlations and validation recommendations, and does not automatically prove that an attack has succeeded or quality has failed.
 
@@ -392,7 +415,7 @@ They must not be conflated: the four answer different questions and must carry t
 
 ### 4.4 Outputs and Reports
 
-#### Q33. How many kinds of output reports does SanityOps produce?
+#### Q34. How many kinds of output reports does SanityOps produce?
 
 **Answer**: SanityOps output reports come in two types: audit and summary. There is one of each per subset — Inspect, Risk Explicit, Risk Implicit, Quality — for 8 in total; the naming convention is `Voyager_{subset}-{audit|summary}_{date}.pdf`. Outputs also include the Relevance diagnostic correlation and the Gate release-decision summary.
 
@@ -401,7 +424,7 @@ They must not be conflated: the four answer different questions and must carry t
 - [samples/results/](/samples/results/) — platform reports section (8 PDFs: inspect/explicit/implicit/quality × audit/summary)
 - [core.md](./core.md) 6.2 (release summary status)
 
-#### Q34. What are the summary report samples?
+#### Q35. What are the summary report samples?
 
 **Answer**: Summary reports: 4 samples in total (Voyager project):
 
@@ -414,7 +437,7 @@ They must not be conflated: the four answer different questions and must carry t
 
 - [samples/results/](/samples/results/) — platform reports section
 
-#### Q35. What are the audit report samples?
+#### Q36. What are the audit report samples?
 
 **Answer**: Audit reports: 4 samples in total (Voyager project):
 
@@ -429,7 +452,7 @@ They must not be conflated: the four answer different questions and must carry t
 
 ### 4.5 Samples and Walkthroughs
 
-#### Q36. What is a typical example of Agent Logic Artifact inspection and remediation?
+#### Q37. What is a typical example of Agent Logic Artifact inspection and remediation?
 
 **Answer**: There are 3 typical inspection-and-remediation examples (each with a complete remediation process):
 
@@ -445,7 +468,7 @@ They must not be conflated: the four answer different questions and must carry t
 
 ## ⑤ Ecosystem Positioning and Comparisons
 
-### Q37. What is the difference between Quality and RAGAS?
+### Q38. What is the difference between Quality and RAGAS?
 
 **Answer**: The core difference lies in the governance level; the two are not the same kind of competitor. RAGAS is a standalone open-source RAG evaluation library focused on quantifying the output quality of retrieval-augmented generation pipelines; it covers only the single "evaluation" step, does not form an "evaluation → localization → remediation → re-evaluation" loop, and has no release gate, regression governance, or evidence chain. SanityOps Quality is a quality subset embedded in the governance framework and, together with Inspect/Risk/Relevance, forms a closed loop: it links quality results with defect localization, release gates, version regression, and evidence retention. In one sentence: RAGAS answers "what score does the output get", while SanityOps Quality answers "can it be released, where is the problem, how to ensure it continuously, and is the evidence complete".
 
@@ -454,7 +477,7 @@ They must not be conflated: the four answer different questions and must carry t
 - [compare-with-ragas.md](../compare/compare-with-ragas.md)
 - [sanityops-positioning.md](../compare/sanityops-positioning.md) 3.2 (RAGAS row), 6.3
 
-### Q38. What is the relationship between Risk Implicit and Red Team?
+### Q39. What is the relationship between Risk Implicit and Red Team?
 
 **Answer**: Risk Implicit is a paradigm evolution of traditional Red Teaming: it upgrades "black-box blind testing" to "artifact-driven validation". Traditional red teaming relies on generic attack libraries for blind testing, with low hit rates and rigid payloads, cannot see enterprise-specific artifacts such as the System Prompt and Tool Schema, and tests in production environments, bringing data/business/compliance risks. Implicit starts from artifact defects to generate targeted attack cases and dynamically validates implicit risks in a completely isolated Shadow Sandbox, outputting a quantifiable security Signal.
 
@@ -463,7 +486,7 @@ They must not be conflated: the four answer different questions and must carry t
 - [implicit.md](../risk/implicit.md) 1.4, 7.2, 7.6
 - [sanityops-positioning.md](../compare/sanityops-positioning.md) 3.1 (Red Teaming methodologies row)
 
-### Q39. What is the difference between Risk Implicit and Promptfoo?
+### Q40. What is the difference between Risk Implicit and Promptfoo?
 
 **Answer**: Promptfoo is a standalone prompt evaluation / Red Team tool that generates attack cases driven by policies/templates and only judges whether an attack payload is defended (Pass/Fail); it has no built-in sandbox isolation, no root-cause localization, and does not parse the internal structure of user artifacts. Risk Implicit is artifact-driven (generating targeted attacks based on Inspect defects), has built-in Shadow Sandbox isolation, and localizes root causes at the clause level across the four layers Prompt/Skill/Tool/Cross, quantifying Signal and Gate decisions through the A/B/C/D termination statuses. The two are not substitutes; Promptfoo can serve as an external attack-generation component of Implicit.
 
@@ -472,7 +495,7 @@ They must not be conflated: the four answer different questions and must carry t
 - [compare-with-promptfoo.md](../compare/compare-with-promptfoo.md)
 - [sanityops-positioning.md](../compare/sanityops-positioning.md) 3.2 (Promptfoo row)
 
-### Q40. What is the relationship between SanityOps and FDE?
+### Q41. What is the relationship between SanityOps and FDE?
 
 **Answer**: FDE is the executor — transforming AI capabilities into business outcomes; SanityOps is the quality infrastructure that supports FDE's high-quality delivery (methodology + toolset Inspect/Risk/Quality). FDE proactively uses it at each stage: during design, using Inspect rules to guide artifact design; during development, running Inspect to fix defects; before release, validating via Risk+Quality; after release, relying on Quality for continuous monitoring and asset accumulation.
 
@@ -480,7 +503,7 @@ They must not be conflated: the four answer different questions and must carry t
 
 - [sanityops-and-fde.md](../compare/sanityops-and-fde.md) "1. Foundational Positioning", "4. Key Collaborative Relationships", "6. Summary"
 
-### Q41. What is the relationship between SanityOps and Harness?
+### Q42. What is the relationship between SanityOps and Harness?
 
 **Answer**: An Agent system can be understood as two parts: Logic Design (Blueprint) and Runtime Implementation (Harness). SanityOps targets the blueprint layer (Prompt → Skill → Tool Schema), ensuring the rules themselves are worth executing; Harness targets the runtime layer, ensuring the rules are executed correctly. The parameter constraints in the Tool Schema are the basis for Harness's runtime interception; the Gate aggregates Inspect/Risk/Quality to make the "whether it can run" release decision, while Harness is responsible for "how it runs and how to intercept".
 
@@ -488,7 +511,7 @@ They must not be conflated: the four answer different questions and must carry t
 
 - [sanityops-and-harness.md](../compare/sanityops-and-harness.md) "1. Principles", "4. Summary in One Sentence"
 
-### Q42. What is the relationship between SanityOps and OWASP, NIST?
+### Q43. What is the relationship between SanityOps and OWASP, NIST?
 
 **Answer**: SanityOps and standards such as OWASP, NIST, and ISO/IEC are complementary, not substitutes. OWASP LLM Top 10 / Agentic AI Top 10 defines the risk classification language ("what to defend against"); NIST AI RMF and ISO/IEC 42001 define organizational-level governance and management-system frameworks ("how to govern"); SanityOps provides executable inspection, validation, and measurement specifications for Logic Artifacts (Prompt / Skill / Tool Schema), using QD defects, the evidence chain, and gates to support the former. It references the principles of these standards but does not constitute any standard certification or compliance claim, nor does it replace a complete management system.
 
@@ -497,7 +520,7 @@ They must not be conflated: the four answer different questions and must carry t
 - [sanityops-positioning.md](../compare/sanityops-positioning.md) 3.1
 - [rag-agent.md](../quality/rag-agent.md) Chapter 7
 
-### Q43. What is the relationship between OWASP AI risks and SanityOps defects?
+### Q44. What is the relationship between OWASP AI risks and SanityOps defects?
 
 **Answer**: OWASP LLM/Agentic Top 10 describes "the final form of an attack" (symptoms), while SanityOps defects describe "the preconditions for a successful attack" (cause); the two are a causal chain rather than substitutes. The defects found by Inspect and OWASP attack types are a many-to-many mapping. Three-layer mapping: OWASP risk (symptom layer) → exploit-chain analysis (preconditions) → SanityOps defect (cause layer QD-P/S/T/Cross, i.e., Prompt/Skill/Tool/cross-artifact defect IDs) → remediation priority (P0 / linked / P1P2). That is, OWASP provides the risk classification language, and SanityOps provides fixable artifact-level defects and attack-surface mapping.
 
@@ -506,7 +529,7 @@ They must not be conflated: the four answer different questions and must carry t
 - [implicit.md](../risk/implicit.md) 8.1, 8.2, 8.3, 8.4
 - [sanityops-positioning.md](../compare/sanityops-positioning.md) 3.1
 
-### Q44. What is the relationship between SanityOps and Guardrail?
+### Q45. What is the relationship between SanityOps and Guardrail?
 
 **Answer**: Guardrail is a runtime verification layer (LLM-as-a-Judge that intercepts each critical operation in real time); constrained by the "Impossible Triangle" (Detection Real-time / Attack Logic Complexity / Massive Context Data Processing), enterprises can in practice only adopt a "low latency, low accuracy" compromise and can, in principle, intercept only known, simple, pattern-based attacks. SanityOps Risk Implicit is a pre-deployment validation layer (Shift Left) that performs dynamic attack validation on Logic Artifacts in an isolated Shadow Sandbox, proactively discovering and fixing vulnerabilities. The two are complementary: SanityOps is the prevention layer and Guardrail is the runtime protection layer — an attack that bypasses the Agent logic may still be intercepted by the Guardrail (termination status B).
 
@@ -514,7 +537,7 @@ They must not be conflated: the four answer different questions and must carry t
 
 - [implicit.md](../risk/implicit.md) 1.2, 1.3, 4.2.2, 7.5, 7.6
 
-### Q45. Why can't Guardrail intercept complex logic attacks in real time? (Impossible Triangle)
+### Q46. Why can't Guardrail intercept complex logic attacks in real time? (Impossible Triangle)
 
 **Answer**: The "Impossible Triangle" of AI real-time monitoring refers to three things that cannot be satisfied simultaneously in principle: ① Detection Real-time (low latency); ② Attack Logic Complexity (complex, adaptive, multi-step, requiring deep reasoning); ③ Massive Context Data Processing (multi-turn dialogue, tool returns, memory, knowledge sources). Strengthening accuracy increases computation and causes latency of 500ms–2000ms+; pursuing real-time forces a simplified model that can capture only shallow attacks. Enterprise Guardrails therefore commonly adopt a "low latency, low accuracy" compromise and can, in principle, intercept only known, simple, pattern-based attacks.
 
@@ -522,9 +545,9 @@ They must not be conflated: the four answer different questions and must carry t
 
 - [implicit.md](../risk/implicit.md) 1.2 (including 1.2.1~1.2.4)
 
-### Q46. Limitations of Guardrail: why can't it be circumvented by engineering means?
+### Q47. Limitations of Guardrail: why can't it be circumvented by engineering means?
 
-**Answer**: The limitations of the Guardrail (runtime protection layer) stem from the "Impossible Triangle" (see Q45): under the premise of real-time (low latency), it cannot simultaneously complete deep reasoning about complex / adaptive / multi-step attacks and complete processing of long-context evidence (multi-turn dialogue, tool returns, memory, knowledge sources). "Cannot" here is not "the current model is not fast enough" but a structural tension — attackers actively split, dilute, deform, and spread malicious intent across turns, maximizing "the amount of evidence that needs reasoning" while minimizing "single-point visible signals", pushing the defense line to the worst corner of the triangle. Common engineering measures cannot truly break this frontier:
+**Answer**: The limitations of the Guardrail (runtime protection layer) stem from the "Impossible Triangle" (see Q46): under the premise of real-time (low latency), it cannot simultaneously complete deep reasoning about complex / adaptive / multi-step attacks and complete processing of long-context evidence (multi-turn dialogue, tool returns, memory, knowledge sources). "Cannot" here is not "the current model is not fast enough" but a structural tension — attackers actively split, dilute, deform, and spread malicious intent across turns, maximizing "the amount of evidence that needs reasoning" while minimizing "single-point visible signals", pushing the defense line to the worst corner of the triangle. Common engineering measures cannot truly break this frontier:
 
 1. **Layered/cascaded guardrails (cheap classifier + heavy-model escalation)** — only reduce average latency, not the worst case; and the "whether to escalate" routing decision is itself shallow, so a complex attack that fools the router will never be escalated and still passes the shallow check.
 2. **Streaming/asynchronous/post-hoc auditing** — abandons the "real-time" vertex: judgment comes after the action, detecting only post-hoc, not intercepting in advance.
@@ -538,7 +561,7 @@ Therefore, the Guardrail as a "shallow, fast, last layer" defense-in-depth is ne
 - [implicit.md](../risk/implicit.md) 1.2 (including 1.2.1~1.2.4)
 - [overview.md](./overview.md) "Background" (Impossible Triangle)
 
-### Q47. What is the difference from SkillSpector?
+### Q48. What is the difference from SkillSpector?
 
 **Answer**: SkillSpector is a security scanner for Skill packages: single-scan, strongest at malicious code and dependency CVE/supply chain, but it only does security scanning, has no cross-artifact consistency, does not execute the object under test, and has no governance closed loop. SanityOps is an Inspect + Risk governance closed loop: it covers logic design defect inspection, cross-artifact consistency (Inspect Cross), Shadow Sandbox dynamic validation (Risk Implicit), and post-remediation re-inspection/regression, outputting defect IDs, risk severity levels, and root-cause localization. The two are complementary, not substitutes: use SkillSpector to gate externally introduced Skills, and run the full SanityOps chain for internally developed artifacts.
 
@@ -551,7 +574,7 @@ Therefore, the Guardrail as a "shallow, fast, last layer" defense-in-depth is ne
 
 ## ⑥ Adoption, Deployment, and Remediation
 
-### Q48. How does the SanityOps Platform upload Logic Artifacts?
+### Q49. How does the SanityOps Platform upload Logic Artifacts?
 
 **Answer**: Onboarding Logic Artifacts is done via the CLI: `sanityops-cli init` generates `.sanityops/inspect_config.yaml` (fill in artifact paths and LLM credentials), and `sanityops-cli inspect` scans locally; you can optionally connect to the Platform (`sanityops-cli config server.api_key`), and the scanned artifacts are then pushed to the Platform project as a new version. The README also mentions "near-real-time synchronization with Git". Risk/Quality checks are provided only by the Platform (SaaS / self-hosted), not in the open-source CLI.
 
@@ -560,7 +583,7 @@ Therefore, the Guardrail as a "shallow, fast, last layer" defense-in-depth is ne
 - [try-the-tools.md](./try-the-tools.md) Quick Start, Two Ways to Run the CLI, CI/CD Integration
 - [overview.md](./overview.md) "Introduction" (near-real-time synchronization with Git), "Get Started"
 
-### Q49. Is SanityOps open source?
+### Q50. Is SanityOps open source?
 
 **Answer**: SanityOps adopts a layered open-source strategy: the core Framework specification (11 sub-specifications: Inspect/Risk/Quality/Relevance/Core) is open source under CC BY-SA 4.0; two inspection tools are open source — the `sanityops-inspect-lite` skill (CC BY-SA 4.0), a lite version for quick in-agent checks, and the Inspect CLI (Apache 2.0), covering the full Inspect inspection (including Permission) and Risk Explicit. The Platform — including Inspect, Risk, and Quality — is not open source (closed-source SaaS / self-hosted), but enterprise customers under specific contractual conditions can obtain code-review access under NDA.
 
@@ -569,7 +592,7 @@ Therefore, the Guardrail as a "shallow, fast, last layer" defense-in-depth is ne
 - [try-the-tools.md](./try-the-tools.md) Openness Overview
 - [overview.md](./overview.md) "License", "Framework and Platform"
 
-### Q50. How does SanityOps charge?
+### Q51. How does SanityOps charge?
 
 **Answer**: The Framework specification is free and open source (CC BY-SA 4.0); two inspection tools are open source — the `sanityops-inspect-lite` skill (CC BY-SA 4.0) and the Inspect CLI (Apache 2.0) — both run on your own model credentials at no charge; the commercial full-featured version (Defect Inspector, Risk Scanner, Quality Evaluator) is provided as SaaS / self-hosted. The hosted platform has no fixed public per-day limit (quota is confirmed together with your invite code); pricing is not listed and requires contacting sales (hello@sanityops.org).
 
@@ -578,7 +601,7 @@ Therefore, the Guardrail as a "shallow, fast, last layer" defense-in-depth is ne
 - [try-the-tools.md](./try-the-tools.md) Openness Overview, Risk & Quality, Usage quota
 - [overview.md](./overview.md) "Framework and Platform", "Get Started", "Road Map"
 
-### Q51. Can SanityOps be tried out?
+### Q52. Can SanityOps be tried out?
 
 **Answer**: Yes. demo.sanityops.org provides an online demo of the full Inspect+Risk+Quality loop (in an early-access phase, invite-only, due to third-party LLM inference costs). How to request access: open the demo and click Register, click Get Code on the registration form, and the dialog shows the address to write to; email hello@sanityops.org from your registration email describing your use case, and we will send an invite code. In addition, both open-source tools — the `sanityops-inspect-lite` skill and the CLI (sanityops-cli) — are free to use locally.
 
@@ -587,7 +610,7 @@ Therefore, the Guardrail as a "shallow, fast, last layer" defense-in-depth is ne
 - [try-the-tools.md](./try-the-tools.md) Risk & Quality — Live Demo
 - [overview.md](./overview.md) "Get Started"
 
-### Q52. Does SanityOps support self-hosted deployment?
+### Q53. Does SanityOps support self-hosted deployment?
 
 **Answer**: Yes. The commercial Platform offers enterprise self-hosted deployment: the full stack (detection engine, database, dashboards) is delivered within the customer's VPC; the model layer is decoupled and can connect to your own LLM (including locally deployed models), without depending on external APIs; contracted enterprise customers can obtain code-review access under NDA. A self-hosted environment does not transmit data back to Sanity AI Labs (as stated in the Privacy Policy). Contact hello@sanityops.org to discuss.
 
@@ -596,7 +619,7 @@ Therefore, the Guardrail as a "shallow, fast, last layer" defense-in-depth is ne
 - [try-the-tools.md](./try-the-tools.md) Enterprise Self-Hosted Deployment
 - [privacy-policy.md](../legal/privacy-policy.md) (self-hosted, no data transmitted back)
 
-### Q53. What is the relationship between the Inspect CLI and the Platform?
+### Q54. What is the relationship between the Inspect CLI and the Platform?
 
 **Answer**: The Inspect CLI (sanityops-cli) is the open-source implementation: it covers the full Inspect inspection (Prompt / Skill / Tool / Cross / Permission) and Risk Explicit, runs locally, and is usable independently. The Platform is the commercial full suite (Defect Inspector, Risk Scanner, Quality Evaluator), provided as SaaS / self-hosted; there, inspection results are cross-correlated with Risk/Quality findings and archived into the version-level evidence chain. Risk Implicit and Quality checks are provided only by the Platform. The CLI can act as a client of the Platform: connected via `server.api_key` (or `SANITYOPS_API_KEY` / `SANITYOPS_BASE_URL`), it synchronizes your Logic Artifacts to the Platform as a new version, while the checks themselves still run locally and the model is always driven by the user's own credentials.
 
@@ -605,7 +628,7 @@ Therefore, the Guardrail as a "shallow, fast, last layer" defense-in-depth is ne
 - [try-the-tools.md](./try-the-tools.md) Openness Overview (Note), Two Ways to Run the CLI
 - [overview.md](./overview.md) "Framework and Platform"
 
-### Q54. How do I download and use the Inspect CLI?
+### Q55. How do I download and use the Inspect CLI?
 
 **Answer**: The Inspect CLI (sanityops-cli) is open source (Apache 2.0), covers the full Inspect inspection (including Permission) and Risk Explicit, and requires Python ≥ 3.11 and your own LLM API key. Install: install script (macOS/Linux `curl .../install.sh | bash`; Windows `irm .../install.ps1 | iex`) or `pip install sanityops-cli`, or from source. Use: `sanityops-cli init` generates `.sanityops/inspect_config.yaml` (containing the model and artifact paths); `sanityops-cli inspect` runs the inspection (`--check-level L1` fast / L2 default / L3 deep). Optional: `sanityops-cli config server.api_key` makes the CLI act as a client of the Platform for artifact synchronization; omit it to run entirely locally.
 
@@ -613,7 +636,7 @@ Therefore, the Guardrail as a "shallow, fast, last layer" defense-in-depth is ne
 
 - [try-the-tools.md](./try-the-tools.md) Install, Quick Start
 
-### Q55. What is SanityOps's execution flow?
+### Q56. What is SanityOps's execution flow?
 
 **Answer**: The SanityOps governance closed loop proceeds in order: ① Design & Build → ② Logic Artifact Versioning → ③ Inspect — Static Defect Inspection → ④ Risk — Risk Audit and Dynamic Validation → ⑤ Quality — Service Quality Assessment → ⑥ Release Authorization and Exception Decisions → ⑦ Runtime Monitoring, Change Assessment, and Regression → ⑧ Incident Review, Rule Calibration, and Asset Improvement. Every artifact version change re-triggers the loop, and the evidence chain accumulates continuously.
 
@@ -623,11 +646,11 @@ Therefore, the Guardrail as a "shallow, fast, last layer" defense-in-depth is ne
 - [overview.md](./overview.md) "Framework Workflow"
 - [sanityops-positioning.md](../compare/sanityops-positioning.md) Section 2 (governance closed-loop overview)
 
-### Q56. Can SanityOps help me fix the defects it finds in Inspect?
+### Q57. Can SanityOps help me fix the defects it finds in Inspect?
 
 **Answer**: On the Platform (online dashboard or PDF report), a repaired version targeting the defect is provided. But it must be emphasized: because SanityOps does not know the user's business elements, many remediation suggestions — especially numeric ones — are for reference only; after receiving SanityOps's repaired version, users must perform human review against the actual business elements before going live.
 
-### Q57. How are the problems found by Quality and Risk fixed?
+### Q58. How are the problems found by Quality and Risk fixed?
 
 **Answer**: After Quality/Risk finds a problem, handle it via the remediation closed loop: export the failure evidence (failed cases, trajectory logs) → hand it to Inspect to localize the root-cause defect → human-confirmed remediation → static re-inspection + dynamic security regression + quality regression → close the approval, and consolidate the results into test cases/rules/governance improvements. Quality/Risk only report the failure facts and troubleshooting clues and do not automatically attribute them to a single component.
 
@@ -637,7 +660,7 @@ Therefore, the Guardrail as a "shallow, fast, last layer" defense-in-depth is ne
 - [tool-agent.md](../quality/tool-agent.md) 5.3.2 (post-hoc traceability process)
 - [rag-agent.md](../quality/rag-agent.md) 6.5 (failure handling and continuous improvement)
 
-### Q58. How do I set the test plan after each fix?
+### Q59. How do I set the test plan after each fix?
 
 **Answer**: Determine the regression/re-inspection scope by change level: L1 (copy/format/low-risk configuration) → Quick Regression Set; L2 (single-topic knowledge update / local Prompt) → Quick Regression Set + affected topic cases; L3 (retrieval strategy / main Prompt / workflow / model version) → Release Regression Set; L4 (business scope / key rules / permissions / major architectural changes) → Release Regression Set + Extended Evaluation + rebuild a new Baseline. Levels can only be raised, and when impact cannot be determined, be strict; the re-run scope can only expand, not shrink.
 
@@ -647,7 +670,7 @@ Therefore, the Guardrail as a "shallow, fast, last layer" defense-in-depth is ne
 - [relevance.md](./relevance.md) 3.6
 - [core.md](./core.md) 8.4
 
-### Q59. Does inspection or assessment affect the production environment?
+### Q60. Does inspection or assessment affect the production environment?
 
 **Answer**: No. Inspection and assessment are both performed in the "Shadow Sandbox" — it is equivalent to production but completely isolated, and attacks or assessments land only on Mock services, never touching real data or production systems.
 
@@ -657,7 +680,7 @@ Therefore, the Guardrail as a "shallow, fast, last layer" defense-in-depth is ne
 - [implicit.md](../risk/implicit.md) 1.6.2 (Shadow Sandbox, safe isolation)
 - [overview.md](./overview.md) "Key Features"
 
-### Q60. Does any defect mean it cannot go live?
+### Q61. Does any defect mean it cannot go live?
 
 **Answer**: Not all defects block release. P0 is a Blocking Defect that must be fixed; only when an exception is permitted may it proceed under the exception process with explicit, time-limited approval and compensating controls; P1 should be fixed before release, and any exception must document residual risk, a disposition plan, approval, and an expiration date; P2 can be deferred and included in an improvement plan or risk register. The framework provides an Exception / Risk Acceptance mechanism that requires authorized approval, a time limit, and compensating controls, and must meet the minimum conditions for exception approval.
 
