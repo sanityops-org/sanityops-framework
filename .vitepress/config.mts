@@ -1,4 +1,14 @@
-import { defineConfig } from 'vitepress'
+import { defineConfig, type HeadConfig } from 'vitepress'
+
+const hostname = 'https://www.sanityops.org'
+
+// Map a source file (e.g. `framework/index.md`) to its public URL.
+function pageUrl(relativePath: string): string {
+  const path = relativePath
+    .replace(/(^|\/)index\.md$/, '$1')
+    .replace(/\.md$/, '.html')
+  return `${hostname}/${path}`
+}
 
 // Shared Community sidebar — referenced by the /community/ route prefix
 // so the left navigation stays identical on every Community page.
@@ -7,6 +17,10 @@ const communitySidebar = [
     text: 'Community',
     link: '/community/',
     items: [
+      { text: 'Try the Tools', link: '/framework/try-the-tools' },
+      { text: 'Samples', link: '/samples/' },
+      { text: 'FAQ', link: '/framework/FAQ' },
+      { text: 'Discussions', link: 'https://github.com/sanityops-org/sanityops-framework/discussions' },
       { text: 'About SanityOps', link: '/community/about' },
       { text: 'Partnership', link: '/community/partnership' },
       { text: 'Contact', link: '/community/about#contact' },
@@ -32,7 +46,46 @@ export default defineConfig({
   ],
 
   sitemap: {
-    hostname: 'https://www.sanityops.org',
+    hostname,
+  },
+
+  transformHead({ pageData }) {
+    const head: HeadConfig[] = [
+      ['link', { rel: 'canonical', href: pageUrl(pageData.relativePath) }],
+    ]
+
+    // Home page only: Organization + WebSite structured data.
+    if (pageData.relativePath === 'index.md') {
+      head.push([
+        'script',
+        { type: 'application/ld+json' },
+        JSON.stringify({
+          '@context': 'https://schema.org',
+          '@graph': [
+            {
+              '@type': 'Organization',
+              '@id': `${hostname}/#organization`,
+              name: 'Sanity AI Labs',
+              alternateName: 'SanityOps',
+              url: `${hostname}/`,
+              logo: `${hostname}/sanityops-logo.png`,
+              sameAs: ['https://github.com/sanityops-org/sanityops-framework'],
+            },
+            {
+              '@type': 'WebSite',
+              '@id': `${hostname}/#website`,
+              url: `${hostname}/`,
+              name: 'SanityOps',
+              description: 'AI Agent Continuous Governance Framework',
+              inLanguage: 'en-US',
+              publisher: { '@id': `${hostname}/#organization` },
+            },
+          ],
+        }),
+      ])
+    }
+
+    return head
   },
 
   vite: {
@@ -113,9 +166,6 @@ export default defineConfig({
           { text: 'Overview', link: '/framework/overview' },
           { text: 'Core', link: '/framework/core' },
           { text: 'Relevance', link: '/framework/relevance' },
-          { text: 'Try the Tools', link: '/framework/try-the-tools' },
-          { text: 'FAQ', link: '/framework/FAQ' },
-          { text: 'Samples', link: '/samples/' },
         ],
       },
       {
@@ -156,9 +206,12 @@ export default defineConfig({
       {
         text: 'Community',
         items: [
+          { text: 'Try the Tools', link: '/framework/try-the-tools' },
+          { text: 'Samples', link: '/samples/' },
+          { text: 'FAQ', link: '/framework/FAQ' },
+          { text: 'Discussions', link: 'https://github.com/sanityops-org/sanityops-framework/discussions' },
           { text: 'About', link: '/community/about' },
           { text: 'Partnership', link: '/community/partnership' },
-          { text: 'Discussions', link: 'https://github.com/sanityops-org/sanityops-framework/discussions' },
           { text: 'Contact', link: '/community/about#contact' },
         ],
       },
@@ -173,9 +226,6 @@ export default defineConfig({
             { text: 'Overview', link: '/framework/overview' },
             { text: 'Core', link: '/framework/core' },
             { text: 'Relevance', link: '/framework/relevance' },
-            { text: 'Try the Tools', link: '/framework/try-the-tools' },
-            { text: 'FAQ', link: '/framework/FAQ' },
-            { text: 'Samples', link: '/samples/' },
           ],
         },
       ],
@@ -232,8 +282,7 @@ export default defineConfig({
           text: 'Samples',
           link: '/samples/',
           items: [
-            { text: 'Test Cases', link: '/samples/cases/' },
-            { text: 'Results', link: '/samples/results/' },
+            { text: 'Medication Information Assistant', link: '/samples/cases/medication-information-assistant' },
           ],
         },
       ],
