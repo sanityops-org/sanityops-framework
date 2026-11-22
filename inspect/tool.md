@@ -62,9 +62,7 @@ description: "Inspect Tool specification: defect rules for reviewing Tool Schema
   - [A.2 L2 Minimum Rule Set (25 Items)](#a2-l2-minimum-rule-set-25-items)
   - [A.3 L3 Minimum Rule Set (25 Items)](#a3-l3-minimum-rule-set-25-items)
 - [Appendix B: QD-T Complete Numbering Index](#appendix-b-qd-t-complete-numbering-index)
-- [Appendix C: Tool Overview](#appendix-c-tool-overview)
-  - [C.1 Tool Formats](#c1-tool-formats)
-  - [C.2 Quick Start](#c2-quick-start)
+- [Appendix C: Tooling](#appendix-c-tooling)
 - [Appendix D: Exemptions and Risk Acceptance](#appendix-d-exemptions-and-risk-acceptance)
   - [D.1 Exemption Application Conditions](#d1-exemption-application-conditions)
   - [D.2 Risk Acceptance Statement](#d2-risk-acceptance-statement)
@@ -2706,19 +2704,9 @@ Step 7: Gate Determination
 
 ---
 
-## Appendix C: Tool Overview
+## Appendix C: Tooling
 
-The inspection tooling for this specification provides automated detection, assisted review, and report generation; rules requiring business semantics or implementation evidence are confirmed by the responsible party.
-
-<a id="c1-tool-formats"></a>
-### C.1 Tool Formats
-
-- **Integration Options**: CI/CD pipeline, IDE plugin, Schema Registry integration
-
-<a id="c2-quick-start"></a>
-### C.2 Quick Start
-
-Visit the [SanityOps Tools Website](https://www.sanityops.org/framework/try-the-tools) for detailed information.
+The rules in this specification are implemented by the open-source SanityOps tooling (automated detection, assisted review, report generation). For installation, integration, and usage, see [Try the Tools](/framework/try-the-tools).
 
 ---
 

@@ -21,6 +21,8 @@ description: "Technical comparison of SanityOps Inspect and Risk with NVIDIA Ski
 
 ---
 
+> **Version anchor**: SkillSpector facts are based on `NVIDIA/SkillSpector` at report version **v2.0.0**, verified 2026-11-22. Pattern counts and delivery forms move as the project ships; treat figures below as version-bound.
+
 <a id="1-scope-of-comparison"></a>
 ## 1. Scope of Comparison
 
@@ -28,7 +30,7 @@ description: "Technical comparison of SanityOps Inspect and Risk with NVIDIA Ski
 
 SkillSpector is a security scanner for AI Agent Skills. SanityOps is a governance framework spanning three dimensions: Inspect, Risk, and Quality. The comparable surface between the two is **Inspect (Defect Inspection) + Risk (Risk Scanning)**. The Quality subset, which assesses user-visible service quality, has no counterpart in SkillSpector and is therefore **excluded from this comparison** to keep it fair.
 
-Both are production-grade tooling: SkillSpector ships as a CLI / Docker image. On the SanityOps side, the corresponding tools are **Defect Inspector** (the Inspect implementation; open source, CLI, SaaS + self-hosted) and **Risk Scanner** (the Risk implementation; Risk Explicit available in the open-source CLI, full capability SaaS + self-hosted).
+Both are production-grade tooling: SkillSpector ships as a CLI, a Docker image, an MCP server (runtime install gate), and Pi / OpenCode extensions. On the SanityOps side, the corresponding tools are **Defect Inspector** (the Inspect implementation; open source, CLI, SaaS + self-hosted) and **Risk Scanner** (the Risk implementation; Risk Explicit available in the open-source CLI, full capability SaaS + self-hosted).
 
 ---
 
@@ -78,7 +80,7 @@ Risk (Risk Scanning)
 └─ Risk Implicit    → Implicit runtime vulnerabilities
 ```
 
-**Key structural difference**: SkillSpector is bounded by the *package*. It cannot answer questions such as "Does the System Prompt actually authorize this Skill's declared capability?" or "Does the Skill's declared permission scope match its Tool Schemas?" These Cross-Artifact Consistency questions are the exclusive province of Inspect Cross.
+**Key structural difference**: SkillSpector is bounded by the *package* — within a single Skill package it does check capability-vs-declaration (e.g., MCP least-privilege LP1/LP4) and description-vs-behavior mismatch (e.g., TP4, LLM-powered). But it cannot answer **cross-artifact** questions such as "Does the System Prompt actually authorize this Skill's declared capability?" or "Does this Skill's declared permission scope match its *separately-authored* Tool Schemas?" These Cross-Artifact Consistency questions are the exclusive province of Inspect Cross.
 
 ---
 
@@ -91,7 +93,7 @@ Risk (Risk Scanning)
 | Design / development (logic defects)                     | ✗                                                                  | ✓ Inspect                                                                                                                |
 | Import / pre-release (supply chain, CVE, malicious code) | ✓ Core strength                                                    | Partial (Risk Explicit covers risk expressions in artifacts and scripts, but not dependency CVEs)                        |
 | Pre-release (Explicit Risk audit and rating)             | Partial                                                            | ✓ Risk Explicit                                                                                                          |
-| Runtime (dynamic attack validation)                      | ✗ (the trust model stipulates the scanned Skill is never executed) | ✓ Risk Implicit, executed in isolated Shadow Sandboxes                                                                |
+| Runtime (dynamic attack validation)                      | ✗ (static + optional LLM semantic analysis; the scanned Skill is never executed) | ✓ Risk Implicit, executed in isolated Shadow Sandboxes                                                                |
 | Post-remediation re-check                                | Baseline suppression (filters known items)                         | Structured re-check: re-run Risk Explicit after fixing defects; address Explicit Risks first, then run runtime detection |
 
 ---
@@ -102,13 +104,13 @@ Risk (Risk Scanning)
 
 | Dimension               | SkillSpector                                                | Inspect                                                           | Risk Explicit                                                 | Risk Implicit                                                                     |
 | ----------------------- | ----------------------------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| Basis for determination | Vulnerability pattern library (68 patterns / 17 categories) | Rule-based inspection items + six-dimension review framework      | 32 Explicit Risk categories + impact type labels + P0/P1/P2 grading | Attack test cases derived from defects                                            |
-| Driving mode            | Pattern-driven                                              | Rule / checklist-driven                                           | Semantic classification-driven                                | **Artifact-Driven** (understands internal structure to generate targeted attacks) |
+| Basis for determination | Vulnerability pattern library (71 patterns / 17 categories) | Rule-based inspection items + six-dimension review framework      | 34 Explicit Risk subcategories (NL-A9/NL-B10/NR-O5/NR-S10) + impact type labels (D1/D2/D3) + P0/P1/P2 grading | Attack test cases derived from defects                                            |
+| Driving mode            | Static pattern matching + optional LLM semantic analysis   | Rule / checklist-driven                                           | Semantic classification-driven                                | **Artifact-Driven** (understands internal structure to generate targeted attacks) |
 | Input source            | The scanned package                                         | Raw artifacts                                                     | Artifacts that have passed Inspect                            | Inspect defect list + Explicit results                                            |
 | Executes the target?    | No                                                          | No                                                                | No                                                            | Yes (Shadow Sandbox)                                                          |
-| Human involvement       | Essentially none                                            | Explicitly divided into automated / semi-automated / human review | Semi-automated + human rating                                 | Semi-automated                                                                    |
+| Human involvement       | Automated scan + human triage                              | Explicitly divided into automated / semi-automated / human review | Semi-automated + human rating                                 | Semi-automated                                                                    |
 
-**Structural difference**: SkillSpector's recall ceiling is set by its pattern library; anything outside the library is invisible to it. SanityOps' recall ceiling is set by the depth of its rule system and artifact understanding, and the tiering mechanism balances cost against inspection intensity.
+**Structural difference**: SkillSpector's recall is bounded by its pattern library plus a targeted semantic layer: static mode (`--no-llm`) matches only library patterns, while the optional LLM layer adds intent comparison for a defined set of semantic issues (description-behavior mismatch, vague triggers, subtle policy) — not arbitrary, library-external analysis. SanityOps' recall ceiling is set by the depth of its rule system and artifact understanding, and the tiering mechanism balances cost against inspection intensity.
 
 ---
 
@@ -118,7 +120,7 @@ Risk (Risk Scanning)
 
 | Dimension                | SkillSpector                                                                             | Inspect                                        | Risk Explicit                                                          |
 | ------------------------ | ---------------------------------------------------------------------------------------- | ---------------------------------------------- | ---------------------------------------------------------------------- |
-| Conclusion form          | 0–100 risk score + severity + install recommendation (`SAFE / CAUTION / DO_NOT_INSTALL`) | Defect list + remediation recommendations      | Risk item list + severity level + deduction                            |
+| Conclusion form          | 0–100 risk score + severity + install recommendation (`SAFE / CAUTION / DO_NOT_INSTALL`) | Defect list + remediation recommendations      | Risk item list + severity grade (P0/P1/P2) + impact type labels          |
 | Rating system            | LOW / MEDIUM / HIGH / CRITICAL                                                           | P0 / P1 / P2; P0 constitutes the Gate          | worst-consequence → P0/P1/P2                                                     |
 | Localization granularity | File : line number + confidence                                                          | Rule ID + artifact entry                       | Risk item + owning artifact                                            |
 | Root-cause answer        | "Which line of code is dangerous"                                                        | "Which design element is missing a constraint" | "Why the defense fell, and which Logic Artifact went wrong" (Implicit) |

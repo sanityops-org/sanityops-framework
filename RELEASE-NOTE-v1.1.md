@@ -11,7 +11,7 @@
 ## Versioning
 
 - **`v1.1.0`** is the SemVer tag for this release; **"v1.1"** is the product name. They refer to the same artifact.
-- All twelve normative documents now carry `**Version**: v1.1`, so a report citing "Inspect Tool v1.1" resolves to exactly one text.
+- All eleven normative documents now carry `**Version**: v1.1`, so a report citing "Inspect Tool v1.1" resolves to exactly one text.
 - The Framework specification and the Inspector CLI are **versioned independently**. Only the Framework carries the `v1.1.0` label here; the CLI follows its own version line in [`sanityops-org/sanityops-cli`](https://github.com/sanityops-org/sanityops-cli).
 - `v1.0.0` remains available under its original tag and release note.
 
@@ -39,8 +39,8 @@
 ### Terminology and Presentation
 
 - Terminology normalized to **Logic Artifacts** throughout; the Inspect use case is stated more precisely.
-- The obsolete `inspect-skill` landing page was removed; the lite inspector deliverable lives in its own repository.
-- Six `sanityops-inspect-lite` instance records added under `samples/inspect-skill-artifacts-samples/` (non-normative). Four remain in this repository: the `anthropics/skills pdf` record was withdrawn for licence reasons (the source artifacts carry a no-derivative / no-distribution licence), and the self-check report is maintained in the `sanityops-inspect-lite` repository only.
+- The obsolete `inspect-skill` landing page was removed; the inspector deliverable lives in its own repository.
+- Six `sanityops-inspector` instance records added under `samples/inspect-skill-artifacts-samples/` (non-normative). Four remain in this repository: the `anthropics/skills pdf` record was withdrawn for licence reasons (the source artifacts carry a no-derivative / no-distribution licence), and the self-check report is maintained in the `sanityops-inspector` repository only.
 
 ---
 
@@ -63,7 +63,7 @@
 ### Open-Source Tooling
 
 - **Defect Inspector CLI** — static defect inspection for logical artifacts. Install via `pip install sanityops-cli`.
-- **`sanityops-inspect-lite`** — condensed, detect-only Markdown inspector for agent runtimes. Install as a Claude Code plugin from [`sanityops-org/sanityops-inspect-lite`](https://github.com/sanityops-org/sanityops-inspect-lite).
+- **`sanityops-inspector`** — condensed, detect-only Markdown inspector for agent runtimes. Install as a Claude Code plugin from [`sanityops-org/sanityops-inspector`](https://github.com/sanityops-org/sanityops-inspector).
 
 ### Sample Assets
 
@@ -110,7 +110,7 @@ There are no breaking changes to the Core object model, terminology glossary, or
 - The Inspector CLI requires your own LLM API key; inference cost is not included.
 - Risk scanning and quality evaluation (Risk Scanner, Quality Evaluator) are commercial and not part of the open-source CLI.
 - The live demo at `demo.sanityops.org` is invite-only due to LLM inference costs.
-- A2A service-contract inspection and derivative-model (DMC) evaluation, previously slated for v1.1, are now planned for **v1.2**.
+- Derivative-model (DMC) evaluation, previously slated for v1.1, is now planned for **v1.2** (January 2027); A2A service-contract inspection is now planned for **v2.0** (March 2027).
 
 ---
 
@@ -135,6 +135,10 @@ The migration row "Re-map any `D1–D3` severity statements" was corrected to "R
 ### E-4: Known residual in `framework/relevance.md`
 
 A mapping-record example in `framework/relevance.md` carried `source_standard_version: v1.0` for a `source_standard: Inspect Tool` entry. Inspect Tool is v1.1 in this release, so the example value was stale — a normative-body residual that could not be corrected as an erratum. **Resolved in `v1.1.1`**: the example now reads `v1.1`.
+
+### E-5: `inspect/tool.md` Appendix C placeholder converged
+
+`inspect/tool.md` Appendix C was an empty placeholder under the misleading heading "Tool Overview" (colliding with the document's primary object, Tool Schema), whose C.2 carried a hard-coded absolute URL. It has been converged to a single self-consistent pointer ("Appendix C: Tooling") using the site-root link `/framework/try-the-tools`; the empty subsections C.1 / C.2 were removed.
 
 ---
 

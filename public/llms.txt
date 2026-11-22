@@ -7,7 +7,7 @@
 - [Home](https://www.sanityops.org/): Site entry point.
 - [Framework Overview](https://www.sanityops.org/framework/overview.html): Big-picture introduction and recommended reading order.
 - [Core](https://www.sanityops.org/framework/core.html): Normative foundation — terminology, object model, grading models, gates, versioning, baselines.
-- [Try the Tools](https://www.sanityops.org/framework/try-the-tools.html): How to install and run the open-source inspection CLI and lite skill.
+- [Try the Tools](https://www.sanityops.org/framework/try-the-tools.html): How to install and run the open-source inspection CLI and inspector skill.
 - [FAQ](https://www.sanityops.org/framework/FAQ.html): Curated Q&A, each answer citing its normative source.
 
 ## Inspect — Defect & Permission Inspection
@@ -35,5 +35,5 @@
 ## Ecosystem & Community
 
 - [Positioning](https://www.sanityops.org/compare/sanityops-positioning.html): How SanityOps relates to other tools and frameworks.
-- [Samples](https://www.sanityops.org/samples/): Version-frozen test cases and inspection results.
+- [Samples](https://www.sanityops.org/samples/): Version-frozen test case and inspection results.
 - [About](https://www.sanityops.org/community/about.html): About SanityOps and contact.

@@ -1,6 +1,6 @@
 ---
 title: Framework
-description: "Entry point for the SanityOps framework documentation: overview, core concepts, relevance, hands-on tools, FAQ, and samples."
+description: "Entry point for the SanityOps framework documentation: overview, core concepts, and relevance."
 ---
 
 # SanityOps Framework
@@ -36,24 +36,6 @@ SanityOps is an open, vendor-neutral methodology for AI Agent governance, built 
     The impact-mapping specification.
 
     Maps defects discovered during inspection to their downstream impact on Risk and Quality, completing the governance feedback loop.
-
-- ### [Try the Tools](./try-the-tools.md)
-
-    Openness overview and tooling entry points.
-
-    How to access the open-source lite inspection skill and Inspect CLI (Inspect + Risk Explicit), the Risk Implicit and Quality SaaS demos, and self-hosted deployment options.
-
-- ### [FAQ](./FAQ.md)
-
-    Frequently asked questions.
-
-    Answers to common questions for AI service managers, developers, operators, and security teams, with sources cited from the official specifications.
-
-- ### [Samples](../samples/index.md)
-
-    Worked examples from the tools.
-
-    Illustrative Logic Artifacts and defect inspection reports produced by the SanityOps tools, showing findings, risk validation rounds, and remediation tracking.
 
 </div>
 

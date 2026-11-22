@@ -36,7 +36,7 @@ The distinction begins with the question each system is designed to answer.
 
 | Dimension                   | SanityOps Quality                                                                                                                                                                         | RAGAS                                                                                                                                    |
 | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| Framework Nature            | A governance subset within an enterprise Agent governance framework, operating in a closed loop with Inspect (Defect Inspection), Risk (Risk Scanning), and Relevance (Impact Mapping).   | A standalone open-source RAG evaluation library focused on measuring the output quality of retrieval-augmented generation pipelines.     |
+| Framework Nature            | A governance subset within an enterprise Agent governance framework, operating in a closed loop with Inspect (Defect Inspection), Risk (Risk Scanning), and Relevance (Impact Mapping).   | A standalone open-source LLM-application evaluation library focused on measuring the output quality of retrieval-augmented generation and agentic pipelines.     |
 | Core Question               | Does the Agent's actual task execution — or the user-visible service — meet the defined quality bar?                                                                                      | How semantically similar is the generated content to the retrieval context and/or reference answer?                                      |
 | Governance Objective        | Supports a complete decision chain: release authorization, defect localization, and continuous improvement.                                                                               | Provides reproducible, automated scoring to assist model and pipeline iteration and comparison.                                          |
 | Part of a Governance System | Yes. Together with Inspect and Risk, it forms the full chain: Design & Build → Static Inspection → Risk Audit → Quality Assessment → Release Gate → Runtime Monitoring → Incident Review. | No. RAGAS is an independent measurement tool; it does not assume release-gating, risk-correlation, or other governance responsibilities. |
@@ -51,11 +51,11 @@ Beyond the RAG vs. task-execution distinction, the two systems differ in their f
 
 | Dimension           | SanityOps Quality                                                                                                                                                                                                                                                           | RAGAS                                                                                                                                                                |
 | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Agent Type Coverage | Dual-track: **Quality RAG-Agent** for knowledge-retrieval and NL-generation Agents; **Quality Tool-Agent** for tool-calling, structured-I/O, task-execution Agents. Each track uses a completely distinct metric system.                                                    | Covers RAG-generation scenarios only. Does not address the Binary Nature success/failure evaluation of tool-calling or task-execution Agents.                        |
-| Output Assumption   | Differentiated by Agent type: RAG-Agent outputs are evaluated on a multi-dimensional continuous scale; Tool-Agent outputs are evaluated on a **Binary Nature** (success/failure) basis — "either entirely correct, or containing an error; there is no intermediate state." | Implicitly assumes natural-language paragraph output and applies continuous scoring paradigms. Provides no adjudication logic for structured, task-oriented outputs. |
-| Enterprise Coverage | Explicitly covers task-execution Agents, which dominate enterprise deployments.                                                                                                                                                                                             | Has a structural coverage gap: cannot evaluate tool-based Agents whose core quality signal is task success/failure.                                                  |
+| Agent Type Coverage | Dual-track: **Quality RAG-Agent** for knowledge-retrieval and NL-generation Agents; **Quality Tool-Agent** for tool-calling, structured-I/O, task-execution Agents. Each track uses a completely distinct metric system.                                                    | Has expanded beyond RAG generation to agent/tool use cases (Topic Adherence, Tool Call Accuracy, Tool Call F1, Agent Goal Accuracy); however, these are single-sample metrics and do not constitute statistical reliability governance.                        |
+| Output Assumption   | Differentiated by Agent type: RAG-Agent outputs are evaluated on a multi-dimensional continuous scale; Tool-Agent outputs are evaluated on a **Binary Nature** (success/failure) basis — "either entirely correct, or containing an error; there is no intermediate state." | Applies continuous scoring to generation quality, and both continuous (Tool Call Accuracy/F1) and binary (Agent Goal Accuracy) scoring to agent/tool outputs. |
+| Enterprise Coverage | Explicitly covers task-execution Agents, which dominate enterprise deployments.                                                                                                                                                                                             | Can score agent/tool behavior (including binary Agent Goal Accuracy), but lacks the statistical, risk-tiered reliability governance that SanityOps applies to task success/failure.                                                  |
 
-In enterprise environments, task-execution Agents — those that call APIs, update databases, or trigger workflows — often outnumber pure generation Agents. A framework that evaluates only generation quality is, by construction, blind to the largest class of production Agents.
+In enterprise environments, task-execution Agents — those that call APIs, update databases, or trigger workflows — often outnumber pure generation Agents. A tool that scores individual agent behaviors without statistical, risk-tiered reliability governance leaves the largest class of production Agents outside a release-grade assurance loop.
 
 ---
 
@@ -71,7 +71,7 @@ This is where the two systems diverge most sharply — and it is the dimension t
 
 SanityOps Quality mandates that test cases be derived from **identified authoritative sources with defined business boundaries**: approved knowledge documents, policy rules, service boundary specifications, historical high-frequency issues, production complaint records, and change logs. The framework requires source stratification — it is not sufficient to have "some questions"; the questions must be traceable to specific, authoritative origins.
 
-RAGAS, in typical usage, relies on a user-prepared dataset of question/context/answer triples. The tool itself provides no mechanism for connecting to business source material, nor does it enforce source stratification. The quality of the evaluation is entirely dependent on the quality of whatever dataset the user provides.
+RAGAS, in typical usage, relies on a user-prepared dataset of question/context/answer triples (or a test set synthesized from documents via `TestsetGenerator`). The tool itself provides no mechanism for verifying that source material is authoritative, nor does it enforce source stratification. The quality of the evaluation is entirely dependent on the quality of whatever dataset the user provides.
 
 <a id="generation-governed-pipeline-vs-pre-supplied-dataset"></a>
 
@@ -79,7 +79,7 @@ RAGAS, in typical usage, relies on a user-prepared dataset of question/context/a
 
 The SanityOps Quality pipeline is a **mandatory hybrid workflow**: Authoritative Documents → Extract Atomic Knowledge Units → Auto-generate Candidate Questions and Test Variants → Business/Compliance Expert Confirmation → Version Freeze → Incorporate into Regression Set. The expert confirmation step is not optional — it is the mechanism that ensures the test corpus is both authoritative and auditable.
 
-RAGAS does not include a built-in test case generation stage. The evaluation dataset is assumed to already exist. There is no mandated expert confirmation checkpoint, and no framework-level mechanism to verify that the questions being scored are the right questions.
+RAGAS provides `TestsetGenerator` (knowledge-graph construction plus query synthesizers and personas) to auto-generate test sets, including for agentic workflows; but it has no expert-confirmation checkpoint, no version freeze, and no framework-level mechanism to verify that the questions being scored are the right questions.
 
 <a id="credibility-and-assetization"></a>
 
@@ -87,7 +87,7 @@ RAGAS does not include a built-in test case generation stage. The evaluation dat
 
 The SanityOps Quality specification is explicit about the preconditions for credible evaluation: if questions are ambiguous, answers lack authoritative sources, or versions are unidentifiable, **automated scoring cannot produce reliable conclusions**. Baseline Test Cases are therefore treated as one of the four core asset classes, governed with versioning, status fields, and audit trails. A test case is not just a row in a dataset — it is a governed asset with a lifecycle.
 
-RAGAS has no corresponding asset governance layer. Datasets are typically consumed as one-off scripts or files, without versioning, status tracking, or governance attributes. The scoring is automated; the trustworthiness of the inputs is not.
+RAGAS now provides a `Dataset` class with storage backends and manual versioning (naming conventions), but lacks status lifecycle fields (Draft/Confirmed/Deprecated), expert confirmation, and audit trails. The scoring is automated; the trustworthiness of the inputs is not.
 
 <a id="coverage-governance"></a>
 
@@ -99,10 +99,10 @@ RAGAS has no built-in coverage governance. The representativeness of the score d
 
 | Dimension                 | SanityOps Quality                                                                                                                                   | RAGAS                                                                                                         |
 | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| Test Case Sourcing        | Mandated authoritative sources with business boundary definition and source stratification.                                                         | User-supplied question/context/answer triples; no built-in business-source integration.                       |
-| Generation Pipeline       | Mandatory hybrid workflow: extract → auto-generate → expert confirm → freeze → regression.                                                          | No built-in generation; assumes pre-existing dataset.                                                         |
+| Test Case Sourcing        | Mandated authoritative sources with business boundary definition and source stratification.                                                         | User-supplied or `TestsetGenerator`-synthesized triples; still no business-source governance or source stratification.                       |
+| Generation Pipeline       | Mandatory hybrid workflow: extract → auto-generate → expert confirm → freeze → regression.                                                          | Built-in `TestsetGenerator` (RAG and agentic); no expert confirmation or version freeze.                                                         |
 | Credibility Prerequisites | Explicit: ambiguous questions, non-authoritative sources, or unidentifiable versions → unreliable scoring. Baseline Test Cases are governed assets. | No mandatory validation of input authority or ambiguity. Credibility entirely dependent on user data hygiene. |
-| Assetization              | Baseline Test Cases are one of four core asset classes, with versioning, status fields, and lifecycle governance.                                   | No asset governance layer. Datasets are typically one-off artifacts.                                          |
+| Assetization              | Baseline Test Cases are one of four core asset classes, with versioning, status fields, and lifecycle governance.                                   | `Dataset` class with manual versioning; no status lifecycle or audit trails.                                          |
 | Coverage Governance       | Coverage Matrix required; gaps must be flagged in reports.                                                                                          | No built-in coverage governance.                                                                              |
 
 ---
@@ -115,11 +115,13 @@ The metric systems reflect each tool's relationship to business risk.
 
 | Dimension               | SanityOps Quality                                                                                                                                                               | RAGAS                                                                                                                                                                               |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Design Principles       | Four principles: **business-risk-first, use-case-appropriate, critical-item independent gating, measurable and traceable.**                                                     | Fixed metrics — Faithfulness, Answer Relevancy, Context Precision/Recall — with weights that do not vary by business risk profile.                                                  |
+| Design Principles       | Four principles: **business-risk-first, use-case-appropriate, critical-item independent gating, measurable and traceable.**                                                     | A broad metric library — Faithfulness, Response Relevancy, Context Precision/Recall, Answer Correctness/Accuracy, Noise Sensitivity, Multimodal, SQL, Rubrics, and agent/tool metrics — with weights that do not vary by business risk profile.                                                  |
 | Critical-Item Handling  | Explicitly requires that "aggregate scores cannot offset failures on critical facts, core rules, or high-risk boundary scenarios." Critical test cases must pass independently. | No independent gating for critical items. Scores are typically presented as averages or aggregates, where high-frequency simple samples can dilute the impact of critical failures. |
-| Tool-Agent Adjudication | Binary Nature success rate: **R = successes / valid executions**. Structured output is "either entirely correct or contains an error — there is no intermediate state."         | No binary adjudication method for structured/task-oriented outputs. The continuous scoring paradigm does not apply to this class of output.                                         |
+| Tool-Agent Adjudication | Binary Nature success rate: **R = successes / valid executions**. Structured output is "either entirely correct or contains an error — there is no intermediate state."         | RAGAS now offers a binary Agent Goal Accuracy (goal achieved / not achieved) plus tool-call metrics; the gap versus SanityOps is not "binary vs continuous" but threefold: (1) SanityOps aggregates N independent executions into statistical reliability R = S/N with confidence intervals; (2) test rigor (sample size + pass threshold) varies by Business Impact Level L1/L2/L3; (3) execution runs in a Shadow Sandbox with mock data generated from Logic Artifacts.                                         |
 
 The critical-item handling distinction is particularly consequential in regulated environments. A RAG Agent that correctly answers 95% of general knowledge questions but hallucinates on a single compliance-critical fact would receive a strong aggregate score under a pure averaging model — and would be unfit for production under a framework that gates on critical items independently.
+
+**Dimension difference (non-correspondence).** SanityOps RAG-Agent's 12 metrics are *business-facing* — Correctness, Completeness, Relevance, Traceability, Timeliness, Consistency, Robustness, Decomposition Capability, Coherence, Format Compliance, Boundary Recognition, and Safe Response — each with a default weight. RAGAS metrics are *retrieval–generation technical* — Faithfulness, Response Relevancy, Context Precision/Recall, and related dimensions. The two are **not** a superset/subset or one-to-one mapping: SanityOps scores final service quality against governed, confirmed baselines; RAGAS scores intermediate retrieval and generation quality. SanityOps's 12 metrics are therefore neither a replacement for, nor reducible to, RAGAS's technical metrics.
 
 ---
 
@@ -133,7 +135,7 @@ The critical-item handling distinction is particularly consequential in regulate
 
 SanityOps Quality operates a **six-step closed loop**: Identify Authoritative Sources and Business Boundaries → Build Confirmed, Versioned Test Cases → Controlled Blind Testing → Evaluator Verification and Adjudication → Aggregate Metrics, Execute Gates, Form Evidence → Regression Validation and Continuous Improvement.
 
-RAGAS provides a library of scoring functions. The typical usage pattern is: Prepare Dataset → Call Scoring Functions → Obtain Scores. There is no built-in gate adjudication, regression governance, or evidence-chain formation.
+RAGAS provides a library of scoring functions. The typical usage pattern is: Prepare Dataset → Call Scoring Functions → Obtain Scores. There is no built-in gate adjudication or evidence-chain formation (experiment tracking exists, but no release gating).
 
 <a id="tool-agent-workflow"></a>
 
@@ -153,7 +155,7 @@ SanityOps Quality varies test sample sizes and pass-rate thresholds by Business 
 
 ### Evidence and result retention
 
-Every SanityOps Quality evaluation must retain version, test case, source, and conclusion evidence. "Evidence and Report Assets" constitute one of the four core asset classes. RAGAS output is typically a single-run score; the tool does not, by default, mandate retention of version lineage, test case traceability, or other governance evidence.
+Every SanityOps Quality evaluation must retain version, test case, source, and conclusion evidence. "Evidence and Report Assets" constitute one of the four core asset classes. RAGAS can persist experiment results with metadata (model version, git commit), but does not mandate retention of version lineage, test case traceability, or other governance evidence.
 
 <a id="result-utilization"></a>
 
@@ -167,16 +169,16 @@ SanityOps Quality results serve three decision layers: **Release** (Gate Decisio
 
 SanityOps Quality specifies an explicit regression validation, problem localization, and continuous improvement loop. Failed test cases follow a structured path: Identify Metric/Risk Level/Version Delta → Candidate Investigation Direction → Trigger Inspect if Necessary → Manual Confirmation → Regression Validation → Codify as Test Case/Rule/Governance Improvement.
 
-RAGAS does not include built-in version baseline comparison or regression governance workflows. These must be constructed externally by the user.
+RAGAS offers experiment tracking with cross-version result comparison and metadata (via `@experiment` and stored experiment results), but has no automatic baseline, no ratchet mechanism, and no regression blocking gate; these must be constructed externally by the user.
 
 | Dimension                   | SanityOps Quality                                                                                       | RAGAS                                                                         |
 | --------------------------- | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | Standard Workflow           | Six-step closed loop with gate adjudication and evidence formation.                                     | Scoring function library; typical usage is "prepare → score → obtain result." |
 | Tool-Agent Workflow         | Seven-step process with risk-tiered parameters, Shadow Sandbox execution, and confidence intervals. | No corresponding mechanism.                                                   |
 | Risk-Tiered Differentiation | Test sample size and pass thresholds vary by Business Impact Level (L1/L2/L3).                          | No risk-tiering concept; uniform scoring logic for all samples.               |
-| Evidence Retention          | Mandatory: version, test case, source, and conclusion evidence retained per evaluation.                 | Single-run output; no mandated governance evidence retention.                 |
+| Evidence Retention          | Mandatory: version, test case, source, and conclusion evidence retained per evaluation.                 | Persisted experiment results with metadata; no mandated governance evidence retention.                 |
 | Result Utilization          | Three-layer: Release (Gate), Optimization, Governance.                                                  | Model/pipeline comparison and iteration.                                      |
-| Regression Governance       | Structured failure handling path from metric identification through rule codification.                  | No built-in regression governance; requires external scaffolding.             |
+| Regression Governance       | Structured failure handling path from metric identification through rule codification.                  | Experiment tracking and cross-version comparison; no baseline/ratchet/gate; requires external scaffolding.             |
 
 ---
 
@@ -199,14 +201,14 @@ SanityOps Quality is not an island. Its integration with the broader framework c
 
 ## 8. Boundary Clarification
 
-This comparison does not diminish RAGAS's technical value within its designed scope. As an automated scoring tool for RAG generation quality, RAGAS offers meaningful quantitative methods for faithfulness, relevance, and related dimensions. It can serve as a **candidate technical component** within the SanityOps Quality evaluator layer — alongside Rule Verification, LLM-as-Judge, and Embedding Assistance.
+This comparison does not diminish RAGAS's technical value within its designed scope. As an automated scoring tool for LLM-application quality, RAGAS offers meaningful quantitative methods for faithfulness, relevance, and related dimensions. It can serve as a **candidate technical component** within the SanityOps Quality evaluator layer — alongside Rule Verification, LLM-as-Judge, and Embedding Assistance.
 
 But the two operate at different architectural layers:
 
 - **RAGAS** is a **scoring-method-layer** tool. It answers: _What score does this output receive?_
 - **SanityOps Quality** is a **governance-framework-layer** mechanism. It answers: _Can this Agent be released? Where is the problem? How do we sustain quality over time? Is the evidence complete?_
 
-An organization that adopts only RAGAS-class tooling gains a quantitative score for generation quality. What it does not gain includes: evaluation of task-execution Agents, critical-item independent gating, risk-tiered testing, test case source governance, cross-module defect correlation, and the complete evidence chain required for release decisions and compliance audits.
+An organization that adopts only RAGAS-class tooling gains a quantitative score for output quality. What it does not gain includes: statistical, risk-tiered reliability evaluation of task-execution Agents, critical-item independent gating, risk-tiered testing, test case source governance, cross-module defect correlation, and the complete evidence chain required for release decisions and compliance audits.
 
 ---
 
@@ -214,6 +216,6 @@ An organization that adopts only RAGAS-class tooling gains a quantitative score 
 
 ## 9. Conclusion
 
-SanityOps Quality and RAGAS are not competing products. They occupy different governance layers: the former is a quality subset embedded within an enterprise Agent Full-Lifecycle Governance Framework; the latter is an optional technical component focused on generation-quality quantification.
+SanityOps Quality and RAGAS are not competing products. They occupy different governance layers: the former is a quality subset embedded within an enterprise Agent Full-Lifecycle Governance Framework; the latter is an optional technical component focused on output-quality quantification.
 
 When evaluating tools or benchmarking frameworks, practitioners should resist the temptation to equate the two. The question is not which tool scores better — it is whether the organization needs a **demonstration-grade scoring tool** or a **production-grade quality governance mechanism**. The dimensions laid out in this comparison provide the criteria for making that determination.

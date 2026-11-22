@@ -20,12 +20,12 @@ description: "Brief overview of how SanityOps governance at the logic-design lay
 
 An Agent system can be understood as two parts: **Logic Design (Blueprint)** and **Runtime Implementation (Execution Engine)**.
 
-- **SanityOps** operates at the logic design layer: System Prompt → Skill → Tool Schema, sequentially defining the Agent's goal boundaries, capability scope, and hard constraints on callable capabilities. Through three core phases — Inspect (static defect inspection), Risk (risk validation), and Quality (service quality assessment) — it answers "whether this design blueprint is correct and whether boundaries are clear."
+- **SanityOps** operates at the logic design layer: System Prompt → Skill → Tool Schema, sequentially defining the Agent's goal boundaries, capability scope, and hard constraints on callable capabilities. Through four core activities — Inspect (static defect inspection), Risk (Explicit risk audit and Implicit risk validation), Quality (service quality assessment), and Relevance (cross-domain defect-to-risk/quality mapping) — it answers "whether this design blueprint is correct and whether boundaries are clear."
 - **Harness** operates at the runtime layer: it is the glue code outside the Model, responsible for tool call orchestration, control loops, context management, and safety guardrails, transforming the rules defined in the blueprint into actual executable behavior.
 
 **Core Principle**: The parameter constraints defined in the Tool Schema are precisely the rules Harness relies on for runtime orchestration and interception. If the blueprint itself has defects (e.g., a parameter "lacks constraints and format validation"), Harness cannot automatically fill this gap even when operating strictly according to the rules.
 
-**Position of the Gate**: The SanityOps Gate aggregates results from Inspect, Risk, and Quality to make release decisions, while Harness is the **execution carrier** of Gate decisions — the Gate determines "whether it can run," and Harness is responsible for "how it runs and how to intercept during execution."
+**Position of the Gate**: Four independent Gates — Inspect, Risk Explicit, Risk Implicit, and Quality — are aggregated into a release summary to make release decisions, while Harness is the **execution carrier** of Gate decisions — the Gates determine "whether it can run," and Harness is responsible for "how it runs and how to intercept during execution."
 
 ---
 

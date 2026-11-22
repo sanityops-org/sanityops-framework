@@ -63,7 +63,7 @@ Relevance serves as the connector: from defects (QD), candidate attack surfaces 
 
 ### Current Coverage Boundaries
 
-SanityOps v1.0 has primarily defined: Inspect (including Tool / Prompt / Skill / Cross / Permission subsets), Risk Explicit, Risk Implicit, Quality Tool-Agent, Quality RAG-Agent, and Inspect defect impact and linkage mapping. Production runtime monitoring, incident response, and Knowledge / Memory / Identity / A2A governance are directions for subsequent expansion; the above directions should not be characterized as currently fully covered specialized specification capabilities.
+SanityOps v1.1 has primarily defined: Inspect (including Tool / Prompt / Skill / Cross / Permission subsets), Risk Explicit, Risk Implicit, Quality Tool-Agent, Quality RAG-Agent, and Inspect defect impact and linkage mapping. Production runtime monitoring, incident response, and Knowledge / Memory / Identity / A2A governance are directions for subsequent expansion; the above directions should not be characterized as currently fully covered specialized specification capabilities.
 
 ### Delivery Form
 
@@ -71,7 +71,7 @@ SanityOps provides two complementary delivery forms:
 
 - **Framework (Open Source Specification)**: Complete methodology documentation across Inspect, Risk, Quality, Relevance, and Core, released under CC BY-SA 4.0, enabling enterprises to build their own toolchain
 - **Platform (Tooling)**: The set of tools that implement the specification:
-  - 🟢 **Open source** — the standalone Inspector CLI (Apache 2.0): full Inspect coverage including Permission, plus Risk Explicit; integrates into CI/CD and can act as a client of the SanityOps Platform
+  - 🟢 **Open source** — the standalone Inspect CLI (Apache 2.0): full Inspect coverage including Permission, plus Risk Explicit; integrates into CI/CD and can act as a client of the SanityOps Platform
   - 🔵 **Commercial** — the full feature suite (Defect Inspector, Risk Scanner, Quality Evaluator), offered as SaaS / self-hosted
 
 Both forms share the same governance language and evaluation standards; enterprises can choose their adoption path based on their circumstances.
@@ -114,15 +114,26 @@ The following three specialized tools have technical value in their respective d
 
 ---
 
+### 3.3 Ecosystem Roles and Runtime Layer: FDE and Harness
+
+Beyond specialized tools, SanityOps also relates to two adjacent categories that are roles and layers rather than products. [SanityOps and FDE](/compare/sanityops-and-fde) positions SanityOps as the quality infrastructure for the Forward Deployed Engineer (the executor); [SanityOps and Harness](/compare/sanityops-and-harness) contrasts blueprint correctness (SanityOps) with runtime execution reliability (Harness).
+
+---
+
 ## 4. Detailed Comparison Entry Points
 
-The following three detailed comparison documents respectively depart from three SanityOps subsets to conduct detailed technical comparisons with corresponding specialized tools. Each document focuses on "what SanityOps can do vs. what the specialized tool can do," and explains combinable complementary paths.
+The following documents cover two categories: three detailed technical comparisons with specialized tools, and two relationship documents with engineering roles and the runtime layer.
 
 | Document | Comparison Object | SanityOps Subset | Core Comparison Dimensions |
 | --- | --- | --- | --- |
 | [vs. Promptfoo](/compare/compare-with-promptfoo) | Promptfoo | Risk Implicit | Root-cause localization, artifact-driven attack generation, shadow sandbox isolation |
 | [vs. RAGAS](/compare/compare-with-ragas) | RAGAS | Quality | Governance framework vs. evaluation library, critical-item independent gating, test case assetization |
 | [vs. NVIDIA SkillSpector](/compare/compare-with-skillspector) | SkillSpector | Inspect + Risk | Governance closed loop vs. security scanning, cross-artifact consistency |
+
+| Document | Relationship Object | Core Relationship |
+| --- | --- | --- |
+| [SanityOps and FDE](/compare/sanityops-and-fde) | Forward Deployed Engineer | Quality infrastructure for the executor |
+| [SanityOps and Harness](/compare/sanityops-and-harness) | Runtime execution layer | Blueprint correctness vs. runtime reliability |
 
 ---
 

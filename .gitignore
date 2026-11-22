@@ -31,5 +31,5 @@ desktop.ini
 *.crdownload
 *.tmp
 
-# Lite inspector — non-published fetch workspace (third-party source, incl. proprietary)
+# Inspector — non-published fetch workspace (third-party source, incl. proprietary)
 inspect-skill/_process/

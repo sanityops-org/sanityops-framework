@@ -13,7 +13,7 @@ description: "Hands-on guide to the SanityOps tools, Defect Inspector and Risk S
 
 | Core Subset | Spec License | Tool License / Delivery                               | Audience                                |
 | ----------- | ------------ | ----------------------------------------------------- | --------------------------------------- |
-| **Inspect** | CC BY-SA 4.0 | **CC BY-SA 4.0** (`sanityops-inspect-lite` skill) + **Apache 2.0** (Inspector CLI) + SaaS / self-hosted | Everyone                                |
+| **Inspect** | CC BY-SA 4.0 | **CC BY-SA 4.0** (`sanityops-inspector` skill) + **Apache 2.0** (Inspect CLI) + SaaS / self-hosted | Everyone                                |
 | **Risk**    | CC BY-SA 4.0 | **Risk Explicit**: Apache 2.0 (open-source CLI); **Risk Implicit**: closed-source SaaS / self-hosted (code-reviewable) | Explicit: everyone; Implicit: paying enterprise customers (under NDA) |
 | **Quality** | CC BY-SA 4.0 | Closed-source SaaS / self-hosted (code-reviewable)    | Paying enterprise customers (under NDA) |
 
@@ -23,21 +23,21 @@ description: "Hands-on guide to the SanityOps tools, Defect Inspector and Risk S
 
 ## Inspect — Open-Source Tooling, Free for Everyone
 
-Inspect ships as two open-source tools that run the same checks in different ways: a lite skill for quick in-agent checks, and a full implementation for CI/CD. Neither repairs artifacts; remediation and everything beyond static inspection live on the Platform.
+Inspect ships as two open-source tools that run the same checks in different ways: an inspector skill for quick in-agent checks, and a full implementation for CI/CD. Neither repairs artifacts; remediation and everything beyond static inspection live on the Platform.
 
-### `sanityops-inspect-lite` skill (CC BY-SA 4.0)
+### `sanityops-inspector` skill (CC BY-SA 4.0)
 
-A lite, report-only inspection skill applied by your host model. It runs the same Inspect and Risk Explicit checks on a single artifact, using a condensed subset (including Permission quick mode); it does not run Risk Implicit or runtime Quality, and it never repairs artifacts. For the full Inspect ruleset, use the CLI below.
+A report-only inspection skill applied by your host model. It runs the same Inspect and Risk Explicit checks on a single artifact, using a condensed subset (including Permission quick mode); it does not run Risk Implicit or runtime Quality, and it never repairs artifacts. For the full Inspect ruleset, use the CLI below.
 
-- **GitHub Repository**: [sanityops-inspect-lite](https://github.com/sanityops-org/sanityops-inspect-lite) — CC BY-SA 4.0
+- **GitHub Repository**: [sanityops-inspector](https://github.com/sanityops-org/sanityops-inspector) — CC BY-SA 4.0
 
 **How to use it**: in Claude Code, add the marketplace and install the plugin —
-`/plugin marketplace add sanityops-org/sanityops-inspect-lite` then `/plugin install sanityops-inspect-lite@sanityops`.
-For any other agent, `git clone` the repository and load **both** skills from `plugins/sanityops-inspect-lite/skills/` — `pre-inspect-extract/` (extraction layer) and `sanityops-inspect-lite/` (seven-stage inspector) — as skills, or paste `SKILL.md` and the reference checklists in as instructions. Then provide the artifacts to inspect, their tier declarations, and a version label; the skill runs its seven-stage flow and emits the report.
+`/plugin marketplace add sanityops-org/sanityops-inspector` then `/plugin install sanityops-inspector@sanityops`.
+For any other agent, `git clone` the repository and load **both** skills from `plugins/sanityops-inspector/skills/` — `sanityops-extract-only/` (extraction layer) and `sanityops-inspect-only/` (seven-stage inspector) — as skills, or paste `SKILL.md` and the reference checklists in as instructions. Then provide the artifacts to inspect, their tier declarations, and a version label; the skill runs its seven-stage flow and emits the report.
 
-### Inspector CLI (Apache 2.0)
+### Inspect CLI (Apache 2.0)
 
-The Inspector CLI is fully open source, allowing the community to freely use, audit, modify, and build upon it.
+The Inspect CLI is fully open source, allowing the community to freely use, audit, modify, and build upon it.
 
 - **GitHub Repository**: [sanityops-cli](https://github.com/sanityops-org/sanityops-cli) — Apache 2.0
 

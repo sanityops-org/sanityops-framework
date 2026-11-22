@@ -29,7 +29,7 @@ description: "Frequently asked questions about the SanityOps framework, its conc
 
 2. **Composition**: Three loosely coupled professional systems — Inspect (defect inspection), Risk (risk audit and dynamic validation), and Quality (quality assessment) — connected by Relevance, which maps defects → risk/quality.
 
-3. Delivery forms are the open-source Framework specification (CC BY-SA 4.0) + tools (the `sanityops-inspect-lite` skill and the Inspect CLI are open source; Risk/Quality are commercial SaaS / self-hosted).
+3. Delivery forms are the open-source Framework specification (CC BY-SA 4.0) + tools (the `sanityops-inspector` skill and the Inspect CLI are open source; Risk/Quality are commercial SaaS / self-hosted).
 
 4. **What it is not**: It does not replace IAM, network/backend security, production monitoring, model fine-tuning, or data governance; it cannot guarantee that Agents governed by SanityOps are absolutely secure or completely correct; and the conclusions of each system cannot substitute for one another (e.g., "Inspect PASS ≠ Security PASS").
 
@@ -126,7 +126,7 @@ description: "Frequently asked questions about the SanityOps framework, its conc
 
 **Answer**: A Logic Artifact is a structured, versionable asset that constrains and guides the LLM, and is SanityOps's "First-Class Governance Asset". Based on the hosting field, content independence, and direct influence on the LLM, SanityOps strictly limits the core types to three: **System Prompt** (instruction), **Skill** (behavior definition), and **Tool Schema** (structured tool definition). Agent, Workflow, Knowledge Source, Memory, Identity / Policy, etc. are defined as "objects" in Core, but Logic Artifacts (first-class governance assets) are limited to the three types above.
 
-Defect inspection for A2A-type Agents will be delivered as SanityOps v1.1.
+Defect inspection for A2A-type Agents will be delivered in SanityOps Framework 2.0 (planned for March 2027).
 
 **Source**:
 
@@ -417,52 +417,51 @@ They must not be conflated: the four answer different questions and must carry t
 
 #### Q34. How many kinds of output reports does SanityOps produce?
 
-**Answer**: SanityOps output reports come in two types: audit and summary. There is one of each per subset — Inspect, Risk Explicit, Risk Implicit, Quality — for 8 in total; the naming convention is `Voyager_{subset}-{audit|summary}_{date}.pdf`. Outputs also include the Relevance diagnostic correlation and the Gate release-decision summary.
+**Answer**: SanityOps output reports come in two types: audit and summary. There is one of each per subset — Inspect, Risk Explicit, Risk Implicit, Quality — for 8 in total; the platform's static-inspection reports use the naming convention `{case}__specification-{audit|summary}__{date}.pdf` (for example `medication-information-assistant__specification-audit__2026-11-20.pdf`). Outputs also include the Relevance diagnostic correlation and the Gate release-decision summary.
 
 **Source**:
 
-- [samples/results/](/samples/results/) — platform reports section (8 PDFs: inspect/explicit/implicit/quality × audit/summary)
+- [samples/](/samples/) — the hosted samples (static-inspection summary and audit PDFs for the medication-information-assistant case)
 - [core.md](./core.md) 6.2 (release summary status)
 
 #### Q35. What are the summary report samples?
 
-**Answer**: Summary reports: 4 samples in total (Voyager project):
+**Answer**: One static-inspection summary report is hosted:
 
-- [Voyager_inspect-summary_20260927.pdf](/samples/report/Voyager_inspect-summary_20260927.pdf)
-- [Voyager_explicit-summary_20260927.pdf](/samples/report/Voyager_explicit-summary_20260927.pdf)
-- [Voyager_implicit-summary_20260926.pdf](/samples/report/Voyager_implicit-summary_20260926.pdf)
-- [Voyager_quality-summary_20260927.pdf](/samples/report/Voyager_quality-summary_20260927.pdf)
+- [medication-information-assistant__specification-summary__2026-11-20.pdf](/samples/report/medication-information-assistant__specification-summary__2026-11-20.pdf)
+
+The other report types (Risk Explicit, Risk Implicit, Quality) are platform outputs not hosted in this sample set.
 
 **Source**:
 
-- [samples/results/](/samples/results/) — platform reports section
+- [samples/](/samples/) — Samples overview
 
 #### Q36. What are the audit report samples?
 
-**Answer**: Audit reports: 4 samples in total (Voyager project):
+**Answer**: One static-inspection audit report is hosted:
 
-- [Voyager_inspect-audit_20260927.pdf](/samples/report/Voyager_inspect-audit_20260927.pdf)
-- [Voyager_explicit-audit_20260927.pdf](/samples/report/Voyager_explicit-audit_20260927.pdf)
-- [Voyager_implicit-audit_20260926.pdf](/samples/report/Voyager_implicit-audit_20260926.pdf)
-- [Voyager_quality-audit_20260927.pdf](/samples/report/Voyager_quality-audit_20260927.pdf)
+- [medication-information-assistant__specification-audit__2026-11-20.pdf](/samples/report/medication-information-assistant__specification-audit__2026-11-20.pdf)
+
+The other report types (Risk Explicit, Risk Implicit, Quality) are platform outputs not hosted in this sample set.
 
 **Source**:
 
-- [samples/results/](/samples/results/) — platform reports section
+- [samples/](/samples/) — Samples overview
 
 ### 4.5 Samples and Walkthroughs
 
 #### Q37. What is a typical example of Agent Logic Artifact inspection and remediation?
 
-**Answer**: There are 3 typical inspection-and-remediation examples (each with a complete remediation process):
+**Answer**: The samples walk through a single example agent, the Medication Information Assistant — its logic artifacts, the Skill/CLI report, and the platform's specification reports:
 
-- [energy-management-assistant.md](../samples/cases/energy-management-assistant.md) Energy Management Assistant
-- [freight-logistics-assistant.md](../samples/cases/freight-logistics-assistant.md) Freight Logistics Assistant
-- [medication-information-assistant.md](../samples/cases/medication-information-assistant.md) Medication Information Assistant
+- [Medication Information Assistant — logic artifacts](/samples/cases/medication-information-assistant)
+- [Skill/CLI report](/samples/results/inspector/medication-information-assistant__inspector-2.0.0__2026-11-21)
+- [Platform summary report](/samples/report/medication-information-assistant__specification-summary__2026-11-20.pdf)
+- [Platform audit report](/samples/report/medication-information-assistant__specification-audit__2026-11-20.pdf)
 
 **Source**:
 
-- [samples/cases/](../samples/cases/) directory
+- [samples/](/samples/) overview
 
 ---
 
@@ -585,7 +584,7 @@ Therefore, the Guardrail as a "shallow, fast, last layer" defense-in-depth is ne
 
 ### Q50. Is SanityOps open source?
 
-**Answer**: SanityOps adopts a layered open-source strategy: the core Framework specification (11 sub-specifications: Inspect/Risk/Quality/Relevance/Core) is open source under CC BY-SA 4.0; two inspection tools are open source — the `sanityops-inspect-lite` skill (CC BY-SA 4.0), a lite version for quick in-agent checks, and the Inspect CLI (Apache 2.0), covering the full Inspect inspection (including Permission) and Risk Explicit. The Platform — including Inspect, Risk, and Quality — is not open source (closed-source SaaS / self-hosted), but enterprise customers under specific contractual conditions can obtain code-review access under NDA.
+**Answer**: SanityOps adopts a layered open-source strategy: the core Framework specification (11 sub-specifications: Inspect/Risk/Quality/Relevance/Core) is open source under CC BY-SA 4.0; two inspection tools are open source — the `sanityops-inspector` skill (CC BY-SA 4.0), a report-only version for quick in-agent checks, and the Inspect CLI (Apache 2.0), covering the full Inspect inspection (including Permission) and Risk Explicit. The Platform — including Inspect, Risk, and Quality — is not open source (closed-source SaaS / self-hosted), but enterprise customers under specific contractual conditions can obtain code-review access under NDA.
 
 **Source**:
 
@@ -594,7 +593,7 @@ Therefore, the Guardrail as a "shallow, fast, last layer" defense-in-depth is ne
 
 ### Q51. How does SanityOps charge?
 
-**Answer**: The Framework specification is free and open source (CC BY-SA 4.0); two inspection tools are open source — the `sanityops-inspect-lite` skill (CC BY-SA 4.0) and the Inspect CLI (Apache 2.0) — both run on your own model credentials at no charge; the commercial full-featured version (Defect Inspector, Risk Scanner, Quality Evaluator) is provided as SaaS / self-hosted. The hosted platform has no fixed public per-day limit (quota is confirmed together with your invite code); pricing is not listed and requires contacting sales (hello@sanityops.org).
+**Answer**: The Framework specification is free and open source (CC BY-SA 4.0); two inspection tools are open source — the `sanityops-inspector` skill (CC BY-SA 4.0) and the Inspect CLI (Apache 2.0) — both run on your own model credentials at no charge; the commercial full-featured version (Defect Inspector, Risk Scanner, Quality Evaluator) is provided as SaaS / self-hosted. The hosted platform has no fixed public per-day limit (quota is confirmed together with your invite code); pricing is not listed and requires contacting sales (hello@sanityops.org).
 
 **Source**:
 
@@ -603,7 +602,7 @@ Therefore, the Guardrail as a "shallow, fast, last layer" defense-in-depth is ne
 
 ### Q52. Can SanityOps be tried out?
 
-**Answer**: Yes. demo.sanityops.org provides an online demo of the full Inspect+Risk+Quality loop (in an early-access phase, invite-only, due to third-party LLM inference costs). How to request access: open the demo and click Register, click Get Code on the registration form, and the dialog shows the address to write to; email hello@sanityops.org from your registration email describing your use case, and we will send an invite code. In addition, both open-source tools — the `sanityops-inspect-lite` skill and the CLI (sanityops-cli) — are free to use locally.
+**Answer**: Yes. demo.sanityops.org provides an online demo of the full Inspect+Risk+Quality loop (in an early-access phase, invite-only, due to third-party LLM inference costs). How to request access: open the demo and click Register, click Get Code on the registration form, and the dialog shows the address to write to; email hello@sanityops.org from your registration email describing your use case, and we will send an invite code. In addition, both open-source tools — the `sanityops-inspector` skill and the CLI (sanityops-cli) — are free to use locally.
 
 **Source**:
 
@@ -630,7 +629,7 @@ Therefore, the Guardrail as a "shallow, fast, last layer" defense-in-depth is ne
 
 ### Q55. How do I download and use the Inspect CLI?
 
-**Answer**: The Inspect CLI (sanityops-cli) is open source (Apache 2.0), covers the full Inspect inspection (including Permission) and Risk Explicit, and requires Python ≥ 3.11 and your own LLM API key. Install: install script (macOS/Linux `curl .../install.sh | bash`; Windows `irm .../install.ps1 | iex`) or `pip install sanityops-cli`, or from source. Use: `sanityops-cli init` generates `.sanityops/inspect_config.yaml` (containing the model and artifact paths); `sanityops-cli inspect` runs the inspection (`--check-level L1` fast / L2 default / L3 deep). Optional: `sanityops-cli config server.api_key` makes the CLI act as a client of the Platform for artifact synchronization; omit it to run entirely locally.
+**Answer**: The Inspect CLI (sanityops-cli) is open source (Apache 2.0), covers the full Inspect inspection (including Permission) and Risk Explicit, and requires Python ≥ 3.11 and your own LLM API key. Install: install script (macOS/Linux `curl .../install.sh | bash`; Windows `irm .../install.ps1 | iex`) or `pip install sanityops-cli`, or from source. Use: `sanityops-cli init` generates `.sanityops/inspect_config.yaml` (containing the model and artifact paths); `sanityops-cli inspect` runs the inspection (every run performs the full deep inspection; there is no level/depth parameter). Optional: `sanityops-cli config server.api_key` makes the CLI act as a client of the Platform for artifact synchronization; omit it to run entirely locally.
 
 **Source**:
 

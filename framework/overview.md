@@ -21,7 +21,7 @@ Runtime evaluation of an Agent's output quality and detection of sophisticated l
 
 The output quality and logical vulnerabilities of an Agent are closely tied to the rigor of each logical artifact (Prompt, Skill, Tool Schema, Permission), manifesting as a wide variety of defects as well as permission requests disproportionate to the assigned responsibilities.
 
-We inspected 500+ logical artifacts from 50+ agents — including LLM-generated artifacts — and over 90% had at least one defect (minor defects included). This is an informal observation, not a rigorous study — run the open-source sanityops-inspect-lite skill on your own artifacts and see for yourself.
+We inspected 500+ logical artifacts from 50+ agents — including LLM-generated artifacts — and over 90% had at least one defect (minor defects included). This is an informal observation, not a rigorous study — run the open-source sanityops-inspector skill on your own artifacts and see for yourself.
 
 Therefore, we start from the inspection and remediation of defects and permissions in logical artifacts, and extend to evaluating Agent output quality and detecting logical risks.
 
@@ -37,9 +37,9 @@ SanityOps has two parts:
 
 2. **Platform (the tooling)** — the set of tools that implement the specifications above:
    
-   - 🟢 **Open source** — a lite, report-only inspection skill (`sanityops-inspect-lite`, CC BY-SA 4.0) that runs Inspect and Risk Explicit checks inside your own agent.
+   - 🟢 **Open source** — a report-only inspection skill (`sanityops-inspector`, CC BY-SA 4.0) that runs Inspect and Risk Explicit checks inside your host model.
 
-   - 🟢 **Open source** — the Inspector CLI (Apache 2.0): full Inspect and Risk Explicit checks, report-only, integrated into CI/CD and kept in sync with the SanityOps Platform.
+   - 🟢 **Open source** — the Inspect CLI (Apache 2.0): full Inspect and Risk Explicit checks, report-only, integrated into CI/CD and kept in sync with the SanityOps Platform.
    
    - 🔵 **Commercial** — the full feature suite (Defect Inspector, Risk Scanner, Quality Evaluator), offered as **SaaS / self-hosted**.
 
@@ -94,14 +94,14 @@ Inspect performs static defect and permission checks on logical artifacts; Risk 
 
 ## Get Started
 
-The framework specification is fully open, along with two open-source tools — a lite inspection skill (CC BY-SA 4.0) and the Inspect CLI (Apache 2.0); Risk Implicit and Quality are offered as **SaaS / self-hosted**.
+The framework specification is fully open, along with two open-source tools — a report-only inspection skill (CC BY-SA 4.0) and the Inspect CLI (Apache 2.0); Risk Implicit and Quality are offered as **SaaS / self-hosted**.
 
 - **Read the framework** — a guided reading path: [Framework Home](/framework/)
-- **Check an artifact in your own agent** — a lite, report-only inspection skill ([`sanityops-inspect-lite`](https://github.com/sanityops-org/sanityops-inspect-lite)) that runs Inspect and Risk Explicit checks on a Prompt, Skill, or Tool Schema inside your host model.
+- **Check an artifact in your own agent** — a report-only inspection skill ([`sanityops-inspector`](https://github.com/sanityops-org/sanityops-inspector)) that runs Inspect and Risk Explicit checks on a Prompt, Skill, or Tool Schema inside your host model.
 - **Try the Inspect CLI** — full Inspect checks (including Permission) plus Risk Explicit, locally or in CI/CD: [Try the Tools](/framework/try-the-tools) · `pip install sanityops-cli`
 - **Try the live demo** — the full Inspect + Risk + Quality loop: [demo.sanityops.org](https://demo.sanityops.org/). Sign-up is invite-only (LLM inference costs) — click **Get Code** on the registration form.
-- **Browse sample test cases** — System Prompts, Skills, and Tool Schemas for three example agents (energy, freight logistics, medication), ready to feed to the lite skill or the CLI: [samples/cases/](/samples/cases/)
-- **Review inspection results** — lite-skill records, CLI runs, and the platform's PDF reports for a "Voyager" sample agent, each bound to the tool and rule version that produced it: [samples/results/](/samples/results/)
+- **Browse the sample test case** — the System Prompt, Skill, and Tool Schemas for a medication-information example agent, ready to feed to the inspection skill or the CLI: [samples/](/samples/)
+- **Review inspection results** — the Skill/CLI report and the platform's specification PDFs for the sample agent, each bound to the tool and rule version that produced it: [samples/](/samples/)
 
 ## Use Cases
 
@@ -162,11 +162,14 @@ Terms appearing in this document such as logical artifact, Prompt / Skill / Tool
 - ✅ Inspect and Permission defect coverage expanded; Permission Quick Mode grown to 17 items
 - ✅ Risk Explicit regraded to P0/P1/P2, with Relevance and Cross aligned
 - ✅ Multi-hit inspection design principle stated explicitly in all five Inspect sub-specifications
-- ✅ Terminology normalized to "Logic Artifacts"; `sanityops-inspect-lite` instance records added
+- ✅ Terminology normalized to "Logic Artifacts"; `sanityops-inspector` instance records added
 
-**v1.2 · November 2026**
+**v1.2 · January 2027**
 
 - 🔜 DMC 1.0 derivative model capability evaluation and optimization method
+
+**v2.0 · March 2027**
+
 - 🔜 Inspect A2A 1.0, A2A Service Contract Defect Inspection Specification
 
 ## Contributing
@@ -180,7 +183,7 @@ You are welcome to participate in improvements via Issues, Pull Requests, or Dis
 
 ## License
 
-The Framework specification and the `sanityops-inspect-lite` skill are licensed under CC BY-SA 4.0; the open-source Inspect CLI is separately licensed under Apache 2.0.
+The Framework specification and the `sanityops-inspector` skill are licensed under CC BY-SA 4.0; the open-source Inspect CLI is separately licensed under Apache 2.0.
 
 ## Contact Us
 
