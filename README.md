@@ -9,7 +9,7 @@
 
 ---
 
-[![Version](https://img.shields.io/badge/version-v1.1-blue)](https://github.com/sanityops-org/sanityops-framework) [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/) [![AI Agent Governance](https://img.shields.io/badge/AI%20Agent-Governance-6f42c1)](https://github.com/sanityops-org/sanityops-framework)
+[![Version](https://img.shields.io/badge/version-v1.2-blue)](https://github.com/sanityops-org/sanityops-framework) [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/) [![AI Agent Governance](https://img.shields.io/badge/AI%20Agent-Governance-6f42c1)](https://github.com/sanityops-org/sanityops-framework)
 
 ---
 
@@ -205,7 +205,11 @@ Terms appearing in this document such as logical artifact, Prompt / Skill / Tool
 - ✅ Multi-hit inspection design principle stated explicitly in all five Inspect sub-specifications
 - ✅ Terminology normalized to "Logic Artifacts"; `sanityops-inspector` instance records added
 
-**v1.2 · January 2027**
+**v1.2 · November 2026**
+
+- ✅ Relevance mapping specification corrections (two normative fixes and record-contract alignment)
+
+**v1.3 · January 2027**
 
 - 🔜 DMC 1.0 derivative model capability evaluation and optimization method
 

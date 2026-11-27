@@ -1,6 +1,6 @@
 # SanityOps
 
-> SanityOps is an open, vendor-neutral framework for AI Agent continuous governance. It specifies how to inspect Logic Artifacts (System Prompt, Skill, Tool Schema, Permission) for defects, scan explicit and implicit risks, and evaluate output quality — bound to versioned baselines and release gates. Open specification under CC BY-SA 4.0 (Framework v1.1).
+> SanityOps is an open, vendor-neutral framework for AI Agent continuous governance. It specifies how to inspect Logic Artifacts (System Prompt, Skill, Tool Schema, Permission) for defects, scan explicit and implicit risks, and evaluate output quality — bound to versioned baselines and release gates. Open specification under CC BY-SA 4.0 (Framework v1.2).
 
 ## Getting Started
 
