@@ -2136,7 +2136,7 @@ This document judges only "declaration missing/inconsistent" (Inspect); explicit
 <a id="104-relationship-with-risk-implicit"></a>
 ### 10.4 Relationship with Risk Implicit
 
-Risk Implicit uses the QD-S defects produced by this document as input to generate attack samples (implicit.md §5). **An implicit result of B (externally blocked) or C (model refused) must not close this document's static defect** (AGENTS.md, relevance.md §2.4.1). A "Static Pass" in this document means only that the static defect has been remediated; runtime effectiveness requires Implicit/Quality dynamic validation.
+Risk Implicit uses the QD-S defects produced by this document as input to generate attack samples (implicit.md §5). **An implicit result of B (externally blocked) or C (model refused) must not close this document's static defect** (core.md §4.8; relevance.md §2.4.1). A "Static Pass" in this document means only that the static defect has been remediated; runtime effectiveness requires Implicit/Quality dynamic validation.
 
 - External content instruction-data trust boundary (Part 12 candidate QD-S-2.5) → attack samples belong to Implicit (indirect injection is excluded by explicit.md §0.1.4).
 

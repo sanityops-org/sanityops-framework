@@ -7,9 +7,9 @@ description: "How SanityOps maps discovered defects to their business and qualit
 
 ---
 
-**Version**: v1.1
+**Version**: v1.2
 
-**Release Date**: October 2026
+**Release Date**: November 2026
 
 **Maintained by**: Sanity AI Labs
 
@@ -94,6 +94,7 @@ description: "How SanityOps maps discovered defects to their business and qualit
 - [A.2 Skill Defect Mapping](#a2-skill-defect-mapping)
 - [A.3 Tool Defect Mapping](#a3-tool-defect-mapping)
 - [A.4 Cross Defect Mapping](#a4-cross-defect-mapping)
+- [A.5 Permission Defect Mapping](#a5-permission-defect-mapping)
 - [Appendix B: Tool-Agent Failure Mode and Supplementary Test Mapping](#appendix-b-tool-agent-failure-mode-and-supplementary-test-mapping)
 - [B.1 QD Category to Failure Mode Mapping](#b1-qd-category-to-failure-mode-mapping)
 - [B.2 Failure Fact Reverse Diagnostic Quick Reference](#b2-failure-fact-reverse-diagnostic-quick-reference)
@@ -168,6 +169,8 @@ This specification applies to the following static logic artifacts and their rel
 - Agent Skill name, description, trigger conditions, inputs and outputs, failure strategies, and permission declarations;
 - Tool Schema `name`, `description`, `inputSchema`, parameter constraints, side effects, and changes;
 - Consistency relationships between Prompt–Skill, Prompt–Tool, and Skill–Tool;
+- Consistency and circular-call relationships among multiple Skills and multiple Tools;
+- Responsibility–permission proportionality mapping relationships for permission defects (QD-PM);
 - Linkage relationships among the above artifacts in security validation, quality supplementary testing, and release governance.
 
 <a id="022-out-of-scope"></a>
@@ -695,7 +698,7 @@ After a Quality failure, the platform should output "failure fact + candidate In
 <a id="36-quality-regression-rules-after-remediation"></a>
 ### 3.6 Quality Regression Rules After Remediation
 
-After remediating an Inspect defect, passing the static re-inspection alone should not be the basis for closure.
+After remediating an Inspect defect, passing the static re-inspection alone should not be the basis for closure. This section executes on top of the CH-L minimum re-inspection and regression requirements of Core §8.3–§8.4 and does not replace change-level determination; P2 findings not listed separately should still determine re-inspection or regression per CH-L, residual risk, and the improvement plan.
 
 | Change Type | Minimum Regression Requirements |
 |-------------|--------------------------------|
@@ -856,20 +859,22 @@ When influencing mapping output of Risk test recommendations, at least the follo
 <a id="46-linked-defect-chain-recording-and-escalation"></a>
 ### 4.6 Linked Defect Chain Recording and Escalation
 
-Defect chain records should include at least:
+Defect chain records must first satisfy the minimum record requirements of Core §7.5.2; this table specifies their Relevance representation and additional scenario fields:
 
 | Field | Description |
 |---|---|
 | `chain_id` | Stable unique identifier |
 | `chain_name` | Human-readable name |
 | `chain_type` | `security`, `tool_quality`, or `rag_quality` |
-| `members` | Member QDs, artifacts, versions, and roles in the chain |
+| `members` | Member Findings, QDs, artifacts, versions, and roles in the chain |
 | `chain_hypothesis` | Description of candidate attack or failure path |
 | `required_conditions` | Permissions, data, Tool, or environment conditions required for the chain to hold |
 | `potential_impacts` | D1/D2/D3, availability, auditability, or quality impact |
 | `validation_plan` | End-to-end Risk or Quality test plan |
 | `chain_status` | Open, validating, confirmed, remediated, closed |
 | `owners` | Prompt, Skill, Tool, security, and quality responsible parties |
+| `evidence_level` | `static_candidate`, `dynamic_support`, or `actual_reproduction` |
+| `remediation_priority` | Fix order and priority relationships among member Findings |
 
 When any of the following conditions are met, a single defect should be escalated to defect chain governance:
 
@@ -984,7 +989,7 @@ The 11 statuses in this section are **Relevance mapping progress statuses**, des
 | `CLOSED` | `closed` |
 | `ACCEPTED_EXCEPTION` | `accepted` |
 
-> Core's `invalid` (false positive or not applicable) has no corresponding progress status in this section; when a mapping does not hold, the Finding should be marked `invalid` and the exclusion rationale recorded.
+> Core's `invalid` (false positive or not applicable) has no corresponding progress status in this section. When a mapping does not hold, mark the mapping review status as `rejected`, or record the mapping strength as `not_applicable` (not applicable), and record the exclusion rationale; do not change the source Finding status as a result. Only when the source Finding itself is confirmed through review to be a false positive or not applicable should it be marked `invalid` per Core §5.3.
 
 <a id="54-comprehensive-gate-and-release-decision-boundaries"></a>
 ### 5.4 Comprehensive Gate and Release Decision Boundaries
@@ -1007,7 +1012,7 @@ This section only explains **how conclusions from multiple sources are merged an
 <a id="542-risk-acceptance-limitations"></a>
 #### 5.4.2 Risk Acceptance Limitations
 
-Risk acceptance is only applicable to scenarios where the source specification permits exceptions, and must at minimum document:
+Risk acceptance is only applicable to scenarios where the source specification permits exceptions. A complete Exception Record must conform to Core §9.3–§9.4. In the Relevance mapping scenario, particular attention must be paid to documenting at least:
 
 - The specific QD, EX, attack result, or quality failure being accepted;
 - The business justification for not remediating;
@@ -1328,6 +1333,7 @@ For defect chains that have been dynamically validated as exploitable, closure m
 > - QD-PS-1.6 and QD-ST-3.5 are same-root (output constraint/structure consistency); the deduplication primary is QD-ST-3.5.
 > - QD-TT-5.1 / QD-TT-5.2 carry over from the Tool subset's QD-T-3.5 (Cross-Tool Data Flow) / QD-T-4.3 (Multi-Tool Semantic Competition); the original namespace no longer maps them repeatedly.
 
+<a id="a5-permission-defect-mapping"></a>
 ## A.5 Permission Defect Mapping
 
 > `QD-PM-*` are produced by the Inspect Permission Governance subset (permission v1.1). This table only defines mapping directions,
@@ -1342,7 +1348,7 @@ For defect chains that have been dynamically validated as exploitable, closure m
 | `QD-PM-3.1~3.6` | Permission Granularity (including 3.3 role substitution and 3.4 high-risk not separated, fixed P0) | AC-L1~L4 (3.4/3.5/3.6 are conditional items) | AS-04, AS-05 | D2, D3 | Strong | A single role completing "initiation + approval", high-risk and routine operations executed with the same authority, and role impersonation testing |
 | `QD-PM-4.1~4.8` | Permission Propagation (including 4.2 downstream exceeds upstream, 4.4 delegation escalation, 4.8 external permissions; also the INHERITED overlap marker) | AC-L1~L4 (4.3/4.4/4.5/4.6 delegation chain items are AC-L4 only; 4.7 is AC-L2+; 4.8 is a conditional item) | AS-04, AS-07, AS-08 | D1, D2, D3 | Strong | Call chain permission inheritance, downstream vs upstream, delegation chain escalation, and external permission source testing |
 | `QD-PM-5.1~5.7` | Permission Boundary (including 5.4 isolation substituting for fixed P0, 5.7 exemption uncontrolled) | AC-L1~L4 (5.4 applies unconditionally; 5.5/5.7 are conditional items requiring the corresponding forms) | AS-04, AS-05 | D2, D3 | Strong | Exemption trigger conditions, exemption expiration, and bypass after isolation substitutes for permission constraints testing |
-| `QD-PM-6.1~6.7` | Permission Auditability (including 6.3 no human confirmation fixed P0, 6.5 inventory not enumerable fixed P0, 6.7 fixed P1) | AC-L1~L4 (6.6 requires AC-L2+; 6.1/6.2/6.3/6.4/6.7 are conditional items requiring OR-L2+/L3 or regulated data) | AS-05, AS-09 | D2, D3, Auditability | Medium (the group contains 6.3/6.5 fixed P0; group-level strength does not represent grading) | High-risk operation direct reach without confirmation, permission inventory not enumerable / not reviewable, and audit log missing testing |
+| `QD-PM-6.1~6.7` | Permission Auditability (including 6.3 no human confirmation fixed P0, 6.5 inventory not enumerable fixed P0, 6.7 fixed P1) | AC-L1~L4 (6.1/6.5 apply at all levels; 6.2/6.4 require OR-L2+; 6.3 requires OR-L3; 6.6 requires AC-L2+; 6.7 requires regulated data) | AS-05, AS-09 | D2, D3, Auditability | Medium (the group contains 6.3/6.5 fixed P0; group-level strength does not represent grading) | High-risk operation direct reach without confirmation, permission inventory not enumerable / not reviewable, and audit log missing testing |
 
 > **Note**: QD-PM totals 43 items and is mapped here in 6 groups. The attack surfaces and impact types of group members use the group-level mapping as a common direction, but the recommended validation column of each group already lists the differentiated directions within the group; the group-level "mapping strength" indicates how strongly the group as a whole should be prioritized for validation and does not represent the severity level of member rules (see §1.3).
 
@@ -1588,14 +1594,23 @@ regression_requirements:
 chain_id: SC-04
 chain_name: Cross-Tool Sensitive Data Exfiltration Candidate Chain
 chain_type: security
-status: open
+chain_status: open
 
 members:
-  - defect_id: QD-S-1.5
+  - finding_id: F-ORG-20260719-0101
+    defect_id: QD-S-1.5
+    artifact: skill:customer-read
+    artifact_version: sha256:...
     role: Data source boundary missing
-  - defect_id: QD-TT-5.1
+  - finding_id: F-ORG-20260719-0102
+    defect_id: QD-TT-5.1
+    artifact: tool:external_send
+    artifact_version: sha256:...
     role: Cross-Tool data flow risk
-  - defect_id: QD-P-2.3.4
+  - finding_id: F-ORG-20260719-0103
+    defect_id: QD-P-2.3.4
+    artifact: prompt:customer-agent
+    artifact_version: sha256:...
     role: Security and privacy filter missing
 
 chain_hypothesis:
@@ -1604,8 +1619,18 @@ chain_hypothesis:
     external destinations, and Prompt does not define sensitive information filtering,
     an unauthorized data exfiltration path may form.
 
+required_conditions:
+  - Skill can read data sources containing sensitive fields
+  - Tool can forward data to external destinations
+  - Prompt does not define sensitive information filtering
+
 potential_impacts: [confidentiality, authorization]
 mapping_strength: strong
+evidence_level: static_candidate
+remediation_priority:
+  - F-ORG-20260719-0103
+  - F-ORG-20260719-0102
+  - F-ORG-20260719-0101
 
 validation_plan:
   environment: shadow
@@ -1621,6 +1646,8 @@ validation_plan:
     - Sensitive fields enter unauthorized Tool calls
     - Exfiltration destination can be controlled by user input or untrusted content
 
+owners: [Prompt Owner, Skill Owner, Tool Owner, Security Owner]
+
 required_regression:
   - Data source allowlist verification
   - Cross-Tool taint propagation verification
@@ -1631,9 +1658,11 @@ required_regression:
 <a id="e3-api-return-example-json"></a>
 ### E.3 API Return Example (JSON)
 
+> This example is the impact-mapping projection of a Finding, not a complete Finding Record; retrieve the complete record by `finding_id`, which must conform to Core §5.2.
+
 ```json
 {
-  "finding_id": "F-20260719-00128",
+  "finding_id": "F-ORG-20260719-00128",
   "defect": {
     "rule_id": "QD-S-5.2",
     "name": "Missing High-Risk Operation Confirmation Mechanism",

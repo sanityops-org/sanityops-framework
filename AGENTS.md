@@ -4,7 +4,7 @@ This file tells AI/automation agents how the SanityOps documentation is organize
 
 It is a **map of relationships and authority**, not a restatement of any specification. When this guide conflicts with a normative document, the normative document wins; please report the mismatch instead of silently following this file.
 
-Last updated: 2026-10-07 · Framework v1.1
+Last updated: 2026-11-27 · Framework v1.2
 
 ---
 
@@ -135,7 +135,15 @@ Known documentation gap: none (the former `inspect/skill.md` Part 10 "Relationsh
 
 ---
 
-## 6. Suggested Reading Order
+## 6. Interaction Rules
+
+- **Minimize questions to the user.** Before asking, first ask yourself whether you can directly understand and resolve the matter from the user's perspective; do not offload a decision or explanation to the user that you could have handled yourself.
+- **When a question is genuinely required** — a decision or explanation only the user can make — present full context: what the issue is, why the user's input is needed, and the concrete options and trade-offs. Do not ask a bare, decontextualized question.
+- **Do not shift the responsibility for adjudication and explanation onto the user.** Resolve what you can; escalate only what truly requires the user's judgment.
+
+---
+
+## 7. Suggested Reading Order
 
 1. `framework/overview.md` — big picture
 2. `framework/core.md` — common semantics (reference as needed)

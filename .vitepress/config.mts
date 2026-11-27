@@ -40,8 +40,10 @@ export default defineConfig({
   // GitHub-facing and internal files, not part of the website
   srcExclude: [
     'README.md',
+    'AGENTS.md',
     'RELEASE-NOTE-v1.0.md',
     'RELEASE-NOTE-v1.1.md',
+    'RELEASE-NOTE-v1.2.md',
     'inspect-skill/_process/**', // fetch workspace + drafting logs, not website content
   ],
 
@@ -50,8 +52,22 @@ export default defineConfig({
   },
 
   transformHead({ pageData }) {
+    const url = pageUrl(pageData.relativePath)
+    const siteDescription =
+      'An open, vendor-neutral framework for AI agent governance. Built on logical-artifact defect inspection, extending into Risk scan and Quality assessment.'
+    const title =
+      pageData.title && !pageData.title.includes('SanityOps')
+        ? `${pageData.title} — SanityOps`
+        : (pageData.title || 'SanityOps — AI Agent Continuous Governance Framework')
+    const description = pageData.description || siteDescription
+
     const head: HeadConfig[] = [
-      ['link', { rel: 'canonical', href: pageUrl(pageData.relativePath) }],
+      ['link', { rel: 'canonical', href: url }],
+      ['meta', { property: 'og:title', content: title }],
+      ['meta', { property: 'og:description', content: description }],
+      ['meta', { property: 'og:url', content: url }],
+      ['meta', { name: 'twitter:title', content: title }],
+      ['meta', { name: 'twitter:description', content: description }],
     ]
 
     // Home page only: Organization + WebSite structured data.
@@ -137,18 +153,13 @@ export default defineConfig({
     ['link', { rel: 'stylesheet', href: '/cookie-consent.css' }],
     ['script', { src: '/cookie-consent.js' }],
 
-    // Open Graph
+    // Open Graph (static fields; title/description/url are set per-page in transformHead)
     ['meta', { property: 'og:type', content: 'website' }],
-    ['meta', { property: 'og:title', content: 'SanityOps — AI Agent Continuous Governance Framework' }],
-    ['meta', { property: 'og:description', content: 'An open, vendor-neutral framework for AI agent governance. Built on logical-artifact defect inspection, extending into Risk scan and Quality assessment.' }],
     ['meta', { property: 'og:image', content: 'https://www.sanityops.org/sanityops-logo.png' }],
-    ['meta', { property: 'og:url', content: 'https://www.sanityops.org' }],
     ['meta', { property: 'og:site_name', content: 'SanityOps' }],
 
-    // Twitter Card
+    // Twitter Card (static fields; title/description are set per-page in transformHead)
     ['meta', { name: 'twitter:card', content: 'summary' }],
-    ['meta', { name: 'twitter:title', content: 'SanityOps — AI Agent Continuous Governance Framework' }],
-    ['meta', { name: 'twitter:description', content: 'An open, vendor-neutral framework for AI agent governance. Built on logical-artifact defect inspection, extending into Risk scan and Quality assessment.' }],
     ['meta', { name: 'twitter:image', content: 'https://www.sanityops.org/sanityops-logo.png' }],
   ],
 

@@ -1,5 +1,8 @@
 ---
 layout: home
+title: SanityOps — AI Agent Continuous Governance Framework
+titleTemplate: false
+description: Open, vendor-neutral framework for AI agent governance — inspect prompts, skills, and tool schemas for defects, then gate releases with risk and quality checks.
 
 hero:
   name: SanityOps
