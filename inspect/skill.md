@@ -227,7 +227,7 @@ QD-S-x.y
 
 #### 0.2.3 Skill Operational Risk Levels (`OR-L`)
 
-> **【Global notation convention · Mandatory】** Throughout this document's body text, tables, examples, and appendices, `L1` / `L2` / `L3` are **always** shorthand for `OR-L1` / `OR-L2` / `OR-L3` (Skill operational risk levels) and are fully equivalent. Except in this definition section, the `OR-` prefix is not repeated at each occurrence. Any standalone `L1` / `L2` / `L3` **must not** be read as `AC-L` (Agent complexity level) or any other grading model. This convention applies with full force to every chapter, appendix, example, and report field in this document.
+> **[Global notation convention · Mandatory]** Throughout this document's body text, tables, examples, and appendices, `L1` / `L2` / `L3` are **always** shorthand for `OR-L1` / `OR-L2` / `OR-L3` (Skill operational risk levels) and are fully equivalent. Except in this definition section, the `OR-` prefix is not repeated at each occurrence. Any standalone `L1` / `L2` / `L3` **must not** be read as `AC-L` (Agent complexity level) or any other grading model. This convention applies with full force to every chapter, appendix, example, and report field in this document.
 
 | Risk Level | Designation | Definition | Typical Characteristics |
 | --- | --- | --- | --- |

@@ -1814,7 +1814,7 @@ This part defines the **parameter constraint, high-risk operation, and semantic 
 <a id="31-tool-risk-level-definitions"></a>
 ### 3.1 Tool Operational Risk Level Definitions (`OR-L`)
 
-> **【Global Symbol Convention · Mandatory】** In the body text, tables, examples, and appendices of this document, `L1` / `L2` / `L3` are **always** shorthand for `OR-L1` / `OR-L2` / `OR-L3` (Tool Operational Risk Level); the two are completely equivalent. Except in this definition section, the `OR-` prefix is not repeated everywhere in the document. Any isolated `L1` / `L2` / `L3` **MUST NOT** be understood as `AC-L` (Agent Complexity Level) or any other grading model. This convention is mandatory for all chapters, appendices, examples, and report fields in this document.
+> **[Global Symbol Convention · Mandatory]** In the body text, tables, examples, and appendices of this document, `L1` / `L2` / `L3` are **always** shorthand for `OR-L1` / `OR-L2` / `OR-L3` (Tool Operational Risk Level); the two are completely equivalent. Except in this definition section, the `OR-` prefix is not repeated everywhere in the document. Any isolated `L1` / `L2` / `L3` **MUST NOT** be understood as `AC-L` (Agent Complexity Level) or any other grading model. This convention is mandatory for all chapters, appendices, examples, and report fields in this document.
 
 <a id="311-agent-level-classification"></a>
 #### 3.1.1 Operational Risk Level Classification
