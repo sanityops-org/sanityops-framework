@@ -6,7 +6,7 @@ const hostname = 'https://www.sanityops.org'
 function pageUrl(relativePath: string): string {
   const path = relativePath
     .replace(/(^|\/)index\.md$/, '$1')
-    .replace(/\.md$/, '.html')
+    .replace(/\.md$/, '')
   return `${hostname}/${path}`
 }
 
@@ -33,6 +33,9 @@ export default defineConfig({
   description: 'AI Agent Continuous Governance Framework',
   lang: 'en-US',
   lastUpdated: true,
+
+  // Serve clean URLs (no `.html`) to match the live host's redirect rules.
+  cleanUrls: true,
 
   // Default to dark appearance (the toggle stays available)
   appearance: 'dark',
@@ -309,7 +312,7 @@ export default defineConfig({
 
     footer: {
       message: '<a href="/legal/privacy-policy">Privacy Policy</a> · <a href="/legal/terms-of-service">Terms of Service</a> · <a href="/legal/cookie-policy">Cookie Policy</a> · <a href="/legal/responsible-disclosure-policy">Responsible Disclosure</a> · <a href="/legal/security-statement">Security</a> · <span id="cc-footer-preferences">Cookie Preferences</span> · <a href="mailto:hello@sanityops.org">Contact: hello@sanityops.org</a>',
-      copyright: 'Copyright © 2026 Sanity AI Labs · v1.0 · Licensed under CC BY-SA 4.0',
+      copyright: 'Copyright © 2026 Sanity AI Labs · v1.2 · Licensed under CC BY-SA 4.0',
     },
 
     outline: {
