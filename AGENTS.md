@@ -81,7 +81,7 @@ These explain, navigate, or exemplify. They **must never define or redefine rule
 - All `index.md` files — navigation hubs only.
 - `compare/*` — ecosystem positioning; `sanityops-positioning.md` is the overview, the other four files (FDE, Harness, Promptfoo, RAGAS, SkillSpector) are topic branches.
 - `samples/cases/*.md` (1 agent) — **test case / input**: a version-frozen "Fixed Artifacts" bundle (System Prompt + 1 Skill + 5 Tool Schemas); not rule definitions.
-- `samples/results/inspector/*.md` — **inspection result / output** (analogous to `F-*` Finding instances in core.md §3.3): a single Skill/CLI report, plus the platform's specification PDFs (`public/samples/report/`). Each record is bound to the tool and rule version stated in its header.
+- `samples/results/inspector/*.md` — **inspection result / output** (analogous to `F-*` Finding instances in core.md §3.3): a single Inspector Skill report, plus the platform's specification PDFs (`public/samples/report/`). Each record is bound to the tool and rule version stated in its header.
 - `inspect-skill/*` — no published site content. The `sanityops-inspector` deliverable (SKILL.md, a non-normative `README.md` auxiliary guide, condensed `references/` checklists, and worked samples) lives in its own repository (`sanityops-org/sanityops-inspector`); it is a condensed extraction of the L1 sub-specifications it covers, defines no new rules, and never overrides its sources. Only the non-published, gitignored `inspect-skill/_process/**` fetch workspace remains in this repo.
 - `community/*`, `legal/*` — independent of the specification system; never cite them as normative basis.
 

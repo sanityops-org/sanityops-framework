@@ -23,11 +23,11 @@ description: "Hands-on guide to the SanityOps tools, Defect Inspector and Risk S
 
 ## Inspect — Open-Source Tooling, Free for Everyone
 
-Inspect ships as two open-source tools that run the same checks in different ways: an inspector skill for quick in-agent checks, and a full implementation for CI/CD. Neither repairs artifacts; remediation and everything beyond static inspection live on the Platform.
+Inspect ships as two open-source entry points that use the same inspection engine and methodology: an inspector skill executed by a host agent, and a CLI for command-line workflows. The CLI additionally synchronizes artifacts to the SanityOps Platform when configured. Neither tool repairs artifacts or runs Risk Implicit or runtime Quality; those capabilities live on the Platform.
 
 ### `sanityops-inspector` skill (CC BY-SA 4.0)
 
-A report-only inspection skill applied by your host model. It runs the same Inspect and Risk Explicit checks on a single artifact, using a condensed subset (including Permission quick mode); it does not run Risk Implicit or runtime Quality, and it never repairs artifacts. For the full Inspect ruleset, use the CLI below.
+A report-only inspection skill applied by your host model. It uses the same inspection engine, methodology, and condensed rule set as the CLI — a subset of the full specification — and neither open-source tool runs Risk Implicit or runtime Quality, nor repairs artifacts. Use the CLI below for a command-line workflow or optional Platform synchronization.
 
 - **GitHub Repository**: [sanityops-inspector](https://github.com/sanityops-org/sanityops-inspector) — CC BY-SA 4.0
 
@@ -43,7 +43,7 @@ The Inspect CLI is fully open source, allowing the community to freely use, audi
 
 - **Use Case**: Static defect inspection of **Logic Artifacts** (System Prompt / Skill / Tool Schema), their cross-artifact relationships, and Permission — plus **Risk Explicit** checks, suitable for local development or CI/CD integration.
 
-- **Note**: The open-source CLI covers the full Inspect inspection (including Permission) and Risk Explicit — report-only, no remediation — plus CI/CD integration: it can act as a client of the SanityOps Platform, keeping your logic artifacts in sync. The remaining capabilities (e.g., Risk Implicit, Quality evaluation, remediation, and the version-level evidence chain) are delivered on the Platform.
+- **Note**: The open-source CLI uses the same inspection engine, methodology, and condensed rule set as the inspector skill — a subset of the full specification — report-only, no remediation. Its only additional capability is optional synchronization with the SanityOps Platform. Risk Implicit, Quality evaluation, remediation, and the version-level evidence chain are delivered on the Platform.
 
 ### Install
 
@@ -116,7 +116,7 @@ Artifact entries accept any plaintext format (`.md`, `.json`, `.py`, `.ts`, ...)
 sanityops-cli inspect
 ```
 
-Every run performs the full deep inspection (L3) across all configured artifacts — there is no depth parameter to tune.
+Every run executes the complete seven-stage inspection flow shared with the inspector skill across all configured artifacts — there is no CLI-only depth parameter to tune.
 
 Add `--skip-defect-check` to scan and upload artifacts without running the defect analysis, `--config <path>` to use a config file elsewhere, and `--model` / `--provider` to override the model for one run.
 

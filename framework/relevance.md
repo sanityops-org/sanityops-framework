@@ -122,9 +122,9 @@ description: "How SanityOps maps discovered defects to their business and qualit
 | Item | Content |
 |------|---------|
 | Document Name | SanityOps Inspect Defect Impact and Linkage Mapping Specification |
-| Version | v1.1 |
+| Version | v1.2 |
 | Status | Released |
-| Date | October 2026 |
+| Date | November 2026 |
 | Applicable Framework | SanityOps Inspect, Risk, Quality Subsets |
 | Maintained by | Sanity AI Labs |
 
@@ -1773,13 +1773,14 @@ This specification can reference OWASP risk language, but does not use OWASP num
 |---------|--------------|-------------|
 | v1.0 | 2026-10 | Initial release |
 | v1.1 | 2026-10 | Expanded Inspect and Permission defect coverage; Risk Explicit regraded to P0/P1/P2; multi-hit design principle clarified; terminology aligned to Logic Artifacts |
+| v1.2 | 2026-11 | Corrected mapping review status and Permission applicability; aligned linked defect-chain records, exception references, examples, and scope with Core and Permission |
 
 ---
 
-**The SanityOps Inspect Defect Impact and Linkage Mapping Specification v1.1 main text and appendices are now complete.**
+**The SanityOps Inspect Defect Impact and Linkage Mapping Specification v1.2 main text and appendices are now complete.**
 
 ---
 
 © 2026 Sanity AI Labs. Licensed under Creative Commons Attribution-ShareAlike 4.0 International.
 https://www.sanityops.org  ·  hello@sanityops.org
-v1.1  ·  October 2026
+v1.2  ·  November 2026

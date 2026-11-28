@@ -1,11 +1,15 @@
 ---
-title: "medication-information-assistant — Skill/CLI Report (sanityops-inspector v2.0.0)"
+title: "medication-information-assistant — Inspector Skill Report (sanityops-inspector v2.0.0)"
 description: "Full-flow SanityOps inspection of the medication-information-assistant artifacts (System Prompt + 1 Skill + 5 Tool Schemas) by sanityops-inspector v2.0.0, dated 2026-11-21."
 ---
 
 # SanityOps Inspection Report — Medication Information Assistant
 
 **How to read this report.** This is an automated self-audit, not a human review: the `sanityops-inspector` skill ran the SanityOps checklist against one test artifact (a medication-information assistant) and recorded a verdict for every applicable rule. Read `FAIL P0` as "fix before release", `P1` / `P2` as "fix soon / consciously accept", and `N/A` as "structurally does not apply here"; severities are checklist-assigned, not risk scores. PASS and N/A lines are folded by default — the body shows every FAIL plus per-stage tallies, and the complete per-rule verdict ledger is emitted on request. The result was produced by a single model with no independent verification and is not a conclusion of the official SanityOps engine.
+
+::: warning Publication clarification
+The inspector Skill and CLI use the same inspection engine, methodology, and rule package; the CLI's only additional capability is optional Platform synchronization. Statements in this archived report that present the CLI as a more official or more complete inspection path, or as providing Risk Implicit and Quality, are outdated. Risk Implicit and runtime Quality are Platform capabilities. The findings, verdicts, and tool/rule versions in this record are unchanged.
+:::
 
 ## Report header (provenance)
 

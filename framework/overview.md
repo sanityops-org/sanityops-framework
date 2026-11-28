@@ -39,7 +39,7 @@ SanityOps has two parts:
    
    - 🟢 **Open source** — a report-only inspection skill (`sanityops-inspector`, CC BY-SA 4.0) that runs Inspect and Risk Explicit checks inside your host model.
 
-   - 🟢 **Open source** — the Inspect CLI (Apache 2.0): full Inspect and Risk Explicit checks, report-only, integrated into CI/CD and kept in sync with the SanityOps Platform.
+   - 🟢 **Open source** — the Inspect CLI (Apache 2.0): the same inspection engine and methodology as the skill, exposed through a command-line workflow, report-only, with optional synchronization to the SanityOps Platform.
    
    - 🔵 **Commercial** — the full feature suite (Defect Inspector, Risk Scanner, Quality Evaluator), offered as **SaaS / self-hosted**.
 
@@ -98,10 +98,10 @@ The framework specification is fully open, along with two open-source tools — 
 
 - **Read the framework** — a guided reading path: [Framework Home](/framework/)
 - **Check an artifact in your own agent** — a report-only inspection skill ([`sanityops-inspector`](https://github.com/sanityops-org/sanityops-inspector)) that runs Inspect and Risk Explicit checks on a Prompt, Skill, or Tool Schema inside your host model.
-- **Try the Inspect CLI** — full Inspect checks (including Permission) plus Risk Explicit, locally or in CI/CD: [Try the Tools](/framework/try-the-tools) · `pip install sanityops-cli`
+- **Try the Inspect CLI** — the same inspection engine and methodology as the skill, with a command-line workflow and optional Platform sync: [Try the Tools](/framework/try-the-tools) · `pip install sanityops-cli`
 - **Try the live demo** — the full Inspect + Risk + Quality loop: [demo.sanityops.org](https://demo.sanityops.org/). Sign-up is invite-only (LLM inference costs) — click **Get Code** on the registration form.
 - **Browse the sample test case** — the System Prompt, Skill, and Tool Schemas for a medication-information example agent, ready to feed to the inspection skill or the CLI: [samples/](/samples/)
-- **Review inspection results** — the Skill/CLI report and the platform's specification PDFs for the sample agent, each bound to the tool and rule version that produced it: [samples/](/samples/)
+- **Review inspection results** — the Inspector Skill report and the platform's specification PDFs for the sample agent, each bound to the tool and rule version that produced it: [samples/](/samples/)
 
 ## Use Cases
 
@@ -164,7 +164,11 @@ Terms appearing in this document such as logical artifact, Prompt / Skill / Tool
 - ✅ Multi-hit inspection design principle stated explicitly in all five Inspect sub-specifications
 - ✅ Terminology normalized to "Logic Artifacts"; `sanityops-inspector` instance records added
 
-**v1.2 · January 2027**
+**v1.2 · November 2026**
+
+- ✅ Relevance mapping specification corrections (two normative fixes and record-contract alignment)
+
+**v1.3 · January 2027**
 
 - 🔜 DMC 1.0 derivative model capability evaluation and optimization method
 
